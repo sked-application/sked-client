@@ -1,0 +1,35 @@
+.badge {
+    padding: 7.5px;
+	border: 1px solid #ffffff;
+    border-radius: 4px;
+    font-size: 14px;
+	display: inline-block;
+
+	&--dark {
+		background-color: $primary;
+		color: #ffffff;
+		a {
+			color: #ffffff;
+		}
+	}
+
+	&--light {
+		background-color: #ffffff;
+		color: $text-color;
+		a {
+			color: $text-color;
+		}
+	}
+
+	&--outline {
+		border-color: $text-color;
+	}
+
+	&--secondary {
+		background-color: $secondary;
+		color: #ffffff;
+		a {
+			color: #ffffff;
+		}
+	}
+}

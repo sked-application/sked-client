@@ -1,0 +1,60 @@
+.label {
+    &__box {
+        display: flex;
+        align-items: center;
+    }
+
+    &__description {
+        position: relative;
+        top: 2px;
+        margin-left: 10px;
+    }
+}
+
+.flexbox {
+    display: flex;
+
+    &--column {
+        flex-direction: column;
+    }
+
+    &--end {
+        align-items: flex-end;
+    }
+
+	&--center {
+        align-items: center;
+    }
+
+	&__justify--center {
+        justify-content: center;
+    }
+
+	&__justify--end {
+        justify-content: flex-end;
+    }
+
+    &--wrap {
+        flex-wrap: wrap;
+    }
+
+    &__item {
+        flex: 1;
+    }
+}
+
+.text {
+	&--center {
+		text-align: center;
+	}
+
+	&--right {
+		text-align: center;
+	}
+}
+
+.cursor{
+	&--pointer {
+		cursor: pointer;
+	}
+}

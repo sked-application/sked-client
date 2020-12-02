@@ -1,0 +1,25 @@
+.select {
+    height: 50px;
+    padding: 0 15px;
+    border: 1px solid;
+    border-radius: 4px;
+    box-shadow: none;
+    width: 100%;
+    font-size: 15px;
+	background: #ffffff;
+	border-color: #ffffff;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+	appearance: none;
+	color: $text-color;
+
+    &:focus {
+        outline: none;
+        box-shadow: none;
+	}
+
+	&--dark {
+		border-color: #d7d7d7;
+	}
+}

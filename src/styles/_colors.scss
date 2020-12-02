@@ -1,0 +1,28 @@
+$primary: rgba(84,64,182, 1);
+$secondary: rgba(132,43, 216, 1);
+$text-color: #2f2f2f;
+$color-success: #08c174;
+$color-danger: #f7636a;
+
+.color {
+	&--white {
+		color: #ffffff;
+	}
+
+	&--success{
+		color: $color-success;
+	}
+
+	&--danger{
+		color: $color-danger;
+	}
+
+	&--primary{
+		color: $primary;
+	}
+
+	&--secondary{
+		color: $secondary;
+	}
+}
+

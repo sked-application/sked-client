@@ -1,0 +1,79 @@
+.header {
+    padding: 15px 0;
+
+    &__content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__logo {
+		background-color: #ffffff;
+		padding: 5px 10px;
+		border-radius: 5px;
+		color: $primary;
+		font-weight: 700;
+		display: inline-block;
+    }
+
+    &__toggle {
+        color: #ffffff;
+        font-size: 28px;
+        cursor: pointer;
+	}
+
+	&__action {
+		color: white;
+		font-size: 14px;
+		padding-bottom: 2px;
+		border-bottom: 1px solid white;
+	}
+
+    &__menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+		width: 60%;
+		max-width: 300px;
+        background-color: #eaeaea;
+        height: 100vh;
+        transform: translateX(100vw);
+		transition: all 0.3s ease-in-out;
+		border-top-left-radius: 6px;
+		border-bottom-left-radius: 6px;
+		box-shadow: 0 0 20px 4px rgba(0,0,0, .2);
+
+        &--active {
+			transform: translateX(0);
+			z-index: 100;
+        }
+    }
+
+    &__list {
+        padding-top: 30px;
+
+        li {
+            padding: 7.5px 15px;
+            a {
+                color: $text-color;
+            }
+        }
+    }
+
+    &__overlay {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        left: 0;
+        top: 0;
+		opacity: 0;
+		z-index: -10;
+        transition: all 0.3s ease-in-out;
+
+        &--active {
+			opacity: 1;
+			background-color: rgba(0,0,0, 0.6);
+            z-index: 95;
+        }
+    }
+}

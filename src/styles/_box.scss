@@ -1,0 +1,29 @@
+.box {
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    width: 100%;
+	background: rgba( #ffffff, .1);
+
+    &__header {
+        display: flex;
+        align-items: center;
+		justify-content: space-between;
+		border-bottom: 1px solid rgba(#ffffff, .1);
+		padding-top: 5px;
+		padding-bottom: 15px;
+		margin-bottom: 15px;
+	}
+
+    &__title {
+		font-size: 18px;
+		font-weight: normal;
+		margin: 0;
+		color: #fff;
+    }
+
+    &__subtitle {
+		font-size: 14px;
+		color: #fff;
+    }
+}
