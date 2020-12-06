@@ -6,7 +6,8 @@
 	top: 0;
 	opacity: 0;
 	z-index: -1;
-	transition: all 0.3s ease-in-out;
+	visibility: hidden;
+	transition: all 0.3s linear;
 	overflow-y: auto;
 	padding-top: 20vh;
 	padding-bottom: 20vh;
@@ -14,6 +15,7 @@
 	&--active {
 		opacity: 1;
 		z-index: 10;
+		visibility: visible;
 	}
 
 	&__overlay {
@@ -35,7 +37,7 @@
 		border-radius: 6px;
 		box-shadow: 0 0 20px 4px rgba(0,0,0, .2);
 		max-width: 720px;
-		width: calc(100% - 40px);
+		width: calc(100% - 20px);
 		position: relative;
 		z-index: 11;
 	}

@@ -69,7 +69,11 @@ const TimegridForm = () => {
 	};
 
 	const handleCloseShowUp = () => {
-		setFormData([]);
+		setTimeout(() => {
+			setFormData([]);
+			reset();
+		}, 300);
+
 		setToggleShow(false);
 	};
 

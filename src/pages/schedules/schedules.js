@@ -128,9 +128,12 @@ const Schedules = () => {
 										<button onClick={() => updateStatus(schedule.id, 'CANCELED')} className="button button--danger m-r-10">
 											Cancelar
 										</button>
-										<button onClick={() => updateStatus(schedule.id, 'FINISHED')} className="button button--success">
-											Finalizar
-										</button>
+
+										{schedule.confirmed_at && (
+											<button onClick={() => updateStatus(schedule.id, 'FINISHED')} className="button button--success">
+												Finalizar
+											</button>
+										)}
 									</div>
 								)}
 							</div>

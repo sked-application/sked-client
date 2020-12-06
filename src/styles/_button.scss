@@ -10,6 +10,7 @@
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
+	transition: all .3s linear;
 	color: $text-color;
 	cursor: pointer;
 	$self: &;
