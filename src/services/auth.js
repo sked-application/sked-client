@@ -7,12 +7,14 @@ const signIn = ({ email, password }) => {
     });
 };
 
-const signUp = ({ name, account, email, password }) => {
+const signUp = ({ name, account, email, password, cpf_cnpj, telephone }) => {
     return api.post('/sign/up', {
         name,
         account,
         email,
-        password,
+		password,
+		cpf_cnpj,
+		telephone,
     });
 };
 

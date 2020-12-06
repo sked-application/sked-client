@@ -4,13 +4,14 @@ import schema from './sign-up-schema-validator';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../contexts/auth/auth';
 import { FormInputError } from '../../components/input-form-error/input-form-error'
 import { replaceSpecialCharacters } from '../../utils/utils';
 
 const SignUp = () => {
-    const { isAuthenticated, handleSignIn, userAccountName } = useContext(AuthContext);
+	const history = useHistory();
+    const { isAuthenticated, userAccountName } = useContext(AuthContext);
     const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 
@@ -22,18 +23,20 @@ const SignUp = () => {
 
     const signUpForm = async (values) => {
 		try {
-			const { name, account, email, password } = values;
+			const { name, account, cpfCnpj, telephone, email, password } = values;
 
 			setIsLoading(true);
 
-			const { data } = await AuthService.signUp({
+			await AuthService.signUp({
 				name,
 				email,
 				password,
+				telephone,
+				cpf_cnpj: cpfCnpj,
 				account: account.toLowerCase(),
 			});
 
-			handleSignIn(data.token, data.account);
+			history.push('/signin');
 		} catch ({ response }) {
 			setError(response.data);
 			setIsLoading(false);
@@ -117,7 +120,7 @@ const SignUp = () => {
 						name="cpfCnpj"
 						type="text"
 						ref={register}
-						placeholder="Cpf/Cnpj"
+						placeholder="Cpf/Cnpj sem pontos e barras"
 						className="input input--dark"
 					/>
 					<FormInputError
