@@ -67,7 +67,6 @@ const SignIn = () => {
 						className="input"
 					/>
 					<FormInputError
-						touched={true}
 						error={errors.email && errors.email.message}
 					/>
 				</div>
@@ -81,7 +80,6 @@ const SignIn = () => {
 						className="input"
 					/>
 					<FormInputError
-						touched={true}
 						error={errors.password && errors.password.message}
 					/>
 				</div>

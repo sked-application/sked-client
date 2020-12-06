@@ -76,7 +76,6 @@ const RecoverPassword = () => {
                         disabled={isLoading}
                     />
                     <FormInputError
-                        touched={true}
 						error={errors.email && errors.email.message}
                     />
                 </div>

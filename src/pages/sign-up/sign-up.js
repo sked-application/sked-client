@@ -70,8 +70,20 @@ const SignUp = () => {
 						className="input"
 					/>
 					<FormInputError
-						touched={true}
 						error={errors.name && errors.name.message}
+					/>
+				</div>
+				<div className="m-b-15">
+					<input
+						name="email"
+						type="email"
+						ref={register}
+						placeholder="Email"
+						disabled={isLoading}
+						className="input"
+					/>
+					<FormInputError
+						error={errors.email && errors.email.message}
 					/>
 				</div>
 				<div className="m-b-15">
@@ -85,22 +97,31 @@ const SignUp = () => {
 						onBlur={(event) => setValue('account', replaceSpecialCharacters(event.target.value))}
 					/>
 					<FormInputError
-						touched={true}
 						error={errors.account && errors.account.message}
 					/>
 				</div>
 				<div className="m-b-15">
 					<input
-						name="email"
-						type="email"
+						name="telephone"
+						type="tel"
 						ref={register}
-						placeholder="Email"
-						disabled={isLoading}
-						className="input"
+						placeholder="Telefone"
+						className="input input--dark"
 					/>
 					<FormInputError
-						touched={true}
-						error={errors.email && errors.email.message}
+						error={errors.telephone && errors.telephone.message}
+					/>
+				</div>
+				<div className="m-b-15">
+					<input
+						name="cpfCnpj"
+						type="text"
+						ref={register}
+						placeholder="Cpf/Cnpj"
+						className="input input--dark"
+					/>
+					<FormInputError
+						error={errors.cpfCnpj && errors.cpfCnpj.message}
 					/>
 				</div>
 				<div className="m-b-15">
@@ -113,7 +134,6 @@ const SignUp = () => {
 						className="input"
 					/>
 					<FormInputError
-						touched={true}
 						error={errors.password && errors.password.message}
 					/>
 				</div>
@@ -127,7 +147,6 @@ const SignUp = () => {
 						className="input"
 					/>
 					<FormInputError
-						touched={true}
 						error={errors.confirmPassword && errors.confirmPassword.message}
 					/>
 				</div>

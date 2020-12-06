@@ -143,7 +143,6 @@ const MainSlotGrid = () => {
 							autoComplete="off"
                         />
                         <FormInputError
-                            touched={true}
                             error={signUpErros.email && signUpErros.email.message}
                         />
                     </div>
@@ -156,7 +155,6 @@ const MainSlotGrid = () => {
 							className="input input--dark"
                         />
                         <FormInputError
-                            touched={true}
                             error={signUpErros.name && signUpErros.name.message}
                         />
                     </div>
@@ -169,7 +167,6 @@ const MainSlotGrid = () => {
 							className="input input--dark"
                         />
                         <FormInputError
-                            touched={true}
                             error={signUpErros.telephone && signUpErros.telephone.message}
                         />
                     </div>
@@ -183,7 +180,6 @@ const MainSlotGrid = () => {
 							autoComplete="off"
                         />
                         <FormInputError
-                            touched={true}
                             error={signUpErros.password && signUpErros.password.message}
                         />
                     </div>
@@ -197,7 +193,6 @@ const MainSlotGrid = () => {
 							autoComplete="off"
                         />
                         <FormInputError
-                            touched={true}
                             error={signUpErros.confirmPassword && signUpErros.confirmPassword.message}
                         />
                     </div>
@@ -229,7 +224,6 @@ const MainSlotGrid = () => {
 							autoComplete="off"
                         />
                          <FormInputError
-                            touched={true}
                             error={signInErros.email && signInErros.email.message}
                         />
                     </div>
@@ -243,7 +237,6 @@ const MainSlotGrid = () => {
 							autoComplete="off"
                         />
                         <FormInputError
-                            touched={true}
                             error={signInErros.password && signInErros.password.message}
                         />
                     </div>

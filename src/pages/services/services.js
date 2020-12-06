@@ -179,7 +179,6 @@ const Services = () => {
 									className="input input--dark"
 								/>
 								<FormInputError
-									touched={true}
 									error={errors.name && errors.name.message}
 								/>
 							</div>
@@ -197,7 +196,6 @@ const Services = () => {
 									className="input input--dark"
 								/>
 								<FormInputError
-									touched={true}
 									error={errors.duration && errors.duration.message}
 								/>
 							</div>
@@ -217,7 +215,6 @@ const Services = () => {
 									className="input input--dark"
 								/>
 								<FormInputError
-									touched={true}
 									error={errors.price && errors.price.message}
 								/>
 							</div>

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import './input-form-error.scss';
 
-const MemoizedFormInputError = ({ touched, error }) => {
-    return touched && error ? (
+const MemoizedFormInputError = ({ error }) => {
+    return error ? (
         <span className="input-form-error">{error}</span>
     ) : (
         <></>
@@ -12,7 +12,6 @@ const MemoizedFormInputError = ({ touched, error }) => {
 };
 
 MemoizedFormInputError.propTypes = {
-    touched: PropTypes.bool,
     error: PropTypes.string,
 };
 
