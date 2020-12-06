@@ -18,3 +18,12 @@ export const getDayLabelByDate = (date) => {
 export const getFormattedDatePreview = (date) => {
     return moment(date).format('DD/MM/YYYY');
 };
+
+export const replaceSpecialCharacters = (string) => {
+	return string.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
+		.replace(/([^\w]+|\s+)/g, '')
+		.replace(/--+/g, '')
+		.replace(/(^-+|-+$)/, '')
+		.toLowerCase();
+};

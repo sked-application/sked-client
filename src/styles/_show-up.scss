@@ -1,20 +1,43 @@
 .show-up {
 	position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    padding: 50px 30px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-	box-shadow: 0 0 20px 4px rgba(0,0,0, .2);
-	transform: translateY(100%);
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	opacity: 0;
+	z-index: -1;
 	transition: all 0.3s ease-in-out;
-	z-index: 0;
+	overflow-y: auto;
+	padding-top: 20vh;
+	padding-bottom: 20vh;
 
 	&--active {
-		transform: translateY(0);
+		opacity: 1;
 		z-index: 10;
+	}
+
+	&__overlay {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+		background-color: rgba(0,0,0, 0.6);
+    }
+
+	&__modal {
+		left: 0;
+		right: 0;
+		width: 100%;
+		margin: auto;
+		background: #fff;
+		padding: 50px 30px;
+		border-radius: 6px;
+		box-shadow: 0 0 20px 4px rgba(0,0,0, .2);
+		max-width: 720px;
+		width: calc(100% - 40px);
+		position: relative;
+		z-index: 11;
 	}
 
 	&__header {
@@ -51,21 +74,4 @@
 		color: $primary;
 		box-shadow: 0 0 15px 4px rgba(0,0,0, .1);
 	}
-
-	&__overlay {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        top: 0;
-		opacity: 0;
-		z-index: -10;
-        transition: all 0.3s ease-in-out;
-
-        &--active {
-			opacity: 1;
-			background-color: rgba(0,0,0, 0.6);
-            z-index: 5;
-        }
-    }
 }

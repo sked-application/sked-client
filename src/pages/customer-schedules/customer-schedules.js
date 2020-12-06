@@ -3,8 +3,6 @@ import ScheduleService from '../../services/schedule';
 import moment from 'moment';
 
 import { getDayLabelByDate } from '../../utils/utils';
-import { ShowUpButton, ShowUp } from '../../components/show-up/show-up';
-import { BsFilter } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
 const Schedules = () => {
@@ -12,7 +10,6 @@ const Schedules = () => {
 	const [schedules, setSchedules] = useState([]);
 	const [status, setStatus] = useState('SCHEDULED');
 	const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
-	const [toggleShow, setToggleShow] = useState(false);
 
 	const updateStatus = async (id, updateStatus) => {
 		await ScheduleService.updateStatusFromCostumer({
@@ -22,14 +19,6 @@ const Schedules = () => {
 
 		const data = await listSchedules({ startDate, status });
 		setSchedules(data);
-	};
-
-	const handleCloseShowUp = () => {
-		setToggleShow(false);
-	};
-
-	const handleOpenShowUp = () => {
-		setToggleShow(true);
 	};
 
 	const listSchedules = useCallback(async ({ startDate, status }) => {
@@ -69,24 +58,33 @@ const Schedules = () => {
 				</div>
 			</div>
             <div className="container m-t-15 m-b-30">
+				<div className="box">
+					<div className="flexbox__item flexbox">
+						<div className="flexbox__item">
+							<input
+								type="date"
+								value={startDate}
+								onChange={(event) => setStartDate(event.target.value)}
+								className="input input--dark"
+							/>
+						</div>
+						<div className="flexbox__item m-l-15">
+							<select
+								value={status}
+								onChange={(event) => setStatus(event.target.value)}
+								className="select select--dark"
+							>
+								<option value="SCHEDULED">Agendados</option>
+								<option value="CANCELED">Cancelados</option>
+								<option value="FINISHED">Finalizados</option>
+							</select>
+						</div>
+					</div>
+				</div>
                 {isLoading ? (
 					<div className="loading"></div>
                 ) : (
                     <>
-						<div className="flexbox m-b-20">
-							<div className="flexbox flexbox--center">
-								<strong className="color--white m-l-15 text--center">
-									{status === 'SCHEDULED' && 'Agendados'}
-									{status === 'CANCELED' && 'Cancelados'}
-									{status === 'FINISHED' && 'Finalizados'}
-								</strong>
-							</div>
-							<div className="flexbox__item flexbox flexbox__justify--end">
-								<ShowUpButton onClick={handleOpenShowUp}>
-									<BsFilter fontSize="30" fontWeight="700"/>
-								</ShowUpButton>
-							</div>
-						</div>
 						{schedules.map((schedule) => (
 							<div key={schedule.id} className="card">
 								<div className="card__header">
@@ -94,9 +92,9 @@ const Schedules = () => {
 										<h2 className="card__title">
 											{schedule.account.user.name}
 										</h2>
-										{status === 'SCHEDULED' && schedule.confirmed_at && <span className="card__subtitle color--success">Confirmado</span>}
+										{status === 'SCHEDULED' && schedule.confirmed_at && <span className="card__subtitle color--secondary">Confirmado</span>}
 										{status === 'CANCELED' && <span className="card__subtitle color--danger">Cancelado</span>}
-										{status === 'FINISHED' && <span className="card__subtitle color--secondary">Finalizado</span>}
+										{status === 'FINISHED' && <span className="card__subtitle color--success">Finalizado</span>}
 									</Link>
 									<div className="flexbox flexbox--column flexbox--end">
 										<span className="card__subtitle m-b-5">{moment(schedule.date).format('DD/MM/YYYY')}</span>
@@ -120,7 +118,7 @@ const Schedules = () => {
 									<div>
 										<div className="m-t-10 flexbox flexbox--center">
 											{!schedule.confirmed_at && (
-												<button onClick={() => updateStatus(schedule.id, 'CONFIRMED')} className="button button--success m-r-10">
+												<button onClick={() => updateStatus(schedule.id, 'CONFIRMED')} className="button button--secondary m-r-10">
 													Confirmar
 												</button>
 											)}
@@ -128,7 +126,7 @@ const Schedules = () => {
 											<button onClick={() => updateStatus(schedule.id, 'CANCELED')} className="button button--danger m-r-10">
 												Cancelar
 											</button>
-											<Link className="color--secondary m-l-5" to={`/${schedule.account.name}`}>
+											<Link className="color--success m-l-5" to={`/${schedule.account.name}`}>
 												<strong>Ver agenda</strong>
 											</Link>
 										</div>
@@ -144,38 +142,6 @@ const Schedules = () => {
 						)}
                     </>
                 )}
-
-				<ShowUp
-					title="Pesquisar por:"
-					isOpen={toggleShow}
-					handleClose={handleCloseShowUp}
-				>
-					<div className="flexbox flexbox--column">
-						<div className="flexbox__item">
-							<div className="m-b-5">
-								<input
-									type="date"
-									value={startDate}
-									onChange={(event) => setStartDate(event.target.value)}
-									className="input input--dark"
-								/>
-							</div>
-						</div>
-						<div className="flexbox__item">
-							<div className="m-b-15">
-								<select
-									value={status}
-									onChange={(event) => setStatus(event.target.value)}
-									className="select select--dark"
-								>
-									<option value="SCHEDULED">Agendados</option>
-									<option value="CANCELED">Cancelados</option>
-									<option value="FINISHED">Finalizados</option>
-								</select>
-							</div>
-						</div>
-					</div>
-				</ShowUp>
             </div>
         </div>
     );

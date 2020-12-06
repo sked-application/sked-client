@@ -6,14 +6,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 import { Redirect, Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/auth/auth';
-import { FormInputError } from '../../components/input-form-error/input-form-error';
+import { FormInputError } from '../../components/input-form-error/input-form-error'
+import { replaceSpecialCharacters } from '../../utils/utils';
 
 const SignUp = () => {
     const { isAuthenticated, handleSignIn, userAccountName } = useContext(AuthContext);
     const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 
-	const { register, handleSubmit, formState, errors } = useForm({
+	const { register, handleSubmit, formState, errors, setValue } = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
 		mode: 'onBlur'
@@ -50,10 +51,10 @@ const SignUp = () => {
 					{isLoading ? (
 						<span className="loading"></span>
 					) : (
-						<h1 className="page__title">Cadastre-se</h1>
+						<h1 className="page__title">Solicite seu cadastro</h1>
 					)}
 					<div className="m-t-5">
-						<span className="page__description">Realize seu cadastro.</span>
+						<span className="page__description">Retornaremos a liberação de sua conta em instantes.</span>
 					</div>
 				</div>
 			</div>
@@ -78,9 +79,10 @@ const SignUp = () => {
 						name="account"
 						type="text"
 						ref={register}
-						placeholder="Nome da conta"
+						placeholder="Nome da conta EX: salaodamaria"
 						disabled={isLoading}
 						className="input"
+						onBlur={(event) => setValue('account', replaceSpecialCharacters(event.target.value))}
 					/>
 					<FormInputError
 						touched={true}

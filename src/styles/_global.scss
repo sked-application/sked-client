@@ -17,6 +17,11 @@ body {
 	background: $primary;
 	background: linear-gradient(165deg, $primary 0%, $secondary 100%);
 	background-attachment: fixed;
+
+	&.block-scroll {
+		overflow-y: hidden;
+		padding-right: 17px;
+	}
 }
 
 a {
@@ -33,27 +38,3 @@ ul {
 button {
     outline: none;
 }
-
-// .full-datepicker {
-//   .react-datepicker,
-//   .react-datepicker__month-container {
-//     width: 100%;
-//   }
-//   .react-datepicker__day-name,
-//   .react-datepicker__day,
-//   .react-datepicker__time-name {
-//     width: calc(100% / 7);
-//     margin: 0;
-//     height: 40px;
-//     display: flex;
-//     float: left;
-//     align-items: center;
-//     justify-content: center;
-//     box-shadow: none;
-//     outline: none;
-//   }
-//   .react-datepicker__day-names,
-//   .react-datepicker__week {
-//     display: flex;
-//   }
-// }
