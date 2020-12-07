@@ -12,13 +12,18 @@ const Schedules = () => {
 	const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
 
 	const updateStatus = async (id, updateStatus) => {
-		await ScheduleService.updateStatusFromCostumer({
-			id,
-			status: updateStatus
-		});
+		try {
+			await ScheduleService.updateStatusFromCostumer({
+				id,
+				status: updateStatus
+			});
 
-		const data = await listSchedules({ startDate, status });
-		setSchedules(data);
+			const data = await listSchedules({ startDate, status });
+
+			setSchedules(data);
+		} catch ({ response }) {
+			alert(response.data);
+		}
 	};
 
 	const listSchedules = useCallback(async ({ startDate, status }) => {
