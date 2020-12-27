@@ -1,4 +1,4 @@
-# Sked - Client PWA
+# Sked App - Client PWA
 
 Web application to manage schedules and appointments.
 

@@ -11,7 +11,7 @@ import { replaceSpecialCharacters } from '../../utils/utils';
 
 const SignUp = () => {
 	const history = useHistory();
-    const { isAuthenticated, userAccountName } = useContext(AuthContext);
+    const { isAuthenticated, userAccountUrl } = useContext(AuthContext);
     const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 
@@ -23,17 +23,30 @@ const SignUp = () => {
 
     const signUpForm = async (values) => {
 		try {
-			const { name, account, cpfCnpj, telephone, email, password } = values;
+			const {
+				accountName,
+				accountUrl,
+				accountCpfCnpj,
+				accountTelephone,
+				userName,
+				userEmail,
+				userPassword
+			} = values;
 
 			setIsLoading(true);
 
 			await AuthService.signUp({
-				name,
-				email,
-				password,
-				telephone,
-				cpf_cnpj: cpfCnpj,
-				account: account.toLowerCase(),
+				account: {
+					name: accountName,
+					url: accountUrl,
+					cpf_cnpj: accountCpfCnpj,
+					telephone: accountTelephone,
+				},
+				user: {
+					name: userName,
+					email: userEmail,
+					password: userPassword,
+				}
 			});
 
 			history.push('/signin');
@@ -44,7 +57,7 @@ const SignUp = () => {
 	};
 
 	if (isAuthenticated) {
-        return <Redirect to={`/${userAccountName}`} />;
+        return <Redirect to={`/${userAccountUrl}`} />;
     }
 
     return (
@@ -63,95 +76,118 @@ const SignUp = () => {
 			</div>
             <form onSubmit={handleSubmit(signUpForm)} className="m-t-30 m-b-15">
 				{error && <div className="text--center m-b-15">{error}</div>}
-				<div className="m-b-15">
-					<input
-						name="name"
-						type="text"
-						ref={register}
-						placeholder="Nome"
-						disabled={isLoading}
-						className="input"
-					/>
-					<FormInputError
-						error={errors.name && errors.name.message}
-					/>
+				<div className="box">
+					<div className="m-b-15">
+						<strong className="color--white">Informações da conta</strong>
+					</div>
+					<div className="m-b-15">
+						<input
+							name="accountUrl"
+							type="text"
+							ref={register}
+							placeholder="Url da conta"
+							disabled={isLoading}
+							className="input"
+							onBlur={(event) => setValue('accountUrl', replaceSpecialCharacters(event.target.value))}
+						/>
+						<FormInputError
+							error={errors.accountUrl && errors.accountUrl.message}
+						/>
+					</div>
+					<div className="m-b-15">
+						<input
+							name="accountName"
+							type="text"
+							ref={register}
+							placeholder="Nome da conta"
+							disabled={isLoading}
+							className="input"
+						/>
+						<FormInputError
+							error={errors.accountName && errors.accountName.message}
+						/>
+					</div>
+					<div className="m-b-15">
+						<input
+							name="accountCpfCnpj"
+							type="text"
+							ref={register}
+							placeholder="Cpf/Cnpj da conta sem pontos e barra"
+							className="input input--dark"
+						/>
+						<FormInputError
+							error={errors.accountCpfCnpj && errors.accountCpfCnpj.message}
+						/>
+					</div>
+					<div>
+						<input
+							name="accountTelephone"
+							type="tel"
+							ref={register}
+							placeholder="Telefone"
+							className="input input--dark"
+						/>
+						<FormInputError
+							error={errors.accountTelephone && errors.accountTelephone.message}
+						/>
+					</div>
 				</div>
-				<div className="m-b-15">
-					<input
-						name="email"
-						type="email"
-						ref={register}
-						placeholder="Email"
-						disabled={isLoading}
-						className="input"
-					/>
-					<FormInputError
-						error={errors.email && errors.email.message}
-					/>
-				</div>
-				<div className="m-b-15">
-					<input
-						name="account"
-						type="text"
-						ref={register}
-						placeholder="Nome da conta EX: salaodamaria"
-						disabled={isLoading}
-						className="input"
-						onBlur={(event) => setValue('account', replaceSpecialCharacters(event.target.value))}
-					/>
-					<FormInputError
-						error={errors.account && errors.account.message}
-					/>
-				</div>
-				<div className="m-b-15">
-					<input
-						name="telephone"
-						type="tel"
-						ref={register}
-						placeholder="Telefone"
-						className="input input--dark"
-					/>
-					<FormInputError
-						error={errors.telephone && errors.telephone.message}
-					/>
-				</div>
-				<div className="m-b-15">
-					<input
-						name="cpfCnpj"
-						type="text"
-						ref={register}
-						placeholder="Cpf/Cnpj sem pontos e barras"
-						className="input input--dark"
-					/>
-					<FormInputError
-						error={errors.cpfCnpj && errors.cpfCnpj.message}
-					/>
-				</div>
-				<div className="m-b-15">
-					<input
-						name="password"
-						type="password"
-						ref={register}
-						placeholder="Senha"
-						disabled={isLoading}
-						className="input"
-					/>
-					<FormInputError
-						error={errors.password && errors.password.message}
-					/>
-				</div>
-				<div className="m-b-15">
-					<input
-						name="confirmPassword"
-						type="password"
-						ref={register}
-						placeholder="Confirme sua senha"
-						disabled={isLoading}
-						className="input"
-					/>
-					<FormInputError
-						error={errors.confirmPassword && errors.confirmPassword.message}
-					/>
+				<div className="box">
+					<div className="m-b-15">
+						<strong className="color--white">Informações do usuário</strong>
+					</div>
+					<div className="m-b-15">
+						<input
+							name="userName"
+							type="text"
+							ref={register}
+							placeholder="Nome"
+							disabled={isLoading}
+							className="input"
+						/>
+						<FormInputError
+							error={errors.userName && errors.userName.message}
+						/>
+					</div>
+					<div className="m-b-15">
+						<input
+							name="userEmail"
+							type="email"
+							ref={register}
+							placeholder="Email"
+							disabled={isLoading}
+							className="input"
+						/>
+						<FormInputError
+							error={errors.userEmail && errors.userEmail.message}
+						/>
+					</div>
+					<div className="m-b-15">
+						<input
+							name="userPassword"
+							type="password"
+							ref={register}
+							placeholder="Senha"
+							disabled={isLoading}
+							className="input"
+						/>
+						<FormInputError
+							error={errors.userPassword && errors.userPassword.message}
+						/>
+					</div>
+					<div className="m-b-15">
+						<input
+							name="userConfirmPassword"
+							type="password"
+							ref={register}
+							placeholder="Confirme sua senha"
+							disabled={isLoading}
+							className="input"
+						/>
+						<FormInputError
+							error={errors.userConfirmPassword && errors.userConfirmPassword.message}
+						/>
+					</div>
 				</div>
 				<div>
 					<button

@@ -6,7 +6,6 @@ import { ShowUp, ShowUpButton } from '../../components/show-up/show-up';
 import { BsPlus } from 'react-icons/bs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
-
 import { FormInputError } from '../../components/input-form-error/input-form-error';
 
 const Services = () => {
@@ -199,7 +198,6 @@ const Services = () => {
 									error={errors.duration && errors.duration.message}
 								/>
 							</div>
-
 							<div className="flexbox__item m-t-15">
 								<div className="m-b-5">
 									<label htmlFor="price">

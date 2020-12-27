@@ -5,13 +5,13 @@ import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from '../../contexts/auth/auth';
 
 const UserPrivateRoute = ({ component: Component, ...rest }) => {
-    const { isAuthenticated, userAccountName } = useContext(AuthContext);
+    const { isAuthenticated, userAccountUrl } = useContext(AuthContext);
 
     return (
         <Route
             {...rest}
             render={(props) =>
-                isAuthenticated && userAccountName ? (
+                isAuthenticated && userAccountUrl ? (
                     <Component {...props} />
                 ) : (
                     <Redirect to="/signin" />

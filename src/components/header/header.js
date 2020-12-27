@@ -6,7 +6,7 @@ import { AuthContext } from '../../contexts/auth/auth';
 import { AiOutlineMenu } from 'react-icons/ai';
 
 const Header = ({ currentPathname }) => {
-    const { isAuthenticated, handleSignOut, userAccountName } = useContext(
+    const { isAuthenticated, handleSignOut, userAccountUrl } = useContext(
         AuthContext
     );
     const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +21,7 @@ const Header = ({ currentPathname }) => {
             <div className="container">
                 <div className="header__content">
                     <div>
-                        <span className="header__logo">Sked</span>
+                        <span className="header__logo">Sked App</span>
                     </div>
 
                     {isAuthenticated && (
@@ -31,7 +31,7 @@ const Header = ({ currentPathname }) => {
                         />
                     )}
 
-                    {!isAuthenticated && !['/signin', '/signin-customer', '/signup', '/recover-password'].includes(currentPathname) && (
+                    {!isAuthenticated && !['/signin', '/signin-customer', '/signup', '/recover-password', '/reset-password'].some((state) => currentPathname.includes(state)) && (
 						<Link to={`/signin`} className="header__action">Sou profissional</Link>
 					)}
 
@@ -59,11 +59,11 @@ const Header = ({ currentPathname }) => {
                         }`}
                     >
                         <ul className="header__list">
-                            {userAccountName && (
+                            {userAccountUrl && (
                                 <>
                                     <li>
                                         <Link
-                                            to={`/${userAccountName}`}
+                                            to={`/${userAccountUrl}`}
                                             onClick={() => setIsOpen(false)}
                                         >
                                             Inicio
@@ -93,10 +93,18 @@ const Header = ({ currentPathname }) => {
                                             Grade de horários
                                         </Link>
                                     </li>
+									<li>
+                                        <Link
+                                            to="/profile"
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            Perfil
+                                        </Link>
+                                    </li>
                                 </>
                             )}
 
-							{!userAccountName && (
+							{!userAccountUrl && (
                                 <>
                                     <li>
                                         <Link

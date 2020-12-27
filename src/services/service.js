@@ -12,7 +12,7 @@ const findAll = () => {
     return api.get('/services');
 };
 
-const findAllById = (params) => {
+const findAllByAccountId = (params) => {
     return api.get('/services/by-id', {
         params,
     });
@@ -27,5 +27,5 @@ export default {
 	update,
     remove,
     findAll,
-    findAllById,
+    findAllByAccountId,
 };

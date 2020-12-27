@@ -11,7 +11,7 @@ const updateStatus = ({ id, status }) => {
 };
 
 const updateStatusFromCostumer = ({ id, status }) => {
-    return api.put(`/customer-schedules/status/${id}`, {
+    return api.put(`/schedules/customer/status/${id}`, {
 		status
 	});
 };
@@ -23,7 +23,7 @@ const findAll = (params) => {
 };
 
 const findCustomerSchedules = (params) => {
-    return api.get('/customer-schedules', {
+    return api.get('/schedules/customer', {
 		params
 	});
 };

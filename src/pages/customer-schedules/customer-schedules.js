@@ -93,9 +93,9 @@ const Schedules = () => {
 						{schedules.map((schedule) => (
 							<div key={schedule.id} className="card">
 								<div className="card__header">
-									<Link to={`/${schedule.account.name}`}>
+									<Link to={`/${schedule.account.url}`}>
 										<h2 className="card__title">
-											{schedule.account.user.name}
+											{schedule.account.name}
 										</h2>
 										{status === 'SCHEDULED' && schedule.confirmed_at && <span className="card__subtitle color--secondary">Confirmado</span>}
 										{status === 'CANCELED' && <span className="card__subtitle color--danger">Cancelado</span>}
@@ -118,6 +118,10 @@ const Schedules = () => {
 									<strong>Valor: </strong>
 									<span className="color--success">R$ {schedule.price}</span>
 								</div>
+								<div className="m-t-10">
+									<strong>Profissional: </strong>
+									<span>{schedule.user.name}</span>
+								</div>
 
 								{status === 'SCHEDULED' && (
 									<div>
@@ -131,7 +135,7 @@ const Schedules = () => {
 											<button onClick={() => updateStatus(schedule.id, 'CANCELED')} className="button button--danger m-r-10">
 												Cancelar
 											</button>
-											<Link className="color--success m-l-5" to={`/${schedule.account.name}`}>
+											<Link className="color--success m-l-5" to={`/${schedule.account.url}`}>
 												<strong>Ver agenda</strong>
 											</Link>
 										</div>

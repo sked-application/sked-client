@@ -3,6 +3,7 @@ import MainSlotGrid from './main-components/main-slotgrid/main-slotgrid';
 import MainScheduleForm from './main-components/main-schedule-form/main-schedule-form';
 import MainDate from './main-components/main-date/main-date';
 import MainServices from './main-components/main-services/main-services';
+import MainUsers from './main-components/main-users/main-users';
 
 import { MainProvider, MainContext } from '../../contexts/main/main';
 import { Redirect } from 'react-router-dom';
@@ -39,8 +40,9 @@ const MainContexted = () => {
 						<div className="loading"></div>
 					) : (
 						<>
-							<MainServices />
 							<MainDate />
+							<MainUsers />
+							<MainServices />
 							<MainSlotGrid />
 							<MainScheduleForm />
 						</>

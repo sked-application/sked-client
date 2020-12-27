@@ -11,8 +11,8 @@ import { MainContext } from '../../../../contexts/main/main';
 import { AuthContext } from '../../../../contexts/auth/auth';
 
 const MainSlotGrid = () => {
-    const { scheduleSlot, accountId, service, resetMainDate, resetMainService } = useContext(MainContext);
-    const { isAuthenticated, handleSignIn, userAccountName, handleSignOut} = useContext(AuthContext);
+    const { scheduleSlot, accountId, service, user, resetMainDate, resetMainService } = useContext(MainContext);
+    const { isAuthenticated, handleSignIn, userAccountUrl, handleSignOut} = useContext(AuthContext);
     const [formType, setFormType] = useState();
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -53,6 +53,11 @@ const MainSlotGrid = () => {
             if (!service.id) {
                 alert('Escolha um serviço');
                 return;
+			}
+
+			if (!user.id) {
+                alert('Escolha um profissional');
+                return;
             }
 
             if (!date) {
@@ -66,7 +71,8 @@ const MainSlotGrid = () => {
                 end,
                 account_id: accountId,
                 service_id: service.id,
-            });
+                user_id: user.id,
+			});
 
             resetMainService();
             resetMainDate();
@@ -273,7 +279,7 @@ const MainSlotGrid = () => {
                 </div>
             )}
 
-            {isAuthenticated && !userAccountName && (
+            {isAuthenticated && !userAccountUrl && (
                 <div className="flexbox m-t-5">
                     <div className="flexbox__item">
                         <button
@@ -286,7 +292,7 @@ const MainSlotGrid = () => {
                 </div>
             )}
 
-            {isAuthenticated && userAccountName && (
+            {isAuthenticated && userAccountUrl && (
                 <div className="flexbox m-t-5">
                     <div className="flexbox__item">
                         <button

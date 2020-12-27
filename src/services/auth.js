@@ -7,25 +7,30 @@ const signIn = ({ email, password }) => {
     });
 };
 
-const signUp = ({ name, account, email, password, cpf_cnpj, telephone }) => {
+const signUp = ({ account, user }) => {
     return api.post('/sign/up', {
-        name,
         account,
-        email,
-		password,
-		cpf_cnpj,
-		telephone,
+        user,
     });
 };
 
-const recorverPassword = ({ email }) => {
+const recorverPassword = ({ email, is_customer }) => {
     return api.post('/sign/recover', {
-        email,
+		email,
+		is_customer,
+    });
+};
+
+const resetPassword = ({ password, token }) => {
+    return api.post('/sign/reset', {
+		password,
+		token,
     });
 };
 
 export default {
     signIn,
     signUp,
-    recorverPassword,
+	recorverPassword,
+	resetPassword,
 };

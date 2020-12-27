@@ -31,55 +31,7 @@ export const replaceSpecialCharacters = (string) => {
 export const phoneRegex = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})-?(\d{4}))$/;
 
 export const validateCpfCnpj = (val) => {
-    if (val.length === 11) {
-		const cpf = val.trim()
-			.replace(/\./g, '')
-			.replace('-', '')
-			.split('')
-			.map((i) => ~~i);
-
-        let v1 = 0;
-        let v2 = 0;
-        let aux = false;
-
-        for (let i = 1; cpf.length > i; i++) {
-            if (cpf[i - 1] !== cpf[i]) {
-                aux = true;
-            }
-        }
-
-        if (aux === false) {
-            return false;
-        }
-
-        for (let i = 0, p = 10; (cpf.length - 2) > i; i++, p--) {
-            v1 += cpf[i] * p;
-        }
-
-        v1 = ((v1 * 10) % 11);
-
-        if (v1 === 10) {
-            v1 = 0;
-        }
-
-        if (v1 !== cpf[9]) {
-            return false;
-        }
-
-        for (let i = 0, p = 11; (cpf.length - 1) > i; i++, p--) {
-            v2 += cpf[i] * p;
-        }
-
-        v2 = ((v2 * 10) % 11);
-
-        if (v2 === 10) {
-            v2 = 0;
-        }
-
-        if (v2 !== cpf[10]) {
-            return false;
-		}
-
+    if (validateCpf(val)) {
 		return true;
     } else if (val.length === 14) {
 		const cnpj = val.trim()
@@ -140,6 +92,62 @@ export const validateCpfCnpj = (val) => {
         }
 
         if (v2 !== cnpj[13]) {
+            return false;
+		}
+
+		return true;
+    } else {
+        return false;
+    }
+ };
+
+ export const validateCpf = (val) => {
+    if (val.length === 11) {
+		const cpf = val.trim()
+			.replace(/\./g, '')
+			.replace('-', '')
+			.split('')
+			.map((i) => ~~i);
+
+        let v1 = 0;
+        let v2 = 0;
+        let aux = false;
+
+        for (let i = 1; cpf.length > i; i++) {
+            if (cpf[i - 1] !== cpf[i]) {
+                aux = true;
+            }
+        }
+
+        if (aux === false) {
+            return false;
+        }
+
+        for (let i = 0, p = 10; (cpf.length - 2) > i; i++, p--) {
+            v1 += cpf[i] * p;
+        }
+
+        v1 = ((v1 * 10) % 11);
+
+        if (v1 === 10) {
+            v1 = 0;
+        }
+
+        if (v1 !== cpf[9]) {
+            return false;
+        }
+
+        for (let i = 0, p = 11; (cpf.length - 1) > i; i++, p--) {
+            v2 += cpf[i] * p;
+        }
+
+        v2 = ((v2 * 10) % 11);
+
+        if (v2 === 10) {
+            v2 = 0;
+        }
+
+        if (v2 !== cpf[10]) {
             return false;
 		}
 

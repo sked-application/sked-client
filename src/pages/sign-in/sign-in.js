@@ -9,7 +9,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { FormInputError } from '../../components/input-form-error/input-form-error';
 
 const SignIn = () => {
-    const { isAuthenticated, handleSignIn, userAccountName } = useContext(AuthContext);
+    const { isAuthenticated, handleSignIn, userAccountUrl } = useContext(AuthContext);
     const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 
@@ -38,7 +38,7 @@ const SignIn = () => {
 	};
 
     if (isAuthenticated) {
-        return <Redirect to={`/${userAccountName || 'customer-schedules'}`} />;
+        return <Redirect to={`/${userAccountUrl || 'customer-schedules'}`} />;
     }
 
     return (
@@ -57,31 +57,33 @@ const SignIn = () => {
 			</div>
             <form onSubmit={handleSubmit(signInForm)} className="m-t-30 m-b-15">
 				{error && <div className="text--center m-b-15">{error}</div>}
-				<div className="m-b-15">
-					<input
-						name="email"
-						type="email"
-						ref={register}
-						placeholder="Email"
-						disabled={isLoading}
-						className="input"
-					/>
-					<FormInputError
-						error={errors.email && errors.email.message}
-					/>
-				</div>
-				<div className="m-b-20">
-					<input
-						name="password"
-						type="password"
-						ref={register}
-						placeholder="Password"
-						disabled={isLoading}
-						className="input"
-					/>
-					<FormInputError
-						error={errors.password && errors.password.message}
-					/>
+				<div className="box m-b-20">
+					<div className="m-b-15">
+						<input
+							name="email"
+							type="email"
+							ref={register}
+							placeholder="Email"
+							disabled={isLoading}
+							className="input"
+						/>
+						<FormInputError
+							error={errors.email && errors.email.message}
+						/>
+					</div>
+					<div>
+						<input
+							name="password"
+							type="password"
+							ref={register}
+							placeholder="Password"
+							disabled={isLoading}
+							className="input"
+						/>
+						<FormInputError
+							error={errors.password && errors.password.message}
+						/>
+					</div>
 				</div>
 				<div className="m-b-20">
 					<Link to="/recover-password" className="color--white">

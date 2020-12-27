@@ -16,6 +16,7 @@ export const MainProvider = ({ children }) => {
     const [isMainRequestPeding, setIsMainRequestPeding] = useState(true);
     const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
     const [service, setService] = useState({});
+    const [user, setUser] = useState({});
 
     const resetMainDate = () => {
         setStartDate(moment().format('YYYY-MM-DD'));
@@ -42,7 +43,7 @@ export const MainProvider = ({ children }) => {
 
             if (unmounted) return;
 
-            setAccountUserName(data.account.user.name);
+            setAccountUserName(data.account.name);
             setAccountId(data.account.id);
             setIsMainRequestPeding(false);
         })();
@@ -59,10 +60,12 @@ export const MainProvider = ({ children }) => {
                 accountExists,
                 isMainRequestPeding,
                 service,
+                user,
                 accountUserName,
                 setStartDate,
                 setScheduleSlot,
                 setService,
+                setUser,
                 resetMainDate,
                 resetMainService,
             }}

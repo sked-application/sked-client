@@ -10,16 +10,15 @@ export const AuthProvider = ({ children }) => {
     const history = useHistory();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isAuthLoading, setIsAuthLoading] = useState(true);
-    const [userAccountName, setUserAccountName] = useState();
+    const [userAccountUrl, setUserAccountUrl] = useState();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        const accountName = localStorage.getItem('userAccountName');
 
         if (token) {
             api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
             setIsAuthenticated(true);
-            setUserAccountName(JSON.parse(accountName));
+            setUserAccountUrl(JSON.parse(localStorage.getItem('userAccountUrl')));
         }
 
         setIsAuthLoading(false);
@@ -30,10 +29,10 @@ export const AuthProvider = ({ children }) => {
         api.defaults.headers.Authorization = `Bearer ${token}`;
 
         if (account) {
-            setUserAccountName(account.name);
+            setUserAccountUrl(account.url);
             localStorage.setItem(
-                'userAccountName',
-                JSON.stringify(account.name)
+                'userAccountUrl',
+                JSON.stringify(account.url)
             );
         }
 
@@ -43,9 +42,9 @@ export const AuthProvider = ({ children }) => {
     const handleSignOut = (withoutRedirect) => {
         api.defaults.headers.Authorization = undefined;
         localStorage.removeItem('token');
-        localStorage.removeItem('userAccountName');
+        localStorage.removeItem('userAccountUrl');
         setIsAuthenticated(false);
-        setUserAccountName();
+        setUserAccountUrl();
 
         if (!withoutRedirect) {
             history.push('/signin');
@@ -57,7 +56,7 @@ export const AuthProvider = ({ children }) => {
             value={{
                 isAuthenticated,
                 isAuthLoading,
-                userAccountName,
+                userAccountUrl,
                 handleSignIn,
                 handleSignOut,
             }}

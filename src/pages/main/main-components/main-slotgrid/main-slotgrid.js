@@ -5,7 +5,7 @@ import { MainContext } from '../../../../contexts/main/main';
 import { getDayLabelByDate } from '../../../../utils/utils';
 
 const MainSlotGrid = () => {
-    const { startDate, accountId, service, setScheduleSlot } = useContext(
+    const { startDate, accountId, service, user, setScheduleSlot } = useContext(
         MainContext
     );
     const [isLoading, setIsLoading] = useState();
@@ -23,7 +23,7 @@ const MainSlotGrid = () => {
         setIsLoading(true);
 
         (async () => {
-            if (!service.id) {
+            if (!service.id || !user.id) {
                 if (unmounted) return;
 
                 setTimegrid([]);
@@ -35,6 +35,7 @@ const MainSlotGrid = () => {
                 account_id: accountId,
                 date: startDate,
                 service_id: service.id,
+                user_id: user.id,
                 service_duration: service.duration,
             });
 
@@ -49,7 +50,7 @@ const MainSlotGrid = () => {
         })();
 
         return () => (unmounted = true);
-    }, [accountId, startDate, service]);
+    }, [accountId, startDate, service, user]);
 
     return (
         <div className="card">
@@ -89,17 +90,21 @@ const MainSlotGrid = () => {
                         ))}
                     </div>
 
-                    {service.id && !timegrid.length && (
+                    {service.id && user.id && !timegrid.length && (
 						<div className="text--center">
 							<span>Nenhum horário disponível</span>
 						</div>
                     )}
 
-                    {!service.id && (
+                    {!service.id ? (
 						<div className="text--center">
-							<span>Selecione um serviço acima.</span>
+							<span>Selecione um serviço.</span>
 						</div>
-					)}
+					) : !user.id ? (
+						<div className="text--center">
+							<span>Selecione um profissional.</span>
+						</div>
+					) : ''}
                 </>
             )}
         </div>
