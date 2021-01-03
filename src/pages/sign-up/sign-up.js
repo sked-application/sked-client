@@ -18,7 +18,7 @@ const SignUp = () => {
 	const { register, handleSubmit, formState, errors, setValue } = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
-		mode: 'onChange',
+		mode: 'onTouched',
 	});
 
     const signUpForm = async (values) => {

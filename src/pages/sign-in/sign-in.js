@@ -16,7 +16,7 @@ const SignIn = () => {
 	const { register, handleSubmit, formState, errors } = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
-		mode: 'onChange',
+		mode: 'onTouched',
 	});
 
     const signInForm = async (values) => {

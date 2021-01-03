@@ -15,7 +15,7 @@ const Profile = () => {
 	const { register, handleSubmit, reset, formState, errors, setValue } = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
-		mode: 'onChange',
+		mode: 'onTouched',
 	});
 
 	const getProfile = async () => {

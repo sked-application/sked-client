@@ -19,7 +19,7 @@ const RecoverPassword = () => {
 	const { register, handleSubmit, reset, formState, errors } = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
-		mode: 'onChange',
+		mode: 'onTouched',
 	});
 
     const recoverPasswordForm = async (values) => {

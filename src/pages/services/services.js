@@ -16,7 +16,7 @@ const Services = () => {
 	const { register, handleSubmit, reset, formState, errors, setValue } = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
-		mode: 'onChange',
+		mode: 'onTouched',
 	});
 
     const serviceForm = async (values) => {
