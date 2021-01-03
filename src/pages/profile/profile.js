@@ -15,17 +15,13 @@ const Profile = () => {
 	const { register, handleSubmit, reset, formState, errors, setValue } = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
-		mode: 'onBlur'
+		mode: 'onChange',
 	});
 
 	const getProfile = async () => {
 		setIsLoading(true);
 
 		const { data } = await UserService.profile();
-
-		// attributes: ['name', 'url', 'cpf_cnpj', 'telephone'],
-		// }],
-		// attributes: ['id', 'name', 'email', 'account_id', 'is_root'],
 
 		setProfile(data.user);
 		setIsLoading(false);

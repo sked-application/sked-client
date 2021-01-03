@@ -10,7 +10,9 @@ export default {
             email: Yup.string()
                 .required('Por favor, digite seu email.')
                 .email('Por favor, digite um email válido.'),
-            password: Yup.string().required('Este campo é obrigatório'),
+			password: Yup.string()
+				.required('Este campo é obrigatório')
+				.min(4, 'Este campo deve conter ao menos 4 caracteres'),
         }),
     },
 };

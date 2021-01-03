@@ -6,7 +6,9 @@ export default {
             email: '',
         },
         validator: Yup.object({
-            email: Yup.string().email().required().label('Email'),
+			email: Yup.string()
+				.email('Insira um e-mail válido')
+				.required('Este campo é obrigatório'),
         }),
     },
 };

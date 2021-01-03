@@ -29,7 +29,7 @@ const TimegridForm = () => {
 	const { register, handleSubmit, reset, formState } = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
-		mode: 'onBlur'
+		mode: 'onChange',
 	});
 
     const timegridForm = (values) => {

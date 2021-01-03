@@ -16,7 +16,7 @@ const Services = () => {
 	const { register, handleSubmit, reset, formState, errors, setValue } = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
-		mode: 'onBlur'
+		mode: 'onChange',
 	});
 
     const serviceForm = async (values) => {

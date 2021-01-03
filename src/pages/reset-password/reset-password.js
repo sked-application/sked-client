@@ -18,7 +18,7 @@ const ResetPassword = () => {
 	const { register, handleSubmit, reset, formState, errors } = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
-		mode: 'onBlur'
+		mode: 'onChange',
 	});
 
     const resetPasswordForm = async (values) => {
