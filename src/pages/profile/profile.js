@@ -127,7 +127,7 @@ const Profile = () => {
 									</div>
 									<div className="m-t-10">
 										<strong>Url: </strong>
-										<span>www.skedapp.com/{profile.account.url}</span>
+										<span>skedapp.com.br/{profile.account.url}</span>
 									</div>
 									<div className="m-t-10">
 										<strong>Cpf/Cnpj: </strong>
