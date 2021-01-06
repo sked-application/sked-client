@@ -78,7 +78,7 @@ const Profile = () => {
     }, []);
 
     return (
-        <div className="p-b-80">
+        <div className="p-b-20">
 			<div className="page__header">
 				<div className="container">
 					<h1 className="page__title">Perfil</h1>

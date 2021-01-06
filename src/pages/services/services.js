@@ -96,7 +96,7 @@ const Services = () => {
     }, []);
 
     return (
-        <div className="p-b-80">
+        <div className="p-b-20">
 			<div className="page__header p-b-30">
 				<div className="container">
 					<h1 className="page__title">Serviços</h1>

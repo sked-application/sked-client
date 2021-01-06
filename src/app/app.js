@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AppRoutes from '../routes/routes';
 import AppHeader from '../components/header/header';
+import Copyright from '../components/copyright/copyright';
 
 import { AuthProvider, AuthContext } from '../contexts/auth/auth';
 import { useLocation } from 'react-router-dom';
@@ -24,6 +25,7 @@ const AppContexted = () => {
                 <>
                     <AppHeader currentPathname={currentPathname} />
                     <AppRoutes />
+					<Copyright />
                 </>
             )}
         </>

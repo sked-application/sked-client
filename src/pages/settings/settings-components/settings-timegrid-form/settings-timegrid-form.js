@@ -99,7 +99,7 @@ const TimegridForm = () => {
     }, []);
 
     return (
-        <div className="p-b-80">
+        <div className="p-b-20">
             {error && (
                 <div className="m-t-15 m-b-15">
                     <span>{error.message}</span>

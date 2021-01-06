@@ -52,7 +52,7 @@ const Schedules = () => {
 	}, [startDate, status, listSchedules]);
 
     return (
-		<div className="p-b-80">
+		<div className="p-b-20">
 			<div className="page__header p-b-30">
 				<div className="container">
 					<h1 className="page__title">Agendamentos</h1>

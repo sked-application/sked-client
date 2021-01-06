@@ -22,7 +22,7 @@ const MainContexted = () => {
     }
 
     return (
-		<div className="p-b-80">
+		<div className="p-b-20">
 			<div className="page__header">
 				<div className="container">
 					{/* <div className="flexbox flexbox__justify--center m-b-15">
@@ -47,6 +47,19 @@ const MainContexted = () => {
 							<MainServices />
 							<MainSlotGrid />
 							<MainScheduleForm />
+							<div className="box m-t-20 m-b-10 flexbox flexbox--column flexbox--center">
+								{accountInfo.telephone && (
+									<p className="color--white m-b-10">Contato: <a href={`tel:+55${accountInfo.telephone}`} className="color--white">{accountInfo.telephone}</a></p>
+								)}
+
+								{accountInfo.address && (
+									<p className="color--white m-b-10">Endereço: {accountInfo.address}</p>
+								)}
+
+								{accountInfo.name && (
+									<p className="color--white">{accountInfo.name}</p>
+								)}
+							</div>
 						</>
 					)}
 				</>
