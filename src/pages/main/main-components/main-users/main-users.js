@@ -4,7 +4,12 @@ import UserService from '../../../../services/user';
 import { MainContext } from '../../../../contexts/main/main';
 
 const MainUsers = () => {
-    const { setUser, user, accountId, setService } = useContext(MainContext);
+	const {
+		setUser,
+		user,
+		accountInfo,
+		setService
+	} = useContext(MainContext);
     const [users, setUsers] = useState({});
 
     const handleChangeUser = (userId) => {
@@ -14,12 +19,12 @@ const MainUsers = () => {
 
     useEffect(() => {
         (async () => {
-			if (!accountId) {
+			if (!accountInfo.id) {
 				return;
 			}
 
             const { data } = await UserService.findAllByAccountId({
-                account_id: accountId,
+                account_id: accountInfo.id,
 			});
 
 			const userValues = Object.values(data.users);
@@ -30,7 +35,7 @@ const MainUsers = () => {
 
             setUsers(data.users);
         })();
-    }, [accountId, setUser]);
+    }, [accountInfo, setUser]);
 
     return (
         <div className="card">

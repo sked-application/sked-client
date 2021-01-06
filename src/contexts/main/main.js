@@ -10,8 +10,7 @@ export const MainContext = createContext();
 export const MainProvider = ({ children }) => {
     const { account } = useParams();
     const [scheduleSlot, setScheduleSlot] = useState('');
-    const [accountId, setAccountId] = useState();
-    const [accountUserName, setAccountUserName] = useState('');
+    const [accountInfo, setAccountInfo] = useState({});
     const [accountExists, setAccountExists] = useState(true);
     const [isMainRequestPeding, setIsMainRequestPeding] = useState(true);
     const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
@@ -43,8 +42,7 @@ export const MainProvider = ({ children }) => {
 
             if (unmounted) return;
 
-            setAccountUserName(data.account.name);
-            setAccountId(data.account.id);
+            setAccountInfo(data.account);
             setIsMainRequestPeding(false);
         })();
 
@@ -56,12 +54,11 @@ export const MainProvider = ({ children }) => {
             value={{
                 startDate,
                 scheduleSlot,
-                accountId,
+                accountInfo,
                 accountExists,
                 isMainRequestPeding,
                 service,
                 user,
-                accountUserName,
                 setStartDate,
                 setScheduleSlot,
                 setService,

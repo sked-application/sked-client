@@ -1,0 +1,21 @@
+.grouped-button {
+	display: flex;
+
+	&__label {
+		@extend .button;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+		pointer-events: none;
+		display: flex;
+		align-items: center;
+		padding-right: 0;
+		font-weight: 400;
+	}
+
+	&__input {
+		@extend .input;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		padding-left: 0;
+	}
+}

@@ -75,21 +75,25 @@ const SignUp = () => {
 				</div>
 			</div>
             <form onSubmit={handleSubmit(signUpForm)} className="m-t-30 m-b-15">
-				{error && <div className="text--center m-b-15">{error}</div>}
+				{error && <div className="text--center color--white m-b-15">{error}</div>}
 				<div className="box">
 					<div className="m-b-15">
 						<strong className="color--white">Informações da conta</strong>
 					</div>
 					<div className="m-b-15">
-						<input
-							name="accountUrl"
-							type="text"
-							ref={register}
-							placeholder="Url da conta"
-							disabled={isLoading}
-							className="input"
-							onBlur={(event) => setValue('accountUrl', replaceSpecialCharacters(event.target.value))}
-						/>
+						<div className="grouped-button">
+							<label htmlFor="account-url" className="grouped-button__label">skedapp.com.br/</label>
+							<input
+								name="accountUrl"
+								type="text"
+								ref={register}
+								placeholder="conta"
+								disabled={isLoading}
+								id="account-url"
+								className="grouped-button__input"
+								onBlur={(event) => setValue('accountUrl', replaceSpecialCharacters(event.target.value))}
+							/>
+						</div>
 						<FormInputError
 							error={errors.accountUrl && errors.accountUrl.message}
 						/>
@@ -99,7 +103,7 @@ const SignUp = () => {
 							name="accountName"
 							type="text"
 							ref={register}
-							placeholder="Nome da conta"
+							placeholder="Nome de seu estabelecimento"
 							disabled={isLoading}
 							className="input"
 						/>

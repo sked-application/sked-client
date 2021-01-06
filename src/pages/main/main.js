@@ -11,9 +11,11 @@ import { Redirect } from 'react-router-dom';
 import './main.scss';
 
 const MainContexted = () => {
-    const { accountExists, isMainRequestPeding, accountUserName } = useContext(
-        MainContext
-    );
+    const {
+		accountExists,
+		isMainRequestPeding,
+		accountInfo
+	} = useContext(MainContext);
 
     if (!accountExists) {
         return <Redirect to="/not-found" />;
@@ -25,10 +27,10 @@ const MainContexted = () => {
 				<div className="container">
 					{/* <div className="flexbox flexbox__justify--center m-b-15">
 						<figure className="page__thumb">
-							<img src="https://i.pinimg.com/originals/a4/58/91/a45891b8705f918291eaf248d40edabd.jpg" alt={accountUserName}/>
+							<img src="https://i.pinimg.com/originals/a4/58/91/a45891b8705f918291eaf248d40edabd.jpg" alt={accountInfo.name}/>
 						</figure>
 					</div> */}
-					<h1 className="page__title">{accountUserName}</h1>
+					<h1 className="page__title">{accountInfo.name}</h1>
 					<div className="m-t-5">
 						<span className="page__description">Realize seu agendamento abaixo.</span>
 					</div>

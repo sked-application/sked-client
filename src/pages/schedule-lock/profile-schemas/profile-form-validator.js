@@ -16,13 +16,7 @@ export default {
 			userName: Yup.string()
 				.required('Este campo é obrigatório'),
 			userCpf: Yup.string()
-				.test('cpf-test', 'Por favor, verifique seu cpf.', (value) => {
-					if (value) {
-						return validateCpf(value)
-					}
-
-					return true;
-				}),
+				.test('cpf-test', 'Por favor, verifique seu cpf.', (value) => validateCpf(value)),
 			accountName: Yup.string()
 				.required('Este campo é obrigatório'),
 			accountCpfCnpj: Yup.string()
@@ -30,7 +24,8 @@ export default {
 				.test('cpf-cnpj-test', 'Por favor, verifique o cpf/cnpj.', (value) => validateCpfCnpj(value)),
 			accountTelephone: Yup.string()
 				.matches(phoneRegex, 'Por favor, verifique o número de telefone.'),
-			accountAddress: Yup.string(),
+			accountAddress: Yup.string()
+				.required('Este campo é obrigatório'),
         }),
     },
 };

@@ -11,8 +11,20 @@ import { MainContext } from '../../../../contexts/main/main';
 import { AuthContext } from '../../../../contexts/auth/auth';
 
 const MainSlotGrid = () => {
-    const { scheduleSlot, accountId, service, user, resetMainDate, resetMainService } = useContext(MainContext);
-    const { isAuthenticated, handleSignIn, userAccountUrl, handleSignOut} = useContext(AuthContext);
+	const {
+		scheduleSlot,
+		accountInfo,
+		service,
+		user,
+		resetMainDate,
+		resetMainService
+	} = useContext(MainContext);
+	const {
+		isAuthenticated,
+		handleSignIn,
+		userAccountUrl,
+		handleSignOut
+	} = useContext(AuthContext);
     const [formType, setFormType] = useState();
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -69,7 +81,7 @@ const MainSlotGrid = () => {
                 date,
                 start,
                 end,
-                account_id: accountId,
+                account_id: accountInfo.id,
                 service_id: service.id,
                 user_id: user.id,
 			});

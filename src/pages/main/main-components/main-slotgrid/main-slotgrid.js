@@ -5,9 +5,13 @@ import { MainContext } from '../../../../contexts/main/main';
 import { getDayLabelByDate } from '../../../../utils/utils';
 
 const MainSlotGrid = () => {
-    const { startDate, accountId, service, user, setScheduleSlot } = useContext(
-        MainContext
-    );
+	const {
+		startDate,
+		accountInfo,
+		service,
+		user,
+		setScheduleSlot
+	} = useContext(MainContext);
     const [isLoading, setIsLoading] = useState();
     const [timegrid, setTimegrid] = useState([]);
     const [activedSlot, setActivedSlot] = useState();
@@ -32,7 +36,7 @@ const MainSlotGrid = () => {
             }
 
             const { data } = await TimegridService.findByDay({
-                account_id: accountId,
+                account_id: accountInfo.id,
                 date: startDate,
                 service_id: service.id,
                 user_id: user.id,
@@ -50,7 +54,7 @@ const MainSlotGrid = () => {
         })();
 
         return () => (unmounted = true);
-    }, [accountId, startDate, service, user]);
+    }, [accountInfo, startDate, service, user]);
 
     return (
         <div className="card">

@@ -58,7 +58,7 @@ const ResetPassword = () => {
 				</div>
 			</div>
             <form onSubmit={handleSubmit(resetPasswordForm)} className="m-t-30 m-b-15">
-				{error && <div className="text--center m-b-15">{error}</div>}
+				{error && <div className="text--center color--white m-b-15">{error}</div>}
 				<div className="box m-b-15">
 					<div className="m-b-15">
 						<input

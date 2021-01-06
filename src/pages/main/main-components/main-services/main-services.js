@@ -4,7 +4,12 @@ import ServiveService from '../../../../services/service';
 import { MainContext } from '../../../../contexts/main/main';
 
 const MainService = () => {
-    const { setService, service, user, accountId } = useContext(MainContext);
+	const {
+		setService,
+		service,
+		user,
+		accountInfo
+	} = useContext(MainContext);
     const [services, setServices] = useState({});
 
     const handleChangeService = (value) => {
@@ -13,18 +18,18 @@ const MainService = () => {
 
     useEffect(() => {
         (async () => {
-			if (!accountId || !user.id) {
+			if (!accountInfo.id || !user.id) {
 				return;
 			}
 
             const { data } = await ServiveService.findAllByAccountId({
-				account_id: accountId,
+				account_id: accountInfo.id,
 				user_id: user.id
             });
 
             setServices(data.services);
         })();
-    }, [accountId, user]);
+    }, [accountInfo, user]);
 
     return (
         <div className="card">

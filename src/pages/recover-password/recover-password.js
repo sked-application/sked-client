@@ -61,8 +61,8 @@ const RecoverPassword = () => {
 				</div>
 			</div>
             <form onSubmit={handleSubmit(recoverPasswordForm)} className="m-t-30 m-b-15">
-				{error && <div className="text--center m-b-15">{error}</div>}
-				{success && <div className="text--center m-b-15">{success}</div>}
+				{error && <div className="text--center color--white m-b-15">{error}</div>}
+				{success && <div className="text--center color--white m-b-15">{success}</div>}
 				<div className="box m-b-15">
 					<div>
 						<input
