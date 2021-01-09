@@ -71,6 +71,12 @@ const MainSlotGrid = () => {
 				</div>
             </div>
 
+			{service && service.name && (
+				<div>
+					<span className="card__subtitle color--primary">{service.name}</span>
+				</div>
+			)}
+
             {isLoading ? (
                 <div className="loading m-b-15"></div>
             ) : (

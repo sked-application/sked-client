@@ -30,10 +30,7 @@ export const AuthProvider = ({ children }) => {
 
         if (account) {
             setUserAccountUrl(account.url);
-            localStorage.setItem(
-                'userAccountUrl',
-                JSON.stringify(account.url)
-            );
+            localStorage.setItem('userAccountUrl', JSON.stringify(account.url));
         }
 
         setIsAuthenticated(true);
