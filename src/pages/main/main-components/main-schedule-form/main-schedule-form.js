@@ -147,7 +147,7 @@ const MainSlotGrid = () => {
                 </span>
             </div>
 
-            {isLoading && <span className="loading m-b-20"></span>}
+            {isLoading && <span className="loading loading--primary m-b-20"></span>}
 
             {!isAuthenticated && !isLoading && formType === 'SIGN_UP' && (
                 <form onSubmit={signUpHandleSubmit(signUpForm)}>

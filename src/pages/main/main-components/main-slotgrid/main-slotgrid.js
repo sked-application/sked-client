@@ -78,7 +78,7 @@ const MainSlotGrid = () => {
 			)}
 
             {isLoading ? (
-                <div className="loading m-b-15"></div>
+                <div className="loading loading--primary m-b-15"></div>
             ) : (
                 <>
                     <div className="slot__box p-t-10">
