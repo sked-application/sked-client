@@ -3,9 +3,10 @@ import ScheduleService from '../../../../services/schedule';
 import CustomerService from '../../../../services/customer';
 import schemaSignUp from './main-schedule-form-schemas/customer-signup-validator';
 import schemaSignIn from './main-schedule-form-schemas/customer-signin-validator';
+import NumberFormat from 'react-number-format';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { FormInputError } from '../../../../components/input-form-error/input-form-error';
 import { MainContext } from '../../../../contexts/main/main';
 import { AuthContext } from '../../../../contexts/auth/auth';
@@ -34,6 +35,7 @@ const MainSlotGrid = () => {
 		formState: signUpFormState,
 		errors: signUpErros,
 		reset: signUpReset,
+		control: signUpControl
 	} = useForm({
 		resolver: yupResolver(schemaSignUp.form.validator),
 		defaultValues: schemaSignUp.form.initialValues,
@@ -177,13 +179,17 @@ const MainSlotGrid = () => {
                         />
                     </div>
                     <div className="m-t-15">
-                        <input
-                            name="telephone"
-                            type="tel"
-                            ref={signUpRegister}
-							placeholder="Telefone"
-							className="input input--dark"
-                        />
+						<Controller
+							name="telephone"
+							control={signUpControl}
+							as={<NumberFormat
+								format="(##) #####-####"
+								mask="_"
+								type="tel"
+								className="input input--dark"
+								placeholder="Telefone"
+							/>}
+						/>
                         <FormInputError
                             error={signUpErros.telephone && signUpErros.telephone.message}
                         />

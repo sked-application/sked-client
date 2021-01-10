@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import AuthService from '../../services/auth';
 import schema from './sign-up-schema-validator';
+import NumberFormat from 'react-number-format';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Redirect, Link, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../contexts/auth/auth';
 import { FormInputError } from '../../components/input-form-error/input-form-error'
@@ -15,7 +16,7 @@ const SignUp = () => {
     const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 
-	const { register, handleSubmit, formState, errors, setValue } = useForm({
+	const { register, handleSubmit, formState, errors, setValue, control } = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
 		mode: 'onTouched',
@@ -124,12 +125,17 @@ const SignUp = () => {
 						/>
 					</div>
 					<div>
-						<input
+						<Controller
+							id="accountTelephone"
 							name="accountTelephone"
-							type="tel"
-							ref={register}
-							placeholder="Telefone"
-							className="input input--dark"
+							control={control}
+							as={<NumberFormat
+								format="(##) #####-####"
+								mask="_"
+								type="tel"
+								className="input input--dark"
+								placeholder="Telefone"
+							/>}
 						/>
 						<FormInputError
 							error={errors.accountTelephone && errors.accountTelephone.message}

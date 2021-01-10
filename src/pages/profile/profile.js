@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import schema from './profile-schemas/profile-form-validator';
 import UserService from '../../services/user';
+import NumberFormat from 'react-number-format';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { FormInputError } from '../../components/input-form-error/input-form-error';
 import { ShowUp } from '../../components/show-up/show-up';
 
@@ -12,7 +13,7 @@ const Profile = () => {
 	const [profile, setProfile] = useState();
 	const [toggleShow, setToggleShow] = useState(false);
 
-	const { register, handleSubmit, reset, formState, errors, setValue } = useForm({
+	const { register, handleSubmit, reset, formState, errors, setValue, control } = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
 		mode: 'onTouched',
@@ -234,12 +235,17 @@ const Profile = () => {
 											Telefone
 										</label>
 									</div>
-									<input
+									<Controller
 										id="accountTelephone"
 										name="accountTelephone"
-										type="text"
-										ref={register}
-										className="input input--dark"
+										control={control}
+										as={<NumberFormat
+											format="(##) #####-####"
+											mask="_"
+											type="tel"
+											className="input input--dark"
+											placeholder="Telefone"
+										/>}
 									/>
 									<FormInputError
 										error={errors.accountTelephone && errors.accountTelephone.message}
