@@ -8,7 +8,7 @@ export default {
             id: '',
             name: '',
             duration: null,
-			price: 0,
+			price: null,
 			showPrice: true,
         },
         validator: Yup.object({

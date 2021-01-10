@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import schema from './services-schemas/service-form-validator';
 import ServiceService from '../../services/service';
+import NumberFormat from 'react-number-format';
 
 import { ShowUp, ShowUpButton } from '../../components/show-up/show-up';
 import { BsPlus } from 'react-icons/bs';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { FormInputError } from '../../components/input-form-error/input-form-error';
 
 const Services = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
     const [services, setServices] = useState([]);
 	const [toggleShow, setToggleShow] = useState(false);
 
-	const { register, handleSubmit, reset, formState, errors, setValue } = useForm({
+	const { register, handleSubmit, reset, formState, errors, setValue, control } = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
 		mode: 'onTouched',
@@ -68,6 +70,8 @@ const Services = () => {
 	const handleCloseShowUp = () => {
 		reset();
 		setToggleShow(false);
+
+		if (isEdit) setIsEdit(false);
 	};
 
 	const handleOpenShowUp = (data) => {
@@ -77,6 +81,7 @@ const Services = () => {
 			setValue("duration", data.duration);
 			setValue("price", data.price);
 			setValue("showPrice", data.show_price);
+			setIsEdit(true);
 		}
 
 		setToggleShow(true);
@@ -156,7 +161,7 @@ const Services = () => {
                     )}
 
 					<ShowUp
-						title="Adicione um serviço"
+						title={`${isEdit ? 'Atualizar serviço' : 'Adicione um serviço'}`}
 						isOpen={toggleShow}
 						handleClose={handleCloseShowUp}
 					>
@@ -204,13 +209,16 @@ const Services = () => {
 										Valor
 									</label>
 								</div>
-								<input
+								<Controller
 									id="price"
 									name="price"
-									type="number"
-									step="0.01"
-									ref={register}
-									className="input input--dark"
+									control={control}
+									as={<NumberFormat
+										decimalSeparator={'.'}
+										decimalScale={2}
+										allowNegative={false}
+										className="input input--dark"
+									/>}
 								/>
 								<FormInputError
 									error={errors.price && errors.price.message}
