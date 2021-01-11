@@ -22,6 +22,10 @@
         align-items: flex-end;
     }
 
+	&--start {
+        align-items: flex-start;
+    }
+
 	&--center {
         align-items: center;
     }
@@ -32,6 +36,10 @@
 
 	&__justify--end {
         justify-content: flex-end;
+	}
+
+	&__justify--between {
+        justify-content: space-between;
     }
 
     &--wrap {

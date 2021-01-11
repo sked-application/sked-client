@@ -12,7 +12,9 @@ export default {
 			showPrice: true,
         },
         validator: Yup.object({
-            name: Yup.string().required('Este campo é obrigatório'),
+			name: Yup.string().required('Este campo é obrigatório'),
+			price: Yup.string(),
+			showPrice: Yup.boolean(),
 			duration: Yup.number()
 				.typeError('Digite uma duração válida')
 				.test('duration-test', 'A duração não pode exceder 24 horas.', (value) => value <= durationLimit)

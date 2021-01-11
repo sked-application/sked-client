@@ -93,6 +93,14 @@ const Header = ({ currentPathname }) => {
                                             Grade de horários
                                         </Link>
                                     </li>
+                                    <li>
+                                        <Link
+                                            to="/schedule-lock"
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            Bloqueio de agenda
+                                        </Link>
+                                    </li>
 									<li>
                                         <Link
                                             to="/profile"

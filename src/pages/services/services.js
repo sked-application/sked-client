@@ -134,27 +134,31 @@ const Services = () => {
 											Editar
 										</strong>
 									</div>
-									<div className="m-t-10">
-										<strong>Duração: </strong>
-										<span>{item.duration} minutos</span>
-									</div>
-									<div className="m-t-10">
-										<strong>Preço: </strong>
-										<span>R$: {item.price}</span>
-									</div>
-									<div className="m-t-10 flexbox">
-										<button
-											onClick={() => removeService(item.id)}
-											className="button button--danger">
-											Remover
-										</button>
+									<div className="flexbox flexbox--end flexbox__justify--between">
+										<div>
+											<div className="m-t-10">
+												<strong>Duração: </strong>
+												<span>{item.duration} minutos</span>
+											</div>
+											<div className="m-t-10">
+												<strong>Preço: </strong>
+												<span>R$: {item.price}</span>
+											</div>
+										</div>
+										<div className="m-t-10 flexbox">
+											<button
+												onClick={() => removeService(item.id)}
+												className="button button--danger button--small">
+												Remover
+											</button>
+										</div>
 									</div>
 								</div>
                             ))}
 
 							{!services.length && (
 								<div className="text--center">
-									<span className="color--white">Clique no botão abaixo e adicione seus serviços.</span>
+									<span className="color--white">Clique no botão acima e adicione seus serviços.</span>
 								</div>
 							)}
                         </>
@@ -237,11 +241,13 @@ const Services = () => {
 									</label>
 								</div>
 							</div>
-							<input
-								name="id"
-								type="hidden"
-								ref={register}
-							/>
+							<div>
+								<input
+									name="id"
+									type="hidden"
+									ref={register}
+								/>
+							</div>
 							<div className="flexbox__item m-t-15">
 								<button
 									type="submit"

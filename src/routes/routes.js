@@ -10,6 +10,7 @@ import CustomerSchedules from '../pages/customer-schedules/customer-schedules';
 import Services from '../pages/services/services';
 import Settings from '../pages/settings/settings';
 import Profile from '../pages/profile/profile';
+import ScheduleLock from '../pages/schedule-lock/schedule-lock';
 import NotFound from '../pages/not-found/not-found';
 import UserPrivateRoute from './private/user-route';
 import CustomerPrivateRoute from './private/customer-route';
@@ -23,6 +24,7 @@ const AppRoutes = () => {
             <UserPrivateRoute exat path="/services" component={Services} />
             <UserPrivateRoute exat path="/settings" component={Settings} />
             <UserPrivateRoute exat path="/profile" component={Profile} />
+            <UserPrivateRoute exat path="/schedule-lock" component={ScheduleLock} />
             <CustomerPrivateRoute exat path="/customer-schedules" component={CustomerSchedules} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/signin" component={SignIn} />

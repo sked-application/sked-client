@@ -127,12 +127,12 @@ const Schedules = () => {
 									<div>
 										<div className="m-t-10 flexbox flexbox--center">
 											{!schedule.confirmed_at && (
-												<button onClick={() => updateStatus(schedule.id, 'CONFIRMED')} className="button button--secondary m-r-10">
+												<button onClick={() => updateStatus(schedule.id, 'CONFIRMED')} className="button button--small button--secondary m-r-10">
 													Confirmar
 												</button>
 											)}
 
-											<button onClick={() => updateStatus(schedule.id, 'CANCELED')} className="button button--danger m-r-10">
+											<button onClick={() => updateStatus(schedule.id, 'CANCELED')} className="button button--small button--danger m-r-10">
 												Cancelar
 											</button>
 											<Link className="color--success m-l-5" to={`/${schedule.account.url}`}>

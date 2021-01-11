@@ -125,17 +125,17 @@ const Schedules = () => {
 								{status === 'SCHEDULED' && (
 									<div className="m-t-10 flexbox">
 										{!schedule.confirmed_at && (
-											<button onClick={() => updateStatus(schedule.id, 'CONFIRMED')} className="button button--secondary m-r-10">
+											<button onClick={() => updateStatus(schedule.id, 'CONFIRMED')} className="button button--small button--secondary m-r-10">
 												Confirmar
 											</button>
 										)}
 
-										<button onClick={() => updateStatus(schedule.id, 'CANCELED')} className="button button--danger m-r-10">
+										<button onClick={() => updateStatus(schedule.id, 'CANCELED')} className="button button--small button--danger m-r-10">
 											Cancelar
 										</button>
 
 										{schedule.confirmed_at && (
-											<button onClick={() => updateStatus(schedule.id, 'FINISHED')} className="button button--success">
+											<button onClick={() => updateStatus(schedule.id, 'FINISHED')} className="button button--small button--success">
 												Finalizar
 											</button>
 										)}
