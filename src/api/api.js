@@ -10,7 +10,7 @@ api.interceptors.response.use(null, (error) => {
     if (response && ((response.status === 401) || response.data.includes('jwt expired'))) {
         localStorage.removeItem('token');
         localStorage.removeItem('userAccountUrl');
-        window.location.href = '/signin';
+        window.location.href = '/sign-in';
     }
 
     return Promise.reject(error);
