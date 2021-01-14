@@ -45,16 +45,14 @@ const MainContexted = () => {
 							<MainServices />
 							<MainSlotGrid />
 							<MainScheduleForm />
-							<div className="box m-t-5 m-b-10 flexbox flexbox--column flexbox--center text--center">
+							<div className="contact-footer">
 								{accountInfo.telephone && (
-									<p className="color--white m-b-10">Contato: <a href={`tel:+55${accountInfo.telephone}`} className="color--white">{accountInfo.telephone}</a></p>
+									<p>Telefone: <a href={`tel:+55${accountInfo.telephone}`}>{accountInfo.telephone}</a></p>
 								)}
-
 								{accountInfo.address && (
-									<p className="color--white m-b-10">Endereço: {accountInfo.address}</p>
+									<p>Endereço: {accountInfo.address}</p>
 								)}
-
-								<p className="color--white">{accountInfo.name}</p>
+								<p>{accountInfo.name}</p>
 							</div>
 						</>
 					)}

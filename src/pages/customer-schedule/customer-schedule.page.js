@@ -5,6 +5,11 @@ import moment from 'moment';
 import { getDayLabelByDate } from '../../utils/utils';
 import { Link } from 'react-router-dom';
 
+const statusLabels = {
+	CONFIRMED: 'confirmar',
+	CANCELED: 'cancelar',
+};
+
 const Schedules = () => {
     const [isLoading, setIsLoading] = useState(true);
 	const [schedules, setSchedules] = useState([]);
@@ -13,14 +18,16 @@ const Schedules = () => {
 
 	const updateStatus = async (id, updateStatus) => {
 		try {
-			await ScheduleService.updateStatusFromCostumer({
-				id,
-				status: updateStatus
-			});
+			if (window.confirm(`Deseja ${statusLabels[updateStatus]} esse agendamento?`)) {
+				await ScheduleService.updateStatusFromCostumer({
+					id,
+					status: updateStatus
+				});
 
-			const data = await listSchedules({ startDate, status });
+				const data = await listSchedules({ startDate, status });
 
-			setSchedules(data);
+				setSchedules(data);
+			}
 		} catch ({ response }) {
 			alert(response.data);
 		}
@@ -135,7 +142,7 @@ const Schedules = () => {
 											<button onClick={() => updateStatus(schedule.id, 'CANCELED')} className="button button--small button--danger m-r-10">
 												Cancelar
 											</button>
-											<Link className="color--success m-l-5" to={`/${schedule.account.url}`}>
+											<Link className="link link--small color--success m-l-5" to={`/${schedule.account.url}`}>
 												<strong>Ver agenda</strong>
 											</Link>
 										</div>

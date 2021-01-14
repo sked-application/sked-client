@@ -66,3 +66,9 @@
 		cursor: pointer;
 	}
 }
+
+.link {
+	&--small {
+		font-size: 13px;
+	}
+}

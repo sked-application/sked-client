@@ -4,6 +4,12 @@ import moment from 'moment';
 
 import { getDayLabelByDate } from '../../utils/utils';
 
+const statusLabels = {
+	CONFIRMED: 'confirmar',
+	CANCELED: 'cancelar',
+	FINISHED: 'finalizar',
+};
+
 const Schedules = () => {
     const [isLoading, setIsLoading] = useState(true);
 	const [schedules, setSchedules] = useState([]);
@@ -12,14 +18,16 @@ const Schedules = () => {
 
 	const updateStatus = async (id, updateStatus) => {
 		try {
-			await ScheduleService.updateStatus({
-				id,
-				status: updateStatus
-			});
+			if (window.confirm(`Deseja ${statusLabels[updateStatus]} esse agendamento?`)) {
+				await ScheduleService.updateStatus({
+					id,
+					status: updateStatus
+				});
 
-			const data = await listSchedules({ startDate, status });
+				const data = await listSchedules({ startDate, status });
 
-			setSchedules(data);
+				setSchedules(data);
+			}
 		} catch ({ response }) {
 			alert(response.data);
 		}

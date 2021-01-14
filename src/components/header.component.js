@@ -6,9 +6,7 @@ import { AuthContext } from '../contexts/auth.context';
 import { AiOutlineMenu } from 'react-icons/ai';
 
 const Header = ({ currentPathname }) => {
-    const { isAuthenticated, handleSignOut, userAccountUrl } = useContext(
-        AuthContext
-    );
+    const { isAuthenticated, handleSignOut, userAccountUrl } = useContext(AuthContext);
     const [isOpen, setIsOpen] = useState(false);
 
     const headerSignOut = () => {

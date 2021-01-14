@@ -3,10 +3,11 @@ $secondary: rgba(132,43, 216, 1);
 $text-color: #2f2f2f;
 $color-success: #08c174;
 $color-danger: #f7636a;
+$color-white: #ffffff;
 
 .color {
 	&--white {
-		color: #ffffff;
+		color: $color-white;
 	}
 
 	&--success{
