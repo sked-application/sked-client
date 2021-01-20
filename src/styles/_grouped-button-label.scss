@@ -2,14 +2,15 @@
 	display: flex;
 
 	&__label {
-		@extend .button;
-		border-top-right-radius: 0;
-		border-bottom-right-radius: 0;
+		border-top-left-radius: 6px;
+		border-bottom-left-radius: 6px;
 		pointer-events: none;
 		display: flex;
 		align-items: center;
 		padding-right: 0;
 		font-weight: 400;
+		background: $color-white;
+		padding-left: 15px;
 	}
 
 	&__input {

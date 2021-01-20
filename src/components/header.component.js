@@ -59,54 +59,64 @@ const Header = ({ currentPathname }) => {
                         <ul className="header__list">
                             {userAccountUrl && (
                                 <>
-                                    <li>
-                                        <Link
-                                            to={`/${userAccountUrl}`}
-                                            onClick={() => setIsOpen(false)}
-                                        >
-                                            Inicio
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="/schedules"
-                                            onClick={() => setIsOpen(false)}
-                                        >
-                                            Agendamentos
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="/services"
-                                            onClick={() => setIsOpen(false)}
-                                        >
-                                            Serviços
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="/settings"
-                                            onClick={() => setIsOpen(false)}
-                                        >
-                                            Grade de horários
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="/schedule-lock"
-                                            onClick={() => setIsOpen(false)}
-                                        >
-                                            Bloqueio de agenda
-                                        </Link>
-                                    </li>
 									<li>
-                                        <Link
-                                            to="/profile"
-                                            onClick={() => setIsOpen(false)}
-                                        >
-                                            Perfil
-                                        </Link>
-                                    </li>
+										<strong>Agenda</strong>
+										<ul className="m-t-10">
+											<li>
+												<Link
+													to={`/${userAccountUrl}`}
+													onClick={() => setIsOpen(false)}
+												>
+													Minha página
+												</Link>
+											</li>
+											<li>
+												<Link
+													to="/schedules"
+													onClick={() => setIsOpen(false)}
+												>
+													Agendamentos
+												</Link>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<strong>Configurações</strong>
+										<ul className="m-t-10">
+											<li>
+												<Link
+													to="/services"
+													onClick={() => setIsOpen(false)}
+												>
+													Serviços
+												</Link>
+											</li>
+											<li>
+												<Link
+													to="/settings"
+													onClick={() => setIsOpen(false)}
+												>
+													Grade de horários
+												</Link>
+											</li>
+											<li>
+												<Link
+													to="/schedule-lock"
+													onClick={() => setIsOpen(false)}
+												>
+													Bloqueio de agenda
+												</Link>
+											</li>
+											<li>
+												<Link
+													to="/profile"
+													onClick={() => setIsOpen(false)}
+												>
+													Perfil
+												</Link>
+											</li>
+										</ul>
+									</li>
                                 </>
                             )}
 
