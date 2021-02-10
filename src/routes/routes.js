@@ -21,20 +21,20 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 const AppRoutes = () => {
     return (
         <Switch>
-            <UserPrivateRoute exat path="/schedules" component={Schedules} />
-            <UserPrivateRoute exat path="/services" component={Services} />
-            <UserPrivateRoute exat path="/settings" component={Settings} />
-            <UserPrivateRoute exat path="/profile" component={Profile} />
-            <UserPrivateRoute exat path="/schedule-lock" component={ScheduleLock} />
-            <CustomerPrivateRoute exat path="/customer-schedules" component={CustomerSchedules} />
+            <UserPrivateRoute exact path="/schedules" component={Schedules} />
+            <UserPrivateRoute exact path="/services" component={Services} />
+            <UserPrivateRoute exact path="/settings" component={Settings} />
+            <UserPrivateRoute exact path="/profile" component={Profile} />
+            <UserPrivateRoute exact path="/schedule-lock" component={ScheduleLock} />
+            <CustomerPrivateRoute exact path="/customer-schedules" component={CustomerSchedules} />
             <Route exact path="/sign-up" component={SignUp} />
             <Route exact path="/sign-in" component={SignIn} />
             <Route exact path="/customer-sign-in" component={SignInCustomer} />
             <Route exact path="/recover-password" component={RecoverPassword} />
             <Route exact path="/recover-password-customer" component={RecoverPassword} />
             <Route exact path="/reset-password/:token" component={ResetPassword} />
-            <Route exat path="/not-found" component={NotFound} />
-            <Route exat path="/:account" component={Main} />
+            <Route exact path="/not-found" component={NotFound} />
+            <Route exact path="/:account" component={Main} />
             <Redirect to="not-found" />
         </Switch>
     );
