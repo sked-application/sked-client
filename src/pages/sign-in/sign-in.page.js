@@ -16,7 +16,12 @@ const SignIn = () => {
 	const [isLoading, setIsLoading] = useState(false);
     const { isAuthenticated, handleSignIn, userAccountUrl } = useContext(AuthContext);
 
-	const { register, handleSubmit, formState, errors } = useForm({
+	const {
+		register,
+		handleSubmit,
+		formState,
+		errors
+	} = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
 		mode: 'onTouched',
