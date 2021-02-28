@@ -1,4 +1,4 @@
-.recover-password {
+.customer-sign-in {
 	&__form {
 		margin-top: 16px;
 		margin-bottom: 16px;
@@ -12,14 +12,17 @@
 		color: var(--orange);
 	}
 
-	&__success {
-		margin-bottom: 16px;
-		text-align: center;
-		color: var(--green);
-	}
-
 	&__field {
 		margin-bottom: 16px;
+	}
+
+	&__forgot-password {
+		margin-top: 8px;
+		margin-bottom: 24px;
+
+		a {
+			color: var(--blue);
+		}
 	}
 
 	&__redirect {
