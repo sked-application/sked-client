@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AppRoutes from '../routes/routes';
 import AppHeader from '../components/header.component';
-import Copyright from '../components/copyright.component';
+import Copyright from '../components/copyright-component/copyright.component';
 
 import { AuthProvider, AuthContext } from '../contexts/auth.context';
 import { useLocation } from 'react-router-dom';
