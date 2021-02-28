@@ -1,20 +1,28 @@
 import React, { useContext, useState } from 'react';
 import schema from './validators/recover-password.validator';
 import AuthService from '../../services/auth.service';
+import PageHeader from '../../components/page-header-component/page-header.component';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 import { AuthContext } from '../../contexts/auth.context';
-import { Link, Redirect, useHistory } from 'react-router-dom';
 import { FormInputError } from '../../components/input-form-error.component';
+
+import {
+	Link,
+	Redirect,
+	useHistory
+} from 'react-router-dom';
+
+import './recover-password.page.scss';
 
 const RecoverPassword = () => {
 	const history = useHistory();
-    const { isAuthenticated, userAccountUrl } = useContext(AuthContext);
+	const isCustomer = ['/recover-password-customer'].includes(history.location.pathname);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
-	const [isCustomer] = useState(['/recover-password-customer'].includes(history.location.pathname));
+    const { isAuthenticated, userAccountUrl } = useContext(AuthContext);
 
 	const { register, handleSubmit, reset, formState, errors } = useForm({
 		resolver: yupResolver(schema.form.validator),
@@ -24,10 +32,9 @@ const RecoverPassword = () => {
 
     const recoverPasswordForm = async (values) => {
 		try {
-			const { email } = values;
-
 			setIsLoading(true);
 
+			const { email } = values;
 			await AuthService.recorverPassword({
 				email,
 				is_customer: isCustomer
@@ -43,25 +50,29 @@ const RecoverPassword = () => {
 	};
 
 	if (isAuthenticated) {
-        return <Redirect to={`/${userAccountUrl || 'customer-schedules'}`} />;
+		const redirectUrl = userAccountUrl ? '/schedules' : '/customer-schedules';
+
+        return <Redirect to={redirectUrl} />;
     }
 
     return (
         <div className="container">
-			<div className="page__header">
-				{isLoading ? (
-					<span className="loading"></span>
-				) : (
-					<h1 className="page__title">Recuperar a senha</h1>
+			<PageHeader
+				title="Recuperar a senha"
+				description="O link de recuperação será enviado para seu email." />
+			{isLoading && (
+				<span className="loading"></span>
+			)}
+            <form
+				onSubmit={handleSubmit(recoverPasswordForm)}
+				className="recover-password__form">
+				{error && (
+					<div className="recover-password__error">{error}</div>
 				)}
-				<div className="m-t-5">
-					<span className="page__description">O link de recuperação será enviado para seu email.</span>
-				</div>
-			</div>
-            <form onSubmit={handleSubmit(recoverPasswordForm)} className="m-t-16 m-b-16">
-				{error && <div className="text--center m-b-16">{error}</div>}
-				{success && <div className="text--center m-b-16">{success}</div>}
-				<div className="m-b-16">
+				{success && (
+					<div className="recover-password__success">{success}</div>
+				)}
+				<div className="recover-password__field">
 					<input
 						name="email"
 						type="email"
@@ -70,23 +81,18 @@ const RecoverPassword = () => {
 						placeholder="Email"
 						disabled={isLoading}
 					/>
-					<FormInputError
-						error={errors.email && errors.email.message}
-					/>
+					<FormInputError error={errors.email && errors.email.message} />
 				</div>
-                <div className="m-b-16">
+                <div className="recover-password__field">
                     <button
                         disabled={!formState.isValid || isLoading}
-                        className="button button--block button--outline"
-                    >
+                        className="button button--block button--purple">
                         Enviar
                     </button>
                 </div>
             </form>
-			<div className="text--center">
-				<strong>
-					<Link to="/sign-in" className="color--blue">Entrar</Link>
-				</strong>
+			<div className="recover-password__redirect">
+				<Link to="/sign-in">Entrar</Link>
 			</div>
         </div>
     );

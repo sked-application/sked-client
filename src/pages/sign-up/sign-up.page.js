@@ -204,7 +204,7 @@ const SignUp = () => {
 					<button
 						type="submit"
 						disabled={!formState.isValid || isLoading}
-						className="button button--block button--outline"
+						className="button button--block button--purple"
 					>
 						Cadastrar
 					</button>
