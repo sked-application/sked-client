@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import ServiveService from '../../../services/service.service';
 
+import {
+	AiOutlineForm,
+} from "react-icons/ai";
 import { MainContext } from '../contexts/main.context';
 
 const MainService = () => {
@@ -32,9 +35,11 @@ const MainService = () => {
     }, [accountInfo, user]);
 
     return (
-        <div className="card">
+        <div className="card card--service">
             <div className="card__header">
-                <h2 className="card__title">Serviço</h2>
+                <h2 className="card__title">
+					<AiOutlineForm /> Serviço
+				</h2>
             </div>
             <div className="m-t-5">
                 <select

@@ -4,7 +4,7 @@
     font-weight: 600;
     border: none;
     font-size: 14px;
-    padding: 0 15px;
+    padding: 0 12px;
     background-color: #ffffff;
 	display: inline-block;
 	border-width: 1px;
@@ -39,21 +39,21 @@
         width: 100%;
     }
 
-	&--primary {
-		border-color: $primary;
-		background-color: $primary;
+	&--purple {
+		border-color: var(--purple);
+		background-color: var(--purple);
 		color: white;
 	}
 
 	&--secondary {
-		border-color: $secondary;
-		background-color: $secondary;
+		border-color: var(--blue);
+		background-color: var(--blue);
 		color: white;
 	}
 
-	&--success {
-		border-color: $color-success;
-		background-color: $color-success;
+	&--green {
+		border-color:var(--green);
+		background-color:var(--green);
 		color: white;
 	}
 

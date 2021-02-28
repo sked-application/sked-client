@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import UserService from '../../../services/user.service';
 
+import {
+	AiOutlineUser,
+} from "react-icons/ai";
 import { MainContext } from '../contexts/main.context';
 
 const MainUsers = () => {
@@ -38,9 +41,11 @@ const MainUsers = () => {
     }, [accountInfo, setUser]);
 
     return (
-        <div className="card">
+        <div className="card card--professional">
             <div className="card__header">
-                <h2 className="card__title">Profissional</h2>
+                <h2 className="card__title">
+					<AiOutlineUser /> Profissional
+				</h2>
             </div>
             <div className="m-t-5">
                 <select

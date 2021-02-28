@@ -14,8 +14,6 @@ html {
 body {
     -webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background: $primary;
-	background: linear-gradient(165deg, $primary 0%, $secondary 100%);
 	background-attachment: fixed;
 
 	&.block-scroll {

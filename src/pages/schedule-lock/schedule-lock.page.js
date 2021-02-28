@@ -102,139 +102,135 @@ const ScheduleLock = () => {
     }, []);
 
     return (
-        <div className="p-b-20">
+        <div className="container">
 			<div className="page__header">
-				<div className="container">
-					<h1 className="page__title">Bloqueio de agenda</h1>
-					<div className="m-t-5">
-						<span className="page__description">Aqui você gerencia o bloqueio de agenda para dias específicos.</span>
-					</div>
+				<h1 className="page__title">Bloqueio de agenda</h1>
+				<div className="m-t-5">
+					<span className="page__description">Aqui você gerencia o bloqueio de agenda para dias específicos.</span>
 				</div>
 			</div>
-            <div className="container m-t-15 m-b-30">
-                {isLoading ? (
-					<div className="loading"></div>
-                ) : (
-					<>
-						<div className="flexbox flexbox__justify--end m-b-20">
-							<ShowUpButton onClick={() => handleOpenShowUp()}>
-								<BsPlus fontSize="30" fontWeight="700"/>
-							</ShowUpButton>
-						</div>
-							{scheduleLocks.map((item, index) => (
-								<div key={index} className="card">
-									<div>
-										<div className="card__header">
-											<h2 className="card__title">{getFormattedDatePreview(item.date)}</h2>
-											<strong
-												onClick={() => handleOpenShowUp(item)}
-												className="card__subtitle color--primary cursor--pointer"
-											>
-												Editar
-											</strong>
-										</div>
-										<div className="flexbox flexbox--end flexbox__justify--between">
-											<div className="badge badge--light badge--outline cursor--pointer text--center">
-												<span>{item.start.slice(0, 5)} às {item.end.slice(0, 5)}</span>
-											</div>
-											<button
-												onClick={() => removeScheduleLock(item.id)}
-												className="button button--danger button--small">
-												Remover
-											</button>
-										</div>
+			{isLoading ? (
+				<div className="loading"></div>
+			) : (
+				<>
+					<div className="flexbox flexbox__justify--end m-b-16">
+						<ShowUpButton onClick={() => handleOpenShowUp()}>
+							<BsPlus fontSize="30" fontWeight="700"/>
+						</ShowUpButton>
+					</div>
+					{scheduleLocks.map((item, index) => (
+						<div key={index} className="card card--outline">
+							<div>
+								<div className="card__header">
+									<h2 className="card__title">{getFormattedDatePreview(item.date)}</h2>
+									<strong
+										onClick={() => handleOpenShowUp(item)}
+										className="card__subtitle color--blue cursor--pointer"
+									>
+										Editar
+									</strong>
+								</div>
+								<div className="flexbox flexbox--end flexbox__justify--between">
+									<div className="badge badge--light badge--outline cursor--pointer text--center">
+										<span>{item.start.slice(0, 5)} às {item.end.slice(0, 5)}</span>
 									</div>
+									<button
+										onClick={() => removeScheduleLock(item.id)}
+										className="button button--outline button--small">
+										Remover
+									</button>
 								</div>
-							))}
+							</div>
+						</div>
+					))}
 
-							{!scheduleLocks.length && (
-								<div className="text--center">
-									<span className="color--white">Clique no botão acima para configurar um bloqueio de agenda.</span>
+					{!scheduleLocks.length && (
+						<div className="text--center">
+							<span>Clique no botão acima para configurar um bloqueio de agenda.</span>
+						</div>
+					)}
+				</>
+			)}
+
+			<ShowUp
+				title="Gerenciar bloqueio de agenda"
+				isOpen={toggleShow}
+				handleClose={handleCloseShowUp}
+			>
+				<>
+					<form
+						onSubmit={handleSubmit(scheduleLockForm)}
+						className="flexbox flexbox--column"
+					>
+						<div className="flexbox flexbox--column">
+							<div className="flexbox__item">
+								<div className="m-b-5">
+									<label htmlFor="date">Data</label>
 								</div>
-							)}
-					</>
-                )}
-
-				<ShowUp
-					title="Gerenciar bloqueio de agenda"
-					isOpen={toggleShow}
-					handleClose={handleCloseShowUp}
-				>
-					<>
-						<form
-							onSubmit={handleSubmit(scheduleLockForm)}
-							className="flexbox flexbox--column"
-						>
-							<div className="flexbox flexbox--column">
+								<input
+									id="date"
+									name="date"
+									type="date"
+									ref={register}
+									className="input input--dark"
+								/>
+								<FormInputError
+									error={errors.date && errors.date.message}
+								/>
+							</div>
+							<div className="flexbox m-t-16">
 								<div className="flexbox__item">
 									<div className="m-b-5">
-										<label htmlFor="date">Data</label>
+										<label htmlFor="start">Início</label>
 									</div>
 									<input
-										id="date"
-										name="date"
-										type="date"
+										id="start"
+										name="start"
+										type="time"
 										ref={register}
 										className="input input--dark"
 									/>
 									<FormInputError
-										error={errors.date && errors.date.message}
+										error={errors.start && errors.start.message}
 									/>
 								</div>
-								<div className="flexbox m-t-15">
-									<div className="flexbox__item">
-										<div className="m-b-5">
-											<label htmlFor="start">Início</label>
-										</div>
-										<input
-											id="start"
-											name="start"
-											type="time"
-											ref={register}
-											className="input input--dark"
-										/>
-										<FormInputError
-											error={errors.start && errors.start.message}
-										/>
+								<div className="flexbox__item m-l-16">
+									<div className="m-b-5">
+										<label htmlFor="end">
+											Término
+										</label>
 									</div>
-									<div className="flexbox__item m-l-15">
-										<div className="m-b-5">
-											<label htmlFor="end">
-												Término
-											</label>
-										</div>
-										<input
-											id="end"
-											name="end"
-											type="time"
-											ref={register}
-											className="input input--dark"
-										/>
-										<FormInputError
-											error={errors.end && errors.end.message}
-										/>
-									</div>
-								</div>
-								<div>
 									<input
-										name="id"
-										type="hidden"
+										id="end"
+										name="end"
+										type="time"
 										ref={register}
+										className="input input--dark"
 									/>
-								</div>
-								<div className="flexbox m-t-15">
-									<button
-										disabled={!formState.isValid}
-										className="button button--block button--primary"
-									>
-										{isEdit ? 'Atualizar' : 'Salvar'}
-									</button>
+									<FormInputError
+										error={errors.end && errors.end.message}
+									/>
 								</div>
 							</div>
-						</form>
-					</>
-				</ShowUp>
-            </div>
+							<div>
+								<input
+									name="id"
+									type="hidden"
+									ref={register}
+								/>
+							</div>
+							<div className="flexbox m-t-16">
+								<button
+									disabled={!formState.isValid}
+									className="button button--block button--purple"
+								>
+									{isEdit ? 'Atualizar' : 'Salvar'}
+								</button>
+							</div>
+						</div>
+					</form>
+				</>
+			</ShowUp>
         </div>
     );
 };

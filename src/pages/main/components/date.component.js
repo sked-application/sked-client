@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
+import {
+	AiOutlineCalendar,
+} from "react-icons/ai";
 
 import { MainContext } from '../contexts/main.context';
-
 const MainDate = () => {
 	const {
 		startDate,
@@ -15,9 +17,11 @@ const MainDate = () => {
     };
 
     return (
-        <div className="card">
+        <div className="card card--date">
             <div className="card__header">
-                <h2 className="card__title">Selecione a data</h2>
+                <h2 className="card__title">
+					<AiOutlineCalendar/> Selecione a data
+				</h2>
             </div>
             <div className="m-t-5">
                 <input

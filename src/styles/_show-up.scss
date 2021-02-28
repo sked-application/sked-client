@@ -7,7 +7,7 @@
 	opacity: 0;
 	z-index: -1;
 	visibility: hidden;
-	transition: all 0.3s linear;
+	transition: all 0.2s linear;
 	overflow-y: auto;
 	padding-top: 20vh;
 	padding-bottom: 20vh;
@@ -73,7 +73,7 @@
 		justify-content: center;
 		border: none;
 		background: white;
-		color: $primary;
+		color: var(--purple);
 		box-shadow: 0 0 15px 4px rgba(0,0,0, .1);
 	}
 }

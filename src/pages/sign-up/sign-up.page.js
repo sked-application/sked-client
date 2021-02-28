@@ -69,155 +69,151 @@ const SignUp = () => {
     }
 
     return (
-        <div className="container p-b-30">
+        <div className="container">
 			<div className="page__header">
-				<div className="container">
-					{isLoading ? (
-						<span className="loading"></span>
-					) : (
-						<h1 className="page__title">Solicite seu cadastro</h1>
-					)}
-					<div className="m-t-5">
-						<span className="page__description">Retornaremos a liberação de sua conta em instantes.</span>
-					</div>
+				{isLoading ? (
+					<span className="loading"></span>
+				) : (
+					<h1 className="page__title">Solicite seu cadastro</h1>
+				)}
+				<div className="m-t-5">
+					<span className="page__description">Retornaremos a liberação de sua conta em instantes.</span>
 				</div>
 			</div>
-            <form onSubmit={handleSubmit(signUpForm)} className="m-t-30 m-b-15">
-				{error && <div className="text--center color--white m-b-15">{error}</div>}
-				<div className="box">
-					<div className="m-b-15">
-						<strong className="color--white">Informações da conta</strong>
-					</div>
-					<div className="m-b-15">
-						<div className="grouped-button">
-							<label htmlFor="account-url" className="grouped-button__label">skedapp.com.br/</label>
-							<input
-								name="accountUrl"
-								type="text"
-								ref={register}
-								placeholder="conta"
-								disabled={isLoading}
-								id="account-url"
-								className="grouped-button__input"
-								onBlur={(event) => setValue('accountUrl', replaceSpecialCharacters(event.target.value))}
-							/>
-						</div>
-						<FormInputError
-							error={errors.accountUrl && errors.accountUrl.message}
-						/>
-					</div>
-					<div className="m-b-15">
-						<input
-							name="accountName"
-							type="text"
-							ref={register}
-							placeholder="Nome de seu estabelecimento"
-							disabled={isLoading}
-							className="input"
-						/>
-						<FormInputError
-							error={errors.accountName && errors.accountName.message}
-						/>
-					</div>
-					<div className="m-b-15">
-						<input
-							name="accountCpfCnpj"
-							type="text"
-							ref={register}
-							placeholder="Cpf/Cnpj da conta sem pontos e barra"
-							className="input input--dark"
-						/>
-						<FormInputError
-							error={errors.accountCpfCnpj && errors.accountCpfCnpj.message}
-						/>
-					</div>
-					<div>
-						<Controller
-							id="accountTelephone"
-							name="accountTelephone"
-							control={control}
-							as={<NumberFormat
-								format="(##) #####-####"
-								mask="_"
-								type="tel"
-								className="input input--dark"
-								placeholder="Telefone"
-							/>}
-						/>
-						<FormInputError
-							error={errors.accountTelephone && errors.accountTelephone.message}
-						/>
-					</div>
+            <form onSubmit={handleSubmit(signUpForm)} className="m-t-16 m-b-16">
+				{error && <div className="text--center m-b-16">{error}</div>}
+				<div className="m-b-16">
+					<strong>Informações da conta</strong>
 				</div>
-				<div className="box">
-					<div className="m-b-15">
-						<strong className="color--white">Informações do usuário</strong>
-					</div>
-					<div className="m-b-15">
+				<div className="m-b-16">
+					<div className="grouped-button">
+						<label htmlFor="account-url" className="grouped-button__label">skedapp.com.br/</label>
 						<input
-							name="userName"
+							name="accountUrl"
 							type="text"
 							ref={register}
-							placeholder="Nome"
+							placeholder="conta"
 							disabled={isLoading}
-							className="input"
-						/>
-						<FormInputError
-							error={errors.userName && errors.userName.message}
+							id="account-url"
+							className="grouped-button__input"
+							onBlur={(event) => setValue('accountUrl', replaceSpecialCharacters(event.target.value))}
 						/>
 					</div>
-					<div className="m-b-15">
-						<input
-							name="userEmail"
-							type="email"
-							ref={register}
-							placeholder="Email"
-							disabled={isLoading}
-							className="input"
-						/>
-						<FormInputError
-							error={errors.userEmail && errors.userEmail.message}
-						/>
-					</div>
-					<div className="m-b-15">
-						<input
-							name="userPassword"
-							type="password"
-							ref={register}
-							placeholder="Senha"
-							disabled={isLoading}
-							className="input"
-						/>
-						<FormInputError
-							error={errors.userPassword && errors.userPassword.message}
-						/>
-					</div>
-					<div className="m-b-15">
-						<input
-							name="userConfirmPassword"
-							type="password"
-							ref={register}
-							placeholder="Confirme sua senha"
-							disabled={isLoading}
-							className="input"
-						/>
-						<FormInputError
-							error={errors.userConfirmPassword && errors.userConfirmPassword.message}
-						/>
-					</div>
+					<FormInputError
+						error={errors.accountUrl && errors.accountUrl.message}
+					/>
+				</div>
+				<div className="m-b-16">
+					<input
+						name="accountName"
+						type="text"
+						ref={register}
+						placeholder="Nome de seu estabelecimento"
+						disabled={isLoading}
+						className="input"
+					/>
+					<FormInputError
+						error={errors.accountName && errors.accountName.message}
+					/>
+				</div>
+				<div className="m-b-16">
+					<input
+						name="accountCpfCnpj"
+						type="text"
+						ref={register}
+						placeholder="Cpf/Cnpj da conta sem pontos e barra"
+						className="input input--dark"
+					/>
+					<FormInputError
+						error={errors.accountCpfCnpj && errors.accountCpfCnpj.message}
+					/>
+				</div>
+				<div className="m-b-16">
+					<Controller
+						id="accountTelephone"
+						name="accountTelephone"
+						control={control}
+						as={<NumberFormat
+							format="(##) #####-####"
+							mask="_"
+							type="tel"
+							className="input input--dark"
+							placeholder="Telefone"
+						/>}
+					/>
+					<FormInputError
+						error={errors.accountTelephone && errors.accountTelephone.message}
+					/>
+				</div>
+				<div className="m-b-16">
+					<strong>Informações do usuário</strong>
+				</div>
+				<div className="m-b-16">
+					<input
+						name="userName"
+						type="text"
+						ref={register}
+						placeholder="Nome"
+						disabled={isLoading}
+						className="input"
+					/>
+					<FormInputError
+						error={errors.userName && errors.userName.message}
+					/>
+				</div>
+				<div className="m-b-16">
+					<input
+						name="userEmail"
+						type="email"
+						ref={register}
+						placeholder="Email"
+						disabled={isLoading}
+						className="input"
+					/>
+					<FormInputError
+						error={errors.userEmail && errors.userEmail.message}
+					/>
+				</div>
+				<div className="m-b-16">
+					<input
+						name="userPassword"
+						type="password"
+						ref={register}
+						placeholder="Senha"
+						disabled={isLoading}
+						className="input"
+					/>
+					<FormInputError
+						error={errors.userPassword && errors.userPassword.message}
+					/>
+				</div>
+				<div className="m-b-16">
+					<input
+						name="userConfirmPassword"
+						type="password"
+						ref={register}
+						placeholder="Confirme sua senha"
+						disabled={isLoading}
+						className="input"
+					/>
+					<FormInputError
+						error={errors.userConfirmPassword && errors.userConfirmPassword.message}
+					/>
 				</div>
 				<div>
 					<button
 						type="submit"
 						disabled={!formState.isValid || isLoading}
-						className="button button--block"
+						className="button button--block button--outline"
 					>
 						Cadastrar
 					</button>
 				</div>
             </form>
 			<div className="text--center">
-				<Link to="/sign-in" className="color--white">Entrar</Link>
+				<strong>
+					<Link className="color--purple" to="/sign-in">Entrar</Link>
+				</strong>
 			</div>
         </div>
     );

@@ -135,7 +135,7 @@ const Header = ({ currentPathname }) => {
 
                             <li>
                                 <button
-                                    className="button button--primary"
+                                    className="button button--purple"
                                     onClick={headerSignOut}
                                 >
                                     Sair

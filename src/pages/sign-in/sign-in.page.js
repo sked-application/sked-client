@@ -38,55 +38,51 @@ const SignIn = () => {
 	};
 
     if (isAuthenticated) {
-        return <Redirect to={`/${userAccountUrl || 'customer-schedules'}`} />;
+        return <Redirect to={`/${userAccountUrl ? 'schedules' : 'customer-schedules'}`} />;
     }
 
     return (
-        <div className="container p-b-30">
+        <div className="container">
 			<div className="page__header">
-				<div className="container">
-					{isLoading ? (
-						<span className="loading"></span>
-					) : (
-						<h1 className="page__title">Sou profissional</h1>
-					)}
-					<div className="m-t-5">
-						<span className="page__description">Gerencie seus agendamentos.</span>
-					</div>
+				{isLoading ? (
+					<span className="loading"></span>
+				) : (
+					<h1 className="page__title">Sou profissional</h1>
+				)}
+				<div className="m-t-5">
+					<span className="page__description">Gerencie seus agendamentos.</span>
 				</div>
 			</div>
-            <form onSubmit={handleSubmit(signInForm)} className="m-t-30 m-b-15">
-				{error && <div className="text--center color--white m-b-15">{error}</div>}
-				<div className="box m-b-20">
-					<div className="m-b-15">
-						<input
-							name="email"
-							type="email"
-							ref={register}
-							placeholder="Email"
-							disabled={isLoading}
-							className="input"
-						/>
-						<FormInputError
-							error={errors.email && errors.email.message}
-						/>
-					</div>
-					<div>
-						<input
-							name="password"
-							type="password"
-							ref={register}
-							placeholder="Password"
-							disabled={isLoading}
-							className="input"
-						/>
-						<FormInputError
-							error={errors.password && errors.password.message}
-						/>
-					</div>
+            <form onSubmit={handleSubmit(signInForm)} className="m-t-16 m-b-16">
+				{error && <div className="text--center m-b-16">{error}</div>}
+				<div className="m-b-16">
+					<input
+						name="email"
+						type="email"
+						ref={register}
+						placeholder="Email"
+						disabled={isLoading}
+						className="input"
+					/>
+					<FormInputError
+						error={errors.email && errors.email.message}
+					/>
+				</div>
+				<div className="m-b-16">
+					<input
+						name="password"
+						type="password"
+						ref={register}
+						placeholder="Password"
+						disabled={isLoading}
+						className="input"
+					/>
+					<FormInputError
+						error={errors.password && errors.password.message}
+					/>
 				</div>
 				<div className="m-b-20">
-					<Link to="/recover-password" className="color--white">
+					<Link to="/recover-password" className="color--blue">
 						<span>Esqueceu a senha?</span>
 					</Link>
 				</div>
@@ -94,14 +90,16 @@ const SignIn = () => {
 					<button
 						type="submit"
 						disabled={!formState.isValid || isLoading}
-						className="button button--block"
+						className="button button--block button--outline"
 					>
 						Entrar
 					</button>
 				</div>
             </form>
 			<div className="text--center">
-				<Link to="/sign-up" className="color--white">Cadastrar-se</Link>
+				<strong>
+					<Link className="color--purple" to="/sign-up">Cadastrar-se</Link>
+				</strong>
 			</div>
         </div>
     );

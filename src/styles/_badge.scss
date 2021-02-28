@@ -6,7 +6,7 @@
 	display: inline-block;
 
 	&--dark {
-		background-color: $primary;
+		background-color: var(--purple);
 		color: #ffffff;
 		a {
 			color: #ffffff;

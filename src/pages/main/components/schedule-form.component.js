@@ -5,6 +5,8 @@ import schemaSignUp from '../validators/customer-sign-up.validator';
 import schemaSignIn from '../validators/customer-sign-in.validator';
 import NumberFormat from 'react-number-format';
 
+
+import { AiOutlineCarryOut } from "react-icons/ai";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from "react-hook-form";
 import { FormInputError } from '../../../components/input-form-error.component';
@@ -143,19 +145,21 @@ const MainSlotGrid = () => {
 	};
 
     return (
-        <div className="card">
+        <div className="card card--schedule">
             <div className="card__header">
-                <h2 className="card__title">Agende</h2>
+                <h2 className="card__title">
+					<AiOutlineCarryOut /> Agende
+				</h2>
                 <span className="card__subtitle">
                     {getScheduleInfoPreview(scheduleSlot)}
                 </span>
             </div>
 
-            {isLoading && <span className="loading loading--primary m-b-20"></span>}
+            {isLoading && <span className="loading loading--purple m-b-20"></span>}
 
             {!isAuthenticated && !isLoading && formType === 'SIGN_UP' && (
                 <form onSubmit={signUpHandleSubmit(signUpForm)}>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <input
                             name="email"
                             type="email"
@@ -168,7 +172,7 @@ const MainSlotGrid = () => {
                             error={signUpErros.email && signUpErros.email.message}
                         />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <input
                             name="name"
                             type="text"
@@ -180,7 +184,7 @@ const MainSlotGrid = () => {
                             error={signUpErros.name && signUpErros.name.message}
                         />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
 						<Controller
 							name="telephone"
 							control={signUpControl}
@@ -196,7 +200,7 @@ const MainSlotGrid = () => {
                             error={signUpErros.telephone && signUpErros.telephone.message}
                         />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <input
                             name="password"
                             type="password"
@@ -209,7 +213,7 @@ const MainSlotGrid = () => {
                             error={signUpErros.password && signUpErros.password.message}
                         />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <input
                             name="confirmPassword"
                             type="password"
@@ -222,15 +226,15 @@ const MainSlotGrid = () => {
                             error={signUpErros.confirmPassword && signUpErros.confirmPassword.message}
                         />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <button
 							type="submit"
-							className="button button--block button--primary"
+							className="button button--block button--purple"
 							disabled={!signUpFormState.isValid}>
                             Casdastrar
                         </button>
                     </div>
-                    <div className="text--center m-t-25 m-b-15">
+                    <div className="text--center m-t-25 m-b-16">
                         <div onClick={() => setFormType('SIGN_IN')} className="cursor--pointer">
                             <span>Já sou cliente</span>
                         </div>
@@ -240,7 +244,7 @@ const MainSlotGrid = () => {
 
             {!isAuthenticated && !isLoading && formType === 'SIGN_IN' && (
                 <form onSubmit={signInHandleSubmit(signInForm)}>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <input
                             name="email"
                             type="email"
@@ -253,7 +257,7 @@ const MainSlotGrid = () => {
                             error={signInErros.email && signInErros.email.message}
                         />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <input
                             name="password"
                             type="password"
@@ -266,15 +270,15 @@ const MainSlotGrid = () => {
                             error={signInErros.password && signInErros.password.message}
                         />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
 						<button
 							type="submit"
-							className="button button--block button--primary"
+							className="button button--block button--purple"
 							disabled={!signInFormState.isValid}>
                             Entrar
                         </button>
                     </div>
-                    <div className="text--center m-t-25 m-b-15">
+                    <div className="text--center m-t-25 m-b-16">
                         <div onClick={() => setFormType('SIGN_UP')} className="cursor--pointer">
                             <span>Não tenho cadastro</span>
                         </div>
@@ -285,7 +289,7 @@ const MainSlotGrid = () => {
             {!isAuthenticated && !formType && (
                 <div className="m-t-5">
                     <button
-                        className="button button--block button--outline m-b-15"
+                        className="button button--block button--outline m-b-16"
                         onClick={() => setFormType('SIGN_IN')}
                     >
                         Já sou cliente
@@ -303,7 +307,7 @@ const MainSlotGrid = () => {
                 <div className="flexbox m-t-5">
                     <div className="flexbox__item">
                         <button
-                            className="button button--block button--primary"
+                            className="button button--block button--purple"
                             onClick={submitSchedule}
                         >
                             Agendar

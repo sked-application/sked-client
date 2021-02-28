@@ -100,7 +100,7 @@ const TimegridForm = () => {
     return (
         <div className="p-b-20">
             {error && (
-                <div className="m-t-15 m-b-15">
+                <div className="m-t-16 m-b-16">
                     <span>{error.message}</span>
                 </div>
             )}
@@ -178,7 +178,7 @@ const TimegridForm = () => {
 										className="input input--dark"
 									/>
 								</div>
-								<div className="flexbox__item m-l-15">
+								<div className="flexbox__item m-l-16">
 									<div className="m-b-5">
 										<label htmlFor="end">
 											Término
@@ -195,7 +195,7 @@ const TimegridForm = () => {
 								<button
 									type="submit"
 									disabled={!formState.isValid}
-									className="button button--secondary m-l-15"
+									className="button button--purple m-l-16"
 								>
 									<BsPlus fontSize="35" fontWeight="700"/>
 								</button>
@@ -205,7 +205,7 @@ const TimegridForm = () => {
 							{formData.map((item, index) => (
 								<div
 									key={index}
-									className={`timegrid-slot__item flexbox m-t-15 p-l-5 p-r-5`}
+									className={`timegrid-slot__item flexbox m-t-16 p-l-5 p-r-5`}
 									onClick={() => handleRemove(index)}>
 									<div className="flexbox__item badge badge--light badge--outline cursor--pointer text--center">
 										<span>{item.start.slice(0, 5)} às {item.end.slice(0, 5)}</span>
@@ -214,10 +214,10 @@ const TimegridForm = () => {
 							))}
 						</div>
 					</form>
-					<div className="flexbox m-t-15">
+					<div className="flexbox m-t-16">
 						<button
 							onClick={handleSubmitTimegrid}
-							className="button button--block button--primary"
+							className="button button--block button--purple"
 						>
 							Salvar grade de horário
 						</button>

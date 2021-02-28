@@ -1,5 +1,10 @@
 .header {
-    padding: 15px 0;
+    padding: 16px 0;
+
+	.container {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
 
     &__content {
         display: flex;
@@ -8,25 +13,25 @@
     }
 
     &__logo {
-		background-color: #ffffff;
 		padding: 5px 10px;
 		border-radius: 5px;
-		color: $primary;
+		background-color: var(--purple);
+		color: var(--white);
 		font-weight: 700;
 		display: inline-block;
     }
 
     &__toggle {
-        color: #ffffff;
         font-size: 28px;
         cursor: pointer;
 	}
 
 	&__action {
-		color: white;
 		font-size: 14px;
 		padding-bottom: 2px;
-		border-bottom: 1px solid white;
+		font-weight: bold;
+		border-bottom: 1px solid var(--dark);
+		color: var(--dark);
 	}
 
     &__menu {
@@ -35,7 +40,7 @@
         right: 0;
 		width: 60%;
 		max-width: 300px;
-        background-color: #eaeaea;
+        background-color: var(--light-gray);
         height: 100vh;
         transform: translateX(100vw);
 		transition: all 0.3s ease-in-out;

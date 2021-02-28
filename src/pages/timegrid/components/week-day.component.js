@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 const TimegridWeekDay = ({ label, timegrid, handleOpen }) => {
     return (
-        <li className="card p-b-5">
+        <li className="card card--outline">
             <div className="card__header">
 				<h2 className="card__title flexbox flexbox--center">{label}</h2>
-				<strong onClick={handleOpen} className="card__subtitle color--primary cursor--pointer">Gerenciar</strong>
+				<strong onClick={handleOpen} className="card__subtitle color--blue cursor--pointer">Gerenciar</strong>
             </div>
 
             {timegrid.length ? (

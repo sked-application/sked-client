@@ -47,20 +47,18 @@ const ResetPassword = () => {
     }
 
     return (
-        <div className="container p-b-30">
+        <div className="container">
 			<div className="page__header">
-				<div className="container">
-					{isLoading ? (
-						<span className="loading"></span>
-					) : (
-						<h1 className="page__title">Resetar a senha</h1>
-					)}
-				</div>
+				{isLoading ? (
+					<span className="loading"></span>
+				) : (
+					<h1 className="page__title">Resetar a senha</h1>
+				)}
 			</div>
-            <form onSubmit={handleSubmit(resetPasswordForm)} className="m-t-30 m-b-15">
-				{error && <div className="text--center color--white m-b-15">{error}</div>}
-				<div className="box m-b-15">
-					<div className="m-b-15">
+            <form onSubmit={handleSubmit(resetPasswordForm)} className="m-t-30 m-b-16">
+				{error && <div className="text--center m-b-16">{error}</div>}
+				<div className="box m-b-16">
+					<div className="m-b-16">
 						<input
 							name="password"
 							type="password"
@@ -87,7 +85,7 @@ const ResetPassword = () => {
 						/>
 					</div>
 				</div>
-                <div className="m-b-15">
+                <div className="m-b-16">
                     <button
                         disabled={!formState.isValid || isLoading}
                         className="button button--block"
@@ -97,7 +95,7 @@ const ResetPassword = () => {
                 </div>
             </form>
 			<div className="text--center">
-				<Link to="/sign-in" className="color--white">Entrar</Link>
+				<Link to="/sign-in">Entrar</Link>
 			</div>
         </div>
     );

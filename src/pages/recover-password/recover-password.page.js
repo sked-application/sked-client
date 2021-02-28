@@ -47,48 +47,46 @@ const RecoverPassword = () => {
     }
 
     return (
-        <div className="container p-b-30">
+        <div className="container">
 			<div className="page__header">
-				<div className="container">
-					{isLoading ? (
-						<span className="loading"></span>
-					) : (
-						<h1 className="page__title">Recuperar a senha</h1>
-					)}
-					<div className="m-t-5">
-						<span className="page__description">O link de recuperação será enviado para seu email.</span>
-					</div>
+				{isLoading ? (
+					<span className="loading"></span>
+				) : (
+					<h1 className="page__title">Recuperar a senha</h1>
+				)}
+				<div className="m-t-5">
+					<span className="page__description">O link de recuperação será enviado para seu email.</span>
 				</div>
 			</div>
-            <form onSubmit={handleSubmit(recoverPasswordForm)} className="m-t-30 m-b-15">
-				{error && <div className="text--center color--white m-b-15">{error}</div>}
-				{success && <div className="text--center color--white m-b-15">{success}</div>}
-				<div className="box m-b-15">
-					<div>
-						<input
-							name="email"
-							type="email"
-							ref={register}
-							className="input"
-							placeholder="Email"
-							disabled={isLoading}
-						/>
-						<FormInputError
-							error={errors.email && errors.email.message}
-						/>
-					</div>
+            <form onSubmit={handleSubmit(recoverPasswordForm)} className="m-t-16 m-b-16">
+				{error && <div className="text--center m-b-16">{error}</div>}
+				{success && <div className="text--center m-b-16">{success}</div>}
+				<div className="m-b-16">
+					<input
+						name="email"
+						type="email"
+						ref={register}
+						className="input"
+						placeholder="Email"
+						disabled={isLoading}
+					/>
+					<FormInputError
+						error={errors.email && errors.email.message}
+					/>
 				</div>
-                <div className="m-b-15">
+                <div className="m-b-16">
                     <button
                         disabled={!formState.isValid || isLoading}
-                        className="button button--block"
+                        className="button button--block button--outline"
                     >
                         Enviar
                     </button>
                 </div>
             </form>
 			<div className="text--center">
-				<Link to="/sign-in" className="color--white">Entrar</Link>
+				<strong>
+					<Link to="/sign-in" className="color--blue">Entrar</Link>
+				</strong>
 			</div>
         </div>
     );

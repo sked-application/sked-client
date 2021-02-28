@@ -1,0 +1,253 @@
+.calendar-timeline {
+	&__body {
+		margin-top: 16px;
+		background-color: var(--white);
+		display: flex;
+	}
+
+	&__date {
+		position: -webkit-sticky;
+		position: sticky;
+		align-self: flex-start;
+		top: -1px;
+		display: flex;
+		flex-direction: column;
+		$self__date: &;
+
+		&__item {
+			padding: 8px 16px 8px 8px;
+			margin-bottom: 4px;
+			-webkit-tap-highlight-color: rgba(0,0,0,0);
+			-webkit-tap-highlight-color: transparent;
+			cursor: pointer;
+		}
+
+		&__item--active {
+			position: relative;
+
+			#{$self__date}__title {
+				color: var(--purple);
+			}
+
+			#{$self__date}__label {
+				color: var(--purple);
+			}
+
+			&:before {
+				content: '';
+				position: absolute;
+				bottom: 13px;
+				margin: auto;
+				right: 10px;
+				width: 6px;
+				height: 6px;
+				background-color: var(--purple);
+				border-radius: 50%;
+			}
+		}
+
+		&__title {
+			font-size: 24px;
+		}
+
+		&__label {
+			font-size: 12px;
+		}
+	}
+
+	&__list {
+		flex: 1;
+	}
+
+	&__card {
+		padding: 16px;
+		border-radius: 6px;
+		margin-bottom: 16px;
+		width: 100%;
+		$self__card: &;
+
+		&__header {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 16px;
+
+			svg {
+				font-size: 16px;
+			}
+		}
+
+		&:nth-child(4n+1) {
+			background-color: #ecf6ff;
+			color: #1a55af;
+		}
+
+		&:nth-child(4n+2) {
+			background-color: #ffece6;
+			color: #fa5f1c;
+		}
+
+		&:nth-child(4n+3) {
+			background-color: #f6f4ff;
+			color: #5843be;
+		}
+
+		&:nth-child(4n+4) {
+			background-color: #fffbf0;
+			color: #427a0a;
+		}
+
+		&--not-found {
+			background-color: #f8f8f9 !important;
+			color: #7f8389 !important;
+			text-align: center;
+		}
+
+		&__title {
+			font-size: 16px;
+			flex: 1;
+
+			a {
+				color: inherit;
+			}
+		}
+
+		&__body {
+			display: flex;
+			justify-content: space-between;
+
+			svg {
+				font-size: 16px;
+			}
+		}
+
+		&__content {
+			margin-right: 8px;
+			flex: 1;
+		}
+
+
+		&__subtitle {
+			font-size: 12px;
+		}
+
+		&__time {
+			display: flex;
+			font-size: 12px;
+			margin-bottom: 8px;
+
+			svg {
+				margin-right: 6px;
+			}
+		}
+
+		&__status {
+			display: flex;
+			font-size: 12px;
+			margin-bottom: 8px;
+
+			svg {
+				margin-right: 6px;
+			}
+		}
+
+		&__phone {
+			display: flex;
+			font-size: 12px;
+
+			a {
+				color: inherit;
+			}
+
+			svg {
+				margin-right: 6px;
+			}
+		}
+
+		&__user {
+			display: flex;
+			font-size: 12px;
+
+			svg {
+				margin-right: 6px;
+			}
+		}
+
+		&__service {
+			display: flex;
+			font-size: 12px;
+			margin-bottom: 8px;
+
+			svg {
+				margin-right: 6px;
+			}
+		}
+
+		&__price {
+			display: flex;
+			font-size: 12px;
+
+			svg {
+				margin-right: 6px;
+			}
+		}
+
+		&__actions {
+			margin-top: 16px;
+			display: flex;
+
+			.button {
+				color: inherit;
+				margin-right: 16px;
+				display: inline-flex;
+				align-items: center;
+				border-color: inherit;
+
+				svg {
+					margin-right: 6px;
+					font-size: 16px;
+				}
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
+	}
+}
+
+.input-month {
+	&__switch {
+		margin-right: 16px;
+		height: 48px;
+		background-color: #f6f7f8;
+		border-radius: 8px;
+		display: flex;
+		justify-content: space-between;
+		align-items: stretch;
+		margin-top: 16px;
+		flex: 1;
+	}
+
+	&__button {
+		display: flex;
+		align-items: center;
+		padding: 16px;
+	}
+
+	&__label {
+		display: flex;
+		align-items: center;
+		font-size: 14px;
+	}
+}
+
+.select-month {
+	&__status {
+		flex: 1;
+	}
+}
+
+.filter__body {
+	display: flex;
+	max-width: 520px;
+}

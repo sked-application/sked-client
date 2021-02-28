@@ -15,6 +15,26 @@ export const getDayLabelByDate = (date) => {
     return weekDays[day];
 };
 
+export const getMonthLabelByDate = (date) => {
+    const month = moment(date).month();
+    const months = {
+        0: 'Janeiro',
+        1: 'Fevereiro',
+        2: 'Março',
+        3: 'Abril',
+        4: 'Maio',
+        5: 'Junho',
+        6: 'Julio',
+        7: 'Agosto',
+        8: 'Setembro',
+        9: 'Outubro',
+        10: 'Novembro',
+        11: 'Dezembro',
+    };
+
+    return months[month];
+};
+
 export const getFormattedDatePreview = (date) => {
     return moment(date).format('DD/MM/YYYY');
 };

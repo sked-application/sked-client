@@ -1,6 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import TimegridService from '../../../services/timegrid.service';
 
+import {
+	AiOutlineClockCircle,
+} from "react-icons/ai";
 import { MainContext } from '../contexts/main.context';
 import { getDayLabelByDate } from '../../../utils/utils';
 
@@ -57,62 +60,66 @@ const MainSlotGrid = () => {
     }, [accountInfo, startDate, service, user]);
 
     return (
-        <div className="card">
+        <div className="card card--slots">
             <div className="card__header">
 				<div>
-					<h2 className="card__title">Horários</h2>
+					<h2 className="card__title">
+						<AiOutlineClockCircle /> Horários
+					</h2>
 				</div>
 				<div className="flexbox flexbox--column flexbox--end">
 					<span className="card__subtitle m-b-5">{getDayLabelByDate(startDate)}</span>
 
 					{service && service.show_price && (
-						<span className="card__subtitle color--success">R$ {service.price}</span>
+						<span className="card__subtitle color--green">R$ {service.price}</span>
 					)}
 				</div>
             </div>
 
-			{service && service.name && (
+			{service.id && user.id && !!timegrid.length && (
 				<div>
-					<span className="card__subtitle color--primary">{service.name}</span>
+					<span className="card__subtitle color--purple">{service.name}</span>
 				</div>
 			)}
 
             {isLoading ? (
-                <div className="loading loading--primary m-b-15"></div>
+                <div className="loading loading--purple m-b-16"></div>
             ) : (
                 <>
-                    <div className="slot__box p-t-10">
-                        {timegrid.map((slot, index) => (
-                            <div
-                                key={index}
-                                className="slot__item"
-                            >
-                                <div
-									onClick={() => handleSetSlot(slot, index)}
-									className={`badge badge--light badge--outline m-t-5 m-b-5 ${activedSlot === index ? 'actived' : ''}`}
-                                >
-                                    <div className="badge__content">
-                                        <span>{slot.start.slice(0, 5)}</span>
-                                        <span>{slot.end.slice(0, 5)}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+					{!!timegrid.length && (
+						<div className="slot__box">
+							{timegrid.map((slot, index) => (
+								<div
+									key={index}
+									className="slot__item"
+								>
+									<div
+										onClick={() => handleSetSlot(slot, index)}
+										className={`badge badge--light badge--outline m-t-5 m-b-5 ${activedSlot === index ? 'actived' : ''}`}
+									>
+										<div className="badge__content">
+											<span>{slot.start.slice(0, 5)}</span>
+											<span>{slot.end.slice(0, 5)}</span>
+										</div>
+									</div>
+								</div>
+							))}
+						</div>
+					)}
 
                     {service.id && user.id && !timegrid.length && (
-						<div className="text--center">
+						<div className="slot__pending">
 							<span>Nenhum horário disponível</span>
 						</div>
                     )}
 
-                    {!service.id ? (
-						<div className="text--center">
-							<span>Selecione um serviço.</span>
-						</div>
-					) : !user.id ? (
-						<div className="text--center">
+                    {!user.id ? (
+						<div className="slot__pending">
 							<span>Selecione um profissional.</span>
+						</div>
+					) : !service.id ? (
+						<div className="slot__pending">
+							<span>Selecione um serviço.</span>
 						</div>
 					) : ''}
                 </>

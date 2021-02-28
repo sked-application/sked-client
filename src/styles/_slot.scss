@@ -4,6 +4,7 @@
         flex-wrap: wrap;
         margin-left: -5px;
         margin-right: -5px;
+		margin-top: 16px;
     }
 
     &__item {
@@ -27,8 +28,8 @@
 			}
 
 			&.actived {
-				background-color: $primary;
-				border-color: $primary;
+				background-color: var(--purple);
+				border-color: var(--purple);
 				color: white;
 
 				.badge__content > span:first-child {
@@ -37,6 +38,10 @@
 			}
         }
     }
+
+	&__pending {
+		margin-top: 16px;
+	}
 }
 
 .timegrid-slot {
