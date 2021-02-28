@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ScheduleService from '../../services/schedule.service';
+import CalendarTimeline from '../../components/calendar-timeline-component/calendar-timeline.component';
+import PageHeader from '../../components/page-header-component/page-header.component';
 import moment from 'moment';
-
-import CalendarTimeline from '../schedule/components/calendar-timeline.component';
 
 const statusLabels = {
 	CONFIRMED: 'confirmar',
 	CANCELED: 'cancelar',
-
 };
 
 const Schedules = () => {
@@ -20,7 +19,6 @@ const Schedules = () => {
 		try {
 			if (window.confirm(`Deseja ${statusLabels[updateStatus]} esse agendamento?`)) {
 				setIsLoading(true);
-				setSchedules([]);
 
 				await ScheduleService.updateStatusFromCostumer({
 					id,
@@ -37,40 +35,32 @@ const Schedules = () => {
 		}
 	};
 
-	const listSchedules = useCallback(async ({ date, status }) => {
-		const { data } = await ScheduleService.findCustomerSchedules({
-			date,
-			status,
-		});
-
-		return data.schedules;
-	}, []);
-
-    useEffect(() => {
-		let unmounted = false;
-
-        (async () => {
+	const listSchedules = useCallback(async () => {
+		try {
 			setIsLoading(true);
 
-			const data = await listSchedules({ date, status });
+			const { data } = await ScheduleService.findCustomerSchedules({
+				date,
+				status,
+			});
 
-            if (!unmounted) {
-				setSchedules(data);
-				setIsLoading(false);
-            }
-        })();
+			setSchedules(data.schedules);
+			setIsLoading(false);
+		} catch (error) {
+			alert('Algum erro aconteceu, tente novamente mais tarde.');
+			setIsLoading(false);
+		}
+	}, [date, status]);
 
-        return () => (unmounted = true);
-    }, [date, status, listSchedules]);
+    useEffect(() => {
+		listSchedules();
+    }, [listSchedules]);
 
     return (
         <div className="container">
-			<div className="page__header">
-				<h1 className="page__title">Meus compromissos</h1>
-				<div className="m-t-5">
-					<span className="page__description">Acompanhe seu histórico de agendamentos.</span>
-				</div>
-			</div>
+			<PageHeader
+				title="Meus compromissos"
+				description="Acompanhe seu histórico de agendamentos." />
 			<CalendarTimeline
 				status={status}
 				list={schedules}

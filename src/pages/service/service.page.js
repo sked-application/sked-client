@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import ServiceService from '../../services/service.service';
 import schema from './validators/service-form.validator';
 import NumberFormat from 'react-number-format';
+import PageHeader from '../../components/page-header-component/page-header.component';
 
-import {
-	AiOutlineClockCircle,
-	AiOutlineDollar,
-} from "react-icons/ai";
 import { BsPlus } from 'react-icons/bs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from "react-hook-form";
 import { ShowUp, ShowUpButton } from '../../components/show-up.component';
 import { FormInputError } from '../../components/input-form-error.component';
+import {
+	AiOutlineClockCircle,
+	AiOutlineDollar,
+} from "react-icons/ai";
 
 const Services = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -106,158 +107,134 @@ const Services = () => {
 
     return (
         <div className="container">
-			<div className="page__header">
-				<h1 className="page__title">Serviços</h1>
-				<div className="m-t-5">
-					<span className="page__description">Adicione e gerencie seus serviços.</span>
-				</div>
-			</div>
-			<>
-				{isLoading ? (
-					<div className="loading"></div>
-				) : (
-					<>
-						<div className="flexbox flexbox__justify--end m-b-16">
-							<ShowUpButton onClick={() => handleOpenShowUp()}>
-								<BsPlus fontSize="30" fontWeight="700"/>
-							</ShowUpButton>
-						</div>
-						{services.map((item) => (
-							<div key={item.id} className="card card--outline">
-								<div className="card__header">
-									<h2 className="card__title">
-										{item.name}
-									</h2>
-									<strong
-										onClick={() => handleOpenShowUp(item)}
-										className="card__subtitle color--blue cursor--pointer"
-									>
-										Editar
-									</strong>
-								</div>
-								<div className="card__content flexbox flexbox--end flexbox__justify--between">
-									<div>
-										<div className="flexbox color--blue">
-											<AiOutlineClockCircle /> {item.duration} minutos
-										</div>
-										<div className="flexbox color--blue m-t-16">
-											<AiOutlineDollar /> {item.price}
-										</div>
+			<PageHeader
+				title="Serviços"
+				description="Adicione e gerencie seus serviços." />
+			{isLoading ? (
+				<div className="loading"></div>
+			) : (
+				<Fragment>
+					<div className="flexbox flexbox__justify--end m-b-16">
+						<ShowUpButton onClick={() => handleOpenShowUp()}>
+							<BsPlus fontSize="30" fontWeight="700"/>
+						</ShowUpButton>
+					</div>
+					{services.map((item) => (
+						<div key={item.id} className="card card--outline">
+							<div className="card__header">
+								<h2 className="card__title">
+									{item.name}
+								</h2>
+								<strong
+									onClick={() => handleOpenShowUp(item)}
+									className="card__subtitle color--blue cursor--pointer"
+								>
+									Editar
+								</strong>
+							</div>
+							<div className="card__content flexbox flexbox--end flexbox__justify--between">
+								<div>
+									<div className="flexbox color--blue">
+										<AiOutlineClockCircle /> {item.duration} minutos
 									</div>
-									<div className="flexbox m-t-16">
-										<button
-											onClick={() => removeService(item.id)}
-											className="button button--small button--outline">
-											Remover
-										</button>
+									<div className="flexbox color--blue m-t-16">
+										<AiOutlineDollar /> {item.price}
 									</div>
 								</div>
+								<div className="flexbox m-t-16">
+									<button
+										onClick={() => removeService(item.id)}
+										className="button button--small button--outline">
+										Remover
+									</button>
+								</div>
 							</div>
-						))}
+						</div>
+					))}
 
-						{!services.length && (
-							<div className="text--center">
-								<span>Clique no botão acima e adicione seus serviços.</span>
-							</div>
-						)}
-					</>
-				)}
+					{!services.length && (
+						<div className="text--center">
+							<span>Clique no botão acima e adicione seus serviços.</span>
+						</div>
+					)}
+				</Fragment>
+			)}
 
-				<ShowUp
-					title={`${isEdit ? 'Atualizar serviço' : 'Adicione um serviço'}`}
-					isOpen={toggleShow}
-					handleClose={handleCloseShowUp}
-				>
-					<form
-						onSubmit={handleSubmit(serviceForm)}
-						className="flexbox flexbox--column"
-					>
-						<div className="flexbox__item">
-							<div className="m-b-5">
-								<label htmlFor="name">
-									Nome
-								</label>
-							</div>
-							<input
-								id="name"
-								name="name"
-								type="text"
-								ref={register}
-								className="input input--dark"
-							/>
-							<FormInputError
-								error={errors.name && errors.name.message}
-							/>
+			<ShowUp
+				title={`${isEdit ? 'Atualizar serviço' : 'Adicione um serviço'}`}
+				isOpen={toggleShow}
+				handleClose={handleCloseShowUp}>
+				<form
+					onSubmit={handleSubmit(serviceForm)}
+					className="flexbox flexbox--column">
+					<div className="flexbox__item">
+						<div className="m-b-5">
+							<label htmlFor="name">Nome</label>
 						</div>
-						<div className="flexbox__item m-t-16">
-							<div className="m-b-5">
-								<label htmlFor="duration">
-									Duração em minutos
-								</label>
-							</div>
-							<input
-								id="duration"
-								name="duration"
-								type="number"
-								ref={register}
-								className="input input--dark"
-							/>
-							<FormInputError
-								error={errors.duration && errors.duration.message}
-							/>
+						<input
+							id="name"
+							name="name"
+							type="text"
+							ref={register}
+							className="input input--dark"/>
+						<FormInputError error={errors.name && errors.name.message} />
+					</div>
+					<div className="flexbox__item m-t-16">
+						<div className="m-b-5">
+							<label htmlFor="duration">Duração em minutos</label>
 						</div>
-						<div className="flexbox__item m-t-16">
-							<div className="m-b-5">
-								<label htmlFor="price">
-									Valor
-								</label>
-							</div>
-							<Controller
-								id="price"
-								name="price"
-								control={control}
-								as={<NumberFormat
-									decimalSeparator={'.'}
-									decimalScale={2}
-									allowNegative={false}
-									className="input input--dark"
-								/>}
-							/>
-							<FormInputError
-								error={errors.price && errors.price.message}
-							/>
+						<input
+							id="duration"
+							name="duration"
+							type="number"
+							ref={register}
+							className="input input--dark"
+						/>
+						<FormInputError error={errors.duration && errors.duration.message} />
+					</div>
+					<div className="flexbox__item m-t-16">
+						<div className="m-b-5">
+							<label htmlFor="price">Valor</label>
 						</div>
-						<div className="flexbox__item m-t-16">
-							<div className="m-b-5">
-								<label className="flexbox cursor--pointer">
-									<input
-										name="showPrice"
-										type="checkbox"
-										ref={register}
-										className="checkbox"
-									/>
-									<span className="m-l-10">Mostrar preço</span>
-								</label>
-							</div>
+						<Controller
+							id="price"
+							name="price"
+							control={control}
+							as={<NumberFormat
+								decimalSeparator={'.'}
+								decimalScale={2}
+								allowNegative={false}
+								className="input input--dark" />} />
+						<FormInputError error={errors.price && errors.price.message} />
+					</div>
+					<div className="flexbox__item m-t-16">
+						<div className="m-b-5">
+							<label className="flexbox cursor--pointer">
+								<input
+									name="showPrice"
+									type="checkbox"
+									ref={register}
+									className="checkbox" />
+								<span className="m-l-10">Mostrar preço</span>
+							</label>
 						</div>
-						<div>
-							<input
-								name="id"
-								type="hidden"
-								ref={register}
-							/>
-						</div>
-						<div className="flexbox__item m-t-16">
-							<button
-								type="submit"
-								disabled={!formState.isValid}
-								className="button button--block button--purple">
-								{isEdit ? 'Atualizar' : 'Adicionar'}
-							</button>
-						</div>
-					</form>
-				</ShowUp>
-			</>
+					</div>
+					<div>
+						<input
+							name="id"
+							type="hidden"
+							ref={register} />
+					</div>
+					<div className="flexbox__item m-t-16">
+						<button
+							type="submit"
+							disabled={!formState.isValid}
+							className="button button--block button--purple">
+							{isEdit ? 'Atualizar' : 'Adicionar'}
+						</button>
+					</div>
+				</form>
+			</ShowUp>
         </div>
     );
 };

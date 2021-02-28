@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import MainSlotGrid from './components/slotgrid.component';
 import MainScheduleForm from './components/schedule-form.component';
 import MainDate from './components/date.component';
 import MainServices from './components/services.component';
 import MainUsers from './components/users.component';
+import PageHeader from '../../components/page-header-component/page-header.component';
 
 import { MainProvider, MainContext } from './contexts/main.context';
 import { Redirect } from 'react-router-dom';
@@ -23,17 +24,14 @@ const MainContexted = () => {
 
     return (
 		<div className="container">
-			<div className="page__header">
-				<h1 className="page__title">{accountInfo.name}</h1>
-				<div className="m-t-5">
-					<span className="page__description">Realize seu agendamento abaixo.</span>
-				</div>
-			</div>
-			<>
+			<PageHeader
+				title={accountInfo.name}
+				description="Realize seu agendamento abaixo." />
+			<Fragment>
 				{isMainRequestPeding ? (
 					<div className="loading"></div>
 				) : (
-					<>
+					<Fragment>
 						<MainDate />
 						<MainUsers />
 						<MainServices />
@@ -48,9 +46,9 @@ const MainContexted = () => {
 							)}
 							<p>{accountInfo.name}</p>
 						</div>
-					</>
+					</Fragment>
 				)}
-			</>
+			</Fragment>
 		</div>
     );
 };

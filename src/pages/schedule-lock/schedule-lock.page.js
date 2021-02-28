@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import schema from './validators/schedule-lock-form.validator';
 import ScheduleLockService from '../../services/schedule-lock.service';
+import PageHeader from '../../components/page-header-component/page-header.component';
 
 import { getFormattedDatePreview } from '../../utils/utils';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,7 +23,7 @@ const ScheduleLock = () => {
 		mode: 'onTouched',
 	});
 
-	const scheduleLockForm = async (values) => {
+	const scheduleLockForm = async values => {
 		try {
 			const { id, date, start, end } = values;
 			let message;
@@ -54,7 +55,7 @@ const ScheduleLock = () => {
 		}
 	};
 
-	const removeScheduleLock = async (id) => {
+	const removeScheduleLock = async id => {
         try {
 			if (window.confirm('Deseja remover esse bloqueio de agenda?')) {
 				await ScheduleLockService.remove(id);
@@ -103,12 +104,9 @@ const ScheduleLock = () => {
 
     return (
         <div className="container">
-			<div className="page__header">
-				<h1 className="page__title">Bloqueio de agenda</h1>
-				<div className="m-t-5">
-					<span className="page__description">Aqui você gerencia o bloqueio de agenda para dias específicos.</span>
-				</div>
-			</div>
+			<PageHeader
+				title="Bloqueio de agenda"
+				description="Aqui você gerencia o bloqueio de agenda para dias específicos." />
 			{isLoading ? (
 				<div className="loading"></div>
 			) : (

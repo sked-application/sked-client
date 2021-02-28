@@ -1,11 +1,12 @@
 import React from 'react';
+import PageHeader from '../../components/page-header-component/page-header.component';
 
 const NotFound = () => {
     return (
         <div className="container">
-            <div className="page__header">
-                <h1 className="page__title">Página não encontrada</h1>
-            </div>
+			<PageHeader
+				title="Página não encontrada"
+				description="O endereço que você está buscando não exite." />
         </div>
     );
 };

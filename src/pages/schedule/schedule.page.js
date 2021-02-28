@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ScheduleService from '../../services/schedule.service';
+import PageHeader from '../../components/page-header-component/page-header.component';
+import CalendarTimeline from '../../components/calendar-timeline-component/calendar-timeline.component';
 import moment from 'moment';
-
-import CalendarTimeline from './components/calendar-timeline.component';
 
 const statusLabels = {
 	CONFIRMED: 'confirmar',
@@ -20,7 +20,6 @@ const Schedules = () => {
 		try {
 			if (window.confirm(`Deseja ${statusLabels[updateStatus]} esse agendamento?`)) {
 				setIsLoading(true);
-				setSchedules([]);
 
 				await ScheduleService.updateStatus({
 					id,
@@ -37,40 +36,27 @@ const Schedules = () => {
 		}
 	};
 
-	const listSchedules = useCallback(async ({ date, status }) => {
+	const listSchedules = useCallback(async () => {
+		setIsLoading(true);
+
 		const { data } = await ScheduleService.findAll({
 			date,
 			status,
 		});
 
-		return data.schedules;
-	}, []);
+		setSchedules(data.schedules);
+		setIsLoading(false);
+	}, [date, status]);
 
     useEffect(() => {
-		let unmounted = false;
-
-        (async () => {
-			setIsLoading(true);
-
-            const data = await listSchedules({ date, status });
-
-            if (!unmounted) {
-				setSchedules(data);
-				setIsLoading(false);
-            }
-        })();
-
-        return () => (unmounted = true);
-	}, [date, status, listSchedules]);
+		listSchedules();
+	}, [listSchedules]);
 
     return (
 		<div className="container">
-			<div className="page__header">
-				<h1 className="page__title">Agendamentos</h1>
-				<div className="m-t-5">
-					<span className="page__description">Gerencie sua lista de agendamentos.</span>
-				</div>
-			</div>
+			<PageHeader
+				title="Agendamentos"
+				description="Gerencie sua lista de agendamentos." />
 			<CalendarTimeline
 				status={status}
 				list={schedules}

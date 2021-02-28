@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import schema from './validators/profile-form.validator';
 import UserService from '../../services/user.service';
 import NumberFormat from 'react-number-format';
+import PageHeader from '../../components/page-header-component/page-header.component';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from "react-hook-form";
@@ -26,15 +27,6 @@ const Profile = () => {
 		defaultValues: schema.form.initialValues,
 		mode: 'onTouched',
 	});
-
-	const getProfile = async () => {
-		setIsLoading(true);
-
-		const { data } = await UserService.profile();
-
-		setProfile(data.user);
-		setIsLoading(false);
-	};
 
 	const handleCloseShowUp = () => {
 		reset();
@@ -78,33 +70,36 @@ const Profile = () => {
 				},
 			});
 
+			getProfile();
 			handleCloseShowUp();
 			alert('Perfil atualizado com sucesso!');
-
-			await getProfile();
 		} catch ({ response }) {
 			alert('Algum erro aconteceu, tente novamente mais tarde.');
 		}
 	};
 
+	const getProfile = useCallback(async () => {
+		setIsLoading(true);
+
+		const { data } = await UserService.profile();
+
+		setProfile(data.user);
+		setIsLoading(false);
+	}, []);
+
     useEffect(() => {
-		(async() => {
-			await getProfile();
-		})();
-    }, []);
+		getProfile();
+    }, [getProfile]);
 
     return (
         <div className="container">
-			<div className="page__header">
-				<h1 className="page__title">Perfil</h1>
-				<div className="m-t-5">
-					<span className="page__description">Gerencie os dados de sua conta.</span>
-				</div>
-			</div>
+			<PageHeader
+				title="Perfil"
+				description="Gerencie os dados de sua conta." />
 			{isLoading ? (
 				<div className="loading"></div>
 			) : (
-				<>
+				<Fragment>
 					{profile && (
 						<div className="card card--outline">
 							<div className="card__header">
@@ -157,18 +152,16 @@ const Profile = () => {
 							</div>
 						</div>
 					)}
-				</>
+				</Fragment>
 			)}
 
 			<ShowUp
 				title="Edição de perfil"
 				isOpen={toggleShow}
-				handleClose={handleCloseShowUp}
-			>
+				handleClose={handleCloseShowUp}>
 				<form
 					onSubmit={handleSubmit(profileForm)}
-					className="flexbox flexbox--column"
-				>
+					className="flexbox flexbox--column">
 					<div className="flexbox__item">
 						<div className="m-b-5">
 							<label htmlFor="userName">
@@ -180,17 +173,12 @@ const Profile = () => {
 							name="userName"
 							type="text"
 							ref={register}
-							className="input input--dark"
-						/>
-						<FormInputError
-							error={errors.userName && errors.userName.message}
-						/>
+							className="input input--dark"/>
+						<FormInputError error={errors.userName && errors.userName.message} />
 					</div>
 					<div className="flexbox__item m-t-16">
 						<div className="m-b-5">
-							<label htmlFor="userCpf">
-								Meu cpf
-							</label>
+							<label htmlFor="userCpf">Meu cpf</label>
 						</div>
 						<input
 							id="userCpf"
@@ -198,37 +186,27 @@ const Profile = () => {
 							type="text"
 							ref={register}
 							placeholder="Cpf sem pontos e barras"
-							className="input input--dark"
-						/>
-						<FormInputError
-							error={errors.userCpf && errors.userCpf.message}
-						/>
+							className="input input--dark" />
+						<FormInputError error={errors.userCpf && errors.userCpf.message} />
 					</div>
 
 					{profile && profile.is_root && (
-						<>
+						<Fragment>
 							<div className="flexbox__item m-t-16">
 								<div className="m-b-5">
-									<label htmlFor="accountName">
-										Nome da conta
-									</label>
+									<label htmlFor="accountName">Nome da conta</label>
 								</div>
 								<input
 									id="accountName"
 									name="accountName"
 									type="text"
 									ref={register}
-									className="input input--dark"
-								/>
-								<FormInputError
-									error={errors.accountName && errors.accountName.message}
-								/>
+									className="input input--dark" />
+								<FormInputError error={errors.accountName && errors.accountName.message} />
 							</div>
 							<div className="flexbox__item m-t-16">
 								<div className="m-b-5">
-									<label htmlFor="accountCpfCnpj">
-										Cpf/Cnpj da conta
-									</label>
+									<label htmlFor="accountCpfCnpj">Cpf/Cnpj da conta</label>
 								</div>
 								<input
 									id="accountCpfCnpj"
@@ -236,17 +214,12 @@ const Profile = () => {
 									type="text"
 									ref={register}
 									placeholder="Cpf/Cnpj sem pontos e barras"
-									className="input input--dark"
-								/>
-								<FormInputError
-									error={errors.accountCpfCnpj && errors.accountCpfCnpj.message}
-								/>
+									className="input input--dark" />
+								<FormInputError error={errors.accountCpfCnpj && errors.accountCpfCnpj.message} />
 							</div>
 							<div className="flexbox__item m-t-16">
 								<div className="m-b-5">
-									<label htmlFor="accountTelephone">
-										Telefone
-									</label>
+									<label htmlFor="accountTelephone">Telefone</label>
 								</div>
 								<Controller
 									id="accountTelephone"
@@ -257,31 +230,22 @@ const Profile = () => {
 										mask="_"
 										type="tel"
 										className="input input--dark"
-										placeholder="Telefone"
-									/>}
-								/>
-								<FormInputError
-									error={errors.accountTelephone && errors.accountTelephone.message}
-								/>
+										placeholder="Telefone"/>} />
+								<FormInputError error={errors.accountTelephone && errors.accountTelephone.message} />
 							</div>
 							<div className="flexbox__item m-t-16">
 								<div className="m-b-5">
-									<label htmlFor="accountAddress">
-										Endereço
-									</label>
+									<label htmlFor="accountAddress">Endereço</label>
 								</div>
 								<input
 									id="accountAddress"
 									name="accountAddress"
 									type="text"
 									ref={register}
-									className="input input--dark"
-								/>
-								<FormInputError
-									error={errors.accountAddress && errors.accountAddress.message}
-								/>
+									className="input input--dark" />
+								<FormInputError error={errors.accountAddress && errors.accountAddress.message} />
 							</div>
-						</>
+						</Fragment>
 					)}
 
 					<div className="flexbox__item m-t-16">

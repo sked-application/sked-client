@@ -21,7 +21,7 @@ const PageHeader = memo(({
 
 PageHeader.displayName = 'PageHeader';
 PageHeader.propTypes = {
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
 	description: PropTypes.string,
 };
 
