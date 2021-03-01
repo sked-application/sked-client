@@ -1,5 +1,5 @@
 import React from 'react';
-import TimegridForm from './components/timegrid-form.component';
+import TimegridForm from './components/timegrid-form-component/timegrid-form.component';
 import PageHeader from '../../components/page-header-component/page-header.component';
 
 const Settings = () => {

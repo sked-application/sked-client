@@ -6,8 +6,8 @@ import PageHeader from '../../components/page-header-component/page-header.compo
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from "react-hook-form";
-import { FormInputError } from '../../components/input-form-error.component';
-import { ShowUp } from '../../components/show-up.component';
+import { FormInputError } from '../../components/input-form-error-component/input-form-error.component';
+import { ShowUp } from '../../components/modal-component/modal.component';
 
 const Profile = () => {
 	const [isLoading, setIsLoading] = useState(false);

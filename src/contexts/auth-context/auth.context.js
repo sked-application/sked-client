@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import api from '../api/api';
+import api from '../../api/api';
 
 import { useHistory } from 'react-router-dom';
 

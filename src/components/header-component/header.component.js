@@ -2,8 +2,10 @@ import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../contexts/auth.context';
+import { AuthContext } from '../../contexts/auth-context/auth.context';
 import { AiOutlineMenu } from 'react-icons/ai';
+
+import './header.component.scss';
 
 const Header = ({ currentPathname }) => {
     const { isAuthenticated, handleSignOut, userAccountUrl } = useContext(AuthContext);
@@ -19,7 +21,7 @@ const Header = ({ currentPathname }) => {
             <div className="container">
                 <div className="header__content">
                     <div>
-                        <span className="header__logo">Sked App</span>
+                        <span className="header__logo">SKED</span>
                     </div>
 
                     {isAuthenticated && (

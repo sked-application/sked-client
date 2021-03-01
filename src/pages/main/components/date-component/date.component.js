@@ -3,7 +3,7 @@ import {
 	AiOutlineCalendar,
 } from "react-icons/ai";
 
-import { MainContext } from '../contexts/main.context';
+import { MainContext } from '../../contexts/main.context';
 const MainDate = () => {
 	const {
 		startDate,
@@ -28,8 +28,7 @@ const MainDate = () => {
                     type="date"
                     value={startDate}
 					onChange={(event) => handleChangeDate(event)}
-					className="input input--dark"
-                />
+					className="input input--dark" />
             </div>
         </div>
     );

@@ -5,6 +5,10 @@
     font-size: 14px;
 	display: inline-block;
 
+	&--outline {
+		border-color: $text-color;
+	}
+
 	&--dark {
 		background-color: var(--purple);
 		color: #ffffff;
@@ -19,10 +23,6 @@
 		a {
 			color: $text-color;
 		}
-	}
-
-	&--outline {
-		border-color: $text-color;
 	}
 
 	&--secondary {

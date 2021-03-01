@@ -1,18 +1,24 @@
-import React, { useState, useContext, useEffect } from 'react';
-import TimegridService from '../../../services/timegrid.service';
+import React, {
+	useState,
+	useContext,
+	useEffect,
+	useCallback,
+	Fragment,
+} from 'react';
+import TimegridService from '../../../../services/timegrid.service';
 
+import { MainContext } from '../../contexts/main.context';
+import { getDayLabelByDate } from '../../../../utils/utils';
 import {
 	AiOutlineClockCircle,
 } from "react-icons/ai";
-import { MainContext } from '../contexts/main.context';
-import { getDayLabelByDate } from '../../../utils/utils';
 
 const MainSlotGrid = () => {
 	const {
+		user,
+		service,
 		startDate,
 		accountInfo,
-		service,
-		user,
 		setScheduleSlot
 	} = useContext(MainContext);
     const [isLoading, setIsLoading] = useState();
@@ -21,43 +27,38 @@ const MainSlotGrid = () => {
 
     const handleSetSlot = (slot, index) => {
         setActivedSlot(index);
-        setScheduleSlot({ date: startDate, ...slot });
+        setScheduleSlot({
+			date: startDate,
+			...slot
+		});
     };
 
+	const listSlots = useCallback(async () => {
+		if (!service.id || !user.id) {
+			setTimegrid([]);
+			setIsLoading(false);
+			return;
+		}
+
+		const { data } = await TimegridService.findByDay({
+			account_id: accountInfo.id,
+			date: startDate,
+			service_id: service.id,
+			user_id: user.id,
+			service_duration: service.duration,
+		});
+
+		if (data.available_timegrid) {
+			setTimegrid(data.available_timegrid);
+		}
+
+		setActivedSlot();
+		setIsLoading(false);
+	}, [accountInfo, startDate, service, user]);
+
     useEffect(() => {
-        let unmounted = false;
-
-        setIsLoading(true);
-
-        (async () => {
-            if (!service.id || !user.id) {
-                if (unmounted) return;
-
-                setTimegrid([]);
-                setIsLoading(false);
-                return;
-            }
-
-            const { data } = await TimegridService.findByDay({
-                account_id: accountInfo.id,
-                date: startDate,
-                service_id: service.id,
-                user_id: user.id,
-                service_duration: service.duration,
-            });
-
-            if (unmounted) return;
-
-            if (data.available_timegrid) {
-                setTimegrid(data.available_timegrid);
-            }
-
-            setActivedSlot();
-            setIsLoading(false);
-        })();
-
-        return () => (unmounted = true);
-    }, [accountInfo, startDate, service, user]);
+        listSlots();
+    }, [listSlots]);
 
     return (
         <div className="card card--slots">
@@ -69,34 +70,29 @@ const MainSlotGrid = () => {
 				</div>
 				<div className="flexbox flexbox--column flexbox--end">
 					<span className="card__subtitle m-b-5">{getDayLabelByDate(startDate)}</span>
-
 					{service && service.show_price && (
 						<span className="card__subtitle color--green">R$ {service.price}</span>
 					)}
 				</div>
             </div>
-
 			{service.id && user.id && !!timegrid.length && (
 				<div>
 					<span className="card__subtitle color--purple">{service.name}</span>
 				</div>
 			)}
-
             {isLoading ? (
-                <div className="loading loading--purple m-b-16"></div>
+                <div className="loading m-b-16"></div>
             ) : (
-                <>
+                <Fragment>
 					{!!timegrid.length && (
 						<div className="slot__box">
 							{timegrid.map((slot, index) => (
 								<div
 									key={index}
-									className="slot__item"
-								>
+									className="slot__item">
 									<div
 										onClick={() => handleSetSlot(slot, index)}
-										className={`badge badge--light badge--outline m-t-5 m-b-5 ${activedSlot === index ? 'actived' : ''}`}
-									>
+										className={`badge badge--light badge--outline m-t-5 m-b-5 ${activedSlot === index ? 'actived' : ''}`}>
 										<div className="badge__content">
 											<span>{slot.start.slice(0, 5)}</span>
 											<span>{slot.end.slice(0, 5)}</span>
@@ -106,13 +102,11 @@ const MainSlotGrid = () => {
 							))}
 						</div>
 					)}
-
                     {service.id && user.id && !timegrid.length && (
 						<div className="slot__pending">
 							<span>Nenhum horário disponível</span>
 						</div>
                     )}
-
                     {!user.id ? (
 						<div className="slot__pending">
 							<span>Selecione um profissional.</span>
@@ -121,8 +115,8 @@ const MainSlotGrid = () => {
 						<div className="slot__pending">
 							<span>Selecione um serviço.</span>
 						</div>
-					) : ''}
-                </>
+					) : <Fragment />}
+                </Fragment>
             )}
         </div>
     );

@@ -7,8 +7,8 @@ import PageHeader from '../../components/page-header-component/page-header.compo
 import { BsPlus } from 'react-icons/bs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from "react-hook-form";
-import { ShowUp, ShowUpButton } from '../../components/show-up.component';
-import { FormInputError } from '../../components/input-form-error.component';
+import { ShowUp, ShowUpButton } from '../../components/modal-component/modal.component';
+import { FormInputError } from '../../components/input-form-error-component/input-form-error.component';
 import {
 	AiOutlineClockCircle,
 	AiOutlineDollar,
@@ -26,7 +26,7 @@ const Services = () => {
 		mode: 'onTouched',
 	});
 
-    const serviceForm = async (values) => {
+    const serviceForm = async values => {
 		try {
 			const { id,  name, duration, price, showPrice } = values;
 			let message;
@@ -60,7 +60,7 @@ const Services = () => {
 		}
 	};
 
-    const removeService = async (id) => {
+    const removeService = async id => {
         try {
 			if (window.confirm('Deseja remover esse serviço?')) {
 				await ServiceService.remove(id);
@@ -79,7 +79,7 @@ const Services = () => {
 		if (isEdit) setIsEdit(false);
 	};
 
-	const handleOpenShowUp = (data) => {
+	const handleOpenShowUp = data => {
 		if (data) {
 			setValue("id", data.id);
 			setValue("name", data.name);
@@ -122,13 +122,10 @@ const Services = () => {
 					{services.map((item) => (
 						<div key={item.id} className="card card--outline">
 							<div className="card__header">
-								<h2 className="card__title">
-									{item.name}
-								</h2>
+								<h2 className="card__title">{item.name}</h2>
 								<strong
 									onClick={() => handleOpenShowUp(item)}
-									className="card__subtitle color--blue cursor--pointer"
-								>
+									className="card__subtitle color--blue cursor--pointer">
 									Editar
 								</strong>
 							</div>
@@ -151,7 +148,6 @@ const Services = () => {
 							</div>
 						</div>
 					))}
-
 					{!services.length && (
 						<div className="text--center">
 							<span>Clique no botão acima e adicione seus serviços.</span>
@@ -159,7 +155,6 @@ const Services = () => {
 					)}
 				</Fragment>
 			)}
-
 			<ShowUp
 				title={`${isEdit ? 'Atualizar serviço' : 'Adicione um serviço'}`}
 				isOpen={toggleShow}
@@ -176,7 +171,7 @@ const Services = () => {
 							name="name"
 							type="text"
 							ref={register}
-							className="input input--dark"/>
+							className="input input--dark" />
 						<FormInputError error={errors.name && errors.name.message} />
 					</div>
 					<div className="flexbox__item m-t-16">
@@ -188,8 +183,7 @@ const Services = () => {
 							name="duration"
 							type="number"
 							ref={register}
-							className="input input--dark"
-						/>
+							className="input input--dark" />
 						<FormInputError error={errors.duration && errors.duration.message} />
 					</div>
 					<div className="flexbox__item m-t-16">

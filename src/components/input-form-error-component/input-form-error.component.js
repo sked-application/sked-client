@@ -1,6 +1,8 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
+import './input-form-error.component.scss';
+
 const MemoizedFormInputError = ({ error }) => {
     return error ? (
         <span className="input-form-error">{error}</span>

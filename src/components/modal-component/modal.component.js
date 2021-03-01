@@ -2,6 +2,8 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { BsX } from "react-icons/bs";
 
+import './modal.component.scss';
+
 const MemoizedShowUp = ({ children, title, isOpen, handleClose }) => {
 	if (window && window.innerWidth > 720) {
 		const bodyElement = document.getElementById('body');

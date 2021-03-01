@@ -6,13 +6,12 @@
 	margin-top: 5px;
 
 	> p {
-		color: $color-white;
+		color: var(--dark);
 		margin-bottom: 5px;
 		font-size: 14px;
-		font-weight: 300;
 
 		> a {
-			color: $color-white;
+			color: var(--dark);
 			text-decoration: underline;
 		}
 	}

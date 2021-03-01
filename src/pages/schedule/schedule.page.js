@@ -26,10 +26,7 @@ const Schedules = () => {
 					status: updateStatus
 				});
 
-				const data = await listSchedules({ date, status });
-
-				setSchedules(data);
-				setIsLoading(false);
+				listSchedules();
 			}
 		} catch ({ response }) {
 			alert(response.data);

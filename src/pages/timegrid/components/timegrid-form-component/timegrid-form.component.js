@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import TimegridWeekDay from './week-day.component';
-import TimegridService from '../../../services/timegrid.service';
-import schema from '../validators/timegrid-form.validator';
+import TimegridWeekDay from '../week-day-component/week-day.component';
+import TimegridService from '../../../../services/timegrid.service';
+import schema from '../../validators/timegrid-form.validator';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
-import { ShowUp } from '../../../components/show-up.component';
+import { ShowUp } from '../../../../components/modal-component/modal.component';
 import { BsPlus } from 'react-icons/bs';
+import { Fragment } from 'react';
 
 const initialTimegrid = {
     0: [],
@@ -32,10 +33,14 @@ const TimegridForm = () => {
 		mode: 'onTouched',
 	});
 
-    const timegridForm = (values) => {
+    const timegridForm = values => {
 		const { start, end } = values;
 
-		setFormData([...formData, { start, end, day }]);
+		setFormData([
+			...formData,
+			{ start, end, day },
+		]);
+
 		reset();
 	};
 
@@ -104,7 +109,6 @@ const TimegridForm = () => {
                     <span>{error.message}</span>
                 </div>
             )}
-
             {isLoading ? (
                 <span className="loading"></span>
             ) : (
@@ -113,57 +117,47 @@ const TimegridForm = () => {
 						label="Domingo"
 						timegrid={timegrid[0]}
 						setTimegrid={setTimegrid}
-						handleOpen={() => handleOpenShowUp(0)}
-					/>
+						handleOpen={() => handleOpenShowUp(0)} />
 					<TimegridWeekDay
 						label="Segunda-feira"
 						timegrid={timegrid[1]}
 						setTimegrid={setTimegrid}
-						handleOpen={() => handleOpenShowUp(1)}
-					/>
+						handleOpen={() => handleOpenShowUp(1)} />
 					<TimegridWeekDay
 						label="Terça-feira"
 						timegrid={timegrid[2]}
 						setTimegrid={setTimegrid}
-						handleOpen={() => handleOpenShowUp(2)}
-					/>
+						handleOpen={() => handleOpenShowUp(2)} />
 					<TimegridWeekDay
 						label="Quarta-feira"
 						timegrid={timegrid[3]}
 						setTimegrid={setTimegrid}
-						handleOpen={() => handleOpenShowUp(3)}
-					/>
+						handleOpen={() => handleOpenShowUp(3)} />
 					<TimegridWeekDay
 						label="Quinta-feira"
 						timegrid={timegrid[4]}
 						setTimegrid={setTimegrid}
-						handleOpen={() => handleOpenShowUp(4)}
-					/>
+						handleOpen={() => handleOpenShowUp(4)} />
 					<TimegridWeekDay
 						label="Sexta-feira"
 						timegrid={timegrid[5]}
 						setTimegrid={setTimegrid}
-						handleOpen={() => handleOpenShowUp(5)}
-					/>
+						handleOpen={() => handleOpenShowUp(5)} />
 					<TimegridWeekDay
 						label="Sábado"
 						timegrid={timegrid[6]}
 						setTimegrid={setTimegrid}
-						handleOpen={() => handleOpenShowUp(6)}
-					/>
+						handleOpen={() => handleOpenShowUp(6)} />
 				</ul>
             )}
-
 			<ShowUp
 				title="Gerenciar horário"
 				isOpen={toggleShow}
-				handleClose={handleCloseShowUp}
-			>
-				<>
+				handleClose={handleCloseShowUp}>
+				<Fragment>
 					<form
 						onSubmit={handleSubmit(timegridForm)}
-						className="flexbox flexbox--column"
-					>
+						className="flexbox flexbox--column">
 						<div className="flexbox flexbox--column">
 							<div className="flexbox flexbox--end">
 								<div className="flexbox__item">
@@ -175,8 +169,7 @@ const TimegridForm = () => {
 										type="time"
 										id="start"
 										ref={register}
-										className="input input--dark"
-									/>
+										className="input input--dark"/>
 								</div>
 								<div className="flexbox__item m-l-16">
 									<div className="m-b-5">
@@ -189,14 +182,12 @@ const TimegridForm = () => {
 										type="time"
 										id="end"
 										ref={register}
-										className="input input--dark"
-									/>
+										className="input input--dark" />
 								</div>
 								<button
 									type="submit"
 									disabled={!formState.isValid}
-									className="button button--purple m-l-16"
-								>
+									className="button button--purple m-l-16">
 									<BsPlus fontSize="35" fontWeight="700"/>
 								</button>
 							</div>
@@ -217,12 +208,11 @@ const TimegridForm = () => {
 					<div className="flexbox m-t-16">
 						<button
 							onClick={handleSubmitTimegrid}
-							className="button button--block button--purple"
-						>
+							className="button button--block button--purple">
 							Salvar grade de horário
 						</button>
 					</div>
-				</>
+				</Fragment>
 			</ShowUp>
         </div>
     );

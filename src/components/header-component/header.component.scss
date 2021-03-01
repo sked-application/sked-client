@@ -13,16 +13,17 @@
     }
 
     &__logo {
-		padding: 5px 10px;
-		border-radius: 5px;
-		background-color: var(--purple);
-		color: var(--white);
+		padding: 4px 8px;
+		border-radius: 4px;
+		color: var(--purple);
 		font-weight: 700;
 		display: inline-block;
+		border: 2px solid var(--purple);
     }
 
     &__toggle {
         font-size: 28px;
+		color: var(--dark);
         cursor: pointer;
 	}
 
@@ -60,7 +61,7 @@
         li {
             padding: 7.5px 15px;
             a {
-                color: $text-color;
+                color: var(--dark);
             }
         }
     }

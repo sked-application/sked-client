@@ -1,9 +1,9 @@
 import React, { Fragment, useContext } from 'react';
-import MainSlotGrid from './components/slotgrid.component';
-import MainScheduleForm from './components/schedule-form.component';
-import MainDate from './components/date.component';
-import MainServices from './components/services.component';
-import MainUsers from './components/users.component';
+import MainSlotGrid from './components/slotgrid-component/slotgrid.component';
+import MainScheduleForm from './components/schedule-form-component/schedule-form.component';
+import MainDate from './components/date-component/date.component';
+import MainServices from './components/services-component/services.component';
+import MainUsers from './components/users-component/users.component';
 import PageHeader from '../../components/page-header-component/page-header.component';
 
 import { MainProvider, MainContext } from './contexts/main.context';

@@ -5,6 +5,11 @@
     width: 100%;
 	background: #ffffff;
 
+	&--outline {
+		border: 1px solid #eaeaea;
+		padding: 16px;
+	}
+
     &__header {
         display: flex;
         align-items: center;
@@ -30,11 +35,6 @@
     &__subtitle {
 		font-size: 14px;
     }
-
-	&--outline {
-		border: 1px solid #eaeaea;
-		padding: 16px;
-	}
 
 	&__content {
 		svg {

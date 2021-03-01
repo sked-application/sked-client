@@ -5,8 +5,8 @@ import PageHeader from '../../components/page-header-component/page-header.compo
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
-import { AuthContext } from '../../contexts/auth.context';
-import { FormInputError } from '../../components/input-form-error.component';
+import { AuthContext } from '../../contexts/auth-context/auth.context';
+import { FormInputError } from '../../components/input-form-error-component/input-form-error.component';
 
 import {
 	Link,
@@ -79,8 +79,7 @@ const RecoverPassword = () => {
 						ref={register}
 						className="input"
 						placeholder="Email"
-						disabled={isLoading}
-					/>
+						disabled={isLoading} />
 					<FormInputError error={errors.email && errors.email.message} />
 				</div>
                 <div className="recover-password__field">

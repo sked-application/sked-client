@@ -11,7 +11,7 @@
 	border-style: solid;
 	border-color: transparent;
 	transition: all .3s linear;
-	color: $text-color;
+	color: var(--dark);
 	cursor: pointer;
 	$self: &;
 
@@ -26,7 +26,7 @@
 		opacity: 0.5;
 		background-color: #ffffff;
 		border-color: #d7d7d7;
-		color: $text-color;
+		color: var(--dark);
 	}
 
 	&--small {
@@ -57,13 +57,7 @@
 		color: white;
 	}
 
-	&--danger {
-		border-color: $color-danger;
-		background-color: $color-danger;
-		color: white;
-	}
-
 	&--outline {
-		border-color: $text-color;
+		border-color: var(--dark);
 	}
 }
