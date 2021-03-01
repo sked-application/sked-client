@@ -1,10 +1,15 @@
-import React, { memo } from 'react';
+import React, { memo, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { BsX } from "react-icons/bs";
 
 import './modal.component.scss';
 
-const MemoizedShowUp = ({ children, title, isOpen, handleClose }) => {
+const MemoizedShowUp = ({
+	children,
+	title,
+	isOpen,
+	handleClose,
+}) => {
 	if (window && window.innerWidth > 720) {
 		const bodyElement = document.getElementById('body');
 
@@ -20,26 +25,22 @@ const MemoizedShowUp = ({ children, title, isOpen, handleClose }) => {
 	}
 
     return (
-		<>
-			<div
-				className={`show-up ${isOpen ? 'show-up--active' : ''}`}
-			>
-				<div className={`show-up__overlay ${isOpen ? 'show-up__overlay--active' : ''}`}
+		<Fragment>
+			<div className={`show-up ${isOpen ? 'show-up--active' : ''}`}>
+				<div
 					onClick={handleClose}
-				></div>
+					className={`show-up__overlay ${isOpen ? 'show-up__overlay--active' : ''}`} />
 				<div className="show-up__modal">
 					<div className="show-up__header">
 						<h2 className="show-up__title">{title}</h2>
 						<div onClick={handleClose} className="show-up__close">
-							<BsX fontSize="34"/>
+							<BsX fontSize="34" />
 						</div>
 					</div>
-					<div className="show-up__content">
-						{children}
-					</div>
+					<div className="show-up__content">{children}</div>
 				</div>
 			</div>
-		</>
+		</Fragment>
     );
 };
 
@@ -52,7 +53,7 @@ MemoizedShowUp.propTypes = {
 
 export const ShowUp = memo(MemoizedShowUp);
 
-const MemoizedShowUpButton = (props) => {
+const MemoizedShowUpButton = props=> {
     return (
         <button {...props} className="show-up__button cursor--pointer">
 			{props.children}
