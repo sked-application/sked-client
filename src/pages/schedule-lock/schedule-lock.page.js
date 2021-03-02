@@ -127,7 +127,7 @@ const ScheduleLock = () => {
 									<h2 className="card__title">{getFormattedDatePreview(item.date)}</h2>
 									<strong
 										onClick={() => handleOpenShowUp(item)}
-										className="card__subtitle color--blue cursor--pointer">
+										className="card__subtitle color--purple cursor--pointer">
 										Editar
 									</strong>
 								</div>

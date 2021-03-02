@@ -6,11 +6,10 @@ import { Link } from 'react-router-dom';
 import {
 	AiOutlineClockCircle,
 	AiOutlineCheck,
-	AiOutlineForm,
-	AiOutlineDollar,
+	AiOutlineCarryOut,
 	AiOutlineLeft,
 	AiOutlineRight,
-	AiOutlinePhone,
+	AiOutlineMobile,
 	AiOutlineCloseCircle,
 	AiOutlineCheckCircle,
 	AiOutlineUser,
@@ -144,27 +143,30 @@ const CalendarTimeline = ({
 									</div>
 									<div className="calendar-timeline__card__body">
 										<div className="calendar-timeline__card__content">
-											<div className="calendar-timeline__card__service">
-												<AiOutlineForm /> {schedule.service.name}
+											<div className="calendar-timeline__card__item">
+												<span><AiOutlineCarryOut /></span>
+												{schedule.service.name}
 											</div>
 											{isCustomerSchudule ? (
-												<div className="calendar-timeline__card__user">
-													<AiOutlineUser /> {schedule.user.name}
+												<div className="calendar-timeline__card__item">
+													<span><AiOutlineUser /></span>
+													{schedule.user.name}
 												</div>
 											) : (
-												<div className="calendar-timeline__card__phone">
-													<AiOutlinePhone />
+												<div className="calendar-timeline__card__item">
+													<span><AiOutlineMobile /></span>
 													<a href={`tel:+55${schedule.customer.telephone}`}>{schedule.customer.telephone}</a>
 												</div>
 											)}
 										</div>
 										<div className="calendar-timeline__card__info">
-											<span className="calendar-timeline__card__time">
-												<AiOutlineClockCircle /> {schedule.start.slice(0, 5)}
-											</span>
-											<span className="calendar-timeline__card__price">
-												<AiOutlineDollar /> {schedule.price}
-											</span>
+											<strong className="calendar-timeline__card__item">
+												<span><AiOutlineClockCircle /></span>
+												{schedule.start.slice(0, 5)}
+											</strong>
+											<strong className="calendar-timeline__card__item">
+												R$ {schedule.price}
+											</strong>
 										</div>
 									</div>
 									{status === 'SCHEDULED' && (
@@ -176,14 +178,14 @@ const CalendarTimeline = ({
 														<AiOutlineCheck /> Confirmar
 													</button>
 												)}
-												<button onClick={() => updateStatus(schedule.id, 'CANCELED')} className="button button--small">
-													<AiOutlineCloseCircle /> Cancelar
-												</button>
 												{!isCustomerSchudule && schedule.confirmed_at && (
 													<button onClick={() => updateStatus(schedule.id, 'FINISHED')} className="button button--small">
 														<AiOutlineCheckCircle /> Finalizar
 													</button>
 												)}
+												<button onClick={() => updateStatus(schedule.id, 'CANCELED')} className="button button--small">
+													<AiOutlineCloseCircle /> Cancelar
+												</button>
 											</div>
 										</Fragment>
 									)}

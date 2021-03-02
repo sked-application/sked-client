@@ -104,7 +104,7 @@ const Profile = () => {
 						<div className="card card--outline">
 							<div className="card__header">
 								<h2 className="card__title">Meus dados</h2>
-								<strong onClick={() => handleOpenShowUp(profile)} className="card__subtitle color--blue cursor--pointer">Gerenciar</strong>
+								<strong onClick={() => handleOpenShowUp(profile)} className="card__subtitle color--purple cursor--pointer">Gerenciar</strong>
 							</div>
 							<div className="flexbox flexbox--column m-b-30">
 								<div className="m-t-10">

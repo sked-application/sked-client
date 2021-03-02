@@ -10,6 +10,7 @@ import { Controller, useForm } from "react-hook-form";
 import { ShowUp, ShowUpButton } from '../../components/modal-component/modal.component';
 import FormInputError from '../../components/input-form-error-component/input-form-error.component';
 import {
+	AiOutlineCarryOut,
 	AiOutlineClockCircle,
 	AiOutlineDollar,
 } from "react-icons/ai";
@@ -122,20 +123,20 @@ const Services = () => {
 					{services.map((item) => (
 						<div key={item.id} className="card card--outline">
 							<div className="card__header">
-								<h2 className="card__title">{item.name}</h2>
+								<h2 className="card__title m-r-16">{item.name}</h2>
 								<strong
 									onClick={() => handleOpenShowUp(item)}
-									className="card__subtitle color--blue cursor--pointer">
+									className="card__subtitle color--purple cursor--pointer">
 									Editar
 								</strong>
 							</div>
 							<div className="card__content flexbox flexbox--end flexbox__justify--between">
 								<div>
-									<div className="flexbox color--blue">
+									<div className="flexbox">
 										<AiOutlineClockCircle /> {item.duration} minutos
 									</div>
-									<div className="flexbox color--blue m-t-16">
-										<AiOutlineDollar /> {item.price}
+									<div className="flexbox m-t-16">
+										<strong>R$ {item.price}</strong>
 									</div>
 								</div>
 								<div className="flexbox m-t-16">

@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import ServiveService from '../../../../services/service.service';
 
 import {
-	AiOutlineForm,
+	AiOutlineCarryOut,
 } from "react-icons/ai";
 import { MainContext } from '../../contexts/main.context';
 
@@ -40,7 +40,7 @@ const MainService = () => {
         <div className="card card--service card--outline">
             <div className="card__header">
                 <h2 className="card__title">
-					<AiOutlineForm /> Serviço
+					<AiOutlineCarryOut /> Serviço
 				</h2>
             </div>
             <div className="m-t-5">

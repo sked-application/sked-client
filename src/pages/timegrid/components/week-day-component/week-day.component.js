@@ -9,10 +9,10 @@ const TimegridWeekDay = ({
     return (
         <li className="card card--outline">
             <div className="card__header">
-				<h2 className="card__title flexbox flexbox--center">{label}</h2>
+				<h2 className="card__title color flexbox flexbox--center">{label}</h2>
 				<strong
 					onClick={handleOpen}
-					className="card__subtitle color--blue cursor--pointer">
+					className="card__subtitle color--purple cursor--pointer">
 					Gerenciar
 				</strong>
             </div>

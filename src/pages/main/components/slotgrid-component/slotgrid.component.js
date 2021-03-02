@@ -38,9 +38,10 @@ const MainSlotGrid = () => {
 	const listSlots = useCallback(async () => {
 		if (!service.id || !user.id) {
 			setTimegrid([]);
-			setIsLoading(false);
 			return;
 		}
+
+		setIsLoading(true);
 
 		const { data } = await TimegridService.findByDay({
 			account_id: accountInfo.id,
