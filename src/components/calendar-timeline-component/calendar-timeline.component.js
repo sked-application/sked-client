@@ -35,7 +35,7 @@ const generateCalendarDates = (startDate, endDate) => {
 	}
 
 	return dates;
-}
+};
 
 const CalendarTimeline = ({
 	list,
@@ -102,8 +102,7 @@ const CalendarTimeline = ({
 							onClick={() => handleChangeDate(currentDate)}
 							className={`
 								calendar-timeline__date__item
-								${currentDate === date ? 'calendar-timeline__date__item--active' : ''}
-							`}>
+								${currentDate === date ? 'calendar-timeline__date__item--active' : ''} `}>
 							<div>
 								<strong className="calendar-timeline__date__title">{currentDate.split('-')[2]}</strong>
 							</div>
@@ -169,27 +168,29 @@ const CalendarTimeline = ({
 										</div>
 									</div>
 									{status === 'SCHEDULED' && (
-										<div className="calendar-timeline__card__actions">
-											{!schedule.confirmed_at && (
-												<button onClick={() => updateStatus(schedule.id, 'CONFIRMED')} className="button button--small">
-													<AiOutlineCheck /> Confirmar
+										<Fragment>
+											<div className="calendar-timeline__card__separator"></div>
+											<div className="calendar-timeline__card__actions">
+												{!schedule.confirmed_at && (
+													<button onClick={() => updateStatus(schedule.id, 'CONFIRMED')} className="button button--small">
+														<AiOutlineCheck /> Confirmar
+													</button>
+												)}
+												<button onClick={() => updateStatus(schedule.id, 'CANCELED')} className="button button--small">
+													<AiOutlineCloseCircle /> Cancelar
 												</button>
-											)}
-											<button onClick={() => updateStatus(schedule.id, 'CANCELED')} className="button button--small">
-												<AiOutlineCloseCircle /> Cancelar
-											</button>
-											{!isCustomerSchudule && schedule.confirmed_at && (
-												<button onClick={() => updateStatus(schedule.id, 'FINISHED')} className="button button--small">
-													<AiOutlineCheckCircle /> Finalizar
-												</button>
-											)}
-										</div>
+												{!isCustomerSchudule && schedule.confirmed_at && (
+													<button onClick={() => updateStatus(schedule.id, 'FINISHED')} className="button button--small">
+														<AiOutlineCheckCircle /> Finalizar
+													</button>
+												)}
+											</div>
+										</Fragment>
 									)}
 								</div>
 							))}
 						</Fragment>
 					)}
-
 					{!isLoading && !list.length && (
 						<div className="calendar-timeline__card calendar-timeline__card--not-found">
 							<span>Nenhum {isCustomerSchudule ? 'compromisso' : 'agendamento'} para este dia.</span>

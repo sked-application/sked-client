@@ -1,10 +1,10 @@
 .button {
-    height: 50px;
+    height: 48px;
     border-radius: 6px;
-    font-weight: 600;
+    font-weight: bold;
     border: none;
     font-size: 14px;
-    padding: 0 12px;
+    padding: 0 16px;
     background-color: #ffffff;
 	display: inline-block;
 	border-width: 1px;
@@ -42,12 +42,6 @@
 	&--purple {
 		border-color: var(--purple);
 		background-color: var(--purple);
-		color: white;
-	}
-
-	&--secondary {
-		border-color: var(--blue);
-		background-color: var(--blue);
 		color: white;
 	}
 

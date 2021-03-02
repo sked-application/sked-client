@@ -3,10 +3,10 @@ import schema from './validators/profile-form.validator';
 import UserService from '../../services/user.service';
 import NumberFormat from 'react-number-format';
 import PageHeader from '../../components/page-header-component/page-header.component';
+import FormInputError from '../../components/input-form-error-component/input-form-error.component';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from "react-hook-form";
-import { FormInputError } from '../../components/input-form-error-component/input-form-error.component';
 import { ShowUp } from '../../components/modal-component/modal.component';
 
 const Profile = () => {

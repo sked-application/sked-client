@@ -8,7 +8,7 @@ import { BsPlus } from 'react-icons/bs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from "react-hook-form";
 import { ShowUp, ShowUpButton } from '../../components/modal-component/modal.component';
-import { FormInputError } from '../../components/input-form-error-component/input-form-error.component';
+import FormInputError from '../../components/input-form-error-component/input-form-error.component';
 import {
 	AiOutlineClockCircle,
 	AiOutlineDollar,

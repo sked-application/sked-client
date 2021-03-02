@@ -1,6 +1,6 @@
 .badge {
     padding: 7.5px;
-	border: 1px solid #ffffff;
+	border: 1px solid var(--white);
     border-radius: 4px;
     font-size: 14px;
 	display: inline-block;
@@ -11,25 +11,19 @@
 
 	&--dark {
 		background-color: var(--purple);
-		color: #ffffff;
+		color: var(--white);
+
 		a {
-			color: #ffffff;
+			color: var(--white);
 		}
 	}
 
 	&--light {
-		background-color: #ffffff;
-		color: $text-color;
-		a {
-			color: $text-color;
-		}
-	}
+		background-color: var(--white);
+		color: var(--dark);
 
-	&--secondary {
-		background-color: $secondary;
-		color: #ffffff;
 		a {
-			color: #ffffff;
+			color: var(--dark);
 		}
 	}
 }

@@ -2,48 +2,28 @@
 	.card__title{
 		color: var(--blue);
 	}
-
-// 	.card__header{
-// 		border-color: #ecf6ff;
-// 	}
 }
 
 .card--professional {
 	.card__title{
 		color: var(--orange);
 	}
-
-	// .card__header{
-	// 	border-color: #ffece6;
-	// }
 }
 
 .card--service {
 	.card__title{
 		color: var(--purple);
 	}
-
-	// .card__header{
-	// 	border-color: #f6f4ff;
-	// }
 }
 
 .card--slots {
 	.card__title{
 		color: var(--green);
 	}
-
-	// .card__header{
-	// 	border-color: #fffbf0;
-	// }
 }
 
 .card--schedule {
 	.card__title{
 		color: var(--dark);
 	}
-
-	// .card__header{
-	// 	border-color: #fffbf0;
-	// }
 }

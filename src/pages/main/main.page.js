@@ -5,6 +5,7 @@ import MainDate from './components/date-component/date.component';
 import MainServices from './components/services-component/services.component';
 import MainUsers from './components/users-component/users.component';
 import PageHeader from '../../components/page-header-component/page-header.component';
+import AccountContact from './components/account-contact-component/account-contact.component';
 
 import { MainProvider, MainContext } from './contexts/main.context';
 import { Redirect } from 'react-router-dom';
@@ -37,15 +38,7 @@ const MainContexted = () => {
 						<MainServices />
 						<MainSlotGrid />
 						<MainScheduleForm />
-						<div className="contact-footer">
-							{accountInfo.telephone && (
-								<p>Telefone: <a href={`tel:+55${accountInfo.telephone}`}>{accountInfo.telephone}</a></p>
-							)}
-							{accountInfo.address && (
-								<p>Endereço: {accountInfo.address}</p>
-							)}
-							<p>{accountInfo.name}</p>
-						</div>
+						<AccountContact accountInfo={accountInfo} />
 					</Fragment>
 				)}
 			</Fragment>

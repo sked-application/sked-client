@@ -64,7 +64,6 @@
 		border-radius: 6px;
 		margin-bottom: 16px;
 		width: 100%;
-		$self__card: &;
 
 		&__header {
 			display: flex;
@@ -191,8 +190,15 @@
 			}
 		}
 
-		&__actions {
+		&__separator {
+			display: flex;
+			border-top: 1px solid;
+			opacity: 0.1;
 			margin-top: 16px;
+		}
+
+		&__actions {
+			padding-top: 16px;
 			display: flex;
 
 			.button {
@@ -201,6 +207,10 @@
 				display: inline-flex;
 				align-items: center;
 				border-color: inherit;
+				padding: 0;
+				background-color: transparent;
+				border: none;
+				height: auto;
 
 				svg {
 					margin-right: 6px;

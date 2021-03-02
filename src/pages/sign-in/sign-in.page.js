@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 import { AuthContext } from '../../contexts/auth-context/auth.context';
 import { Redirect, Link } from 'react-router-dom';
-import { FormInputError } from '../../components/input-form-error-component/input-form-error.component';
+import FormInputError from '../../components/input-form-error-component/input-form-error.component';
 
 import './sign-in.page.scss';
 import { AiOutlineLogin } from 'react-icons/ai';

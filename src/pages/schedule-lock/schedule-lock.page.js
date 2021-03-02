@@ -7,12 +7,12 @@ import moment from 'moment';
 import schema from './validators/schedule-lock-form.validator';
 import ScheduleLockService from '../../services/schedule-lock.service';
 import PageHeader from '../../components/page-header-component/page-header.component';
+import FormInputError from '../../components/input-form-error-component/input-form-error.component';
 
 import { getFormattedDatePreview } from '../../utils/utils';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 import { ShowUp, ShowUpButton } from '../../components/modal-component/modal.component';
-import { FormInputError } from '../../components/input-form-error-component/input-form-error.component';
 import { BsPlus } from 'react-icons/bs';
 
 const ScheduleLock = () => {

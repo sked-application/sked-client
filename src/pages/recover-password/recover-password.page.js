@@ -2,11 +2,11 @@ import React, { useContext, useState } from 'react';
 import schema from './validators/recover-password.validator';
 import AuthService from '../../services/auth.service';
 import PageHeader from '../../components/page-header-component/page-header.component';
+import FormInputError from '../../components/input-form-error-component/input-form-error.component';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 import { AuthContext } from '../../contexts/auth-context/auth.context';
-import { FormInputError } from '../../components/input-form-error-component/input-form-error.component';
 import { AiOutlineLock } from 'react-icons/ai';
 
 import {

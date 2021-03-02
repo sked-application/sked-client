@@ -13,6 +13,8 @@ import {
 	AiOutlineClockCircle,
 } from "react-icons/ai";
 
+import './slotgrid.component.scss';
+
 const MainSlotGrid = () => {
 	const {
 		user,
@@ -70,18 +72,22 @@ const MainSlotGrid = () => {
 				</div>
 				<div className="flexbox flexbox--column flexbox--end">
 					<span className="card__subtitle m-b-5">{getDayLabelByDate(startDate)}</span>
-					{service && service.show_price && (
-						<span className="card__subtitle color--green">R$ {service.price}</span>
-					)}
 				</div>
             </div>
 			{service.id && user.id && !!timegrid.length && (
-				<div>
-					<span className="card__subtitle color--purple">{service.name}</span>
-				</div>
+				<Fragment>
+					<div>
+						<span className="card__subtitle">{service.name}</span>
+					</div>
+					{service.show_price && (
+						<div>
+							<span className="card__subtitle color--green">R$ {service.price}</span>
+						</div>
+					)}
+				</Fragment>
 			)}
             {isLoading ? (
-                <div className="loading m-b-16"></div>
+                <div className="loading"></div>
             ) : (
                 <Fragment>
 					{!!timegrid.length && (

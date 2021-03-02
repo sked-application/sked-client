@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 
 import './input-form-error.component.scss';
 
-const MemoizedFormInputError = ({ error }) => {
+const FormInputError = memo(({ error }) => {
     return error ? (
         <span className="input-form-error">{error}</span>
     ) : (
         <></>
     );
-};
+});
 
-MemoizedFormInputError.propTypes = {
+FormInputError.displayName = 'FormInputError';
+FormInputError.propTypes = {
     error: PropTypes.string,
 };
 
-export const FormInputError = memo(MemoizedFormInputError);
+export default FormInputError;

@@ -4,11 +4,11 @@ import CustomerService from '../../../../services/customer.service';
 import schemaSignUp from '../../validators/customer-sign-up.validator';
 import schemaSignIn from '../../validators/customer-sign-in.validator';
 import NumberFormat from 'react-number-format';
+import FormInputError from '../../../../components/input-form-error-component/input-form-error.component';
 
 import { AiOutlineCarryOut } from "react-icons/ai";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from "react-hook-form";
-import { FormInputError } from '../../../../components/input-form-error-component/input-form-error.component';
 import { MainContext } from '../../contexts/main.context';
 import { AuthContext } from '../../../../contexts/auth-context/auth.context';
 
@@ -159,7 +159,7 @@ const MainSlotGrid = () => {
                 <span className="card__subtitle">{getScheduleInfoPreview(scheduleSlot)}</span>
             </div>
             {isLoading && (
-				<span className="loading loading--purple m-b-20"></span>
+				<span className="loading m-b-16"></span>
 			)}
             {!isAuthenticated && !isLoading && formType === 'SIGN_UP' && (
                 <form onSubmit={signUpHandleSubmit(signUpForm)}>
@@ -225,8 +225,8 @@ const MainSlotGrid = () => {
                     <div className="text--center m-t-25 m-b-16">
                         <div
 							onClick={() => setFormType('SIGN_IN')}
-							className="cursor--pointer">
-                            <span>Já sou cliente</span>
+							className="cursor--pointer color--purple">
+                            <strong>Já sou cliente</strong>
                         </div>
                     </div>
                 </form>
@@ -264,8 +264,8 @@ const MainSlotGrid = () => {
                     <div className="text--center m-t-25 m-b-16">
                         <div
 							onClick={() => setFormType('SIGN_UP')}
-							className="cursor--pointer">
-                            <span>Não tenho cadastro</span>
+							className="cursor--pointer color--purple">
+                            <strong>Não tenho cadastro</strong>
                         </div>
                     </div>
                 </form>
