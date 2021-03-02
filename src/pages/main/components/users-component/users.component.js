@@ -48,7 +48,7 @@ const MainUsers = () => {
     }, [listUsers]);
 
     return (
-        <div className="card card--professional">
+        <div className="card card--professional card--outline">
             <div className="card__header">
                 <h2 className="card__title">
 					<AiOutlineUser /> Profissional

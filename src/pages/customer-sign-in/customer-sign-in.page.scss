@@ -4,10 +4,14 @@
 		margin-bottom: 16px;
 		display: flex;
 		flex-direction: column;
+
+		.card__title {
+			color: var(--purple);
+		}
 	}
 
 	&__error {
-		margin-bottom: 16px;
+		margin-bottom: 8px;
 		text-align: center;
 		color: var(--orange);
 	}
@@ -17,20 +21,10 @@
 	}
 
 	&__forgot-password {
-		margin-top: 8px;
-		margin-bottom: 24px;
+		margin-bottom: 16px;
 
 		a {
-			color: var(--blue);
-		}
-	}
-
-	&__redirect {
-		text-align: center;
-
-		a {
-			color: var(--purple);
-			font-weight: bold;
+			color: var(--dark);
 		}
 	}
 }

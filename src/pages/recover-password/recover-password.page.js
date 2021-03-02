@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 import { AuthContext } from '../../contexts/auth-context/auth.context';
 import { FormInputError } from '../../components/input-form-error-component/input-form-error.component';
+import { AiOutlineLock } from 'react-icons/ai';
 
 import {
 	Link,
@@ -42,10 +43,18 @@ const RecoverPassword = () => {
 
 			reset();
 			setIsLoading(false);
-			setSuccess('Link de recuperação enviado para seu email.');
+			setSuccess('Link enviado para seu email.');
+
+			if (error) {
+				setError('');
+			}
 		} catch ({ response }) {
 			setError(response.data);
 			setIsLoading(false);
+
+			if (success) {
+				setSuccess('');
+			}
 		}
 	};
 
@@ -58,20 +67,25 @@ const RecoverPassword = () => {
     return (
         <div className="container">
 			<PageHeader
-				title="Recuperar a senha"
-				description="O link de recuperação será enviado para seu email." />
+				title="Esqueci a senha"
+				description="Um link de recuperação será enviado para seu email." />
 			{isLoading && (
 				<span className="loading"></span>
 			)}
+			{error && (
+				<div className="recover-password__error">{error}</div>
+			)}
+			{success && (
+				<div className="recover-password__success">{success}</div>
+			)}
             <form
 				onSubmit={handleSubmit(recoverPasswordForm)}
-				className="recover-password__form">
-				{error && (
-					<div className="recover-password__error">{error}</div>
-				)}
-				{success && (
-					<div className="recover-password__success">{success}</div>
-				)}
+				className="recover-password__form card card--outline">
+				<div className="card__header">
+					<h2 className="card__title">
+						<AiOutlineLock /> Recuperar
+					</h2>
+				</div>
 				<div className="recover-password__field">
 					<input
 						name="email"
@@ -82,7 +96,7 @@ const RecoverPassword = () => {
 						disabled={isLoading} />
 					<FormInputError error={errors.email && errors.email.message} />
 				</div>
-                <div className="recover-password__field">
+                <div>
                     <button
                         disabled={!formState.isValid || isLoading}
                         className="button button--block button--purple">

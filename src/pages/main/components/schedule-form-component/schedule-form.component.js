@@ -151,7 +151,7 @@ const MainSlotGrid = () => {
 	};
 
     return (
-        <div className="card card--schedule">
+        <div className="card card--schedule card--outline">
             <div className="card__header">
                 <h2 className="card__title">
 					<AiOutlineCarryOut /> Agende

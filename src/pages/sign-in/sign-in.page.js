@@ -10,6 +10,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { FormInputError } from '../../components/input-form-error-component/input-form-error.component';
 
 import './sign-in.page.scss';
+import { AiOutlineLogin } from 'react-icons/ai';
 
 const SignIn = () => {
 	const [error, setError] = useState(null);
@@ -58,12 +59,17 @@ const SignIn = () => {
 			{isLoading && (
 				<span className="loading"></span>
 			)}
+			{error && (
+				<div className="sign-in__error">{error}</div>
+			)}
             <form
 				onSubmit={handleSubmit(signInForm)}
-				className="sign-in__form">
-				{error && (
-					<div className="sign-in__error">{error}</div>
-				)}
+				className="sign-in__form card card--outline">
+				<div className="card__header">
+					<h2 className="card__title">
+						<AiOutlineLogin /> Entrar
+					</h2>
+				</div>
 				<div className="sign-in__field">
 					<input
 						name="email"
@@ -87,7 +93,7 @@ const SignIn = () => {
 				<div className="sign-in__forgot-password">
 					<Link to="/recover-password">Esqueceu a senha?</Link>
 				</div>
-				<div className="sign-in__field">
+				<div>
 					<button
 						type="submit"
 						disabled={!formState.isValid || isLoading}

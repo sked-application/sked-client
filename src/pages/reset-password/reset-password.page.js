@@ -16,6 +16,7 @@ import {
 } from 'react-router-dom';
 
 import './reset-password.page.scss';
+import { AiOutlineLock } from 'react-icons/ai';
 
 const ResetPassword = () => {
 	const history = useHistory();
@@ -63,16 +64,21 @@ const ResetPassword = () => {
 
     return (
         <div className="container">
-			<PageHeader title="Resetar a senha" />
+			<PageHeader title="Informe a nova senha" />
 			{isLoading && (
 				<span className="loading"></span>
 			)}
+			{error && (
+				<div className="reset-password__error">{error}</div>
+			)}
             <form
 				onSubmit={handleSubmit(resetPasswordForm)}
-				className="reset-password__form">
-				{error && (
-					<div className="reset-password__error">{error}</div>
-				)}
+				className="reset-password__form card card--outline">
+				<div className="card__header">
+					<h2 className="card__title">
+						<AiOutlineLock /> Resetar
+					</h2>
+				</div>
 				<div className="reset-password__field">
 					<input
 						name="password"
@@ -93,7 +99,7 @@ const ResetPassword = () => {
 						className="input" />
 					<FormInputError error={errors.confirmPassword && errors.confirmPassword.message} />
 				</div>
-                <div className="reset-password__field">
+                <div>
                     <button
                         disabled={!formState.isValid || isLoading}
                         className="button button--block button--purple">

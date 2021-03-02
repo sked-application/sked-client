@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from '../../contexts/auth-context/auth.context';
 import { Redirect, Link } from 'react-router-dom';
 import { FormInputError } from '../../components/input-form-error-component/input-form-error.component';
+import { AiOutlineLogin } from 'react-icons/ai';
 
 import './customer-sign-in.page.scss';
 
@@ -53,10 +54,17 @@ const SignIn = () => {
 			{isLoading && (
 				<span className="loading"></span>
 			)}
+			{error && (
+				<div className="customer-sign-in__error">{error}</div>
+			)}
             <form
 				onSubmit={handleSubmit(signInForm)}
-				className="customer-sign-in__form">
-				{error && <div className="customer-sign-in__error">{error}</div>}
+				className="customer-sign-in__form card card--outline">
+				<div className="card__header">
+					<h2 className="card__title">
+						<AiOutlineLogin /> Entrar
+					</h2>
+				</div>
 				<div className="customer-sign-in__field">
 					<input
 						name="email"

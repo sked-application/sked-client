@@ -9,6 +9,7 @@ import { Controller, useForm } from "react-hook-form";
 import { AuthContext } from '../../contexts/auth-context/auth.context';
 import { FormInputError } from '../../components/input-form-error-component/input-form-error.component'
 import { replaceSpecialCharacters } from '../../utils/utils';
+import { AiOutlineForm } from 'react-icons/ai';
 
 import {
 	Redirect,
@@ -86,12 +87,17 @@ const SignUp = () => {
 			{isLoading && (
 				<span className="loading"></span>
 			)}
+			{error && (
+				<div className="sign-up__error">{error}</div>
+			)}
             <form
 				onSubmit={handleSubmit(signUpForm)}
-				className="sign-up__form">
-				{error && (
-					<div className="sign-up__error">{error}</div>
-				)}
+				className="sign-up__form card card--outline">
+				<div className="card__header">
+					<h2 className="card__title">
+						<AiOutlineForm /> Cadastre-se
+					</h2>
+				</div>
 				<div className="sign-up__title">Informações da conta</div>
 				<div className="sign-up__field">
 					<div className="grouped-button">
@@ -187,7 +193,7 @@ const SignUp = () => {
 						className="input" />
 					<FormInputError error={errors.userConfirmPassword && errors.userConfirmPassword.message} />
 				</div>
-				<div className="sign-up__field">
+				<div>
 					<button
 						type="submit"
 						disabled={!formState.isValid || isLoading}

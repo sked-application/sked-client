@@ -17,7 +17,7 @@ const MainDate = () => {
     };
 
     return (
-        <div className="card card--date">
+        <div className="card card--date card--outline">
             <div className="card__header">
                 <h2 className="card__title">
 					<AiOutlineCalendar/> Selecione a data

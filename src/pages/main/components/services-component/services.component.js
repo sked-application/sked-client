@@ -37,7 +37,7 @@ const MainService = () => {
     }, [listServices]);
 
     return (
-        <div className="card card--service">
+        <div className="card card--service card--outline">
             <div className="card__header">
                 <h2 className="card__title">
 					<AiOutlineForm /> Serviço

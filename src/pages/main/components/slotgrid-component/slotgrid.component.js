@@ -61,7 +61,7 @@ const MainSlotGrid = () => {
     }, [listSlots]);
 
     return (
-        <div className="card card--slots">
+        <div className="card card--slots card--outline">
             <div className="card__header">
 				<div>
 					<h2 className="card__title">
