@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import ScheduleService from '../../../../services/service.service';
+import ScheduleService from '../../../../services/schedule.service';
 import CustomerService from '../../../../services/customer.service';
 import schemaSignUp from '../../validators/customer-sign-up.validator';
 import schemaSignIn from '../../validators/customer-sign-in.validator';
