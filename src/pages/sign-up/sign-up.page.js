@@ -43,21 +43,21 @@ const SignUp = () => {
 			setIsLoading(true);
 
 			const {
-				accountName,
-				accountUrl,
-				accountCpfCnpj,
-				accountTelephone,
+				companyName,
+				companyUrl,
+				companyCpfCnpj,
+				companyTelephone,
 				userName,
 				userEmail,
 				userPassword
 			} = values;
 
 			await AuthService.signUp({
-				account: {
-					name: accountName,
-					url: accountUrl,
-					cpf_cnpj: accountCpfCnpj,
-					telephone: accountTelephone,
+				company: {
+					name: companyName,
+					url: companyUrl,
+					cpfCnpj: companyCpfCnpj,
+					telephone: companyTelephone,
 				},
 				user: {
 					name: userName,
@@ -107,40 +107,40 @@ const SignUp = () => {
 							skedapp.com.br/
 						</label>
 						<input
-							name="accountUrl"
+							name="companyUrl"
 							type="text"
 							ref={register}
 							placeholder="conta"
 							disabled={isLoading}
 							id="account-url"
 							className="grouped-button__input"
-							onBlur={(event) => setValue('accountUrl', replaceSpecialCharacters(event.target.value))} />
+							onBlur={(event) => setValue('companyUrl', replaceSpecialCharacters(event.target.value))} />
 					</div>
-					<FormInputError error={errors.accountUrl && errors.accountUrl.message} />
+					<FormInputError error={errors.companyUrl && errors.companyUrl.message} />
 				</div>
 				<div className="sign-up__field">
 					<input
-						name="accountName"
+						name="companyName"
 						type="text"
 						ref={register}
 						placeholder="Nome de seu estabelecimento"
 						disabled={isLoading}
 						className="input" />
-					<FormInputError error={errors.accountName && errors.accountName.message} />
+					<FormInputError error={errors.companyName && errors.companyName.message} />
 				</div>
 				<div className="sign-up__field">
 					<input
-						name="accountCpfCnpj"
+						name="companyCpfCnpj"
 						type="text"
 						ref={register}
 						placeholder="Cpf/Cnpj da conta sem pontos e barra"
 						className="input input--dark" />
-					<FormInputError error={errors.accountCpfCnpj && errors.accountCpfCnpj.message} />
+					<FormInputError error={errors.companyCpfCnpj && errors.companyCpfCnpj.message} />
 				</div>
 				<div className="sign-up__field">
 					<Controller
 						id="accountTelephone"
-						name="accountTelephone"
+						name="companyTelephone"
 						control={control}
 						as={<NumberFormat
 							format="(##) #####-####"
@@ -148,7 +148,7 @@ const SignUp = () => {
 							type="tel"
 							className="input input--dark"
 							placeholder="Telefone" />} />
-					<FormInputError error={errors.accountTelephone && errors.accountTelephone.message} />
+					<FormInputError error={errors.companyTelephone && errors.companyTelephone.message} />
 				</div>
 				<div className="sign-up__title">
 					<strong>Informações do usuário</strong>

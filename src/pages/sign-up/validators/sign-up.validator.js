@@ -4,22 +4,22 @@ import { phoneRegex, validateCpfCnpj } from '../../../utils/utils';
 export default {
     form: {
         initialValues: {
-            accountUrl: '',
-            accountName: '',
-            accountCpfCnpj: '',
-            accountTelephone: '',
+            companyUrl: '',
+            companyName: '',
+            companyCpfCnpj: '',
+            companyTelephone: '',
             userName: '',
             userEmail: '',
             userPassword: '',
             userConfirmPassword: '',
         },
         validator: Yup.object({
-			accountUrl: Yup.string().required('Este campo é obrigatório'),
-			accountName: Yup.string().required('Este campo é obrigatório'),
-			accountCpfCnpj: Yup.string()
+			companyUrl: Yup.string().required('Este campo é obrigatório'),
+			companyName: Yup.string().required('Este campo é obrigatório'),
+			companyCpfCnpj: Yup.string()
 				.required('Por favor, digite seu cpf/cnpj.')
 				.test('cpf-test', 'Por favor, verifique seu cpf/cnpj.', (value) => validateCpfCnpj(value)),
-			accountTelephone: Yup.string()
+			companyTelephone: Yup.string()
 				.required('Por favor, digite seu telefone.')
 				.matches(
 					phoneRegex,

@@ -2,15 +2,15 @@ import React, { useContext, useState } from 'react';
 import AuthService from '../../services/auth.service';
 import schema from './validators/sign-in.validator';
 import PageHeader from '../../components/page-header-component/page-header.component';
+import FormInputError from '../../components/input-form-error-component/input-form-error.component';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 import { AuthContext } from '../../contexts/auth-context/auth.context';
 import { Redirect, Link } from 'react-router-dom';
-import FormInputError from '../../components/input-form-error-component/input-form-error.component';
+import { AiOutlineLogin } from 'react-icons/ai';
 
 import './sign-in.page.scss';
-import { AiOutlineLogin } from 'react-icons/ai';
 
 const SignIn = () => {
 	const [error, setError] = useState(null);
@@ -38,9 +38,9 @@ const SignIn = () => {
 				password,
 			});
 
-			handleSignIn(data.token, data.account);
+			handleSignIn(data.token, data.company);
 		} catch ({ response }) {
-			setError(response.data);
+			setError(response.data.message);
 			setIsLoading(false);
 		}
 	};

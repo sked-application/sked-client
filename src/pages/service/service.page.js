@@ -10,9 +10,7 @@ import { Controller, useForm } from "react-hook-form";
 import { ShowUp, ShowUpButton } from '../../components/modal-component/modal.component';
 import FormInputError from '../../components/input-form-error-component/input-form-error.component';
 import {
-	AiOutlineCarryOut,
 	AiOutlineClockCircle,
-	AiOutlineDollar,
 } from "react-icons/ai";
 
 const Services = () => {
