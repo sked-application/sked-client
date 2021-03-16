@@ -31,7 +31,7 @@ export const MainProvider = ({ children }) => {
         (async () => {
             const { data } = await AccountService.find({ company });
 
-            if (!data.company) {
+            if (!data) {
                 if (unmounted) return;
 
                 setIsMainRequestPeding(false);
@@ -41,7 +41,7 @@ export const MainProvider = ({ children }) => {
 
             if (unmounted) return;
 
-            setAccountInfo(data.company);
+            setAccountInfo(data);
             setIsMainRequestPeding(false);
         })();
 
