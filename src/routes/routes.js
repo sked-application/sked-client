@@ -34,7 +34,7 @@ const AppRoutes = () => {
             <Route exact path="/recover-password-customer" component={RecoverPassword} />
             <Route exact path="/reset-password/:token" component={ResetPassword} />
             <Route exact path="/not-found" component={NotFound} />
-            <Route exact path="/:account" component={Main} />
+            <Route exact path="/:company" component={Main} />
             <Redirect to="not-found" />
         </Switch>
     );

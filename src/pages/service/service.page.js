@@ -9,9 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from "react-hook-form";
 import { ShowUp, ShowUpButton } from '../../components/modal-component/modal.component';
 import FormInputError from '../../components/input-form-error-component/input-form-error.component';
-import {
-	AiOutlineClockCircle,
-} from "react-icons/ai";
+import { AiOutlineClockCircle } from "react-icons/ai";
 
 const Services = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +17,15 @@ const Services = () => {
     const [services, setServices] = useState([]);
 	const [toggleShow, setToggleShow] = useState(false);
 
-	const { register, handleSubmit, reset, formState, errors, setValue, control } = useForm({
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState,
+		errors,
+		setValue,
+		control,
+	} = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
 		mode: 'onTouched',
@@ -33,18 +39,18 @@ const Services = () => {
 			if (id) {
 				await ServiceService.update(id, {
 					name,
-					duration,
 					price,
-					show_price: showPrice
+					duration,
+					showPrice,
 				});
 
 				message = 'Serviço atualizado com sucesso!';
 			} else {
 				await ServiceService.create({
 					name,
-					duration,
 					price,
-					show_price: showPrice,
+					duration,
+					showPrice,
 				});
 
 				message = 'Serviço cadastrado com sucesso!';
@@ -75,7 +81,9 @@ const Services = () => {
 		reset();
 		setToggleShow(false);
 
-		if (isEdit) setIsEdit(false);
+		if (isEdit) {
+			setIsEdit(false);
+		}
 	};
 
 	const handleOpenShowUp = data => {
@@ -84,7 +92,7 @@ const Services = () => {
 			setValue("name", data.name);
 			setValue("duration", data.duration);
 			setValue("price", data.price);
-			setValue("showPrice", data.show_price);
+			setValue("showPrice", data.showPrice);
 			setIsEdit(true);
 		}
 
@@ -96,7 +104,7 @@ const Services = () => {
 
 		const { data } = await ServiceService.findAll();
 
-		setServices(data.services);
+		setServices(data);
 		setIsLoading(false);
 	};
 

@@ -30,17 +30,17 @@ const MainUsers = () => {
 			return;
 		}
 
-		const { data } = await UserService.findAllByAccountId({
-			account_id: accountInfo.id,
+		const { data } = await UserService.findAllByCompanyId({
+			companyId: accountInfo.id,
 		});
 
-		const userValues = Object.values(data.users);
+		const userValues = Object.values(data);
 
 		if (userValues.length === 1) {
 			setUser(userValues[0]);
 		}
 
-		setUsers(data.users);
+		setUsers(data);
 	}, [accountInfo, setUser]);
 
     useEffect(() => {

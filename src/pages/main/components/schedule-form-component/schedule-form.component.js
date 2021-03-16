@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import ScheduleService from '../../../../services/schedule.service';
-import CustomerService from '../../../../services/customer.service';
+import AuthService from '../../../../services/auth.service';
 import schemaSignUp from '../../validators/customer-sign-up.validator';
 import schemaSignIn from '../../validators/customer-sign-in.validator';
 import NumberFormat from 'react-number-format';
@@ -114,7 +114,7 @@ const MainSlotGrid = () => {
 				password,
 			} = values;
 
-			const { data } = await CustomerService.signUp({
+			const { data } = await AuthService.customerSignUp({
 				email,
 				name,
 				telephone,
@@ -126,7 +126,7 @@ const MainSlotGrid = () => {
 			handleSignIn(data.token);
 			alert('Cadastro realizado com sucesso, realize agora seu agendamento!');
 		} catch ({ response }) {
-			alert(response.data);
+			alert(response.data.message);
 			setIsLoading(false);
 		}
 	};
@@ -136,7 +136,7 @@ const MainSlotGrid = () => {
 			setIsLoading(true);
 
 			const { email, password } = values;
-			const { data } = await CustomerService.signIn({
+			const { data } = await AuthService.customerSignIn({
 				email,
 				password,
 			});
@@ -145,7 +145,7 @@ const MainSlotGrid = () => {
 			setIsLoading(false);
 			handleSignIn(data.token);
 		} catch ({ response }) {
-			alert(response.data);
+			alert(response.data.message);
 			setIsLoading(false);
 		}
 	};

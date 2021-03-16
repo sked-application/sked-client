@@ -14,6 +14,22 @@ const signUp = ({ company, user }) => {
     });
 };
 
+const customerSignIn = ({ email, password }) => {
+    return api.post('/v1/auth/signin-customer', {
+        email,
+        password,
+    });
+};
+
+const customerSignUp = ({ email, name, telephone, password }) => {
+    return api.post('/v1/auth/signup-customer', {
+        email,
+        name,
+        telephone,
+        password,
+    });
+};
+
 const recorverPassword = ({ email, is_customer }) => {
     return api.post('/sign/recover', {
 		email,
@@ -33,4 +49,6 @@ export default {
     signUp,
 	recorverPassword,
 	resetPassword,
+	customerSignIn,
+	customerSignUp,
 };

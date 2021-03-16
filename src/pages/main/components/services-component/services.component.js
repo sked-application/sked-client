@@ -24,12 +24,12 @@ const MainService = () => {
 			return;
 		}
 
-		const { data } = await ServiveService.findAllByAccountId({
-			account_id: accountInfo.id,
-			user_id: user.id
+		const { data } = await ServiveService.findAllByCompanyId({
+			companyId: accountInfo.id,
+			userId: user.id
 		});
 
-		setServices(data.services);
+		setServices(data);
 	}, [accountInfo, user]);
 
     useEffect(() => {

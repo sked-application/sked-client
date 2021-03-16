@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import CustomerService from '../../services/customer.service';
+import AuthService from '../../services/auth.service';
 import schema from './validators/customer-sign-in.validator';
 import PageHeader from '../../components/page-header-component/page-header.component';
 import FormInputError from '../../components/input-form-error-component/input-form-error.component';
@@ -28,7 +28,7 @@ const SignIn = () => {
 			setIsLoading(true);
 
 			const { email, password } = values;
-			const { data } = await CustomerService.signIn({
+			const { data } = await AuthService.customerSignIn({
 				email,
 				password,
 			});

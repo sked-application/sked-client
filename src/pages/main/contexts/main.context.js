@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 export const MainContext = createContext();
 
 export const MainProvider = ({ children }) => {
-    const { account } = useParams();
+    const { company } = useParams();
     const [scheduleSlot, setScheduleSlot] = useState('');
     const [accountInfo, setAccountInfo] = useState({});
     const [accountExists, setAccountExists] = useState(true);
@@ -29,9 +29,9 @@ export const MainProvider = ({ children }) => {
         let unmounted = false;
 
         (async () => {
-            const { data } = await AccountService.find({ account });
+            const { data } = await AccountService.find({ company });
 
-            if (!data.account) {
+            if (!data.company) {
                 if (unmounted) return;
 
                 setIsMainRequestPeding(false);
@@ -41,12 +41,12 @@ export const MainProvider = ({ children }) => {
 
             if (unmounted) return;
 
-            setAccountInfo(data.account);
+            setAccountInfo(data.company);
             setIsMainRequestPeding(false);
         })();
 
         return () => (unmounted = true);
-    }, [account]);
+    }, [company]);
 
     return (
         <MainContext.Provider

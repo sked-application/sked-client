@@ -11,14 +11,12 @@ const updateProfile = ({ user, account}) => {
 	});
 };
 
-const findAllByAccountId = (params) => {
-    return api.get('/users', {
-		params
-	});
+const findAllByCompanyId = ({ companyId }) => {
+    return api.get(`v1/users/${companyId}/grouped`);
 };
 
 export default {
 	profile,
 	updateProfile,
-	findAllByAccountId,
+	findAllByCompanyId,
 };

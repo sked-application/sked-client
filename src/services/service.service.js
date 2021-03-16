@@ -1,25 +1,28 @@
 import api from '../api/api';
 
 const create = (data) => {
-    return api.post('/services', data);
+    return api.post('v1/services', data);
 };
 
 const update = (id, changes) => {
-    return api.put(`/services/${id}`, changes);
+    return api.put(`v1/services/${id}`, changes);
 };
 
 const findAll = () => {
-    return api.get('/services');
+    return api.get('v1/services');
 };
 
-const findAllByAccountId = (params) => {
-    return api.get('/services/by-id', {
-        params,
-    });
+const findAllByCompanyId = ({ companyId, userId }) => {
+    return api.get(`v1/services/grouped`, {
+		params: {
+			companyId,
+			userId,
+		}
+	});
 };
 
 const remove = (id) => {
-    return api.delete(`/services/${id}`);
+    return api.delete(`v1/services/${id}`);
 };
 
 export default {
@@ -27,5 +30,5 @@ export default {
 	update,
     remove,
     findAll,
-    findAllByAccountId,
+    findAllByCompanyId,
 };
