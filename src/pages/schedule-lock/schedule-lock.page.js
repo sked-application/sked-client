@@ -55,7 +55,7 @@ const ScheduleLock = () => {
 			handleCloseShowUp();
 			alert(message);
 		} catch ({ response }) {
-			alert(response.data);
+			alert(response.data.message);
 		}
 	};
 
@@ -98,7 +98,7 @@ const ScheduleLock = () => {
 
 		const { data } = await ScheduleLockService.findAll();
 
-		setScheduleLocks(data.schedule_locks);
+		setScheduleLocks(data);
 		setIsLoading(false);
 	};
 
