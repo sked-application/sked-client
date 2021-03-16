@@ -1,21 +1,15 @@
 import React from 'react';
-import TimegridForm from './components/timegrid-form.component';
+import TimegridForm from './components/timegrid-form-component/timegrid-form.component';
+import PageHeader from '../../components/page-header-component/page-header.component';
 
 const Settings = () => {
     return (
-        <>
-			<div className="page__header p-b-30">
-				<div className="container">
-					<h1 className="page__title">Grade de horário</h1>
-					<div className="m-t-5">
-						<span className="page__description">Gerencie os horários de sua agenda.</span>
-					</div>
-				</div>
-			</div>
-            <div className="container m-t-30">
-                <TimegridForm />
-            </div>
-        </>
+        <div className="container">
+			<PageHeader
+				title="Grade de horário"
+				description="Gerencie os horários de sua agenda." />
+			<TimegridForm />
+        </div>
     );
 };
 

@@ -1,16 +1,32 @@
 import api from '../api/api';
 
 const signIn = ({ email, password }) => {
-    return api.post('/sign/in', {
+    return api.post('/v1/auth/signin-admin', {
         email,
         password,
     });
 };
 
-const signUp = ({ account, user }) => {
-    return api.post('/sign/up', {
-        account,
+const signUp = ({ company, user }) => {
+    return api.post('/v1/auth/signup-admin', {
+        company,
         user,
+    });
+};
+
+const customerSignIn = ({ email, password }) => {
+    return api.post('/v1/auth/signin-customer', {
+        email,
+        password,
+    });
+};
+
+const customerSignUp = ({ email, name, telephone, password }) => {
+    return api.post('/v1/auth/signup-customer', {
+        email,
+        name,
+        telephone,
+        password,
     });
 };
 
@@ -33,4 +49,6 @@ export default {
     signUp,
 	recorverPassword,
 	resetPassword,
+	customerSignIn,
+	customerSignUp,
 };

@@ -1,20 +1,29 @@
 import React, { useContext, useState } from 'react';
 import schema from './validators/recover-password.validator';
 import AuthService from '../../services/auth.service';
+import PageHeader from '../../components/page-header-component/page-header.component';
+import FormInputError from '../../components/input-form-error-component/input-form-error.component';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
-import { AuthContext } from '../../contexts/auth.context';
-import { Link, Redirect, useHistory } from 'react-router-dom';
-import { FormInputError } from '../../components/input-form-error.component';
+import { AuthContext } from '../../contexts/auth-context/auth.context';
+import { AiOutlineLock } from 'react-icons/ai';
+
+import {
+	Link,
+	Redirect,
+	useHistory
+} from 'react-router-dom';
+
+import './recover-password.page.scss';
 
 const RecoverPassword = () => {
 	const history = useHistory();
-    const { isAuthenticated, userAccountUrl } = useContext(AuthContext);
+	const isCustomer = ['/recover-password-customer'].includes(history.location.pathname);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
-	const [isCustomer] = useState(['/recover-password-customer'].includes(history.location.pathname));
+    const { isAuthenticated, userAccountUrl } = useContext(AuthContext);
 
 	const { register, handleSubmit, reset, formState, errors } = useForm({
 		resolver: yupResolver(schema.form.validator),
@@ -24,10 +33,9 @@ const RecoverPassword = () => {
 
     const recoverPasswordForm = async (values) => {
 		try {
-			const { email } = values;
-
 			setIsLoading(true);
 
+			const { email } = values;
 			await AuthService.recorverPassword({
 				email,
 				is_customer: isCustomer
@@ -35,60 +43,69 @@ const RecoverPassword = () => {
 
 			reset();
 			setIsLoading(false);
-			setSuccess('Link de recuperação enviado para seu email.');
+			setSuccess('Link enviado para seu email.');
+
+			if (error) {
+				setError('');
+			}
 		} catch ({ response }) {
 			setError(response.data);
 			setIsLoading(false);
+
+			if (success) {
+				setSuccess('');
+			}
 		}
 	};
 
 	if (isAuthenticated) {
-        return <Redirect to={`/${userAccountUrl || 'customer-schedules'}`} />;
+		const redirectUrl = userAccountUrl ? '/schedules' : '/customer-schedules';
+
+        return <Redirect to={redirectUrl} />;
     }
 
     return (
-        <div className="container p-b-30">
-			<div className="page__header">
-				<div className="container">
-					{isLoading ? (
-						<span className="loading"></span>
-					) : (
-						<h1 className="page__title">Recuperar a senha</h1>
-					)}
-					<div className="m-t-5">
-						<span className="page__description">O link de recuperação será enviado para seu email.</span>
-					</div>
+        <div className="container">
+			<PageHeader
+				title="Esqueci a senha"
+				description="Um link de recuperação será enviado para seu email." />
+			{isLoading && (
+				<span className="loading"></span>
+			)}
+			{error && (
+				<div className="recover-password__error">{error}</div>
+			)}
+			{success && (
+				<div className="recover-password__success">{success}</div>
+			)}
+            <form
+				onSubmit={handleSubmit(recoverPasswordForm)}
+				className="recover-password__form card card--outline">
+				<div className="card__header">
+					<h2 className="card__title">
+						<AiOutlineLock /> Recuperar
+					</h2>
 				</div>
-			</div>
-            <form onSubmit={handleSubmit(recoverPasswordForm)} className="m-t-30 m-b-15">
-				{error && <div className="text--center color--white m-b-15">{error}</div>}
-				{success && <div className="text--center color--white m-b-15">{success}</div>}
-				<div className="box m-b-15">
-					<div>
-						<input
-							name="email"
-							type="email"
-							ref={register}
-							className="input"
-							placeholder="Email"
-							disabled={isLoading}
-						/>
-						<FormInputError
-							error={errors.email && errors.email.message}
-						/>
-					</div>
+				<div className="recover-password__field">
+					<input
+						name="email"
+						type="email"
+						ref={register}
+						className="input"
+						placeholder="Email"
+						disabled={isLoading} />
+					<FormInputError error={errors.email && errors.email.message} />
 				</div>
-                <div className="m-b-15">
+                <div>
                     <button
                         disabled={!formState.isValid || isLoading}
-                        className="button button--block"
-                    >
+                        className="button button--block button--purple">
                         Enviar
                     </button>
                 </div>
             </form>
-			<div className="text--center">
-				<Link to="/sign-in" className="color--white">Entrar</Link>
+			<div className="recover-password__redirect">
+				<Link to="/sign-in">Entrar</Link>
 			</div>
         </div>
     );

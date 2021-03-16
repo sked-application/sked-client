@@ -1,0 +1,40 @@
+.sign-in {
+	&__form {
+		margin-top: 16px;
+		margin-bottom: 16px;
+		display: flex;
+		flex-direction: column;
+
+		.card__title {
+			color: var(--purple);
+		}
+	}
+
+	&__error {
+		margin-bottom: 8px;
+		text-align: center;
+		color: var(--orange);
+	}
+
+	&__field {
+		margin-bottom: 16px;
+	}
+
+	&__forgot-password {
+		margin-bottom: 16px;
+
+		a {
+			font-size: 14px;
+			color: var(--dark);
+		}
+	}
+
+	&__redirect {
+		text-align: center;
+
+		a {
+			color: var(--purple);
+			font-weight: bold;
+		}
+	}
+}

@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import api from '../api/api';
+import api from '../../api/api';
 
 import { useHistory } from 'react-router-dom';
 
@@ -24,13 +24,13 @@ export const AuthProvider = ({ children }) => {
         setIsAuthLoading(false);
     }, []);
 
-    const handleSignIn = (token, account) => {
+    const handleSignIn = (token, company) => {
         localStorage.setItem('token', JSON.stringify(token));
         api.defaults.headers.Authorization = `Bearer ${token}`;
 
-        if (account) {
-            setUserAccountUrl(account.url);
-            localStorage.setItem('userAccountUrl', JSON.stringify(account.url));
+        if (company) {
+            setUserAccountUrl(company.url);
+            localStorage.setItem('userAccountUrl', JSON.stringify(company.url));
         }
 
         setIsAuthenticated(true);

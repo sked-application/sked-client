@@ -1,4 +1,5 @@
 .show-up {
+	$self: &;
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -7,7 +8,7 @@
 	opacity: 0;
 	z-index: -1;
 	visibility: hidden;
-	transition: all 0.3s linear;
+	transition: all 0.2s ease;
 	overflow-y: auto;
 	padding-top: 20vh;
 	padding-bottom: 20vh;
@@ -16,6 +17,11 @@
 		opacity: 1;
 		z-index: 10;
 		visibility: visible;
+
+		#{$self}__modal {
+			transform: translateY(0);
+			opacity: 1;
+		}
 	}
 
 	&__overlay {
@@ -25,6 +31,11 @@
         left: 0;
         top: 0;
 		background-color: rgba(0,0,0, 0.6);
+		opacity: 0;
+
+		&--active {
+			opacity: 1;
+		}
     }
 
 	&__modal {
@@ -33,13 +44,16 @@
 		width: 100%;
 		margin: auto;
 		background: #fff;
-		padding: 50px 30px;
+		padding: 40px 24px 24px;
 		border-radius: 6px;
 		box-shadow: 0 0 20px 4px rgba(0,0,0, .2);
 		max-width: 720px;
 		width: calc(100% - 20px);
 		position: relative;
 		z-index: 11;
+		transform: translateY(10%);
+		transition: all 0.2s ease;
+		opacity: 0;
 	}
 
 	&__header {
@@ -73,7 +87,7 @@
 		justify-content: center;
 		border: none;
 		background: white;
-		color: $primary;
+		color: var(--purple);
 		box-shadow: 0 0 15px 4px rgba(0,0,0, .1);
 	}
 }

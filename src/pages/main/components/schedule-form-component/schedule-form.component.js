@@ -1,15 +1,16 @@
 import React, { useContext, useState } from 'react';
-import ScheduleService from '../../../services/schedule.service';
-import CustomerService from '../../../services/customer.service';
-import schemaSignUp from '../validators/customer-sign-up.validator';
-import schemaSignIn from '../validators/customer-sign-in.validator';
+import ScheduleService from '../../../../services/schedule.service';
+import AuthService from '../../../../services/auth.service';
+import schemaSignUp from '../../validators/customer-sign-up.validator';
+import schemaSignIn from '../../validators/customer-sign-in.validator';
 import NumberFormat from 'react-number-format';
+import FormInputError from '../../../../components/input-form-error-component/input-form-error.component';
 
+import { AiOutlineCarryOut } from "react-icons/ai";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from "react-hook-form";
-import { FormInputError } from '../../../components/input-form-error.component';
-import { MainContext } from '../contexts/main.context';
-import { AuthContext } from '../../../contexts/auth.context';
+import { MainContext } from '../../contexts/main.context';
+import { AuthContext } from '../../../../contexts/auth-context/auth.context';
 
 const MainSlotGrid = () => {
 	const [formType, setFormType] = useState();
@@ -64,7 +65,11 @@ const MainSlotGrid = () => {
 
     const submitSchedule = async () => {
         try {
-            const { date, start, end } = scheduleSlot;
+            const {
+				date,
+				start,
+				end,
+			} = scheduleSlot;
 
             if (!service.id) {
                 alert('Escolha um serviço');
@@ -101,11 +106,15 @@ const MainSlotGrid = () => {
 
     const signUpForm = async (values) => {
 		try {
-			const { email, name, telephone, password } = values;
-
 			setIsLoading(true);
+			const {
+				email,
+				name,
+				telephone,
+				password,
+			} = values;
 
-			const { data } = await CustomerService.signUp({
+			const { data } = await AuthService.customerSignUp({
 				email,
 				name,
 				telephone,
@@ -117,18 +126,17 @@ const MainSlotGrid = () => {
 			handleSignIn(data.token);
 			alert('Cadastro realizado com sucesso, realize agora seu agendamento!');
 		} catch ({ response }) {
-			alert(response.data);
+			alert(response.data.message);
 			setIsLoading(false);
 		}
 	};
 
     const signInForm = async (values) => {
 		try {
-			const { email, password } = values;
-
 			setIsLoading(true);
 
-			const { data } = await CustomerService.signIn({
+			const { email, password } = values;
+			const { data } = await AuthService.customerSignIn({
 				email,
 				password,
 			});
@@ -137,50 +145,44 @@ const MainSlotGrid = () => {
 			setIsLoading(false);
 			handleSignIn(data.token);
 		} catch ({ response }) {
-			alert(response.data);
+			alert(response.data.message);
 			setIsLoading(false);
 		}
 	};
 
     return (
-        <div className="card">
+        <div className="card card--schedule card--outline">
             <div className="card__header">
-                <h2 className="card__title">Agende</h2>
-                <span className="card__subtitle">
-                    {getScheduleInfoPreview(scheduleSlot)}
-                </span>
+                <h2 className="card__title">
+					<AiOutlineCarryOut /> Agende
+				</h2>
+                <span className="card__subtitle">{getScheduleInfoPreview(scheduleSlot)}</span>
             </div>
-
-            {isLoading && <span className="loading loading--primary m-b-20"></span>}
-
+            {isLoading && (
+				<span className="loading m-b-16"></span>
+			)}
             {!isAuthenticated && !isLoading && formType === 'SIGN_UP' && (
                 <form onSubmit={signUpHandleSubmit(signUpForm)}>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <input
                             name="email"
                             type="email"
                             ref={signUpRegister}
 							placeholder="Email"
 							className="input input--dark"
-							autoComplete="off"
-                        />
-                        <FormInputError
-                            error={signUpErros.email && signUpErros.email.message}
-                        />
+							autoComplete="off" />
+                        <FormInputError error={signUpErros.email && signUpErros.email.message} />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <input
                             name="name"
                             type="text"
                             ref={signUpRegister}
 							placeholder="Nome"
-							className="input input--dark"
-                        />
-                        <FormInputError
-                            error={signUpErros.name && signUpErros.name.message}
-                        />
+							className="input input--dark" />
+                        <FormInputError error={signUpErros.name && signUpErros.name.message} />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
 						<Controller
 							name="telephone"
 							control={signUpControl}
@@ -189,136 +191,116 @@ const MainSlotGrid = () => {
 								mask="_"
 								type="tel"
 								className="input input--dark"
-								placeholder="Telefone"
-							/>}
-						/>
-                        <FormInputError
-                            error={signUpErros.telephone && signUpErros.telephone.message}
-                        />
+								placeholder="Telefone" />} />
+                        <FormInputError error={signUpErros.telephone && signUpErros.telephone.message} />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <input
                             name="password"
                             type="password"
                             ref={signUpRegister}
 							placeholder="Senha"
 							className="input input--dark"
-							autoComplete="off"
-                        />
-                        <FormInputError
-                            error={signUpErros.password && signUpErros.password.message}
-                        />
+							autoComplete="off" />
+                        <FormInputError error={signUpErros.password && signUpErros.password.message} />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <input
                             name="confirmPassword"
                             type="password"
                             ref={signUpRegister}
 							placeholder="Confirme sua senha"
 							className="input input--dark"
-							autoComplete="off"
-                        />
-                        <FormInputError
-                            error={signUpErros.confirmPassword && signUpErros.confirmPassword.message}
-                        />
+							autoComplete="off" />
+                        <FormInputError error={signUpErros.confirmPassword && signUpErros.confirmPassword.message} />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <button
 							type="submit"
-							className="button button--block button--primary"
+							className="button button--block button--purple"
 							disabled={!signUpFormState.isValid}>
                             Casdastrar
                         </button>
                     </div>
-                    <div className="text--center m-t-25 m-b-15">
-                        <div onClick={() => setFormType('SIGN_IN')} className="cursor--pointer">
-                            <span>Já sou cliente</span>
+                    <div className="text--center m-t-25 m-b-16">
+                        <div
+							onClick={() => setFormType('SIGN_IN')}
+							className="cursor--pointer color--purple">
+                            <strong>Já sou cliente</strong>
                         </div>
                     </div>
                 </form>
             )}
-
             {!isAuthenticated && !isLoading && formType === 'SIGN_IN' && (
                 <form onSubmit={signInHandleSubmit(signInForm)}>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <input
                             name="email"
                             type="email"
                             ref={signInRegister}
 							placeholder="Email"
 							className="input input--dark"
-							autoComplete="off"
-                        />
-                         <FormInputError
-                            error={signInErros.email && signInErros.email.message}
-                        />
+							autoComplete="off" />
+                         <FormInputError error={signInErros.email && signInErros.email.message} />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
                         <input
                             name="password"
                             type="password"
                             ref={signInRegister}
 							placeholder="Senha"
 							className="input input--dark"
-							autoComplete="off"
-                        />
-                        <FormInputError
-                            error={signInErros.password && signInErros.password.message}
-                        />
+							autoComplete="off" />
+                        <FormInputError error={signInErros.password && signInErros.password.message} />
                     </div>
-                    <div className="m-t-15">
+                    <div className="m-t-16">
 						<button
 							type="submit"
-							className="button button--block button--primary"
+							className="button button--block button--purple"
 							disabled={!signInFormState.isValid}>
                             Entrar
                         </button>
                     </div>
-                    <div className="text--center m-t-25 m-b-15">
-                        <div onClick={() => setFormType('SIGN_UP')} className="cursor--pointer">
-                            <span>Não tenho cadastro</span>
+                    <div className="text--center m-t-25 m-b-16">
+                        <div
+							onClick={() => setFormType('SIGN_UP')}
+							className="cursor--pointer color--purple">
+                            <strong>Não tenho cadastro</strong>
                         </div>
                     </div>
                 </form>
             )}
-
             {!isAuthenticated && !formType && (
                 <div className="m-t-5">
                     <button
-                        className="button button--block button--outline m-b-15"
-                        onClick={() => setFormType('SIGN_IN')}
-                    >
+                        className="button button--block button--outline m-b-16"
+                        onClick={() => setFormType('SIGN_IN')}>
                         Já sou cliente
                     </button>
                     <button
                         className="button button--block button--outline"
-                        onClick={() => setFormType('SIGN_UP')}
-                    >
+                        onClick={() => setFormType('SIGN_UP')}>
                         Não tenho cadastro
                     </button>
                 </div>
             )}
-
             {isAuthenticated && !userAccountUrl && (
                 <div className="flexbox m-t-5">
                     <div className="flexbox__item">
                         <button
-                            className="button button--block button--primary"
-                            onClick={submitSchedule}
-                        >
+                            className="button button--block button--purple"
+                            onClick={submitSchedule}>
                             Agendar
                         </button>
                     </div>
                 </div>
             )}
-
             {isAuthenticated && userAccountUrl && (
                 <div className="flexbox m-t-5">
                     <div className="flexbox__item">
                         <button
                             className="button button--block button--outline"
-                            onClick={() => handleSignOut(true)}
-                        >
+                            onClick={() => handleSignOut(true)}>
                             Entrar como cliente
                         </button>
                     </div>

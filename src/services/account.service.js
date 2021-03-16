@@ -1,7 +1,7 @@
 import api from '../api/api';
 
-const find = ({ account }) => {
-    return api.get(`/accounts/${account}`);
+const find = ({ company }) => {
+    return api.get(`/v1/companies/${company}`);
 };
 
 export default {

@@ -1,107 +1,109 @@
 import React, { useContext, useState } from 'react';
 import AuthService from '../../services/auth.service';
 import schema from './validators/sign-in.validator';
+import PageHeader from '../../components/page-header-component/page-header.component';
+import FormInputError from '../../components/input-form-error-component/input-form-error.component';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
-import { AuthContext } from '../../contexts/auth.context';
+import { AuthContext } from '../../contexts/auth-context/auth.context';
 import { Redirect, Link } from 'react-router-dom';
-import { FormInputError } from '../../components/input-form-error.component';
+import { AiOutlineLogin } from 'react-icons/ai';
+
+import './sign-in.page.scss';
 
 const SignIn = () => {
-    const { isAuthenticated, handleSignIn, userAccountUrl } = useContext(AuthContext);
-    const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const [isLoading, setIsLoading] = useState(false);
+    const { isAuthenticated, handleSignIn, userAccountUrl } = useContext(AuthContext);
 
-	const { register, handleSubmit, formState, errors } = useForm({
+	const {
+		register,
+		handleSubmit,
+		formState,
+		errors
+	} = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
 		mode: 'onTouched',
 	});
 
-    const signInForm = async (values) => {
+    const signInForm = async values => {
 		try {
-			const { email, password } = values;
-
 			setIsLoading(true);
 
+			const { email, password } = values;
 			const { data } = await AuthService.signIn({
 				email,
 				password,
 			});
 
-			handleSignIn(data.token, data.account);
+			handleSignIn(data.token, data.company);
 		} catch ({ response }) {
-			setError(response.data);
+			setError(response.data.message);
 			setIsLoading(false);
 		}
 	};
 
-    if (isAuthenticated) {
-        return <Redirect to={`/${userAccountUrl || 'customer-schedules'}`} />;
+	if (isAuthenticated) {
+		const redirectUrl = userAccountUrl ? '/schedules' : '/customer-schedules';
+
+        return <Redirect to={redirectUrl} />;
     }
 
     return (
-        <div className="container p-b-30">
-			<div className="page__header">
-				<div className="container">
-					{isLoading ? (
-						<span className="loading"></span>
-					) : (
-						<h1 className="page__title">Sou profissional</h1>
-					)}
-					<div className="m-t-5">
-						<span className="page__description">Gerencie seus agendamentos.</span>
-					</div>
+        <div className="container">
+			<PageHeader
+				title="Sou profissional"
+				description="Gerencie seus agendamentos." />
+			{isLoading && (
+				<span className="loading"></span>
+			)}
+			{error && (
+				<div className="sign-in__error">{error}</div>
+			)}
+            <form
+				onSubmit={handleSubmit(signInForm)}
+				className="sign-in__form card card--outline">
+				<div className="card__header">
+					<h2 className="card__title">
+						<AiOutlineLogin /> Entrar
+					</h2>
 				</div>
-			</div>
-            <form onSubmit={handleSubmit(signInForm)} className="m-t-30 m-b-15">
-				{error && <div className="text--center color--white m-b-15">{error}</div>}
-				<div className="box m-b-20">
-					<div className="m-b-15">
-						<input
-							name="email"
-							type="email"
-							ref={register}
-							placeholder="Email"
-							disabled={isLoading}
-							className="input"
-						/>
-						<FormInputError
-							error={errors.email && errors.email.message}
-						/>
-					</div>
-					<div>
-						<input
-							name="password"
-							type="password"
-							ref={register}
-							placeholder="Password"
-							disabled={isLoading}
-							className="input"
-						/>
-						<FormInputError
-							error={errors.password && errors.password.message}
-						/>
-					</div>
+				<div className="sign-in__field">
+					<input
+						name="email"
+						type="email"
+						ref={register}
+						placeholder="Email"
+						disabled={isLoading}
+						className="input" />
+					<FormInputError error={errors.email && errors.email.message} />
 				</div>
-				<div className="m-b-20">
-					<Link to="/recover-password" className="color--white">
-						<span>Esqueceu a senha?</span>
-					</Link>
+				<div className="sign-in__field">
+					<input
+						name="password"
+						type="password"
+						ref={register}
+						placeholder="Password"
+						disabled={isLoading}
+						className="input" />
+					<FormInputError error={errors.password && errors.password.message} />
+				</div>
+				<div className="sign-in__forgot-password">
+					<Link to="/recover-password">Esqueceu a senha?</Link>
 				</div>
 				<div>
 					<button
 						type="submit"
 						disabled={!formState.isValid || isLoading}
-						className="button button--block"
-					>
+						className="button button--block button--purple">
 						Entrar
 					</button>
 				</div>
             </form>
-			<div className="text--center">
-				<Link to="/sign-up" className="color--white">Cadastrar-se</Link>
+			<div className="sign-in__redirect">
+				<Link to="/sign-up">Cadastrar-se</Link>
 			</div>
         </div>
     );

@@ -7,7 +7,9 @@ const api = axios.create({
 api.interceptors.response.use(null, (error) => {
 	const response = error.response;
 
-    if (response && ((response.status === 401) || response.data.includes('jwt expired'))) {
+	// TODO: Validate token expired
+
+    if (response && (response.data & response.message === 'Token expirado')) {
         localStorage.removeItem('token');
         localStorage.removeItem('userAccountUrl');
         window.location.href = '/sign-in';

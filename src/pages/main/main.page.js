@@ -1,12 +1,16 @@
-import React, { useContext } from 'react';
-import MainSlotGrid from './components/slotgrid.component';
-import MainScheduleForm from './components/schedule-form.component';
-import MainDate from './components/date.component';
-import MainServices from './components/services.component';
-import MainUsers from './components/users.component';
+import React, { Fragment, useContext } from 'react';
+import MainSlotGrid from './components/slotgrid-component/slotgrid.component';
+import MainScheduleForm from './components/schedule-form-component/schedule-form.component';
+import MainDate from './components/date-component/date.component';
+import MainServices from './components/services-component/services.component';
+import MainUsers from './components/users-component/users.component';
+import PageHeader from '../../components/page-header-component/page-header.component';
+import AccountContact from './components/account-contact-component/account-contact.component';
 
 import { MainProvider, MainContext } from './contexts/main.context';
 import { Redirect } from 'react-router-dom';
+
+import './main.page.scss';
 
 const MainContexted = () => {
     const {
@@ -20,44 +24,24 @@ const MainContexted = () => {
     }
 
     return (
-		<div className="p-b-20">
-			<div className="page__header">
-				<div className="container">
-					{/* <div className="flexbox flexbox__justify--center m-b-15">
-						<figure className="page__thumb">
-							<img src="https://i.pinimg.com/originals/a4/58/91/a45891b8705f918291eaf248d40edabd.jpg" alt={accountInfo.name}/>
-						</figure>
-					</div> */}
-					<h1 className="page__title">{accountInfo.name}</h1>
-					<div className="m-t-5">
-						<span className="page__description">Realize seu agendamento abaixo.</span>
-					</div>
-				</div>
-			</div>
-			<div className="container m-t-30">
-				<>
-					{isMainRequestPeding ? (
-						<div className="loading"></div>
-					) : (
-						<>
-							<MainDate />
-							<MainUsers />
-							<MainServices />
-							<MainSlotGrid />
-							<MainScheduleForm />
-							<div className="contact-footer">
-								{accountInfo.telephone && (
-									<p>Telefone: <a href={`tel:+55${accountInfo.telephone}`}>{accountInfo.telephone}</a></p>
-								)}
-								{accountInfo.address && (
-									<p>Endereço: {accountInfo.address}</p>
-								)}
-								<p>{accountInfo.name}</p>
-							</div>
-						</>
-					)}
-				</>
-			</div>
+		<div className="container">
+			<PageHeader
+				title={accountInfo.name}
+				description="Realize seu agendamento abaixo." />
+			<Fragment>
+				{isMainRequestPeding ? (
+					<div className="loading"></div>
+				) : (
+					<Fragment>
+						<MainDate />
+						<MainUsers />
+						<MainServices />
+						<MainSlotGrid />
+						<MainScheduleForm />
+						<AccountContact accountInfo={accountInfo} />
+					</Fragment>
+				)}
+			</Fragment>
 		</div>
     );
 };

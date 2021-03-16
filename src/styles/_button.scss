@@ -1,17 +1,17 @@
 .button {
-    height: 50px;
+    height: 48px;
     border-radius: 6px;
-    font-weight: 600;
+    font-weight: bold;
     border: none;
     font-size: 14px;
-    padding: 0 15px;
+    padding: 0 16px;
     background-color: #ffffff;
 	display: inline-block;
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
 	transition: all .3s linear;
-	color: $text-color;
+	color: var(--dark);
 	cursor: pointer;
 	$self: &;
 
@@ -26,7 +26,7 @@
 		opacity: 0.5;
 		background-color: #ffffff;
 		border-color: #d7d7d7;
-		color: $text-color;
+		color: var(--dark);
 	}
 
 	&--small {
@@ -39,31 +39,19 @@
         width: 100%;
     }
 
-	&--primary {
-		border-color: $primary;
-		background-color: $primary;
+	&--purple {
+		border-color: var(--purple);
+		background-color: var(--purple);
 		color: white;
 	}
 
-	&--secondary {
-		border-color: $secondary;
-		background-color: $secondary;
-		color: white;
-	}
-
-	&--success {
-		border-color: $color-success;
-		background-color: $color-success;
-		color: white;
-	}
-
-	&--danger {
-		border-color: $color-danger;
-		background-color: $color-danger;
+	&--green {
+		border-color:var(--green);
+		background-color:var(--green);
 		color: white;
 	}
 
 	&--outline {
-		border-color: $text-color;
+		border-color: var(--dark);
 	}
 }
