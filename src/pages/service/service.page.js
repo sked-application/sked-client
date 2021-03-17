@@ -10,6 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from "react-hook-form";
 import { ShowUp, ShowUpButton } from '../../components/modal-component/modal.component';
 import { AiOutlineClockCircle } from "react-icons/ai";
+import { handleError } from '../../utils/api';
 
 const Services = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -60,20 +61,22 @@ const Services = () => {
 			listServices();
 			handleCloseShowUp();
 			alert(message);
-		} catch ({ response }) {
-			alert('Algum erro aconteceu, tente novamente mais tarde.');
+		} catch (error) {
+			alert(handleError(error));
 		}
 	};
 
     const removeService = async id => {
         try {
-			if (window.confirm('Deseja remover esse serviço?')) {
+			const alertQuestion = 'Deseja remover esse serviço?';
+
+			if (window.confirm(alertQuestion)) {
 				await ServiceService.remove(id);
 
 				listServices();
 			}
-        } catch ({ response }) {
-            alert('Algum erro aconteceu, tente novamente mais tarde.');
+        } catch (error) {
+			alert(handleError(error));
         }
 	};
 
@@ -100,12 +103,16 @@ const Services = () => {
 	};
 
 	const listServices = async () => {
-		setIsLoading(true);
+		try {
+			setIsLoading(true);
 
-		const { data } = await ServiceService.findAll();
+			const { data } = await ServiceService.findAll();
 
-		setServices(data);
-		setIsLoading(false);
+			setServices(data);
+			setIsLoading(false);
+		} catch (error) {
+			alert(handleError(error));
+		}
 	};
 
     useEffect(() => {

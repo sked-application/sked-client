@@ -1,10 +1,9 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import ServiveService from '../../../../services/service.service';
 
-import {
-	AiOutlineCarryOut,
-} from "react-icons/ai";
+import { AiOutlineCarryOut } from "react-icons/ai";
 import { MainContext } from '../../contexts/main.context';
+import { handleError } from '../../../../utils/api';
 
 const MainService = () => {
 	const {
@@ -20,16 +19,18 @@ const MainService = () => {
     };
 
 	const listServices = useCallback(async () => {
-		if (!accountInfo.id || !user.id) {
-			return;
+		try {
+			if (!accountInfo.id || !user.id) return;
+
+			const { data } = await ServiveService.findAllByCompanyId({
+				companyId: accountInfo.id,
+				userId: user.id
+			});
+
+			setServices(data);
+		} catch (error) {
+			alert(handleError(error));
 		}
-
-		const { data } = await ServiveService.findAllByCompanyId({
-			companyId: accountInfo.id,
-			userId: user.id
-		});
-
-		setServices(data);
 	}, [accountInfo, user]);
 
     useEffect(() => {

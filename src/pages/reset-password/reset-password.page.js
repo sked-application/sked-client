@@ -7,7 +7,8 @@ import FormInputError from '../../components/input-form-error-component/input-fo
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AuthContext } from '../../contexts/auth-context/auth.context';
-
+import { AiOutlineLock } from 'react-icons/ai';
+import { handleError } from '../../utils/api';
 import {
 	Link,
 	Redirect,
@@ -16,7 +17,6 @@ import {
 } from 'react-router-dom';
 
 import './reset-password.page.scss';
-import { AiOutlineLock } from 'react-icons/ai';
 
 const ResetPassword = () => {
 	const history = useHistory();
@@ -50,8 +50,8 @@ const ResetPassword = () => {
 			}
 
 			history.push('/sign-in');
-		} catch ({ response }) {
-			setError(response.data);
+		} catch (error) {
+			setError(handleError(error));
 			setIsLoading(false);
 		}
 	};

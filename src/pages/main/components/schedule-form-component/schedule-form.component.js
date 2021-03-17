@@ -11,6 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from "react-hook-form";
 import { MainContext } from '../../contexts/main.context';
 import { AuthContext } from '../../../../contexts/auth-context/auth.context';
+import { handleError } from '../../../../utils/api';
 
 const MainSlotGrid = () => {
 	const [formType, setFormType] = useState();
@@ -98,9 +99,9 @@ const MainSlotGrid = () => {
             resetMainService();
             resetMainDate();
             alert('Agendamento realizado com sucesso!');
-        } catch ({ response }) {
+        } catch (error) {
             resetMainDate();
-            alert(response.data);
+			alert(handleError(error));
         }
     };
 
@@ -125,8 +126,8 @@ const MainSlotGrid = () => {
 			setIsLoading(false);
 			handleSignIn(data.token);
 			alert('Cadastro realizado com sucesso, realize agora seu agendamento!');
-		} catch ({ response }) {
-			alert(response.data.message);
+		} catch (error) {
+			alert(handleError(error));
 			setIsLoading(false);
 		}
 	};
@@ -144,8 +145,8 @@ const MainSlotGrid = () => {
 			signInReset();
 			setIsLoading(false);
 			handleSignIn(data.token);
-		} catch ({ response }) {
-			alert(response.data.message);
+		} catch (error) {
+			alert(handleError(error));
 			setIsLoading(false);
 		}
 	};

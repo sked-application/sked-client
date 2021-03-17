@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 import { AuthContext } from '../../contexts/auth-context/auth.context';
 import { AiOutlineLock } from 'react-icons/ai';
+import { handleError } from '../../utils/api';
 
 import {
 	Link,
@@ -48,8 +49,8 @@ const RecoverPassword = () => {
 			if (error) {
 				setError('');
 			}
-		} catch ({ response }) {
-			setError(response.data);
+		} catch (error) {
+			setError(handleError(error));
 			setIsLoading(false);
 
 			if (success) {

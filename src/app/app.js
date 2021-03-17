@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, Fragment } from 'react';
 import AppRoutes from '../routes/routes';
 import AppHeader from '../components/header-component/header.component';
 import Copyright from '../components/copyright-component/copyright.component';
@@ -22,11 +22,11 @@ const AppContexted = () => {
             {isAuthLoading ? (
                 <div className="loading m-t-30"></div>
             ) : (
-                <>
+                <Fragment>
                     <AppHeader currentPathname={currentPathname} />
                     <AppRoutes />
 					<Copyright />
-                </>
+                </Fragment>
             )}
         </>
     );

@@ -4,6 +4,8 @@ import PageHeader from '../../components/page-header-component/page-header.compo
 import CalendarTimeline from '../../components/calendar-timeline-component/calendar-timeline.component';
 import moment from 'moment';
 
+import { handleError } from '../../utils/api';
+
 const statusLabels = {
 	CONFIRMED: 'confirmar',
 	CANCELED: 'cancelar',
@@ -18,7 +20,9 @@ const Schedules = () => {
 
 	const updateStatus = async (id, updateStatus) => {
 		try {
-			if (window.confirm(`Deseja ${statusLabels[updateStatus]} esse agendamento?`)) {
+			const alertQuestion = `Deseja ${statusLabels[updateStatus]} esse agendamento?`;
+
+			if (window.confirm(alertQuestion)) {
 				setIsLoading(true);
 
 				await ScheduleService.updateStatus({
@@ -28,21 +32,25 @@ const Schedules = () => {
 
 				listSchedules();
 			}
-		} catch ({ response }) {
-			alert(response.data);
+		} catch (error) {
+			alert(handleError(error));
 		}
 	};
 
 	const listSchedules = useCallback(async () => {
-		setIsLoading(true);
+		try {
+			setIsLoading(true);
 
-		const { data } = await ScheduleService.findAll({
-			date,
-			status,
-		});
+			const { data } = await ScheduleService.findAll({
+				date,
+				status,
+			});
 
-		setSchedules(data.schedules);
-		setIsLoading(false);
+			setSchedules(data.schedules);
+			setIsLoading(false);
+		} catch (error) {
+			alert(handleError(error));
+		}
 	}, [date, status]);
 
     useEffect(() => {

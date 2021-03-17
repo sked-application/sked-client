@@ -14,6 +14,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
 import { ShowUp, ShowUpButton } from '../../components/modal-component/modal.component';
 import { BsPlus } from 'react-icons/bs';
+import { handleError } from '../../utils/api';
 
 const ScheduleLock = () => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +22,14 @@ const ScheduleLock = () => {
 	const [toggleShow, setToggleShow] = useState(false);
 	const [isEdit, setIsEdit] = useState(false);
 
-	const { register, handleSubmit, reset, formState, errors, setValue } = useForm({
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState,
+		errors,
+		setValue,
+	} = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
 		mode: 'onTouched',
@@ -54,20 +62,22 @@ const ScheduleLock = () => {
 			listScheduleLocks();
 			handleCloseShowUp();
 			alert(message);
-		} catch ({ response }) {
-			alert(response.data.message);
+		} catch (error) {
+			alert(handleError(error));
 		}
 	};
 
 	const removeScheduleLock = async id => {
         try {
-			if (window.confirm('Deseja remover esse bloqueio de agenda?')) {
+			const alertQuestion = 'Deseja remover esse bloqueio de agenda?';
+
+			if (window.confirm(alertQuestion)) {
 				await ScheduleLockService.remove(id);
 
 				listScheduleLocks();
 			}
-        } catch ({ response }) {
-            alert('Algum erro aconteceu, tente novamente mais tarde.');
+        } catch (error) {
+			alert(handleError(error));
         }
 	};
 
@@ -94,12 +104,17 @@ const ScheduleLock = () => {
 	};
 
 	const listScheduleLocks = async () => {
-		setIsLoading(true);
+		try {
+			setIsLoading(true);
 
-		const { data } = await ScheduleLockService.findAll();
+			const { data } = await ScheduleLockService.findAll();
 
-		setScheduleLocks(data);
-		setIsLoading(false);
+			setScheduleLocks(data);
+			setIsLoading(false);
+		} catch (error) {
+			alert(handleError(error));
+		}
+
 	};
 
     useEffect(() => {

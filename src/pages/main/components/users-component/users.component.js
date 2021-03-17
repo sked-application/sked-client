@@ -6,10 +6,9 @@ import React, {
 } from 'react';
 import UserService from '../../../../services/user.service';
 
-import {
-	AiOutlineUser,
-} from "react-icons/ai";
+import { AiOutlineUser } from "react-icons/ai";
 import { MainContext } from '../../contexts/main.context';
+import { handleError } from '../../../../utils/api';
 
 const MainUsers = () => {
 	const {
@@ -26,21 +25,23 @@ const MainUsers = () => {
     };
 
 	const listUsers = useCallback(async () => {
-		if (!accountInfo.id) {
-			return;
+		try {
+			if (!accountInfo.id) return;
+
+			const { data } = await UserService.findAllByCompanyId({
+				companyId: accountInfo.id,
+			});
+
+			const userValues = Object.values(data);
+
+			if (userValues.length === 1) {
+				setUser(userValues[0]);
+			}
+
+			setUsers(data);
+		} catch (error) {
+			alert(handleError(error));
 		}
-
-		const { data } = await UserService.findAllByCompanyId({
-			companyId: accountInfo.id,
-		});
-
-		const userValues = Object.values(data);
-
-		if (userValues.length === 1) {
-			setUser(userValues[0]);
-		}
-
-		setUsers(data);
 	}, [accountInfo, setUser]);
 
     useEffect(() => {

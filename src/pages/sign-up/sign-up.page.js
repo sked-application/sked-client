@@ -3,18 +3,18 @@ import AuthService from '../../services/auth.service';
 import schema from './validators/sign-up.validator';
 import NumberFormat from 'react-number-format';
 import PageHeader from '../../components/page-header-component/page-header.component';
+import FormInputError from '../../components/input-form-error-component/input-form-error.component'
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from "react-hook-form";
 import { AuthContext } from '../../contexts/auth-context/auth.context';
-import FormInputError from '../../components/input-form-error-component/input-form-error.component'
 import { replaceSpecialCharacters } from '../../utils/utils';
 import { AiOutlineForm } from 'react-icons/ai';
-
+import { handleError } from '../../utils/api';
 import {
-	Redirect,
 	Link,
-	useHistory
+	Redirect,
+	useHistory,
 } from 'react-router-dom';
 
 import './sign-up.page.scss';
@@ -67,8 +67,8 @@ const SignUp = () => {
 			});
 
 			history.push('/sign-in');
-		} catch ({ response }) {
-			setError(response.data);
+		} catch (error) {
+			setError(handleError(error));
 			setIsLoading(false);
 		}
 	};

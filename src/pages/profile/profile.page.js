@@ -8,6 +8,7 @@ import FormInputError from '../../components/input-form-error-component/input-fo
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from "react-hook-form";
 import { ShowUp } from '../../components/modal-component/modal.component';
+import { handleError } from '../../utils/api';
 
 const Profile = () => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -73,18 +74,22 @@ const Profile = () => {
 			getProfile();
 			handleCloseShowUp();
 			alert('Perfil atualizado com sucesso!');
-		} catch ({ response }) {
-			alert('Algum erro aconteceu, tente novamente mais tarde.');
+		} catch (error) {
+			alert(handleError(error));
 		}
 	};
 
 	const getProfile = useCallback(async () => {
-		setIsLoading(true);
+		try {
+			setIsLoading(true);
 
-		const { data } = await UserService.profile();
+			const { data } = await UserService.profile();
 
-		setProfile(data);
-		setIsLoading(false);
+			setProfile(data);
+			setIsLoading(false);
+		} catch (error) {
+			alert(handleError(error));
+		}
 	}, []);
 
     useEffect(() => {

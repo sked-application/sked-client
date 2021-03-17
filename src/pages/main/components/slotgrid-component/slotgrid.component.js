@@ -9,9 +9,8 @@ import TimegridService from '../../../../services/timegrid.service';
 
 import { MainContext } from '../../contexts/main.context';
 import { getDayLabelByDate } from '../../../../utils/utils';
-import {
-	AiOutlineClockCircle,
-} from "react-icons/ai";
+import { AiOutlineClockCircle } from "react-icons/ai";
+import { handleError } from '../../../../utils/api';
 
 import './slotgrid.component.scss';
 
@@ -36,27 +35,31 @@ const MainSlotGrid = () => {
     };
 
 	const listSlots = useCallback(async () => {
-		if (!service.id || !user.id) {
-			setTimegrid([]);
-			return;
+		try {
+			if (!service.id || !user.id) {
+				setTimegrid([]);
+				return;
+			}
+
+			setIsLoading(true);
+
+			const { data } = await TimegridService.findByDay({
+				account_id: accountInfo.id,
+				date: startDate,
+				service_id: service.id,
+				user_id: user.id,
+				service_duration: service.duration,
+			});
+
+			if (data.available_timegrid) {
+				setTimegrid(data.available_timegrid);
+			}
+
+			setActivedSlot();
+			setIsLoading(false);
+		} catch (error) {
+			alert(handleError(error));
 		}
-
-		setIsLoading(true);
-
-		const { data } = await TimegridService.findByDay({
-			account_id: accountInfo.id,
-			date: startDate,
-			service_id: service.id,
-			user_id: user.id,
-			service_duration: service.duration,
-		});
-
-		if (data.available_timegrid) {
-			setTimegrid(data.available_timegrid);
-		}
-
-		setActivedSlot();
-		setIsLoading(false);
 	}, [accountInfo, startDate, service, user]);
 
     useEffect(() => {

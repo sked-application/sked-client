@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { ShowUp } from '../../../../components/modal-component/modal.component';
 import { BsPlus } from 'react-icons/bs';
 import { Fragment } from 'react';
+import { handleError } from '../../../../utils/api';
 
 const initialTimegrid = {
     0: [],
@@ -66,8 +67,8 @@ const TimegridForm = () => {
 
 			listTimegrid();
 			handleCloseShowUp();
-        } catch ({ response }) {
-            setError(response.data);
+        } catch (error) {
+			setError(handleError(error));
             setIsLoading(false);
         }
 	};
@@ -90,12 +91,16 @@ const TimegridForm = () => {
 	};
 
 	const listTimegrid = async () => {
-		setIsLoading(true);
+		try {
+			setIsLoading(true);
 
-		const { data } = await TimegridService.findAll();
+			const { data } = await TimegridService.findAll();
 
-		setTimegrid(data.timegrid);
-		setIsLoading(false);
+			setTimegrid(data.timegrid);
+			setIsLoading(false);
+		} catch (error) {
+			alert(handleError(error));
+		}
 	};
 
     useEffect(() => {

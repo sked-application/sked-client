@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from '../../contexts/auth-context/auth.context';
 import { Redirect, Link } from 'react-router-dom';
 import { AiOutlineLogin } from 'react-icons/ai';
+import { handleError } from '../../utils/api';
 
 import './customer-sign-in.page.scss';
 
@@ -34,8 +35,8 @@ const SignIn = () => {
 			});
 
 			handleSignIn(data.token);
-		} catch ({ response }) {
-			setError(response.data);
+		} catch (error) {
+			setError(handleError(error));
 			setIsLoading(false);
 		}
 	};

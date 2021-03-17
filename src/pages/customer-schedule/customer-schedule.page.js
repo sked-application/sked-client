@@ -4,6 +4,8 @@ import CalendarTimeline from '../../components/calendar-timeline-component/calen
 import PageHeader from '../../components/page-header-component/page-header.component';
 import moment from 'moment';
 
+import { handleError } from '../../utils/api';
+
 const statusLabels = {
 	CONFIRMED: 'confirmar',
 	CANCELED: 'cancelar',
@@ -27,8 +29,8 @@ const Schedules = () => {
 
 				listSchedules();
 			}
-		} catch ({ response }) {
-			alert(response.data);
+		} catch (error) {
+			alert(handleError(error));
 		}
 	};
 
@@ -44,7 +46,7 @@ const Schedules = () => {
 			setSchedules(data.schedules);
 			setIsLoading(false);
 		} catch (error) {
-			alert('Algum erro aconteceu, tente novamente mais tarde.');
+			alert(handleError(error));
 			setIsLoading(false);
 		}
 	}, [date, status]);
