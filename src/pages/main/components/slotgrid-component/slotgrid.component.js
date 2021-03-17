@@ -36,8 +36,14 @@ const MainSlotGrid = () => {
 
 	const listSlots = useCallback(async () => {
 		try {
+			console.log(123);
 			if (!service.id || !user.id) {
 				setTimegrid([]);
+				return;
+			}
+
+			if (!startDate) {
+				alert('Escolha uma data válida');
 				return;
 			}
 

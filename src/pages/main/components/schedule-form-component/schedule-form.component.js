@@ -43,7 +43,7 @@ const MainSlotGrid = () => {
 	} = useForm({
 		resolver: yupResolver(schemaSignUp.form.validator),
 		defaultValues: schemaSignUp.form.initialValues,
-		mode: 'onTouched',
+		mode: 'all',
 	});
 
 	const {
@@ -55,7 +55,7 @@ const MainSlotGrid = () => {
 	} = useForm({
 		resolver: yupResolver(schemaSignIn.form.validator),
 		defaultValues: schemaSignIn.form.initialValues,
-		mode: 'onTouched',
+		mode: 'all',
 	});
 
     const getScheduleInfoPreview = ({ date, start, end }) => {

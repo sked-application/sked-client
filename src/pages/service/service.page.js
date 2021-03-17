@@ -29,7 +29,7 @@ const Services = () => {
 	} = useForm({
 		resolver: yupResolver(schema.form.validator),
 		defaultValues: schema.form.initialValues,
-		mode: 'onTouched',
+		mode: 'all',
 	});
 
     const serviceForm = async values => {

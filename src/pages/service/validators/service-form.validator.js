@@ -7,13 +7,13 @@ export default {
         initialValues: {
             id: '',
             name: '',
+			price: '',
             duration: null,
-			price: null,
 			showPrice: true,
         },
         validator: Yup.object({
 			name: Yup.string().required('Este campo é obrigatório'),
-			price: Yup.string(),
+			price: Yup.string().required('Este campo é obrigatório'),
 			showPrice: Yup.boolean(),
 			duration: Yup.number()
 				.typeError('Digite uma duração válida')
