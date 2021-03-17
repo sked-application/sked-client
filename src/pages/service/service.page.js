@@ -3,12 +3,12 @@ import ServiceService from '../../services/service.service';
 import schema from './validators/service-form.validator';
 import NumberFormat from 'react-number-format';
 import PageHeader from '../../components/page-header-component/page-header.component';
+import FormInputError from '../../components/input-form-error-component/input-form-error.component';
 
 import { BsPlus } from 'react-icons/bs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from "react-hook-form";
 import { ShowUp, ShowUpButton } from '../../components/modal-component/modal.component';
-import FormInputError from '../../components/input-form-error-component/input-form-error.component';
 import { AiOutlineClockCircle } from "react-icons/ai";
 
 const Services = () => {

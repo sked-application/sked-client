@@ -1,13 +1,13 @@
 import api from '../api/api';
 
 const profile = () => {
-	return api.get('/users/profile');
+	return api.get('v1/users/profile');
 };
 
-const updateProfile = ({ user, account}) => {
-    return api.put(`/users/profile`, {
+const updateProfile = ({ user, company }) => {
+    return api.put(`v1/users/profile`, {
 		user,
-		account,
+		company,
 	});
 };
 

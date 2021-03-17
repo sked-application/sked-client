@@ -37,10 +37,10 @@ const Profile = () => {
 		if (data) {
 			setValue("userName", data.name);
 			setValue("userCpf", data.cpf);
-			setValue("accountName", data.account.name);
-			setValue("accountCpfCnpj", data.account.cpf_cnpj);
-			setValue("accountTelephone", data.account.telephone);
-			setValue("accountAddress", data.account.address);
+			setValue("companyName", data.company.name);
+			setValue("companyCpfCnpj", data.company.cpfCnpj);
+			setValue("companyTelephone", data.company.telephone);
+			setValue("companyAddress", data.company.address);
 		}
 
 		setToggleShow(true);
@@ -51,10 +51,10 @@ const Profile = () => {
 			const {
 				userName,
 				userCpf,
-				accountName,
-				accountCpfCnpj,
-				accountTelephone,
-				accountAddress
+				companyName,
+				companyCpfCnpj,
+				companyTelephone,
+				companyAddress
 			} = values;
 
 			await UserService.updateProfile({
@@ -62,11 +62,11 @@ const Profile = () => {
 					cpf: userCpf,
 					name: userName,
 				},
-				account: {
-					name: accountName,
-					cpf_cnpj: accountCpfCnpj,
-					telephone: accountTelephone,
-					address: accountAddress,
+				company: {
+					name: companyName,
+					cpfCnpj: companyCpfCnpj,
+					telephone: companyTelephone,
+					address: companyAddress,
 				},
 			});
 
@@ -83,7 +83,7 @@ const Profile = () => {
 
 		const { data } = await UserService.profile();
 
-		setProfile(data.user);
+		setProfile(data);
 		setIsLoading(false);
 	}, []);
 
@@ -121,7 +121,7 @@ const Profile = () => {
 								</div>
 								<div className="m-t-10">
 									<strong>Administrador: </strong>
-									<span>{profile.is_root ? 'Sim' : 'Não'}</span>
+									<span>{profile.role === 'ADMIN' ? 'Sim' : 'Não'}</span>
 								</div>
 							</div>
 
@@ -131,23 +131,23 @@ const Profile = () => {
 							<div className="flexbox flexbox--column m-b-30">
 								<div className="m-t-10">
 									<strong>Conta: </strong>
-									<span>{profile.account.name}</span>
+									<span>{profile.company.name}</span>
 								</div>
 								<div className="m-t-10">
 									<strong>Url: </strong>
-									<span>skedapp.com.br/{profile.account.url}</span>
+									<span>skedapp.com.br/{profile.company.url}</span>
 								</div>
 								<div className="m-t-10">
 									<strong>Cpf/Cnpj: </strong>
-									<span>{profile.account.cpf_cnpj}</span>
+									<span>{profile.company.cpfCnpj}</span>
 								</div>
 								<div className="m-t-10">
 									<strong>Número: </strong>
-									<span>{profile.account.telephone || 'Não informado'}</span>
+									<span>{profile.company.telephone || 'Não informado'}</span>
 								</div>
 								<div className="m-t-10">
 									<strong>Endereço: </strong>
-									<span>{profile.account.address || 'Não informado'}</span>
+									<span>{profile.company.address || 'Não informado'}</span>
 								</div>
 							</div>
 						</div>
@@ -190,40 +190,40 @@ const Profile = () => {
 						<FormInputError error={errors.userCpf && errors.userCpf.message} />
 					</div>
 
-					{profile && profile.is_root && (
+					{profile && profile.role === 'ADMIN' && (
 						<Fragment>
 							<div className="flexbox__item m-t-16">
 								<div className="m-b-5">
-									<label htmlFor="accountName">Nome da conta</label>
+									<label htmlFor="companyName">Nome da conta</label>
 								</div>
 								<input
-									id="accountName"
-									name="accountName"
+									id="companyName"
+									name="companyName"
 									type="text"
 									ref={register}
 									className="input input--dark" />
-								<FormInputError error={errors.accountName && errors.accountName.message} />
+								<FormInputError error={errors.companyName && errors.companyName.message} />
 							</div>
 							<div className="flexbox__item m-t-16">
 								<div className="m-b-5">
-									<label htmlFor="accountCpfCnpj">Cpf/Cnpj da conta</label>
+									<label htmlFor="companyCpfCnpj">Cpf/Cnpj da conta</label>
 								</div>
 								<input
-									id="accountCpfCnpj"
-									name="accountCpfCnpj"
+									id="companyCpfCnpj"
+									name="companyCpfCnpj"
 									type="text"
 									ref={register}
 									placeholder="Cpf/Cnpj sem pontos e barras"
 									className="input input--dark" />
-								<FormInputError error={errors.accountCpfCnpj && errors.accountCpfCnpj.message} />
+								<FormInputError error={errors.companyCpfCnpj && errors.companyCpfCnpj.message} />
 							</div>
 							<div className="flexbox__item m-t-16">
 								<div className="m-b-5">
-									<label htmlFor="accountTelephone">Telefone</label>
+									<label htmlFor="companyTelephone">Telefone</label>
 								</div>
 								<Controller
-									id="accountTelephone"
-									name="accountTelephone"
+									id="companyTelephone"
+									name="companyTelephone"
 									control={control}
 									as={<NumberFormat
 										format="(##) #####-####"
@@ -231,19 +231,19 @@ const Profile = () => {
 										type="tel"
 										className="input input--dark"
 										placeholder="Telefone"/>} />
-								<FormInputError error={errors.accountTelephone && errors.accountTelephone.message} />
+								<FormInputError error={errors.companyTelephone && errors.companyTelephone.message} />
 							</div>
 							<div className="flexbox__item m-t-16">
 								<div className="m-b-5">
-									<label htmlFor="accountAddress">Endereço</label>
+									<label htmlFor="companyAddress">Endereço</label>
 								</div>
 								<input
-									id="accountAddress"
-									name="accountAddress"
+									id="companyAddress"
+									name="companyAddress"
 									type="text"
 									ref={register}
 									className="input input--dark" />
-								<FormInputError error={errors.accountAddress && errors.accountAddress.message} />
+								<FormInputError error={errors.companyAddress && errors.companyAddress.message} />
 							</div>
 						</Fragment>
 					)}

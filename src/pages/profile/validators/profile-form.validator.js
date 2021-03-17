@@ -7,10 +7,10 @@ export default {
         initialValues: {
 			userName: '',
 			userCpf: '',
-			accountName: '',
-			accountCpfCnpj: '',
-			accountTelephone: '',
-			accountAddress: '',
+			companyName: '',
+			companyCpfCnpj: '',
+			companyTelephone: '',
+			companyAddress: '',
         },
         validator: Yup.object({
 			userName: Yup.string()
@@ -23,14 +23,14 @@ export default {
 
 					return true;
 				}),
-			accountName: Yup.string()
+			companyName: Yup.string()
 				.required('Este campo é obrigatório'),
-			accountCpfCnpj: Yup.string()
+			companyCpfCnpj: Yup.string()
 				.required('Por favor, digite o cpf/cnpj.')
 				.test('cpf-cnpj-test', 'Por favor, verifique o cpf/cnpj.', (value) => validateCpfCnpj(value)),
-			accountTelephone: Yup.string()
+			companyTelephone: Yup.string()
 				.matches(phoneRegex, 'Por favor, verifique o número de telefone.'),
-			accountAddress: Yup.string(),
+			companyAddress: Yup.string(),
         }),
     },
 };
