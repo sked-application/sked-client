@@ -5,7 +5,7 @@ const create = (data) => {
 };
 
 const update = (id, changes) => {
-    return api.put(`/schedule-locks/${id}`, changes);
+    return api.put(`v1/schedule-locks/${id}`, changes);
 };
 
 const findAll = () => {
@@ -13,7 +13,7 @@ const findAll = () => {
 };
 
 const remove = (id) => {
-    return api.delete(`/schedule-locks/${id}`);
+    return api.delete(`v1/schedule-locks/${id}`);
 };
 
 export default {

@@ -36,7 +36,7 @@ export const getMonthLabelByDate = (date) => {
 };
 
 export const getFormattedDatePreview = (date) => {
-    return moment(date).format('DD/MM/YYYY');
+    return moment(date.slice(0, 10)).format('DD/MM/YYYY');
 };
 
 export const replaceSpecialCharacters = (string) => {
