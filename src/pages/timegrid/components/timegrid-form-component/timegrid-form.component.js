@@ -96,7 +96,7 @@ const TimegridForm = () => {
 
 			const { data } = await TimegridService.findAll();
 
-			setTimegrid(data.timegrid);
+			setTimegrid(data);
 			setIsLoading(false);
 		} catch (error) {
 			alert(handleError(error));

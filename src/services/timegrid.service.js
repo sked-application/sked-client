@@ -1,13 +1,13 @@
 import api from '../api/api';
 
 const set = ({ data }) => {
-    return api.post('/timegrid', {
-        timegrid: data,
+    return api.post('v1/timegrids', {
+        timeGrids: data,
     });
 };
 
 const findAll = () => {
-    return api.get('/timegrid');
+    return api.get('v1/timegrids');
 };
 
 const findByDay = (params) => {
