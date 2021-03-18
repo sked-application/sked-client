@@ -9,10 +9,21 @@ const handleResponse = ({ data }) =>  data;
 const handleError = (error) => {
 	const response = error.response;
 
-    if (response && response.data && response.data.message === 'Token expirado') {
+    if (response && response.data && response.data.message === 'Unauthorized') {
+		const isProfessionalUser = !!JSON.parse(localStorage.getItem('userAccountUrl'));
+		const href = isProfessionalUser ? '/sign-in' : 'sign-in-customer';
+
         localStorage.removeItem('token');
         localStorage.removeItem('userAccountUrl');
-        window.location.href = '/sign-in';
+        window.location.href = href;
+
+		return Promise.reject({
+			response: {
+				data: {
+					message: 'Sua sessão expirou, realize o login novamente.'
+				}
+			}
+		});
     }
 
     return Promise.reject(error);
