@@ -1,42 +1,22 @@
-import moment from 'moment';
+import { format, parseISO } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR'
 
-export const getDayLabelByDate = (date) => {
-    const day = moment(date).day();
-    const weekDays = {
-        0: 'Domingo',
-        1: 'Segunda',
-        2: 'Terça',
-        3: 'Quarta',
-        4: 'Quinta',
-        5: 'Sexta',
-        6: 'Sábado',
-    };
+export const getDayLabelByDate = (date, short) => {
+	const pattern = short ? 'EEEEEE' : 'EEEE';
 
-    return weekDays[day];
+    return format(parseISO(date.slice(0, 10)), pattern, {
+		locale: ptBR
+	});
 };
 
 export const getMonthLabelByDate = (date) => {
-    const month = moment(date).month();
-    const months = {
-        0: 'Janeiro',
-        1: 'Fevereiro',
-        2: 'Março',
-        3: 'Abril',
-        4: 'Maio',
-        5: 'Junho',
-        6: 'Julio',
-        7: 'Agosto',
-        8: 'Setembro',
-        9: 'Outubro',
-        10: 'Novembro',
-        11: 'Dezembro',
-    };
-
-    return months[month];
+    return format(parseISO(date.slice(0, 10)), 'MMMM', {
+		locale: ptBR
+	});
 };
 
 export const getFormattedDatePreview = (date) => {
-    return moment(date.slice(0, 10)).format('DD/MM/YYYY');
+	return format(parseISO(date.slice(0, 10)), 'dd/MM/yyyy');
 };
 
 export const replaceSpecialCharacters = (string) => {

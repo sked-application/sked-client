@@ -52,6 +52,7 @@
 
 		&__label {
 			font-size: 12px;
+			text-transform: capitalize;
 		}
 	}
 
@@ -218,6 +219,7 @@
 		display: flex;
 		align-items: center;
 		font-size: 14px;
+		text-transform: capitalize;
 	}
 }
 

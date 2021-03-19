@@ -34,7 +34,7 @@ const SignIn = () => {
 				password,
 			});
 
-			handleSignIn(data.token);
+			handleSignIn(data);
 		} catch (error) {
 			setError(handleError(error));
 			setIsLoading(false);

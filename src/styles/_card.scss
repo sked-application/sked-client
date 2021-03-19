@@ -33,6 +33,10 @@
 
     &__subtitle {
 		font-size: 14px;
+
+		&--captalized {
+			text-transform: capitalize;
+		}
     }
 
 	&__content {

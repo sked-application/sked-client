@@ -10,8 +10,8 @@ const findAll = () => {
     return api.get('v1/timegrids');
 };
 
-const findByDay = (params) => {
-    return api.get('/timegrid/by-day', {
+const findSlots = (params) => {
+    return api.get('v1/timegrids/slots', {
         params,
     });
 };
@@ -19,5 +19,5 @@ const findByDay = (params) => {
 export default {
     set,
     findAll,
-    findByDay,
+    findSlots,
 };

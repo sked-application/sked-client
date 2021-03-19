@@ -36,7 +36,6 @@ const MainSlotGrid = () => {
 
 	const listSlots = useCallback(async () => {
 		try {
-			console.log(123);
 			if (!service.id || !user.id) {
 				setTimegrid([]);
 				return;
@@ -49,16 +48,16 @@ const MainSlotGrid = () => {
 
 			setIsLoading(true);
 
-			const { data } = await TimegridService.findByDay({
-				account_id: accountInfo.id,
+			const { data } = await TimegridService.findSlots({
+				userId: user.id,
 				date: startDate,
-				service_id: service.id,
-				user_id: user.id,
-				service_duration: service.duration,
+				serviceId: service.id,
+				companyId: accountInfo.id,
+				serviceDuration: service.duration,
 			});
 
-			if (data.available_timegrid) {
-				setTimegrid(data.available_timegrid);
+			if (data) {
+				setTimegrid(data);
 			}
 
 			setActivedSlot();
@@ -81,7 +80,7 @@ const MainSlotGrid = () => {
 					</h2>
 				</div>
 				<div className="flexbox flexbox--column flexbox--end">
-					<span className="card__subtitle m-b-5">{getDayLabelByDate(startDate)}</span>
+					<span className="card__subtitle card__subtitle--captalized m-b-5">{getDayLabelByDate(startDate)}</span>
 				</div>
             </div>
 			{service.id && user.id && !!timegrid.length && (

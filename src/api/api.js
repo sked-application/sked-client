@@ -11,7 +11,7 @@ const handleError = (error) => {
 
     if (response && response.data && response.data.message === 'Unauthorized') {
 		const isProfessionalUser = !!JSON.parse(localStorage.getItem('userAccountUrl'));
-		const href = isProfessionalUser ? '/sign-in' : 'sign-in-customer';
+		const href = isProfessionalUser ? '/sign-in' : '/customer-sign-in';
 
         localStorage.removeItem('token');
         localStorage.removeItem('userAccountUrl');

@@ -1,7 +1,7 @@
 import api from '../api/api';
 
 const create = (data) => {
-    return api.post('/schedules', data);
+    return api.post('v1/schedules', data);
 };
 
 const updateStatus = ({ id, status }) => {

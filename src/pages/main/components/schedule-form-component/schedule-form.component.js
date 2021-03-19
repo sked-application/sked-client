@@ -91,9 +91,9 @@ const MainSlotGrid = () => {
                 date,
                 start,
                 end,
-                account_id: accountInfo.id,
-                service_id: service.id,
-                user_id: user.id,
+                companyId: accountInfo.id,
+                serviceId: service.id,
+                userId: user.id,
 			});
 
             resetMainService();
@@ -124,7 +124,7 @@ const MainSlotGrid = () => {
 
 			signUpReset();
 			setIsLoading(false);
-			handleSignIn(data.token);
+			handleSignIn(data);
 			alert('Cadastro realizado com sucesso, realize agora seu agendamento!');
 		} catch (error) {
 			alert(handleError(error));
@@ -144,7 +144,7 @@ const MainSlotGrid = () => {
 
 			signInReset();
 			setIsLoading(false);
-			handleSignIn(data.token);
+			handleSignIn(data);
 		} catch (error) {
 			alert(handleError(error));
 			setIsLoading(false);

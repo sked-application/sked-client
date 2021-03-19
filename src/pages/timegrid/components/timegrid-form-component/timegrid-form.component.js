@@ -119,37 +119,37 @@ const TimegridForm = () => {
             ) : (
 				<ul>
 					<TimegridWeekDay
-						label="Domingo"
+						label="Segunda-feira"
 						timegrid={timegrid[0]}
 						setTimegrid={setTimegrid}
 						handleOpen={() => handleOpenShowUp(0)} />
 					<TimegridWeekDay
-						label="Segunda-feira"
+						label="Terça-feira"
 						timegrid={timegrid[1]}
 						setTimegrid={setTimegrid}
 						handleOpen={() => handleOpenShowUp(1)} />
 					<TimegridWeekDay
-						label="Terça-feira"
+						label="Quarta-feira"
 						timegrid={timegrid[2]}
 						setTimegrid={setTimegrid}
 						handleOpen={() => handleOpenShowUp(2)} />
 					<TimegridWeekDay
-						label="Quarta-feira"
+						label="Quinta-feira"
 						timegrid={timegrid[3]}
 						setTimegrid={setTimegrid}
 						handleOpen={() => handleOpenShowUp(3)} />
 					<TimegridWeekDay
-						label="Quinta-feira"
+						label="Sexta-feira"
 						timegrid={timegrid[4]}
 						setTimegrid={setTimegrid}
 						handleOpen={() => handleOpenShowUp(4)} />
 					<TimegridWeekDay
-						label="Sexta-feira"
+						label="Sábado"
 						timegrid={timegrid[5]}
 						setTimegrid={setTimegrid}
 						handleOpen={() => handleOpenShowUp(5)} />
 					<TimegridWeekDay
-						label="Sábado"
+						label="Domingo"
 						timegrid={timegrid[6]}
 						setTimegrid={setTimegrid}
 						handleOpen={() => handleOpenShowUp(6)} />

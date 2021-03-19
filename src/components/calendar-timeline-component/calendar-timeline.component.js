@@ -67,11 +67,11 @@ const CalendarTimeline = ({
 	};
 
 	useEffect(() => {
-		const _dates = generateCalendarDates(startDate, endDate);
-		const _activeDate = _dates.find(currentDate => currentDate === today) || _dates[0];
+		const newDates = generateCalendarDates(startDate, endDate);
+		const activeDate = newDates.find(currentDate => currentDate === today) || newDates[0];
 
-		setDates(_dates);
-		setDate(_activeDate);
+		setDates(newDates);
+		setDate(activeDate);
 	}, [startDate, endDate, today, setDate]);
 
     return (
@@ -106,7 +106,7 @@ const CalendarTimeline = ({
 								<strong className="calendar-timeline__date__title">{currentDate.split('-')[2]}</strong>
 							</div>
 							<div>
-								<span className="calendar-timeline__date__label">{getDayLabelByDate(currentDate).slice(0, 3)}</span>
+								<span className="calendar-timeline__date__label">{getDayLabelByDate(currentDate, 'SHORT')}</span>
 							</div>
 						</div>
 					))}
