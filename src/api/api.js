@@ -4,7 +4,7 @@ const api = axios.create({
   baseURL: process.env.REACT_APP_API_HOST,
 });
 
-const handleResponse = ({ data } => data;
+const handleResponse = ({ data }) => data;
 
 const handleError = (error) => {
   const response = error.response;
