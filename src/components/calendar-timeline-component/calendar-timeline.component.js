@@ -121,16 +121,16 @@ const CalendarTimeline = ({
 									<div className="calendar-timeline__card__header">
 										{isCustomerSchudule ? (
 											<h2 className="calendar-timeline__card__title">
-												<Link to={`/${schedule.account.url}`}>{schedule.account.name}</Link>
+												<Link to={`/${schedule.company.url}`}>{schedule.company.name}</Link>
 											</h2>
 										) : (
 											<h2 className="calendar-timeline__card__title">{schedule.customer.name}</h2>
 										)}
 										<div>
-											{status === 'SCHEDULED' && !schedule.confirmed_at && (
+											{status === 'SCHEDULED' && !schedule.confirmedAt && (
 												<div className="calendar-timeline__card__status">Agendado</div>
 											)}
-											{status === 'SCHEDULED' && schedule.confirmed_at && (
+											{status === 'SCHEDULED' && schedule.confirmedAt && (
 												<div className="calendar-timeline__card__status">Confirmado</div>
 											)}
 											{status === 'CANCELED' && (
@@ -173,12 +173,12 @@ const CalendarTimeline = ({
 										<Fragment>
 											<div className="calendar-timeline__card__separator"></div>
 											<div className="calendar-timeline__card__actions">
-												{!schedule.confirmed_at && (
+												{!schedule.confirmedAt && (
 													<button onClick={() => updateStatus(schedule.id, 'CONFIRMED')} className="button button--small">
 														<AiOutlineCheck /> Confirmar
 													</button>
 												)}
-												{!isCustomerSchudule && schedule.confirmed_at && (
+												{!isCustomerSchudule && schedule.confirmedAt && (
 													<button onClick={() => updateStatus(schedule.id, 'FINISHED')} className="button button--small">
 														<AiOutlineCheckCircle /> Finalizar
 													</button>

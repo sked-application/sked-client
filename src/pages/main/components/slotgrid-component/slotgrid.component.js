@@ -88,7 +88,7 @@ const MainSlotGrid = () => {
 					<div>
 						<span className="card__subtitle">{service.name}</span>
 					</div>
-					{service.show_price && (
+					{service.showPrice && (
 						<div>
 							<span className="card__subtitle color--green">R$ {service.price}</span>
 						</div>

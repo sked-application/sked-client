@@ -38,12 +38,12 @@ const Schedules = () => {
 		try {
 			setIsLoading(true);
 
-			const { data } = await ScheduleService.findCustomerSchedules({
+			const { data } = await ScheduleService.findAll({
 				date,
 				status,
 			});
 
-			setSchedules(data.schedules);
+			setSchedules(data);
 			setIsLoading(false);
 		} catch (error) {
 			alert(handleError(error));

@@ -17,13 +17,7 @@ const updateStatusFromCostumer = ({ id, status }) => {
 };
 
 const findAll = (params) => {
-    return api.get('/schedules', {
-		params
-	});
-};
-
-const findCustomerSchedules = (params) => {
-    return api.get('/schedules/customer', {
+    return api.get('v1/schedules', {
 		params
 	});
 };
@@ -31,7 +25,6 @@ const findCustomerSchedules = (params) => {
 export default {
     create,
 	findAll,
-	findCustomerSchedules,
 	updateStatus,
 	updateStatusFromCostumer,
 };

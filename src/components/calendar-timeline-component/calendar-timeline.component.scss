@@ -128,7 +128,7 @@
 
 		&__info {
 			display: flex;
-			align-items: flex-start;
+			align-items: flex-end;
 			flex-direction: column;
 			#{$selfCard}__item {
 				justify-content: flex-end;

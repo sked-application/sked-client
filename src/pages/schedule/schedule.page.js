@@ -46,7 +46,7 @@ const Schedules = () => {
 				status,
 			});
 
-			setSchedules(data.schedules);
+			setSchedules(data);
 			setIsLoading(false);
 		} catch (error) {
 			alert(handleError(error));
