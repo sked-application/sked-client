@@ -1,88 +1,88 @@
 .header {
-    padding: 16px 0;
+  padding: 16px 0;
 
-	.container {
-		margin-top: 0;
-		margin-bottom: 0;
-	}
+  .container {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 
-    &__content {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: var(--purple);
+    font-weight: bold;
+    display: inline-block;
+    border: 2px solid var(--purple);
+  }
+
+  &__toggle {
+    font-size: 28px;
+    color: var(--dark);
+    cursor: pointer;
+  }
+
+  &__action {
+    font-size: 14px;
+    padding-bottom: 2px;
+    font-weight: bold;
+    border-bottom: 1px solid var(--dark);
+    color: var(--dark);
+  }
+
+  &__menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 60%;
+    max-width: 300px;
+    background-color: var(--light-gray);
+    height: 100vh;
+    transform: translateX(100vw);
+    transition: all 0.3s ease-in-out;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.2);
+
+    &--active {
+      transform: translateX(0);
+      z-index: 100;
     }
 
-    &__logo {
-		padding: 4px 8px;
-		border-radius: 4px;
-		color: var(--purple);
-		font-weight: bold;
-		display: inline-block;
-		border: 2px solid var(--purple);
+    // @media screen and (min-width: 1024px) {
+    // }
+  }
+
+  &__list {
+    padding-top: 30px;
+
+    li {
+      padding: 7.5px 15px;
+      a {
+        color: var(--dark);
+      }
     }
+  }
 
-    &__toggle {
-        font-size: 28px;
-		color: var(--dark);
-        cursor: pointer;
-	}
+  &__overlay {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    z-index: -10;
+    transition: all 0.3s ease-in-out;
 
-	&__action {
-		font-size: 14px;
-		padding-bottom: 2px;
-		font-weight: bold;
-		border-bottom: 1px solid var(--dark);
-		color: var(--dark);
-	}
-
-    &__menu {
-        position: fixed;
-        top: 0;
-        right: 0;
-		width: 60%;
-		max-width: 300px;
-        background-color: var(--light-gray);
-        height: 100vh;
-        transform: translateX(100vw);
-		transition: all 0.3s ease-in-out;
-		border-top-left-radius: 6px;
-		border-bottom-left-radius: 6px;
-		box-shadow: 0 0 20px 4px rgba(0,0,0, .2);
-
-        &--active {
-			transform: translateX(0);
-			z-index: 100;
-        }
-
-		// @media screen and (min-width: 1024px) {
-		// }
+    &--active {
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 95;
     }
-
-    &__list {
-        padding-top: 30px;
-
-        li {
-            padding: 7.5px 15px;
-            a {
-                color: var(--dark);
-            }
-        }
-    }
-
-    &__overlay {
-        position: fixed;
-        width: 100%;
-        height: 100vh;
-        left: 0;
-        top: 0;
-		opacity: 0;
-		z-index: -10;
-        transition: all 0.3s ease-in-out;
-
-        &--active {
-			opacity: 1;
-			background-color: rgba(0,0,0, 0.6);
-            z-index: 95;
-        }
-    }
+  }
 }

@@ -5,24 +5,24 @@ import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from '../../contexts/auth-context/auth.context';
 
 const UserPrivateRoute = ({ component: Component, ...rest }) => {
-    const { isAuthenticated, userAccountUrl } = useContext(AuthContext);
+  const { isAuthenticated, userAccountUrl } = useContext(AuthContext);
 
-    return (
-        <Route
-            {...rest}
-            render={(props) =>
-                isAuthenticated && userAccountUrl ? (
-                    <Component {...props} />
-                ) : (
-                    <Redirect to="/sign-in" />
-                )
-            }
-        />
-    );
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isAuthenticated && userAccountUrl ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/sign-in" />
+        )
+      }
+    />
+  );
 };
 
 UserPrivateRoute.propTypes = {
-    component: PropTypes.elementType.isRequired,
+  component: PropTypes.elementType.isRequired,
 };
 
 export default UserPrivateRoute;
