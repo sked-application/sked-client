@@ -7,8 +7,8 @@ import App from './app/app';
 const history = createBrowserHistory();
 
 ReactDOM.render(
-    <Router location={history}>
-        <App />
-    </Router>,
-    document.getElementById('root')
+  <Router location={history}>
+    <App />
+  </Router>,
+  document.getElementById('root'),
 );

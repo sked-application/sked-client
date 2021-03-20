@@ -1,93 +1,93 @@
 .show-up {
-	$self: &;
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	left: 0;
-	top: 0;
-	opacity: 0;
-	z-index: -1;
-	visibility: hidden;
-	transition: all 0.2s ease;
-	overflow-y: auto;
-	padding-top: 20vh;
-	padding-bottom: 20vh;
+  $self: &;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  z-index: -1;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  overflow-y: auto;
+  padding-top: 20vh;
+  padding-bottom: 20vh;
 
-	&--active {
-		opacity: 1;
-		z-index: 10;
-		visibility: visible;
+  &--active {
+    opacity: 1;
+    z-index: 10;
+    visibility: visible;
 
-		#{$self}__modal {
-			transform: translateY(0);
-			opacity: 1;
-		}
-	}
-
-	&__overlay {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        top: 0;
-		background-color: rgba(0,0,0, 0.6);
-		opacity: 0;
-
-		&--active {
-			opacity: 1;
-		}
+    #{$self}__modal {
+      transform: translateY(0);
+      opacity: 1;
     }
+  }
 
-	&__modal {
-		left: 0;
-		right: 0;
-		width: 100%;
-		margin: auto;
-		background: #fff;
-		padding: 40px 24px 24px;
-		border-radius: 6px;
-		box-shadow: 0 0 20px 4px rgba(0,0,0, .2);
-		max-width: 720px;
-		width: calc(100% - 20px);
-		position: relative;
-		z-index: 11;
-		transform: translateY(10%);
-		transition: all 0.2s ease;
-		opacity: 0;
-	}
+  &__overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 0;
 
-	&__header {
-		display: flex;
-        align-items: center;
-		justify-content: space-between;
-		padding-bottom: 15px;
-		border-bottom: 1px solid rgba(234, 234, 234, .7);
-		margin-bottom: 15px;
-	}
-
-	&__title {
-		font-size: 18px;
-		margin: 0;
+    &--active {
+      opacity: 1;
     }
+  }
 
-	&__close {
-		position: absolute;
-		right: 10px;
-		top: 10px;
-		padding: 5px;
-		cursor: pointer;
-	}
+  &__modal {
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin: auto;
+    background: #fff;
+    padding: 40px 24px 24px;
+    border-radius: 6px;
+    box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.2);
+    max-width: 720px;
+    width: calc(100% - 20px);
+    position: relative;
+    z-index: 11;
+    transform: translateY(10%);
+    transition: all 0.2s ease;
+    opacity: 0;
+  }
 
-	&__button {
-		border-radius: 100%;
-		height: 40px;
-		width: 40px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border: none;
-		background: white;
-		color: var(--purple);
-		box-shadow: 0 0 15px 4px rgba(0,0,0, .1);
-	}
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(234, 234, 234, 0.7);
+    margin-bottom: 15px;
+  }
+
+  &__title {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  &__close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  &__button {
+    border-radius: 100%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: white;
+    color: var(--purple);
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.1);
+  }
 }

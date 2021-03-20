@@ -13,43 +13,42 @@ import { Redirect } from 'react-router-dom';
 import './main.page.scss';
 
 const MainContexted = () => {
-    const {
-		accountExists,
-		isMainRequestPeding,
-		accountInfo
-	} = useContext(MainContext);
+  const { accountExists, isMainRequestPeding, accountInfo } = useContext(
+    MainContext,
+  );
 
-    if (!accountExists) {
-        return <Redirect to="/not-found" />;
-    }
+  if (!accountExists) {
+    return <Redirect to="/not-found" />;
+  }
 
-    return (
-		<div className="container">
-			<PageHeader
-				title={accountInfo.name}
-				description="Realize seu agendamento abaixo." />
-			<Fragment>
-				{isMainRequestPeding ? (
-					<div className="loading"></div>
-				) : (
-					<Fragment>
-						<MainDate />
-						<MainUsers />
-						<MainServices />
-						<MainSlotGrid />
-						<MainScheduleForm />
-						<AccountContact accountInfo={accountInfo} />
-					</Fragment>
-				)}
-			</Fragment>
-		</div>
-    );
+  return (
+    <div className="container">
+      <PageHeader
+        title={accountInfo.name}
+        description="Realize seu agendamento abaixo."
+      />
+      <Fragment>
+        {isMainRequestPeding ? (
+          <div className="loading"></div>
+        ) : (
+          <Fragment>
+            <MainDate />
+            <MainUsers />
+            <MainServices />
+            <MainSlotGrid />
+            <MainScheduleForm />
+            <AccountContact accountInfo={accountInfo} />
+          </Fragment>
+        )}
+      </Fragment>
+    </div>
+  );
 };
 
 const Main = () => (
-    <MainProvider>
-        <MainContexted />
-    </MainProvider>
+  <MainProvider>
+    <MainContexted />
+  </MainProvider>
 );
 
 export default Main;

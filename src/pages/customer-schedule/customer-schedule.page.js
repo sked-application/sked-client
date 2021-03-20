@@ -7,71 +7,74 @@ import moment from 'moment';
 import { handleError } from '../../utils/api';
 
 const statusLabels = {
-	CONFIRMED: 'confirmar',
-	CANCELED: 'cancelar',
+  CONFIRMED: 'confirmar',
+  CANCELED: 'cancelar',
 };
 
 const Schedules = () => {
-    const [isLoading, setIsLoading] = useState(true);
-	const [schedules, setSchedules] = useState([]);
-	const [status, setStatus] = useState('SCHEDULED');
-	const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
+  const [isLoading, setIsLoading] = useState(true);
+  const [schedules, setSchedules] = useState([]);
+  const [status, setStatus] = useState('SCHEDULED');
+  const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
 
-	const updateStatus = async (id, updateStatus) => {
-		try {
-			if (window.confirm(`Deseja ${statusLabels[updateStatus]} esse agendamento?`)) {
-				setIsLoading(true);
+  const updateStatus = async (id, updateStatus) => {
+    try {
+      if (
+        window.confirm(`Deseja ${statusLabels[updateStatus]} esse agendamento?`)
+      ) {
+        setIsLoading(true);
 
-				await ScheduleService.updateStatusFromCostumer({
-					id,
-					status: updateStatus
-				});
+        await ScheduleService.updateStatusFromCostumer({
+          id,
+          status: updateStatus,
+        });
 
-				listSchedules();
-			}
-		} catch (error) {
-			alert(handleError(error));
-		}
-	};
+        listSchedules();
+      }
+    } catch (error) {
+      alert(handleError(error));
+    }
+  };
 
-	const listSchedules = useCallback(async () => {
-		try {
-			setIsLoading(true);
+  const listSchedules = useCallback(async () => {
+    try {
+      setIsLoading(true);
 
-			const { data } = await ScheduleService.findAll({
-				date,
-				status,
-			});
+      const { data } = await ScheduleService.findAll({
+        date,
+        status,
+      });
 
-			setSchedules(data);
-			setIsLoading(false);
-		} catch (error) {
-			alert(handleError(error));
-			setIsLoading(false);
-		}
-	}, [date, status]);
+      setSchedules(data);
+      setIsLoading(false);
+    } catch (error) {
+      alert(handleError(error));
+      setIsLoading(false);
+    }
+  }, [date, status]);
 
-    useEffect(() => {
-		listSchedules();
-    }, [listSchedules]);
+  useEffect(() => {
+    listSchedules();
+  }, [listSchedules]);
 
-    return (
-        <div className="container">
-			<PageHeader
-				title="Meus compromissos"
-				description="Acompanhe seu histórico de agendamentos." />
-			<CalendarTimeline
-				status={status}
-				list={schedules}
-				isLoading={isLoading}
-				date={date}
-				updateStatus={updateStatus}
-				setDate={setDate}
-				setStatus={setStatus}
-				isCustomerSchudule={true}
-			/>
-        </div>
-    );
+  return (
+    <div className="container">
+      <PageHeader
+        title="Meus compromissos"
+        description="Acompanhe seu histórico de agendamentos."
+      />
+      <CalendarTimeline
+        status={status}
+        list={schedules}
+        isLoading={isLoading}
+        date={date}
+        updateStatus={updateStatus}
+        setDate={setDate}
+        setStatus={setStatus}
+        isCustomerSchudule={true}
+      />
+    </div>
+  );
 };
 
 export default Schedules;
