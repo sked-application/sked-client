@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { Redirect, Link } from 'react-router-dom';
+import { AiOutlineLogin } from 'react-icons/ai';
 import AuthService from '../../services/auth.service';
 import schema from './validators/sign-in.validator';
 import PageHeader from '../../common/components/page-header';
 import InputFormError from '../../common/components/input-form-error';
-
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../common/contexts/auth';
-import { Redirect, Link } from 'react-router-dom';
-import { AiOutlineLogin } from 'react-icons/ai';
 import { handleError } from '../../common/utils/api';
 
 import './sign-in.page.scss';

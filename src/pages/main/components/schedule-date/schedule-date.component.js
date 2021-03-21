@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { MainContext } from '../../contexts/main';
 import { AiOutlineCalendar } from 'react-icons/ai';
+import { MainContext } from '../../contexts/main';
 
 const ScheduleDate = () => {
   const { startDate, setStartDate, setScheduleSlot } = useContext(MainContext);

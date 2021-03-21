@@ -1,7 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-
 import { Link } from 'react-router-dom';
 import {
   AiOutlineClockCircle,
@@ -15,7 +14,6 @@ import {
   AiOutlineUser,
 } from 'react-icons/ai';
 import { getDayLabelByDate, getMonthLabelByDate } from '../../utils/date';
-
 import './calendar-timeline.component.scss';
 
 const generateCalendarDates = (startDate, endDate) => {
@@ -140,22 +138,26 @@ const CalendarTimeline = ({
                         {schedule.customer.name}
                       </h2>
                     )}
+
                     <div>
                       {status === 'SCHEDULED' && !schedule.confirmedAt && (
                         <div className="calendar-timeline__card__status">
                           Agendado
                         </div>
                       )}
+
                       {status === 'SCHEDULED' && schedule.confirmedAt && (
                         <div className="calendar-timeline__card__status">
                           Confirmado
                         </div>
                       )}
+
                       {status === 'CANCELED' && (
                         <div className="calendar-timeline__card__status">
                           Cancelado
                         </div>
                       )}
+
                       {status === 'FINISHED' && (
                         <div className="calendar-timeline__card__status">
                           Finalizado
@@ -171,6 +173,7 @@ const CalendarTimeline = ({
                         </span>
                         {schedule.service.name}
                       </div>
+
                       {isCustomerSchudule ? (
                         <div className="calendar-timeline__card__item">
                           <span>
@@ -201,6 +204,7 @@ const CalendarTimeline = ({
                       </strong>
                     </div>
                   </div>
+
                   {status === 'SCHEDULED' && (
                     <Fragment>
                       <div className="calendar-timeline__card__separator"></div>
@@ -215,6 +219,7 @@ const CalendarTimeline = ({
                             <AiOutlineCheck /> Confirmar
                           </button>
                         )}
+
                         {!isCustomerSchudule && schedule.confirmedAt && (
                           <button
                             onClick={() =>
@@ -225,6 +230,7 @@ const CalendarTimeline = ({
                             <AiOutlineCheckCircle /> Finalizar
                           </button>
                         )}
+
                         <button
                           onClick={() => updateStatus(schedule.id, 'CANCELED')}
                           className="button button--small"
@@ -238,6 +244,7 @@ const CalendarTimeline = ({
               ))}
             </Fragment>
           )}
+
           {!isLoading && !list.length && (
             <div className="calendar-timeline__card calendar-timeline__card--not-found">
               <span>

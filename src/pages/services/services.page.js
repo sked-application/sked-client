@@ -1,15 +1,14 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import { BsPlus } from 'react-icons/bs';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Controller, useForm } from 'react-hook-form';
+import { AiOutlineClockCircle } from 'react-icons/ai';
 import ServiceService from '../../services/service.service';
 import schema from './validators/service-form.validator';
 import NumberFormat from 'react-number-format';
 import PageHeader from '../../common/components/page-header';
 import InputFormError from '../../common/components/input-form-error';
-
-import { BsPlus } from 'react-icons/bs';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Controller, useForm } from 'react-hook-form';
 import { Modal, ModalOpenButton } from '../../common/components/modal';
-import { AiOutlineClockCircle } from 'react-icons/ai';
 import { handleError } from '../../common/utils/api';
 
 const Services = () => {

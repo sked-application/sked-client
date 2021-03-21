@@ -1,9 +1,8 @@
 import React, { createContext, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import AccountService from '../../../../services/company.service';
-
 import { useParams } from 'react-router-dom';
+import AccountService from '../../../../services/company.service';
 import { handleError } from '../../../../common/utils/api';
 
 export const MainContext = createContext();

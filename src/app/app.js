@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react';
+import { useLocation } from 'react-router-dom';
 import AppRoutes from '../routes/routes';
 import AppHeader from '../common/components/header';
 import Copyright from '../common/components/copyright';
-
 import { AuthProvider, AuthContext } from '../common/contexts/auth';
-import { useLocation } from 'react-router-dom';
 
 import '../common/styles/main.scss';
 

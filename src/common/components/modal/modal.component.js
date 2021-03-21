@@ -1,7 +1,6 @@
 import React, { memo, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { BsX } from 'react-icons/bs';
-
 import './modal.component.scss';
 
 const MemoizedModal = ({ children, title, isOpen, handleClose }) => {

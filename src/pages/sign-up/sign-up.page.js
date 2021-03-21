@@ -1,17 +1,16 @@
 import React, { useContext, useState } from 'react';
-import AuthService from '../../services/auth.service';
-import schema from './validators/sign-up.validator';
 import NumberFormat from 'react-number-format';
-import PageHeader from '../../common/components/page-header';
-import InputFormError from '../../common/components/input-form-error';
-
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
+import { AiOutlineForm } from 'react-icons/ai';
+import { Link, Redirect, useHistory } from 'react-router-dom';
+import AuthService from '../../services/auth.service';
+import schema from './validators/sign-up.validator';
+import PageHeader from '../../common/components/page-header';
+import InputFormError from '../../common/components/input-form-error';
 import { AuthContext } from '../../common/contexts/auth';
 import { replaceSpecialCharacters } from '../../common/utils/validator';
-import { AiOutlineForm } from 'react-icons/ai';
 import { handleError } from '../../common/utils/api';
-import { Link, Redirect, useHistory } from 'react-router-dom';
 
 import './sign-up.page.scss';
 

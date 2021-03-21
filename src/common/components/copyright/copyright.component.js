@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-
 import './copyright.component.scss';
 
 const Copyright = memo(() => {

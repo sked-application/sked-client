@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import moment from 'moment';
 import CalendarTimeline from '../../common/components/calendar-timeline';
 import ScheduleService from '../../services/schedule.service';
 import PageHeader from '../../common/components/page-header';
-import moment from 'moment';
-
 import { handleError } from '../../common/utils/api';
 
 const statusLabels = {

@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import TimegridWeekDay from '../week-day-component/week-day.component';
+import React, { useState, useEffect, Fragment } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { BsPlus } from 'react-icons/bs';
+import { useForm } from 'react-hook-form';
+import TimegridWeekDay from '../timegrid-week-day';
 import TimegridService from '../../../../services/timegrid.service';
 import schema from '../../validators/timegrid-form.validator';
-
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 import { Modal } from '../../../../common/components/modal';
-import { BsPlus } from 'react-icons/bs';
-import { Fragment } from 'react';
 import { handleError } from '../../../../common/utils/api';
 
 const initialTimegrid = {

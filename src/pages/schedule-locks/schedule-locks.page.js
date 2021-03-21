@@ -1,15 +1,14 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import moment from 'moment';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { BsPlus } from 'react-icons/bs';
 import schema from './validators/schedule-locks-form.validator';
 import ScheduleLockService from '../../services/schedule-lock.service';
 import PageHeader from '../../common/components/page-header';
 import InputFormError from '../../common/components/input-form-error';
-
 import { getFormattedDatePreview } from '../../common/utils/date';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 import { Modal, ModalOpenButton } from '../../common/components/modal';
-import { BsPlus } from 'react-icons/bs';
 import { handleError } from '../../common/utils/api';
 
 const ScheduleLocks = () => {

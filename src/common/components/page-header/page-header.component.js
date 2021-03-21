@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-
 import './page-header.component.scss';
 
 const PageHeader = memo(({ title, description }) => {

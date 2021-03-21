@@ -1,8 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import api from '../../../api';
-
 import { useHistory } from 'react-router-dom';
+import api from '../../../api';
 
 export const AuthContext = createContext();
 

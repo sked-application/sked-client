@@ -1,13 +1,12 @@
 import React, { useContext, useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { AiOutlineLock } from 'react-icons/ai';
 import schema from './validators/recover-password.validator';
 import AuthService from '../../services/auth.service';
 import PageHeader from '../../common/components/page-header';
 import InputFormError from '../../common/components/input-form-error';
-
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../common/contexts/auth';
-import { AiOutlineLock } from 'react-icons/ai';
 import { handleError } from '../../common/utils/api';
 
 import { Link, Redirect, useHistory } from 'react-router-dom';

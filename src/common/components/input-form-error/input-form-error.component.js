@@ -1,6 +1,5 @@
 import React, { Fragment, memo } from 'react';
 import PropTypes from 'prop-types';
-
 import './input-form-error.component.scss';
 
 const InputFormError = memo(({ error, touched }) => {

@@ -5,11 +5,10 @@ import React, {
   useCallback,
   Fragment,
 } from 'react';
+import { AiOutlineClockCircle } from 'react-icons/ai';
 import TimegridService from '../../../../services/timegrid.service';
-
 import { MainContext } from '../../contexts/main';
 import { getDayLabelByDate } from '../../../../common/utils/date';
-import { AiOutlineClockCircle } from 'react-icons/ai';
 import { handleError } from '../../../../common/utils/api';
 
 import './slots.component.scss';
@@ -81,6 +80,7 @@ const MainSlotGrid = () => {
           </span>
         </div>
       </div>
+
       {service.id && user.id && !!timegrid.length && (
         <Fragment>
           <div>
@@ -95,6 +95,7 @@ const MainSlotGrid = () => {
           )}
         </Fragment>
       )}
+
       {isLoading ? (
         <div className="loading"></div>
       ) : (
@@ -118,11 +119,13 @@ const MainSlotGrid = () => {
               ))}
             </div>
           )}
+
           {service.id && user.id && !timegrid.length && (
             <div className="slot__pending">
               <span>Nenhum horário disponível</span>
             </div>
           )}
+
           {!user.id ? (
             <div className="slot__pending">
               <span>Selecione um profissional.</span>

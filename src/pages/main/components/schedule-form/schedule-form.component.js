@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { AiOutlineCarryOut } from 'react-icons/ai';
-
 import ScheduleService from '../../../../services/schedule.service';
 import CustomerSignInForm from '../customer-sign-in-form';
 import CustomerSignUpForm from '../customer-sign-up-form';

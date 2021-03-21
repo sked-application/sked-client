@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import schema from '../../validators/customer-sign-in.validator';
 import AuthService from '../../../../services/auth.service';
 import InputFormError from '../../../../common/components/input-form-error';

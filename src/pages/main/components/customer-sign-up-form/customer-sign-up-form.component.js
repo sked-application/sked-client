@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import schema from '../../validators/customer-sign-up.validator';
 import AuthService from '../../../../services/auth.service';
 import InputFormError from '../../../../common/components/input-form-error';

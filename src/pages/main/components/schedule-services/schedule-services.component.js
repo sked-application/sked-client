@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import ServiveService from '../../../../services/service.service';
-
 import { AiOutlineCarryOut } from 'react-icons/ai';
+import ServiveService from '../../../../services/service.service';
 import { MainContext } from '../../contexts/main';
 import { handleError } from '../../../../common/utils/api';
 

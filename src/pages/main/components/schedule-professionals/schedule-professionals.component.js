@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import UserService from '../../../../services/user.service';
-
 import { AiOutlineUser } from 'react-icons/ai';
+import UserService from '../../../../services/user.service';
 import { MainContext } from '../../contexts/main';
 import { handleError } from '../../../../common/utils/api';
 
