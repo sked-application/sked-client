@@ -1,15 +1,12 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react';
 import AppRoutes from '../routes/routes';
-import AppHeader from '../components/header-component/header.component';
-import Copyright from '../components/copyright-component/copyright.component';
+import AppHeader from '../common/components/header';
+import Copyright from '../common/components/copyright';
 
-import {
-  AuthProvider,
-  AuthContext,
-} from '../contexts/auth-context/auth.context';
+import { AuthProvider, AuthContext } from '../common/contexts/auth';
 import { useLocation } from 'react-router-dom';
 
-import '../styles/main.scss';
+import '../common/styles/main.scss';
 
 const AppContexted = () => {
   const { isAuthLoading } = useContext(AuthContext);

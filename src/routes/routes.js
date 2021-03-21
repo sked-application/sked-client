@@ -1,18 +1,17 @@
 import React from 'react';
-import Main from '../pages/main/main.page';
-import SignUp from '../pages/sign-up/sign-up.page';
-import SignIn from '../pages/sign-in/sign-in.page';
-import Profile from '../pages/profile/profile.page';
-import Services from '../pages/service/service.page';
-import Settings from '../pages/timegrid/timegrid.page';
-import NotFound from '../pages/not-found/not-found.page';
-import Schedules from '../pages/schedule/schedule.page';
-import ScheduleLock from '../pages/schedule-lock/schedule-lock.page';
-import ResetPassword from '../pages/reset-password/reset-password.page';
-import SignInCustomer from '../pages/customer-sign-in/customer-sign-in.page';
-import RecoverPassword from '../pages/recover-password/recover-password.page';
-import CustomerSchedules from '../pages/customer-schedule/customer-schedule.page';
-
+import Main from '../pages/main';
+import SignUp from '../pages/sign-up';
+import SignIn from '../pages/sign-in';
+import Profile from '../pages/profile';
+import Services from '../pages/services';
+import Timegrid from '../pages/timegrid';
+import NotFound from '../pages/not-found';
+import Schedules from '../pages/schedules';
+import ScheduleLocks from '../pages/schedule-locks';
+import ResetPassword from '../pages/reset-password';
+import CustomerSignIn from '../pages/customer-sign-in';
+import RecoverPassword from '../pages/recover-password';
+import CustomerSchedules from '../pages/customer-schedule';
 import UserPrivateRoute from './private/user.route';
 import CustomerPrivateRoute from './private/customer.route';
 
@@ -23,9 +22,13 @@ const AppRoutes = () => {
     <Switch>
       <UserPrivateRoute exact path="/schedules" component={Schedules} />
       <UserPrivateRoute exact path="/services" component={Services} />
-      <UserPrivateRoute exact path="/settings" component={Settings} />
+      <UserPrivateRoute exact path="/settings" component={Timegrid} />
       <UserPrivateRoute exact path="/profile" component={Profile} />
-      <UserPrivateRoute exact path="/schedule-lock" component={ScheduleLock} />
+      <UserPrivateRoute
+        exact
+        path="/schedule-locks"
+        component={ScheduleLocks}
+      />
       <CustomerPrivateRoute
         exact
         path="/customer-schedules"
@@ -33,7 +36,7 @@ const AppRoutes = () => {
       />
       <Route exact path="/sign-up" component={SignUp} />
       <Route exact path="/sign-in" component={SignIn} />
-      <Route exact path="/customer-sign-in" component={SignInCustomer} />
+      <Route exact path="/customer-sign-in" component={CustomerSignIn} />
       <Route exact path="/recover-password" component={RecoverPassword} />
       <Route
         exact

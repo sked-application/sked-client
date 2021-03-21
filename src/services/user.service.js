@@ -1,4 +1,4 @@
-import api from '../api/api';
+import api from '../api';
 
 const profile = () => {
   return api.get('v1/users/profile');

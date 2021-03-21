@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { phoneRegex, validateCpfCnpj } from '../../../utils/utils';
+import { phoneRegex, validateCpfCnpj } from '../../../common/utils/validator';
 
 export default {
   form: {
@@ -23,7 +23,7 @@ export default {
         ),
       companyTelephone: Yup.string()
         .required('Por favor, digite seu telefone.')
-        .matches(phoneRegex, 'Por favor, verifique seu número de telefone.'),
+        .matches(phoneRegex(), 'Por favor, verifique seu número de telefone.'),
       userName: Yup.string().required('Este campo é obrigatório'),
       userEmail: Yup.string()
         .required('Por favor, digite seu email.')

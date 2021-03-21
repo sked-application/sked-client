@@ -1,15 +1,15 @@
 import React, { useContext, useState } from 'react';
 import AuthService from '../../services/auth.service';
 import schema from './validators/sign-in.validator';
-import PageHeader from '../../components/page-header-component/page-header.component';
-import FormInputError from '../../components/input-form-error-component/input-form-error.component';
+import PageHeader from '../../common/components/page-header';
+import InputFormError from '../../common/components/input-form-error';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { AuthContext } from '../../contexts/auth-context/auth.context';
+import { AuthContext } from '../../common/contexts/auth';
 import { Redirect, Link } from 'react-router-dom';
 import { AiOutlineLogin } from 'react-icons/ai';
-import { handleError } from '../../utils/api';
+import { handleError } from '../../common/utils/api';
 
 import './sign-in.page.scss';
 
@@ -23,8 +23,10 @@ const SignIn = () => {
   const { register, handleSubmit, formState, errors } = useForm({
     resolver: yupResolver(schema.form.validator),
     defaultValues: schema.form.initialValues,
-    mode: 'all',
+    mode: 'onChange',
   });
+
+  const { touched, isValid, isDirty } = formState;
 
   const signInForm = async (values) => {
     try {
@@ -75,7 +77,7 @@ const SignIn = () => {
             disabled={isLoading}
             className="input"
           />
-          <FormInputError error={errors.email && errors.email.message} />
+          <InputFormError touched={touched.email} error={errors.email} />
         </div>
         <div className="sign-in__field">
           <input
@@ -86,7 +88,7 @@ const SignIn = () => {
             disabled={isLoading}
             className="input"
           />
-          <FormInputError error={errors.password && errors.password.message} />
+          <InputFormError touched={touched.password} error={errors.password} />
         </div>
         <div className="sign-in__forgot-password">
           <Link to="/recover-password">Esqueceu a senha?</Link>
@@ -94,7 +96,7 @@ const SignIn = () => {
         <div>
           <button
             type="submit"
-            disabled={!formState.isValid || isLoading}
+            disabled={!isValid || !isDirty || isLoading}
             className="button button--block button--purple"
           >
             Entrar

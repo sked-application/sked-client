@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import schema from './validators/profile-form.validator';
 import UserService from '../../services/user.service';
 import NumberFormat from 'react-number-format';
-import PageHeader from '../../components/page-header-component/page-header.component';
-import FormInputError from '../../components/input-form-error-component/input-form-error.component';
+import PageHeader from '../../common/components/page-header';
+import InputFormError from '../../common/components/input-form-error';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
-import { ShowUp } from '../../components/modal-component/modal.component';
-import { handleError } from '../../utils/api';
+import { Modal } from '../../common/components/modal';
+import { handleError } from '../../common/utils/api';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,15 +26,17 @@ const Profile = () => {
   } = useForm({
     resolver: yupResolver(schema.form.validator),
     defaultValues: schema.form.initialValues,
-    mode: 'all',
+    mode: 'onChange',
   });
 
-  const handleCloseShowUp = () => {
+  const { touched, isValid, isDirty } = formState;
+
+  const handleCloseModal = () => {
     reset();
     setToggleShow(false);
   };
 
-  const handleOpenShowUp = (data) => {
+  const handleOpenModal = (data) => {
     if (data) {
       setValue('userName', data.name);
       setValue('userCpf', data.cpf);
@@ -72,7 +74,7 @@ const Profile = () => {
       });
 
       getProfile();
-      handleCloseShowUp();
+      handleCloseModal();
       alert('Perfil atualizado com sucesso!');
     } catch (error) {
       alert(handleError(error));
@@ -111,7 +113,7 @@ const Profile = () => {
               <div className="card__header">
                 <h2 className="card__title">Meus dados</h2>
                 <strong
-                  onClick={() => handleOpenShowUp(profile)}
+                  onClick={() => handleOpenModal(profile)}
                   className="card__subtitle color--purple cursor--pointer"
                 >
                   Gerenciar
@@ -166,10 +168,10 @@ const Profile = () => {
         </Fragment>
       )}
 
-      <ShowUp
+      <Modal
         title="Edição de perfil"
         isOpen={toggleShow}
-        handleClose={handleCloseShowUp}
+        handleClose={handleCloseModal}
       >
         <form
           onSubmit={handleSubmit(profileForm)}
@@ -186,8 +188,9 @@ const Profile = () => {
               ref={register}
               className="input input--dark"
             />
-            <FormInputError
-              error={errors.userName && errors.userName.message}
+            <InputFormError
+              touched={touched.userName}
+              error={errors.userName}
             />
           </div>
           <div className="flexbox__item m-t-16">
@@ -202,7 +205,7 @@ const Profile = () => {
               placeholder="Cpf sem pontos e barras"
               className="input input--dark"
             />
-            <FormInputError error={errors.userCpf && errors.userCpf.message} />
+            <InputFormError touched={touched.userCpf} error={errors.userCpf} />
           </div>
 
           {profile && profile.role === 'ADMIN' && (
@@ -218,8 +221,9 @@ const Profile = () => {
                   ref={register}
                   className="input input--dark"
                 />
-                <FormInputError
-                  error={errors.companyName && errors.companyName.message}
+                <InputFormError
+                  touched={touched.companyName}
+                  error={errors.companyName}
                 />
               </div>
               <div className="flexbox__item m-t-16">
@@ -234,8 +238,9 @@ const Profile = () => {
                   placeholder="Cpf/Cnpj sem pontos e barras"
                   className="input input--dark"
                 />
-                <FormInputError
-                  error={errors.companyCpfCnpj && errors.companyCpfCnpj.message}
+                <InputFormError
+                  touched={touched.companyCpfCnpj}
+                  error={errors.companyCpfCnpj}
                 />
               </div>
               <div className="flexbox__item m-t-16">
@@ -256,10 +261,9 @@ const Profile = () => {
                     />
                   }
                 />
-                <FormInputError
-                  error={
-                    errors.companyTelephone && errors.companyTelephone.message
-                  }
+                <InputFormError
+                  touched={touched.companyTelephone}
+                  error={errors.companyTelephone}
                 />
               </div>
               <div className="flexbox__item m-t-16">
@@ -273,8 +277,9 @@ const Profile = () => {
                   ref={register}
                   className="input input--dark"
                 />
-                <FormInputError
-                  error={errors.companyAddress && errors.companyAddress.message}
+                <InputFormError
+                  touched={touched.companyAddress}
+                  error={errors.companyAddress}
                 />
               </div>
             </Fragment>
@@ -283,14 +288,14 @@ const Profile = () => {
           <div className="flexbox__item m-t-16">
             <button
               type="submit"
-              disabled={!formState.isValid}
+              disabled={!isValid || !isDirty}
               className="button button--block button--purple"
             >
               Editar
             </button>
           </div>
         </form>
-      </ShowUp>
+      </Modal>
     </div>
   );
 };

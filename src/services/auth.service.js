@@ -1,4 +1,4 @@
-import api from '../api/api';
+import api from '../api';
 
 const signIn = ({ email, password }) => {
   return api.post('/v1/auth/signin-admin', {

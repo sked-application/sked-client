@@ -1,8 +1,8 @@
 import React from 'react';
 import TimegridForm from './components/timegrid-form-component/timegrid-form.component';
-import PageHeader from '../../components/page-header-component/page-header.component';
+import PageHeader from '../../common/components/page-header';
 
-const Settings = () => {
+const Timegrid = () => {
   return (
     <div className="container">
       <PageHeader
@@ -14,4 +14,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default Timegrid;

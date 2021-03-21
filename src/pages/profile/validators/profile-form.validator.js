@@ -1,6 +1,9 @@
 import * as Yup from 'yup';
-
-import { phoneRegex, validateCpfCnpj, validateCpf } from '../../../utils/utils';
+import {
+  phoneRegex,
+  validateCpfCnpj,
+  validateCpf,
+} from '../../../common/utils/validator';
 
 export default {
   form: {
@@ -32,7 +35,7 @@ export default {
           validateCpfCnpj(value),
         ),
       companyTelephone: Yup.string().matches(
-        phoneRegex,
+        phoneRegex(),
         'Por favor, verifique o número de telefone.',
       ),
       companyAddress: Yup.string(),

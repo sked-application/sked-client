@@ -1,4 +1,4 @@
-import api from '../api/api';
+import api from '../api';
 
 const create = (data) => {
   return api.post('v1/schedule-locks', data);

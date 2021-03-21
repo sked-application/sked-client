@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
 import schema from './validators/reset-password.validator';
 import AuthService from '../../services/auth.service';
-import PageHeader from '../../components/page-header-component/page-header.component';
-import FormInputError from '../../components/input-form-error-component/input-form-error.component';
+import PageHeader from '../../common/components/page-header';
+import InputFormError from '../../common/components/input-form-error';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { AuthContext } from '../../contexts/auth-context/auth.context';
+import { AuthContext } from '../../common/contexts/auth';
 import { AiOutlineLock } from 'react-icons/ai';
-import { handleError } from '../../utils/api';
+import { handleError } from '../../common/utils/api';
 import { Link, Redirect, useParams, useHistory } from 'react-router-dom';
 
 import './reset-password.page.scss';
@@ -23,8 +23,10 @@ const ResetPassword = () => {
   const { register, handleSubmit, reset, formState, errors } = useForm({
     resolver: yupResolver(schema.form.validator),
     defaultValues: schema.form.initialValues,
-    mode: 'all',
+    mode: 'onChange',
   });
+
+  const { touched, isValid, isDirty } = formState;
 
   const resetPasswordForm = async (values) => {
     try {
@@ -80,7 +82,7 @@ const ResetPassword = () => {
             disabled={isLoading}
             className="input"
           />
-          <FormInputError error={errors.password && errors.password.message} />
+          <InputFormError touched={touched.password} error={errors.password} />
         </div>
         <div className="reset-password__field">
           <input
@@ -91,13 +93,14 @@ const ResetPassword = () => {
             disabled={isLoading}
             className="input"
           />
-          <FormInputError
-            error={errors.confirmPassword && errors.confirmPassword.message}
+          <InputFormError
+            touched={touched.confirmPassword}
+            error={errors.confirmPassword}
           />
         </div>
         <div>
           <button
-            disabled={!formState.isValid || isLoading}
+            disabled={!isValid || !isDirty || isLoading}
             className="button button--block button--purple"
           >
             Resetar

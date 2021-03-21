@@ -5,10 +5,10 @@ import schema from '../../validators/timegrid-form.validator';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { ShowUp } from '../../../../components/modal-component/modal.component';
+import { Modal } from '../../../../common/components/modal';
 import { BsPlus } from 'react-icons/bs';
 import { Fragment } from 'react';
-import { handleError } from '../../../../utils/api';
+import { handleError } from '../../../../common/utils/api';
 
 const initialTimegrid = {
   0: [],
@@ -31,7 +31,7 @@ const TimegridForm = () => {
   const { register, handleSubmit, reset, formState } = useForm({
     resolver: yupResolver(schema.form.validator),
     defaultValues: schema.form.initialValues,
-    mode: 'all',
+    mode: 'onChange',
   });
 
   const timegridForm = (values) => {
@@ -63,14 +63,14 @@ const TimegridForm = () => {
       await TimegridService.set({ data });
 
       listTimegrid();
-      handleCloseShowUp();
+      handleCloseModal();
     } catch (error) {
       setError(handleError(error));
       setIsLoading(false);
     }
   };
 
-  const handleCloseShowUp = () => {
+  const handleCloseModal = () => {
     setTimeout(() => {
       setFormData([]);
       reset();
@@ -79,7 +79,7 @@ const TimegridForm = () => {
     setToggleShow(false);
   };
 
-  const handleOpenShowUp = (currentDay) => {
+  const handleOpenModal = (currentDay) => {
     const timegridData = { ...timegrid };
 
     setDay(currentDay);
@@ -119,50 +119,50 @@ const TimegridForm = () => {
             label="Segunda-feira"
             timegrid={timegrid[0]}
             setTimegrid={setTimegrid}
-            handleOpen={() => handleOpenShowUp(0)}
+            handleOpen={() => handleOpenModal(0)}
           />
           <TimegridWeekDay
             label="Terça-feira"
             timegrid={timegrid[1]}
             setTimegrid={setTimegrid}
-            handleOpen={() => handleOpenShowUp(1)}
+            handleOpen={() => handleOpenModal(1)}
           />
           <TimegridWeekDay
             label="Quarta-feira"
             timegrid={timegrid[2]}
             setTimegrid={setTimegrid}
-            handleOpen={() => handleOpenShowUp(2)}
+            handleOpen={() => handleOpenModal(2)}
           />
           <TimegridWeekDay
             label="Quinta-feira"
             timegrid={timegrid[3]}
             setTimegrid={setTimegrid}
-            handleOpen={() => handleOpenShowUp(3)}
+            handleOpen={() => handleOpenModal(3)}
           />
           <TimegridWeekDay
             label="Sexta-feira"
             timegrid={timegrid[4]}
             setTimegrid={setTimegrid}
-            handleOpen={() => handleOpenShowUp(4)}
+            handleOpen={() => handleOpenModal(4)}
           />
           <TimegridWeekDay
             label="Sábado"
             timegrid={timegrid[5]}
             setTimegrid={setTimegrid}
-            handleOpen={() => handleOpenShowUp(5)}
+            handleOpen={() => handleOpenModal(5)}
           />
           <TimegridWeekDay
             label="Domingo"
             timegrid={timegrid[6]}
             setTimegrid={setTimegrid}
-            handleOpen={() => handleOpenShowUp(6)}
+            handleOpen={() => handleOpenModal(6)}
           />
         </ul>
       )}
-      <ShowUp
+      <Modal
         title="Gerenciar horário"
         isOpen={toggleShow}
-        handleClose={handleCloseShowUp}
+        handleClose={handleCloseModal}
       >
         <Fragment>
           <form
@@ -197,7 +197,7 @@ const TimegridForm = () => {
                 </div>
                 <button
                   type="submit"
-                  disabled={!formState.isValid}
+                  disabled={!formState.isDirty}
                   className="button button--purple m-l-16"
                 >
                   <BsPlus fontSize="35" fontWeight="700" />
@@ -229,7 +229,7 @@ const TimegridForm = () => {
             </button>
           </div>
         </Fragment>
-      </ShowUp>
+      </Modal>
     </div>
   );
 };

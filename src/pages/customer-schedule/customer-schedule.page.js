@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import CalendarTimeline from '../../common/components/calendar-timeline';
 import ScheduleService from '../../services/schedule.service';
-import CalendarTimeline from '../../components/calendar-timeline-component/calendar-timeline.component';
-import PageHeader from '../../components/page-header-component/page-header.component';
+import PageHeader from '../../common/components/page-header';
 import moment from 'moment';
 
-import { handleError } from '../../utils/api';
+import { handleError } from '../../common/utils/api';
 
 const statusLabels = {
   CONFIRMED: 'confirmar',
   CANCELED: 'cancelar',
 };
 
-const Schedules = () => {
+const CustomerSchedules = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [schedules, setSchedules] = useState([]);
   const [status, setStatus] = useState('SCHEDULED');
@@ -19,12 +19,12 @@ const Schedules = () => {
 
   const updateStatus = async (id, updateStatus) => {
     try {
-      if (
-        window.confirm(`Deseja ${statusLabels[updateStatus]} esse agendamento?`)
-      ) {
+      const alertQuestion = `Deseja ${statusLabels[updateStatus]} esse agendamento?`;
+
+      if (window.confirm(alertQuestion)) {
         setIsLoading(true);
 
-        await ScheduleService.updateStatusFromCostumer({
+        await ScheduleService.updateStatus({
           id,
           status: updateStatus,
         });
@@ -77,4 +77,4 @@ const Schedules = () => {
   );
 };
 
-export default Schedules;
+export default CustomerSchedules;

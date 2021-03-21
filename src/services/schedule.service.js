@@ -1,17 +1,11 @@
-import api from '../api/api';
+import api from '../api';
 
 const create = (data) => {
   return api.post('v1/schedules', data);
 };
 
 const updateStatus = ({ id, status }) => {
-  return api.put(`/schedules/status/${id}`, {
-    status,
-  });
-};
-
-const updateStatusFromCostumer = ({ id, status }) => {
-  return api.put(`/schedules/customer/status/${id}`, {
+  return api.put(`v1/schedules/status/${id}`, {
     status,
   });
 };
@@ -26,5 +20,4 @@ export default {
   create,
   findAll,
   updateStatus,
-  updateStatusFromCostumer,
 };

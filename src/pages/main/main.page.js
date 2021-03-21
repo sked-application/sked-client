@@ -1,13 +1,13 @@
 import React, { Fragment, useContext } from 'react';
-import MainSlotGrid from './components/slotgrid-component/slotgrid.component';
-import MainScheduleForm from './components/schedule-form-component/schedule-form.component';
-import MainDate from './components/date-component/date.component';
-import MainServices from './components/services-component/services.component';
-import MainUsers from './components/users-component/users.component';
-import PageHeader from '../../components/page-header-component/page-header.component';
-import AccountContact from './components/account-contact-component/account-contact.component';
+import ScheduleDate from './components/schedule-date';
+import ScheduleProfessionals from './components/schedule-professionals';
+import ScheduleServices from './components/schedule-services';
+import ScheduleSlots from './components/schedule-slots';
+import ScheduleForm from './components/schedule-form';
+import PageHeader from '../../common/components/page-header';
+import CompanyContact from './components/company-contact';
 
-import { MainProvider, MainContext } from './contexts/main.context';
+import { MainProvider, MainContext } from './contexts/main';
 import { Redirect } from 'react-router-dom';
 
 import './main.page.scss';
@@ -32,12 +32,12 @@ const MainContexted = () => {
           <div className="loading"></div>
         ) : (
           <Fragment>
-            <MainDate />
-            <MainUsers />
-            <MainServices />
-            <MainSlotGrid />
-            <MainScheduleForm />
-            <AccountContact accountInfo={accountInfo} />
+            <ScheduleDate />
+            <ScheduleProfessionals />
+            <ScheduleServices />
+            <ScheduleSlots />
+            <ScheduleForm />
+            <CompanyContact accountInfo={accountInfo} />
           </Fragment>
         )}
       </Fragment>

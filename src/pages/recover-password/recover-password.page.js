@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
 import schema from './validators/recover-password.validator';
 import AuthService from '../../services/auth.service';
-import PageHeader from '../../components/page-header-component/page-header.component';
-import FormInputError from '../../components/input-form-error-component/input-form-error.component';
+import PageHeader from '../../common/components/page-header';
+import InputFormError from '../../common/components/input-form-error';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { AuthContext } from '../../contexts/auth-context/auth.context';
+import { AuthContext } from '../../common/contexts/auth';
 import { AiOutlineLock } from 'react-icons/ai';
-import { handleError } from '../../utils/api';
+import { handleError } from '../../common/utils/api';
 
 import { Link, Redirect, useHistory } from 'react-router-dom';
 
@@ -27,8 +27,10 @@ const RecoverPassword = () => {
   const { register, handleSubmit, reset, formState, errors } = useForm({
     resolver: yupResolver(schema.form.validator),
     defaultValues: schema.form.initialValues,
-    mode: 'all',
+    mode: 'onChange',
   });
+
+  const { touched, isValid, isDirty } = formState;
 
   const recoverPasswordForm = async (values) => {
     try {
@@ -90,11 +92,11 @@ const RecoverPassword = () => {
             placeholder="Email"
             disabled={isLoading}
           />
-          <FormInputError error={errors.email && errors.email.message} />
+          <InputFormError touched={touched.email} error={errors.email} />
         </div>
         <div>
           <button
-            disabled={!formState.isValid || isLoading}
+            disabled={!isValid || !isDirty || isLoading}
             className="button button--block button--purple"
           >
             Enviar

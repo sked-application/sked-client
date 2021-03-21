@@ -2,15 +2,15 @@ import React, { useContext, useState } from 'react';
 import AuthService from '../../services/auth.service';
 import schema from './validators/sign-up.validator';
 import NumberFormat from 'react-number-format';
-import PageHeader from '../../components/page-header-component/page-header.component';
-import FormInputError from '../../components/input-form-error-component/input-form-error.component';
+import PageHeader from '../../common/components/page-header';
+import InputFormError from '../../common/components/input-form-error';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
-import { AuthContext } from '../../contexts/auth-context/auth.context';
-import { replaceSpecialCharacters } from '../../utils/utils';
+import { AuthContext } from '../../common/contexts/auth';
+import { replaceSpecialCharacters } from '../../common/utils/validator';
 import { AiOutlineForm } from 'react-icons/ai';
-import { handleError } from '../../utils/api';
+import { handleError } from '../../common/utils/api';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 
 import './sign-up.page.scss';
@@ -31,8 +31,10 @@ const SignUp = () => {
   } = useForm({
     resolver: yupResolver(schema.form.validator),
     defaultValues: schema.form.initialValues,
-    mode: 'all',
+    mode: 'onChange',
   });
+
+  const { touched, isValid, isDirty } = formState;
 
   const signUpForm = async (values) => {
     try {
@@ -114,8 +116,9 @@ const SignUp = () => {
               }
             />
           </div>
-          <FormInputError
-            error={errors.companyUrl && errors.companyUrl.message}
+          <InputFormError
+            touched={touched.companyUrl}
+            error={errors.companyUrl}
           />
         </div>
         <div className="sign-up__field">
@@ -127,8 +130,9 @@ const SignUp = () => {
             disabled={isLoading}
             className="input"
           />
-          <FormInputError
-            error={errors.companyName && errors.companyName.message}
+          <InputFormError
+            touched={touched.companyName}
+            error={errors.companyName}
           />
         </div>
         <div className="sign-up__field">
@@ -139,8 +143,9 @@ const SignUp = () => {
             placeholder="Cpf/Cnpj da conta sem pontos e barra"
             className="input input--dark"
           />
-          <FormInputError
-            error={errors.companyCpfCnpj && errors.companyCpfCnpj.message}
+          <InputFormError
+            touched={touched.companyCpfCnpj}
+            error={errors.companyCpfCnpj}
           />
         </div>
         <div className="sign-up__field">
@@ -158,8 +163,9 @@ const SignUp = () => {
               />
             }
           />
-          <FormInputError
-            error={errors.companyTelephone && errors.companyTelephone.message}
+          <InputFormError
+            touched={touched.companyTelephone}
+            error={errors.companyTelephone}
           />
         </div>
         <div className="sign-up__title">
@@ -174,7 +180,7 @@ const SignUp = () => {
             disabled={isLoading}
             className="input"
           />
-          <FormInputError error={errors.userName && errors.userName.message} />
+          <InputFormError touched={touched.userName} error={errors.userName} />
         </div>
         <div className="sign-up__field">
           <input
@@ -185,8 +191,9 @@ const SignUp = () => {
             disabled={isLoading}
             className="input"
           />
-          <FormInputError
-            error={errors.userEmail && errors.userEmail.message}
+          <InputFormError
+            touched={touched.userEmail}
+            error={errors.userEmail}
           />
         </div>
         <div className="sign-up__field">
@@ -198,8 +205,9 @@ const SignUp = () => {
             disabled={isLoading}
             className="input"
           />
-          <FormInputError
-            error={errors.userPassword && errors.userPassword.message}
+          <InputFormError
+            touched={touched.userPassword}
+            error={errors.userPassword}
           />
         </div>
         <div className="sign-up__field">
@@ -211,16 +219,15 @@ const SignUp = () => {
             disabled={isLoading}
             className="input"
           />
-          <FormInputError
-            error={
-              errors.userConfirmPassword && errors.userConfirmPassword.message
-            }
+          <InputFormError
+            touched={touched.userConfirmPassword}
+            error={errors.userConfirmPassword}
           />
         </div>
         <div>
           <button
             type="submit"
-            disabled={!formState.isValid || isLoading}
+            disabled={!isValid || !isDirty || isLoading}
             className="button button--block button--purple"
           >
             Cadastrar
