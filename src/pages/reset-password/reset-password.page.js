@@ -31,16 +31,17 @@ const ResetPassword = () => {
     try {
       setIsLoading(true);
 
-      const { password } = values;
+      const { password, confirmPassword } = values;
       const { data } = await AuthService.resetPassword({
         password,
+        confirmPassword,
         token,
       });
 
       reset();
       setIsLoading(false);
 
-      if (data.is_customer) {
+      if (data?.role === 'CUSTOMER') {
         history.push('/customer-sign-in');
         return;
       }

@@ -9,15 +9,11 @@ import InputFormError from '../../common/components/input-form-error';
 import { AuthContext } from '../../common/contexts/auth';
 import { handleError } from '../../common/utils/api';
 
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import './recover-password.page.scss';
 
 const RecoverPassword = () => {
-  const history = useHistory();
-  const isCustomer = ['/recover-password-customer'].includes(
-    history.location.pathname,
-  );
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -36,9 +32,8 @@ const RecoverPassword = () => {
       setIsLoading(true);
 
       const { email } = values;
-      await AuthService.recorverPassword({
+      await AuthService.sendRecoverEmail({
         email,
-        is_customer: isCustomer,
       });
 
       reset();

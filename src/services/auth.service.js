@@ -30,24 +30,27 @@ const customerSignUp = ({ email, name, telephone, password }) => {
   });
 };
 
-const recorverPassword = ({ email, is_customer }) => {
-  return api.post('/sign/recover', {
+const sendRecoverEmail = ({ email }) => {
+  return api.post('/v1/auth/send-recover-email', {
     email,
-    is_customer,
   });
 };
 
-const resetPassword = ({ password, token }) => {
-  return api.post('/sign/reset', {
-    password,
-    token,
-  });
+const resetPassword = ({ password, confirmPassword, token }) => {
+  return api.post(
+    '/v1/auth/reset-password',
+    {
+      password,
+      confirmPassword,
+    },
+    { params: { token } },
+  );
 };
 
 export default {
   signIn,
   signUp,
-  recorverPassword,
+  sendRecoverEmail,
   resetPassword,
   customerSignIn,
   customerSignUp,
