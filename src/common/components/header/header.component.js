@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { AiOutlineMenu } from 'react-icons/ai';
@@ -72,7 +72,7 @@ const Header = ({ currentPathname }) => {
           >
             <ul className="header__list">
               {userAccountUrl && (
-                <>
+                <Fragment>
                   <li>
                     <strong>Agenda</strong>
                     <ul className="m-t-10">
@@ -119,11 +119,11 @@ const Header = ({ currentPathname }) => {
                       </li>
                     </ul>
                   </li>
-                </>
+                </Fragment>
               )}
 
               {!userAccountUrl && (
-                <>
+                <Fragment>
                   <li>
                     <Link
                       to="/customer-schedules"
@@ -132,7 +132,15 @@ const Header = ({ currentPathname }) => {
                       Meus compromissos
                     </Link>
                   </li>
-                </>
+                  <li>
+                    <Link
+                      to="/customer-profile"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Perfil
+                    </Link>
+                  </li>
+                </Fragment>
               )}
 
               <li>

@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback, Fragment } from 'react';
-import schema from './validators/profile-form.validator';
+import schema from './validators/customer-profile-form.validator';
 import UserService from '../../services/user.service';
-import NumberFormat from 'react-number-format';
 import PageHeader from '../../common/components/page-header';
 import InputFormError from '../../common/components/input-form-error';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { Modal } from '../../common/components/modal';
 import { handleError } from '../../common/utils/api';
+import NumberFormat from 'react-number-format';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,12 +17,12 @@ const Profile = () => {
 
   const {
     errors,
-    control,
     formState,
     reset,
     setValue,
     register,
     handleSubmit,
+    control,
   } = useForm({
     resolver: yupResolver(schema.form.validator),
     defaultValues: schema.form.initialValues,
@@ -41,10 +41,6 @@ const Profile = () => {
       setValue('userName', data.name);
       setValue('userCpf', data.cpf);
       setValue('userTelephone', data.telephone);
-      setValue('companyName', data.company.name);
-      setValue('companyCpfCnpj', data.company.cpfCnpj);
-      setValue('companyTelephone', data.company.telephone);
-      setValue('companyAddress', data.company.address);
     }
 
     setToggleShow(true);
@@ -52,27 +48,13 @@ const Profile = () => {
 
   const profileForm = async (values) => {
     try {
-      const {
-        userName,
-        userCpf,
-        userTelephone,
-        companyName,
-        companyCpfCnpj,
-        companyTelephone,
-        companyAddress,
-      } = values;
+      const { userName, userCpf, userTelephone } = values;
 
       await UserService.updateProfile({
         user: {
           cpf: userCpf || null,
-          name: userName,
           telephone: userTelephone || null,
-        },
-        company: {
-          name: companyName,
-          cpfCnpj: companyCpfCnpj,
-          telephone: companyTelephone,
-          address: companyAddress || null,
+          name: userName,
         },
       });
 
@@ -138,36 +120,6 @@ const Profile = () => {
                 <div className="m-t-10">
                   <strong>Meu telefone: </strong>
                   <span>{profile.telephone || 'Não informado'}</span>
-                </div>
-                <div className="m-t-10">
-                  <strong>Administrador: </strong>
-                  <span>{profile.role === 'ADMIN' ? 'Sim' : 'Não'}</span>
-                </div>
-              </div>
-
-              <div className="card__header">
-                <h2 className="card__title">Dados da conta</h2>
-              </div>
-              <div className="flexbox flexbox--column m-b-30">
-                <div className="m-t-10">
-                  <strong>Conta: </strong>
-                  <span>{profile.company.name}</span>
-                </div>
-                <div className="m-t-10">
-                  <strong>Url: </strong>
-                  <span>skedapp.com.br/{profile.company.url}</span>
-                </div>
-                <div className="m-t-10">
-                  <strong>Cpf/Cnpj: </strong>
-                  <span>{profile.company.cpfCnpj}</span>
-                </div>
-                <div className="m-t-10">
-                  <strong>Telefone: </strong>
-                  <span>{profile.company.telephone || 'Não informado'}</span>
-                </div>
-                <div className="m-t-10">
-                  <strong>Endereço: </strong>
-                  <span>{profile.company.address || 'Não informado'}</span>
                 </div>
               </div>
             </div>
@@ -237,83 +189,6 @@ const Profile = () => {
               error={errors.userTelephone}
             />
           </div>
-
-          {profile && profile.role === 'ADMIN' && (
-            <Fragment>
-              <div className="flexbox__item m-t-16">
-                <div className="m-b-5">
-                  <label htmlFor="companyName">Nome da conta</label>
-                </div>
-                <input
-                  id="companyName"
-                  name="companyName"
-                  type="text"
-                  ref={register}
-                  className="input input--dark"
-                />
-                <InputFormError
-                  touched={touched.companyName}
-                  error={errors.companyName}
-                />
-              </div>
-              <div className="flexbox__item m-t-16">
-                <div className="m-b-5">
-                  <label htmlFor="companyCpfCnpj">Cpf/Cnpj da conta</label>
-                </div>
-                <input
-                  id="companyCpfCnpj"
-                  name="companyCpfCnpj"
-                  type="text"
-                  ref={register}
-                  placeholder="Cpf/Cnpj sem pontos e barras"
-                  className="input input--dark"
-                />
-                <InputFormError
-                  touched={touched.companyCpfCnpj}
-                  error={errors.companyCpfCnpj}
-                />
-              </div>
-              <div className="flexbox__item m-t-16">
-                <div className="m-b-5">
-                  <label htmlFor="companyTelephone">Telefone</label>
-                </div>
-                <Controller
-                  id="companyTelephone"
-                  name="companyTelephone"
-                  control={control}
-                  as={
-                    <NumberFormat
-                      format="(##) #####-####"
-                      mask="_"
-                      type="tel"
-                      className="input input--dark"
-                      placeholder="Telefone"
-                    />
-                  }
-                />
-                <InputFormError
-                  touched={touched.companyTelephone}
-                  error={errors.companyTelephone}
-                />
-              </div>
-              <div className="flexbox__item m-t-16">
-                <div className="m-b-5">
-                  <label htmlFor="companyAddress">Endereço</label>
-                </div>
-                <input
-                  id="companyAddress"
-                  name="companyAddress"
-                  type="text"
-                  ref={register}
-                  className="input input--dark"
-                />
-                <InputFormError
-                  touched={touched.companyAddress}
-                  error={errors.companyAddress}
-                />
-              </div>
-            </Fragment>
-          )}
 
           <div className="flexbox__item m-t-16">
             <button

@@ -10,6 +10,7 @@ import Schedules from '../pages/schedules';
 import ScheduleLocks from '../pages/schedule-locks';
 import ResetPassword from '../pages/reset-password';
 import CustomerSignIn from '../pages/customer-sign-in';
+import CustomerProfile from '../pages/customer-profile';
 import RecoverPassword from '../pages/recover-password';
 import CustomerSchedules from '../pages/customer-schedule';
 import UserPrivateRoute from './private/user.route';
@@ -33,6 +34,11 @@ const AppRoutes = () => {
         exact
         path="/customer-schedules"
         component={CustomerSchedules}
+      />
+      <CustomerPrivateRoute
+        exact
+        path="/customer-profile"
+        component={CustomerProfile}
       />
       <Route exact path="/sign-up" component={SignUp} />
       <Route exact path="/sign-in" component={SignIn} />

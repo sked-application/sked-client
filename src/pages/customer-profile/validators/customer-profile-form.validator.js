@@ -1,9 +1,5 @@
 import * as Yup from 'yup';
-import {
-  phoneRegex,
-  validateCpfCnpj,
-  validateCpf,
-} from '../../../common/utils/validator';
+import { phoneRegex, validateCpf } from '../../../common/utils/validator';
 
 export default {
   form: {
@@ -11,10 +7,6 @@ export default {
       userName: '',
       userCpf: '',
       userTelephone: '',
-      companyName: '',
-      companyCpfCnpj: '',
-      companyTelephone: '',
-      companyAddress: '',
     },
     validator: Yup.object({
       userName: Yup.string().required('Este campo é obrigatório'),
@@ -40,17 +32,6 @@ export default {
           return true;
         },
       ),
-      companyName: Yup.string().required('Este campo é obrigatório'),
-      companyCpfCnpj: Yup.string()
-        .required('Por favor, digite o cpf/cnpj.')
-        .test('cpf-cnpj-test', 'Por favor, verifique o cpf/cnpj.', (value) =>
-          validateCpfCnpj(value),
-        ),
-      companyTelephone: Yup.string().matches(
-        phoneRegex(),
-        'Por favor, verifique o número de telefone.',
-      ),
-      companyAddress: Yup.string(),
     }),
   },
 };

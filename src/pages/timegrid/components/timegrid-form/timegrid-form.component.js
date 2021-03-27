@@ -7,6 +7,7 @@ import TimegridService from '../../../../services/timegrid.service';
 import schema from '../../validators/timegrid-form.validator';
 import { Modal } from '../../../../common/components/modal';
 import { handleError } from '../../../../common/utils/api';
+import './timegrid-form.component.scss';
 
 const initialTimegrid = {
   0: [],
@@ -218,6 +219,13 @@ const TimegridForm = () => {
               ))}
             </div>
           </form>
+          {!!formData.length && (
+            <div className="flexbox m-t-16">
+              <span className="timegrid-form__tip">
+                Obs: Clicando em um configuração, você consegue removê-la.
+              </span>
+            </div>
+          )}
           <div className="flexbox m-t-16">
             <button
               onClick={handleSubmitTimegrid}
