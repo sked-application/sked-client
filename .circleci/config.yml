@@ -27,8 +27,6 @@
     
           - run: yarn lint
     
-          - run: yarn size
-
           - run: yarn build
     
           - aws-s3/sync:
