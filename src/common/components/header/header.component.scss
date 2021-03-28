@@ -13,12 +13,7 @@
   }
 
   &__logo {
-    padding: 4px 8px;
-    border-radius: 4px;
-    color: var(--purple);
-    font-weight: bold;
-    display: inline-block;
-    border: 2px solid var(--purple);
+    display: inline-flex;
   }
 
   &__toggle {

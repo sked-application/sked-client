@@ -1,9 +1,9 @@
 import React, { Fragment, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import logoSvg from '../../assets/svg/logo.svg';
 import { Link } from 'react-router-dom';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { AuthContext } from '../../contexts/auth';
-
 import './header.component.scss';
 
 const Header = ({ currentPathname }) => {
@@ -22,7 +22,9 @@ const Header = ({ currentPathname }) => {
       <div className="container">
         <div className="header__content">
           <div>
-            <span className="header__logo">SKED</span>
+            <span className="header__logo">
+              <img src={logoSvg} alt="Logo Sked App" />
+            </span>
           </div>
 
           {isAuthenticated && (
