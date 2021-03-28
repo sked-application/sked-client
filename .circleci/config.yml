@@ -2,33 +2,41 @@
     orbs:
       aws-s3: circleci/aws-s3@1.0.11
     jobs:
-      build:
+      approve-deploy:
+          type: approval
+          filters:
+            branches:
+              only:
+                - main
+      deploy:
+        requires:
+          - approve-deploy
         docker:
-          - image: circleci/node:12.9.1-browsers
-    
+          - image: circleci/node:14.16.0-browsers
+
         working_directory: ~/repo
-    
+
         steps:
           - checkout
-    
+
           - restore_cache:
               keys:
                 - v1-dependencies-{{ checksum "package.json" }}
                 # fallback to using the latest cache if no exact match is found
                 - v1-dependencies-
           - run: yarn install
-    
+
           - save_cache:
               paths:
                 - node_modules
                 - ~/.npm
                 - ~/.cache
               key: v1-dependencies-{{ checksum "package.json" }}
-    
+
           - run: yarn lint
-    
+
           - run: yarn build
-    
+
           - aws-s3/sync:
               from: build
               to: "s3://skedapp.com.br/"
