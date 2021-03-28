@@ -2,8 +2,8 @@ name: s3-depl
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - '**'
 
 jobs:
   build:
