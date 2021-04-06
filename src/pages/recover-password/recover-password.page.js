@@ -32,13 +32,13 @@ const RecoverPassword = () => {
       setIsLoading(true);
 
       const { email } = values;
-      await AuthService.sendRecoverEmail({
+      const { message } = await AuthService.sendRecoverEmail({
         email,
       });
 
       reset();
       setIsLoading(false);
-      setSuccess('Link enviado para seu email.');
+      setSuccess(message);
 
       if (error) {
         setError('');

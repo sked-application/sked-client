@@ -1,28 +1,28 @@
 import api from '../api';
 
 const signIn = ({ email, password }) => {
-  return api.post('/v1/auth/signin-admin', {
+  return api.post('v1/auth/signin-admin', {
     email,
     password,
   });
 };
 
 const signUp = ({ company, user }) => {
-  return api.post('/v1/auth/signup-admin', {
+  return api.post('v1/auth/signup-admin', {
     company,
     user,
   });
 };
 
 const customerSignIn = ({ email, password }) => {
-  return api.post('/v1/auth/signin-customer', {
+  return api.post('v1/auth/signin-customer', {
     email,
     password,
   });
 };
 
 const customerSignUp = ({ email, name, telephone, password }) => {
-  return api.post('/v1/auth/signup-customer', {
+  return api.post('v1/auth/signup-customer', {
     email,
     name,
     telephone,
@@ -31,14 +31,14 @@ const customerSignUp = ({ email, name, telephone, password }) => {
 };
 
 const sendRecoverEmail = ({ email }) => {
-  return api.post('/v1/auth/send-recover-email', {
+  return api.post('v1/auth/send-recover-email', {
     email,
   });
 };
 
 const resetPassword = ({ password, confirmPassword, token }) => {
   return api.post(
-    '/v1/auth/reset-password',
+    'v1/auth/reset-password',
     {
       password,
       confirmPassword,
