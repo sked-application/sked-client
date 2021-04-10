@@ -11,6 +11,7 @@ import InputFormError from '../../common/components/input-form-error';
 import { AuthContext } from '../../common/contexts/auth';
 import { replaceSpecialCharacters } from '../../common/utils/validator';
 import { handleError } from '../../common/utils/api';
+import { cpfCnpjMask } from '../../common/utils/cpf-cnpf';
 
 import './sign-up.page.scss';
 
@@ -141,6 +142,9 @@ const SignUp = () => {
             ref={register}
             placeholder="Cpf/Cnpj da conta sem pontos e barra"
             className="input input--dark"
+            onChange={(event) =>
+              setValue('companyCpfCnpj', cpfCnpjMask(event.target.value))
+            }
           />
           <InputFormError
             touched={touched.companyCpfCnpj}

@@ -9,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 import { Modal } from '../../common/components/modal';
 import { handleError } from '../../common/utils/api';
+import { cpfCnpjMask, cpfMask } from '../../common/utils/cpf-cnpf';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -211,6 +212,9 @@ const Profile = () => {
               ref={register}
               placeholder="Cpf sem pontos e barras"
               className="input input--dark"
+              onChange={(event) =>
+                setValue('userCpf', cpfMask(event.target.value))
+              }
             />
             <InputFormError touched={touched.userCpf} error={errors.userCpf} />
           </div>
@@ -267,6 +271,9 @@ const Profile = () => {
                   ref={register}
                   placeholder="Cpf/Cnpj sem pontos e barras"
                   className="input input--dark"
+                  onChange={(event) =>
+                    setValue('companyCpfCnpj', cpfCnpjMask(event.target.value))
+                  }
                 />
                 <InputFormError
                   touched={touched.companyCpfCnpj}
