@@ -10,13 +10,13 @@ import { handleError } from '../../../../common/utils/api';
 import './timegrid-form.component.scss';
 
 const initialTimegrid = {
-  0: [],
   1: [],
   2: [],
   3: [],
   4: [],
   5: [],
   6: [],
+  7: [],
 };
 
 const TimegridForm = () => {
@@ -116,45 +116,45 @@ const TimegridForm = () => {
         <ul>
           <TimegridWeekDay
             label="Segunda-feira"
-            timegrid={timegrid[0]}
-            setTimegrid={setTimegrid}
-            handleOpen={() => handleOpenModal(0)}
-          />
-          <TimegridWeekDay
-            label="Terça-feira"
             timegrid={timegrid[1]}
             setTimegrid={setTimegrid}
             handleOpen={() => handleOpenModal(1)}
           />
           <TimegridWeekDay
-            label="Quarta-feira"
+            label="Terça-feira"
             timegrid={timegrid[2]}
             setTimegrid={setTimegrid}
             handleOpen={() => handleOpenModal(2)}
           />
           <TimegridWeekDay
-            label="Quinta-feira"
+            label="Quarta-feira"
             timegrid={timegrid[3]}
             setTimegrid={setTimegrid}
             handleOpen={() => handleOpenModal(3)}
           />
           <TimegridWeekDay
-            label="Sexta-feira"
+            label="Quinta-feira"
             timegrid={timegrid[4]}
             setTimegrid={setTimegrid}
             handleOpen={() => handleOpenModal(4)}
           />
           <TimegridWeekDay
-            label="Sábado"
+            label="Sexta-feira"
             timegrid={timegrid[5]}
             setTimegrid={setTimegrid}
             handleOpen={() => handleOpenModal(5)}
           />
           <TimegridWeekDay
-            label="Domingo"
+            label="Sábado"
             timegrid={timegrid[6]}
             setTimegrid={setTimegrid}
             handleOpen={() => handleOpenModal(6)}
+          />
+          <TimegridWeekDay
+            label="Domingo"
+            timegrid={timegrid[7]}
+            setTimegrid={setTimegrid}
+            handleOpen={() => handleOpenModal(7)}
           />
         </ul>
       )}
