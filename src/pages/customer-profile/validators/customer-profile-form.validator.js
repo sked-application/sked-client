@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
-import { phoneRegex, validateCpf } from '../../../common/utils/validator';
+import { phoneRegex } from '../../../common/utils/validator';
+import { validateCpf } from '../../../common/utils/cpf-cnpf';
 
 export default {
   form: {
