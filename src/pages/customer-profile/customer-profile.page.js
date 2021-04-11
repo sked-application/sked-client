@@ -8,6 +8,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import { Modal } from '../../common/components/modal';
 import { handleError } from '../../common/utils/api';
+import { replaceSpecialCharacters } from '../../common/utils/validator';
+import { cpfMask } from '../../common/utils/cpf-cnpf';
 import NumberFormat from 'react-number-format';
 
 const Profile = () => {
@@ -39,7 +41,7 @@ const Profile = () => {
   const handleOpenModal = (data) => {
     if (data) {
       setValue('userName', data.name);
-      setValue('userCpf', data.cpf);
+      setValue('userCpf', cpfMask(data.cpf));
       setValue('userTelephone', data.telephone);
     }
 
@@ -52,7 +54,7 @@ const Profile = () => {
 
       await UserService.updateProfile({
         user: {
-          cpf: userCpf || null,
+          cpf: replaceSpecialCharacters(userCpf) || null,
           telephone: userTelephone || null,
           name: userName,
         },
@@ -115,7 +117,7 @@ const Profile = () => {
                 </div>
                 <div className="m-t-10">
                   <strong>Cpf: </strong>
-                  <span>{profile.cpf || 'Não informado'}</span>
+                  <span>{cpfMask(profile.cpf) || 'Não informado'}</span>
                 </div>
                 <div className="m-t-10">
                   <strong>Meu telefone: </strong>

@@ -10,6 +10,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { Modal } from '../../common/components/modal';
 import { handleError } from '../../common/utils/api';
 import { cpfCnpjMask, cpfMask } from '../../common/utils/cpf-cnpf';
+import { replaceSpecialCharacters } from '../../common/utils/validator';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,10 +41,10 @@ const Profile = () => {
   const handleOpenModal = (data) => {
     if (data) {
       setValue('userName', data.name);
-      setValue('userCpf', data.cpf);
+      setValue('userCpf', cpfMask(data.cpf));
       setValue('userTelephone', data.telephone);
       setValue('companyName', data.company.name);
-      setValue('companyCpfCnpj', data.company.cpfCnpj);
+      setValue('companyCpfCnpj', cpfCnpjMask(data.company.cpfCnpj));
       setValue('companyTelephone', data.company.telephone);
       setValue('companyAddress', data.company.address);
     }
@@ -65,13 +66,13 @@ const Profile = () => {
 
       await UserService.updateProfile({
         user: {
-          cpf: userCpf || null,
+          cpf: replaceSpecialCharacters(userCpf) || null,
           name: userName,
           telephone: userTelephone || null,
         },
         company: {
           name: companyName,
-          cpfCnpj: companyCpfCnpj,
+          cpfCnpj: replaceSpecialCharacters(companyCpfCnpj),
           telephone: companyTelephone,
           address: companyAddress || null,
         },
@@ -134,7 +135,7 @@ const Profile = () => {
                 </div>
                 <div className="m-t-10">
                   <strong>Cpf: </strong>
-                  <span>{profile.cpf || 'Não informado'}</span>
+                  <span>{cpfMask(profile.cpf) || 'Não informado'}</span>
                 </div>
                 <div className="m-t-10">
                   <strong>Meu telefone: </strong>
@@ -160,7 +161,7 @@ const Profile = () => {
                 </div>
                 <div className="m-t-10">
                   <strong>Cpf/Cnpj: </strong>
-                  <span>{profile.company.cpfCnpj}</span>
+                  <span>{cpfCnpjMask(profile.company.cpfCnpj)}</span>
                 </div>
                 <div className="m-t-10">
                   <strong>Telefone: </strong>

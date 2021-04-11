@@ -54,7 +54,7 @@ const SignUp = () => {
         company: {
           name: companyName,
           url: companyUrl,
-          cpfCnpj: companyCpfCnpj,
+          cpfCnpj: replaceSpecialCharacters(companyCpfCnpj),
           telephone: companyTelephone,
         },
         user: {

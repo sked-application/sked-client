@@ -1,5 +1,5 @@
 export const replaceSpecialCharacters = (string) => {
-  return string
+  return (string || '')
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/([^\w]+|\s+)/g, '')
