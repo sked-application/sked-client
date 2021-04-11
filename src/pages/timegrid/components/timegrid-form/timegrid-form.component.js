@@ -10,13 +10,13 @@ import { handleError } from '../../../../common/utils/api';
 import './timegrid-form.component.scss';
 
 const initialTimegrid = {
+  0: [],
   1: [],
   2: [],
   3: [],
   4: [],
   5: [],
   6: [],
-  7: [],
 };
 
 const TimegridForm = () => {
@@ -152,7 +152,7 @@ const TimegridForm = () => {
           />
           <TimegridWeekDay
             label="Domingo"
-            timegrid={timegrid[7]}
+            timegrid={timegrid[0]}
             setTimegrid={setTimegrid}
             handleOpen={() => handleOpenModal(7)}
           />

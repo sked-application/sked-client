@@ -9,6 +9,7 @@ import PageHeader from '../../common/components/page-header';
 import InputFormError from '../../common/components/input-form-error';
 import { AuthContext } from '../../common/contexts/auth';
 import { handleError } from '../../common/utils/api';
+import { getDay } from 'date-fns';
 
 import './sign-in.page.scss';
 
@@ -49,6 +50,8 @@ const SignIn = () => {
 
     return <Redirect to={redirectUrl} />;
   }
+
+  console.log(getDay(new Date()), new Date().toISOString());
 
   return (
     <div className="container">
