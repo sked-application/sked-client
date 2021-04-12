@@ -154,7 +154,7 @@ const TimegridForm = () => {
             label="Domingo"
             timegrid={timegrid[0]}
             setTimegrid={setTimegrid}
-            handleOpen={() => handleOpenModal(7)}
+            handleOpen={() => handleOpenModal(0)}
           />
         </ul>
       )}
