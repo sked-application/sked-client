@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import schema from './validators/profile-form.validator';
 import UserService from '../../services/user.service';
-import NumberFormat from 'react-number-format';
 import PageHeader from '../../common/components/page-header';
 import InputFormError from '../../common/components/input-form-error';
+import InputTelephone from '../../common/components/input-telephone';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Modal } from '../../common/components/modal';
 import { handleError } from '../../common/utils/api';
-import { cpfCnpjMask, cpfMask } from '../../common/utils/cpf-cnpf';
+import { telephoneMask } from '../../common/utils/telephone-mask';
 import { replaceSpecialCharacters } from '../../common/utils/validator';
 
 const Profile = () => {
@@ -19,7 +19,6 @@ const Profile = () => {
 
   const {
     errors,
-    control,
     formState,
     reset,
     setValue,
@@ -41,11 +40,9 @@ const Profile = () => {
   const handleOpenModal = (data) => {
     if (data) {
       setValue('userName', data.name);
-      setValue('userCpf', cpfMask(data.cpf));
-      setValue('userTelephone', data.telephone);
+      setValue('userTelephone', telephoneMask(data.telephone));
       setValue('companyName', data.company.name);
-      setValue('companyCpfCnpj', cpfCnpjMask(data.company.cpfCnpj));
-      setValue('companyTelephone', data.company.telephone);
+      setValue('companyTelephone', telephoneMask(data.company.telephone));
       setValue('companyAddress', data.company.address);
     }
 
@@ -56,24 +53,20 @@ const Profile = () => {
     try {
       const {
         userName,
-        userCpf,
         userTelephone,
         companyName,
-        companyCpfCnpj,
         companyTelephone,
         companyAddress,
       } = values;
 
       await UserService.updateProfile({
         user: {
-          cpf: replaceSpecialCharacters(userCpf) || null,
           name: userName,
           telephone: userTelephone || null,
         },
         company: {
           name: companyName,
-          cpfCnpj: replaceSpecialCharacters(companyCpfCnpj),
-          telephone: companyTelephone,
+          telephone: replaceSpecialCharacters(companyTelephone) || null,
           address: companyAddress || null,
         },
       });
@@ -134,10 +127,6 @@ const Profile = () => {
                   <span>{profile.email}</span>
                 </div>
                 <div className="m-t-10">
-                  <strong>Cpf: </strong>
-                  <span>{cpfMask(profile.cpf) || 'Não informado'}</span>
-                </div>
-                <div className="m-t-10">
                   <strong>Meu telefone: </strong>
                   <span>{profile.telephone || 'Não informado'}</span>
                 </div>
@@ -158,10 +147,6 @@ const Profile = () => {
                 <div className="m-t-10">
                   <strong>Url: </strong>
                   <span>skedapp.com.br/{profile.company.url}</span>
-                </div>
-                <div className="m-t-10">
-                  <strong>Cpf/Cnpj: </strong>
-                  <span>{cpfCnpjMask(profile.company.cpfCnpj)}</span>
                 </div>
                 <div className="m-t-10">
                   <strong>Telefone: </strong>
@@ -186,68 +171,14 @@ const Profile = () => {
           onSubmit={handleSubmit(profileForm)}
           className="flexbox flexbox--column"
         >
-          <div className="flexbox__item">
-            <div className="m-b-5">
-              <label htmlFor="userName">Meu nome</label>
-            </div>
-            <input
-              id="userName"
-              name="userName"
-              type="text"
-              ref={register}
-              className="input input--dark"
-            />
-            <InputFormError
-              touched={touched.userName}
-              error={errors.userName}
-            />
-          </div>
-          <div className="flexbox__item m-t-16">
-            <div className="m-b-5">
-              <label htmlFor="userCpf">Meu cpf</label>
-            </div>
-            <input
-              id="userCpf"
-              name="userCpf"
-              type="text"
-              ref={register}
-              placeholder="Cpf sem pontos e barras"
-              className="input input--dark"
-              onChange={(event) =>
-                setValue('userCpf', cpfMask(event.target.value))
-              }
-            />
-            <InputFormError touched={touched.userCpf} error={errors.userCpf} />
-          </div>
-          <div className="flexbox__item m-t-16">
-            <div className="m-b-5">
-              <label htmlFor="userTelephone">Meu telefone</label>
-            </div>
-            <Controller
-              id="userTelephone"
-              name="userTelephone"
-              control={control}
-              as={
-                <NumberFormat
-                  format="(##) #####-####"
-                  mask="_"
-                  type="tel"
-                  className="input input--dark"
-                  placeholder="Telefone"
-                />
-              }
-            />
-            <InputFormError
-              touched={touched.userTelephone}
-              error={errors.userTelephone}
-            />
-          </div>
-
           {profile && profile.role === 'ADMIN' && (
             <Fragment>
-              <div className="flexbox__item m-t-16">
+              <div className="m-b-16">
+                <strong>Informações do estabelecimento</strong>
+              </div>
+              <div className="flexbox__item m-b-16">
                 <div className="m-b-5">
-                  <label htmlFor="companyName">Nome da conta</label>
+                  <label htmlFor="companyName">Nome</label>
                 </div>
                 <input
                   id="companyName"
@@ -261,42 +192,20 @@ const Profile = () => {
                   error={errors.companyName}
                 />
               </div>
-              <div className="flexbox__item m-t-16">
-                <div className="m-b-5">
-                  <label htmlFor="companyCpfCnpj">Cpf/Cnpj da conta</label>
-                </div>
-                <input
-                  id="companyCpfCnpj"
-                  name="companyCpfCnpj"
-                  type="text"
-                  ref={register}
-                  placeholder="Cpf/Cnpj sem pontos e barras"
-                  className="input input--dark"
-                  onChange={(event) =>
-                    setValue('companyCpfCnpj', cpfCnpjMask(event.target.value))
-                  }
-                />
-                <InputFormError
-                  touched={touched.companyCpfCnpj}
-                  error={errors.companyCpfCnpj}
-                />
-              </div>
-              <div className="flexbox__item m-t-16">
+              <div className="flexbox__item m-b-16">
                 <div className="m-b-5">
                   <label htmlFor="companyTelephone">Telefone</label>
                 </div>
-                <Controller
+                <InputTelephone
                   id="companyTelephone"
                   name="companyTelephone"
-                  control={control}
-                  as={
-                    <NumberFormat
-                      format="(##) #####-####"
-                      mask="_"
-                      type="tel"
-                      className="input input--dark"
-                      placeholder="Telefone"
-                    />
+                  className="input input--dark"
+                  ref={register}
+                  onChange={(event) =>
+                    setValue(
+                      'companyTelephone',
+                      telephoneMask(event.target.value),
+                    )
                   }
                 />
                 <InputFormError
@@ -304,7 +213,7 @@ const Profile = () => {
                   error={errors.companyTelephone}
                 />
               </div>
-              <div className="flexbox__item m-t-16">
+              <div className="flexbox__item m-t-16 m-b-16">
                 <div className="m-b-5">
                   <label htmlFor="companyAddress">Endereço</label>
                 </div>
@@ -323,7 +232,44 @@ const Profile = () => {
             </Fragment>
           )}
 
-          <div className="flexbox__item m-t-16">
+          <div className="m-b-16">
+            <strong>Informações do usuário</strong>
+          </div>
+          <div className="flexbox__item m-b-16">
+            <div className="m-b-5">
+              <label htmlFor="userName">Nome</label>
+            </div>
+            <input
+              id="userName"
+              name="userName"
+              type="text"
+              ref={register}
+              className="input input--dark"
+            />
+            <InputFormError
+              touched={touched.userName}
+              error={errors.userName}
+            />
+          </div>
+          <div className="flexbox__item m-b-16">
+            <div className="m-b-5">
+              <label htmlFor="userTelephone">Telefone</label>
+            </div>
+            <InputTelephone
+              id="userTelephone"
+              name="userTelephone"
+              className="input input--dark"
+              ref={register}
+              onChange={(event) =>
+                setValue('userTelephone', telephoneMask(event.target.value))
+              }
+            />
+            <InputFormError
+              touched={touched.userTelephone}
+              error={errors.userTelephone}
+            />
+          </div>
+          <div className="flexbox__item">
             <button
               type="submit"
               disabled={!isValid || !isDirty}

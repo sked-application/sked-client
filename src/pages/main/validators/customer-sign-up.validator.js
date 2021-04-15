@@ -15,9 +15,17 @@ export default {
       email: Yup.string()
         .required('Por favor, digite seu email.')
         .email('Por favor, digite um email válido.'),
-      telephone: Yup.string()
-        .required('Por favor, digite seu telefone.')
-        .matches(phoneRegex(), 'Por favor, verifique seu número de telefone.'),
+      telephone: Yup.string().test(
+        'telephone',
+        'Por favor, verifique o número de telefone.',
+        (value) => {
+          if (value) {
+            return phoneRegex(value);
+          }
+
+          return true;
+        },
+      ),
       password: Yup.string()
         .required('Este campo é obrigatório')
         .min(4, 'Este campo deve conter ao menos 4 caracteres'),

@@ -3,14 +3,14 @@ import schema from './validators/customer-profile-form.validator';
 import UserService from '../../services/user.service';
 import PageHeader from '../../common/components/page-header';
 import InputFormError from '../../common/components/input-form-error';
+import InputTelephone from '../../common/components/input-telephone';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Modal } from '../../common/components/modal';
 import { handleError } from '../../common/utils/api';
 import { replaceSpecialCharacters } from '../../common/utils/validator';
-import { cpfMask } from '../../common/utils/cpf-cnpf';
-import NumberFormat from 'react-number-format';
+import { telephoneMask } from '../../common/utils/telephone-mask';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +24,6 @@ const Profile = () => {
     setValue,
     register,
     handleSubmit,
-    control,
   } = useForm({
     resolver: yupResolver(schema.form.validator),
     defaultValues: schema.form.initialValues,
@@ -41,8 +40,7 @@ const Profile = () => {
   const handleOpenModal = (data) => {
     if (data) {
       setValue('userName', data.name);
-      setValue('userCpf', cpfMask(data.cpf));
-      setValue('userTelephone', data.telephone);
+      setValue('userTelephone', telephoneMask(data.telephone));
     }
 
     setToggleShow(true);
@@ -50,12 +48,11 @@ const Profile = () => {
 
   const profileForm = async (values) => {
     try {
-      const { userName, userCpf, userTelephone } = values;
+      const { userName, userTelephone } = values;
 
       await UserService.updateProfile({
         user: {
-          cpf: replaceSpecialCharacters(userCpf) || null,
-          telephone: userTelephone || null,
+          telephone: replaceSpecialCharacters(userTelephone) || null,
           name: userName,
         },
       });
@@ -116,10 +113,6 @@ const Profile = () => {
                   <span>{profile.email}</span>
                 </div>
                 <div className="m-t-10">
-                  <strong>Cpf: </strong>
-                  <span>{cpfMask(profile.cpf) || 'Não informado'}</span>
-                </div>
-                <div className="m-t-10">
                   <strong>Meu telefone: </strong>
                   <span>{profile.telephone || 'Não informado'}</span>
                 </div>
@@ -156,34 +149,15 @@ const Profile = () => {
           </div>
           <div className="flexbox__item m-t-16">
             <div className="m-b-5">
-              <label htmlFor="userCpf">Meu cpf</label>
-            </div>
-            <input
-              id="userCpf"
-              name="userCpf"
-              type="text"
-              ref={register}
-              placeholder="Cpf sem pontos e barras"
-              className="input input--dark"
-            />
-            <InputFormError touched={touched.userCpf} error={errors.userCpf} />
-          </div>
-          <div className="flexbox__item m-t-16">
-            <div className="m-b-5">
               <label htmlFor="userTelephone">Meu telefone</label>
             </div>
-            <Controller
+            <InputTelephone
               id="userTelephone"
               name="userTelephone"
-              control={control}
-              as={
-                <NumberFormat
-                  format="(##) #####-####"
-                  mask="_"
-                  type="tel"
-                  className="input input--dark"
-                  placeholder="Telefone"
-                />
+              className="input input--dark"
+              ref={register}
+              onChange={(event) =>
+                setValue('userTelephone', telephoneMask(event.target.value))
               }
             />
             <InputFormError

@@ -108,7 +108,7 @@ export const validateCpfCnpj = (val) => {
 };
 
 export const validateCpf = (val) => {
-  val = replaceSpecialCharacters(val);
+  val = replaceSpecialCharacters(val).slice(0, 11);
 
   if (val.length === 11) {
     const cpf = val

@@ -1,24 +1,31 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import NumberFormat from 'react-number-format';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import schema from '../../validators/customer-sign-up.validator';
 import AuthService from '../../../../services/auth.service';
 import InputFormError from '../../../../common/components/input-form-error';
 import { handleError } from '../../../../common/utils/api';
 import { AuthContext } from '../../../../common/contexts/auth';
+import InputTelephone from '../../../../common/components/input-telephone';
+import { telephoneMask } from '../../../../common/utils/telephone-mask';
+import { replaceSpecialCharacters } from '../../../../common/utils/validator';
 
 const CustomerSignUpForm = ({ setIsLoading, setFormType }) => {
   const { handleSignIn } = useContext(AuthContext);
 
-  const { register, handleSubmit, formState, errors, reset, control } = useForm(
-    {
-      resolver: yupResolver(schema.form.validator),
-      defaultValues: schema.form.initialValues,
-      mode: 'onChange',
-    },
-  );
+  const {
+    register,
+    handleSubmit,
+    formState,
+    errors,
+    reset,
+    setValue,
+  } = useForm({
+    resolver: yupResolver(schema.form.validator),
+    defaultValues: schema.form.initialValues,
+    mode: 'onChange',
+  });
 
   const { touched, isValid, isDirty } = formState;
 
@@ -30,7 +37,7 @@ const CustomerSignUpForm = ({ setIsLoading, setFormType }) => {
       const { data } = await AuthService.customerSignUp({
         email,
         name,
-        telephone,
+        telephone: replaceSpecialCharacters(telephone) || null,
         password,
       });
 
@@ -68,17 +75,13 @@ const CustomerSignUpForm = ({ setIsLoading, setFormType }) => {
         <InputFormError touched={touched.name} error={errors.name} />
       </div>
       <div className="m-t-16">
-        <Controller
+        <InputTelephone
+          id="telephone"
           name="telephone"
-          control={control}
-          as={
-            <NumberFormat
-              format="(##) #####-####"
-              mask="_"
-              type="tel"
-              className="input input--dark"
-              placeholder="Telefone"
-            />
+          className="input input--dark"
+          ref={register}
+          onChange={(event) =>
+            setValue('telephone', telephoneMask(event.target.value))
           }
         />
         <InputFormError touched={touched.telephone} error={errors.telephone} />

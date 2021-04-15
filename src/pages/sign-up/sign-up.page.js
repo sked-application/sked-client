@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
-import NumberFormat from 'react-number-format';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { AiOutlineForm } from 'react-icons/ai';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import AuthService from '../../services/auth.service';
@@ -11,9 +10,10 @@ import InputFormError from '../../common/components/input-form-error';
 import { AuthContext } from '../../common/contexts/auth';
 import { replaceSpecialCharacters } from '../../common/utils/validator';
 import { handleError } from '../../common/utils/api';
-import { cpfCnpjMask } from '../../common/utils/cpf-cnpf';
 
 import './sign-up.page.scss';
+import InputTelephone from '../../common/components/input-telephone';
+import { telephoneMask } from '../../common/utils/telephone-mask';
 
 const SignUp = () => {
   const history = useHistory();
@@ -21,14 +21,7 @@ const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated, userAccountUrl } = useContext(AuthContext);
 
-  const {
-    errors,
-    control,
-    formState,
-    setValue,
-    register,
-    handleSubmit,
-  } = useForm({
+  const { errors, formState, setValue, register, handleSubmit } = useForm({
     resolver: yupResolver(schema.form.validator),
     defaultValues: schema.form.initialValues,
     mode: 'onChange',
@@ -43,7 +36,6 @@ const SignUp = () => {
       const {
         companyName,
         companyUrl,
-        companyCpfCnpj,
         companyTelephone,
         userName,
         userEmail,
@@ -54,8 +46,7 @@ const SignUp = () => {
         company: {
           name: companyName,
           url: companyUrl,
-          cpfCnpj: replaceSpecialCharacters(companyCpfCnpj),
-          telephone: companyTelephone,
+          telephone: replaceSpecialCharacters(companyTelephone) || null,
         },
         user: {
           name: userName,
@@ -136,34 +127,13 @@ const SignUp = () => {
           />
         </div>
         <div className="sign-up__field">
-          <input
-            name="companyCpfCnpj"
-            type="text"
-            ref={register}
-            placeholder="Cpf/Cnpj da conta sem pontos e barra"
-            className="input input--dark"
-            onChange={(event) =>
-              setValue('companyCpfCnpj', cpfCnpjMask(event.target.value))
-            }
-          />
-          <InputFormError
-            touched={touched.companyCpfCnpj}
-            error={errors.companyCpfCnpj}
-          />
-        </div>
-        <div className="sign-up__field">
-          <Controller
-            id="accountTelephone"
+          <InputTelephone
+            id="companyTelephone"
             name="companyTelephone"
-            control={control}
-            as={
-              <NumberFormat
-                format="(##) #####-####"
-                mask="_"
-                type="tel"
-                className="input input--dark"
-                placeholder="Telefone"
-              />
+            className="input input--dark"
+            ref={register}
+            onChange={(event) =>
+              setValue('companyTelephone', telephoneMask(event.target.value))
             }
           />
           <InputFormError

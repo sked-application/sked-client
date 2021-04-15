@@ -8,6 +8,10 @@ export const replaceSpecialCharacters = (string) => {
     .toLowerCase();
 };
 
-export const phoneRegex = () => {
-  return /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})-?(\d{4}))$/;
+export const phoneRegex = (value) => {
+  value = replaceSpecialCharacters(value).slice(0, 11);
+
+  return /\(?\b([0-9]{2,3}|0((x|[0-9]){2,3}[0-9]{2}))\)?\s*[0-9]{5}[- ]*[0-9]{4}\b/.test(
+    value,
+  );
 };
