@@ -127,6 +127,11 @@ const Header = ({ currentPathname }) => {
               {!userAccountUrl && (
                 <Fragment>
                   <li>
+                    <Link to="/favorites" onClick={() => setIsOpen(false)}>
+                      Favoritos
+                    </Link>
+                  </li>
+                  <li>
                     <Link
                       to="/customer-schedules"
                       onClick={() => setIsOpen(false)}

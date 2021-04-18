@@ -12,6 +12,7 @@ import ResetPassword from '../pages/reset-password';
 import CustomerSignIn from '../pages/customer-sign-in';
 import CustomerProfile from '../pages/customer-profile';
 import RecoverPassword from '../pages/recover-password';
+import Favorites from '../pages/favorites';
 import CustomerSchedules from '../pages/customer-schedule';
 import UserPrivateRoute from './private/user.route';
 import CustomerPrivateRoute from './private/customer.route';
@@ -40,6 +41,7 @@ const AppRoutes = () => {
         path="/customer-profile"
         component={CustomerProfile}
       />
+      <CustomerPrivateRoute exact path="/favorites" component={Favorites} />
       <Route exact path="/sign-up" component={SignUp} />
       <Route exact path="/sign-in" component={SignIn} />
       <Route exact path="/customer-sign-in" component={CustomerSignIn} />
