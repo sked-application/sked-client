@@ -8,6 +8,7 @@ import ScheduleSlots from './components/schedule-slots';
 import ScheduleForm from './components/schedule-form';
 import PageHeader from '../../common/components/page-header';
 import CompanyContact from './components/company-contact';
+import Favorite from './components/favorite';
 import './main.page.scss';
 
 const MainContexted = () => {
@@ -30,6 +31,7 @@ const MainContexted = () => {
           <div className="loading"></div>
         ) : (
           <Fragment>
+            <Favorite />
             <ScheduleDate />
             <ScheduleProfessionals />
             <ScheduleServices />
