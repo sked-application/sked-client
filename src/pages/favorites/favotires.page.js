@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import FavoriteService from '../../services/favorite.service';
 import PageHeader from '../../common/components/page-header';
 import { handleError } from '../../common/utils/api';
+import { telephoneMask } from '../../common/utils/telephone-mask';
 
 const Favorites = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -55,7 +56,7 @@ const Favorites = () => {
                   </div>
                   <div className="m-t-10">
                     <strong>Telefone: </strong>
-                    {item.company.telephone || 'Não informado'}
+                    {telephoneMask(item.company.telephone) || 'Não informado'}
                   </div>
                 </div>
               </div>

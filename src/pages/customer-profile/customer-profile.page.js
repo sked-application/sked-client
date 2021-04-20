@@ -114,7 +114,9 @@ const Profile = () => {
                 </div>
                 <div className="m-t-10">
                   <strong>Meu telefone: </strong>
-                  <span>{profile.telephone || 'Não informado'}</span>
+                  <span>
+                    {telephoneMask(profile.telephone) || 'Não informado'}
+                  </span>
                 </div>
               </div>
             </div>

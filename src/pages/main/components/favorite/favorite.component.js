@@ -21,10 +21,6 @@ const Favorite = () => {
 
   const handleFavorite = async (favorite) => {
     try {
-      if (!isAuthenticated) {
-        return false;
-      }
-
       setIsFavorited(favorite);
 
       if (favorite) {
