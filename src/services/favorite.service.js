@@ -1,7 +1,11 @@
 import api from '../api';
 
-const favorite = (data) => {
+const create = (data) => {
   return api.post('v1/favorites', data);
+};
+
+const remove = ({ companyId }) => {
+  return api.delete(`v1/favorites/${companyId}`);
 };
 
 const find = ({ companyId }) => {
@@ -13,7 +17,8 @@ const findAll = () => {
 };
 
 export default {
-  favorite,
+  create,
+  remove,
   findAll,
   find,
 };

@@ -19,15 +19,22 @@ const Favorite = () => {
   const [isFavorited, setIsFavorited] = useState(false);
   const [isPending, setIsPending] = useState(true);
 
-  const handleFavorite = async () => {
+  const handleFavorite = async (favorite) => {
     try {
       if (!isAuthenticated) {
         return false;
       }
 
-      setIsFavorited(!isFavorited);
-      await FavoriteService.favorite({
-        isFavorited: !isFavorited,
+      setIsFavorited(favorite);
+
+      if (favorite) {
+        await FavoriteService.create({
+          companyId: accountInfo.id,
+        });
+        return;
+      }
+
+      await FavoriteService.remove({
         companyId: accountInfo.id,
       });
     } catch (error) {
@@ -67,7 +74,7 @@ const Favorite = () => {
           {!isPending && (
             <button
               className="button button--block button--outline m-b-16"
-              onClick={handleFavorite}
+              onClick={() => handleFavorite(!isFavorited)}
               disabled={!isAuthenticated}
             >
               <Fragment>
