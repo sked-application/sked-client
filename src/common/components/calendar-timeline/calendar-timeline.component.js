@@ -14,6 +14,7 @@ import {
   AiOutlineUser,
 } from 'react-icons/ai';
 import { getDayLabelByDate, getMonthLabelByDate } from '../../utils/date';
+import { telephoneMask } from '../../utils/telephone-mask';
 import './calendar-timeline.component.scss';
 
 const generateCalendarDates = (startDate, endDate) => {
@@ -187,7 +188,7 @@ const CalendarTimeline = ({
                             <AiOutlineMobile />
                           </span>
                           <a href={`tel:+55${schedule.customer.telephone}`}>
-                            {schedule.customer.telephone}
+                            {telephoneMask(schedule.customer.telephone)}
                           </a>
                         </div>
                       )}

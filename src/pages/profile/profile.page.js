@@ -128,7 +128,9 @@ const Profile = () => {
                 </div>
                 <div className="m-t-10">
                   <strong>Meu telefone: </strong>
-                  <span>{profile.telephone || 'Não informado'}</span>
+                  <span>
+                    {telephoneMask(profile.telephone) || 'Não informado'}
+                  </span>
                 </div>
                 <div className="m-t-10">
                   <strong>Administrador: </strong>
@@ -150,7 +152,10 @@ const Profile = () => {
                 </div>
                 <div className="m-t-10">
                   <strong>Telefone: </strong>
-                  <span>{profile.company.telephone || 'Não informado'}</span>
+                  <span>
+                    {telephoneMask(profile.company.telephone) ||
+                      'Não informado'}
+                  </span>
                 </div>
                 <div className="m-t-10">
                   <strong>Endereço: </strong>

@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
+import { telephoneMask } from '../../../../common/utils/telephone-mask';
 import './company-contact.component.scss';
 
 const CompanyContact = memo(({ accountInfo }) => {
@@ -7,9 +8,9 @@ const CompanyContact = memo(({ accountInfo }) => {
     <div className="contact-footer">
       {accountInfo.telephone && (
         <p>
-          Telefone:{' '}
+          <span>Telefone: </span>
           <a href={`tel:+55${accountInfo.telephone}`}>
-            {accountInfo.telephone}
+            {telephoneMask(accountInfo.telephone)}
           </a>
         </p>
       )}
