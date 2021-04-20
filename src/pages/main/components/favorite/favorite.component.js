@@ -5,13 +5,13 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import FavoriteService from '../../../../services/favorite.service';
 import { AiFillStar } from 'react-icons/ai';
+import FavoriteService from '../../../../services/favorite.service';
 import { handleError } from '../../../../common/utils/api';
 import { MainContext } from '../../contexts/main';
+import { AuthContext } from '../../../../common/contexts/auth';
 
 import './favorite.component.scss';
-import { AuthContext } from '../../../../common/contexts/auth';
 
 const Favorite = () => {
   const { accountInfo } = useContext(MainContext);
@@ -71,7 +71,7 @@ const Favorite = () => {
               disabled={!isAuthenticated}
             >
               <Fragment>
-                <AiFillStar className="favorite__start" />
+                <AiFillStar className="favorite__star" />
                 {isFavorited ? 'Favoritado' : 'Adicionar aos favoritos'}
               </Fragment>
             </button>
