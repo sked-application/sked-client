@@ -11,6 +11,10 @@ import { Modal } from '../../common/components/modal';
 import { handleError } from '../../common/utils/api';
 import { telephoneMask } from '../../common/utils/telephone-mask';
 import { replaceSpecialCharacters } from '../../common/utils/validator';
+import {
+  companyPlanLabels,
+  getLeftTrialDays,
+} from '../../common/utils/company';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -139,7 +143,7 @@ const Profile = () => {
               </div>
 
               <div className="card__header">
-                <h2 className="card__title">Dados da conta</h2>
+                <h2 className="card__title">Dados do estabelecimento</h2>
               </div>
               <div className="flexbox flexbox--column m-b-30">
                 <div className="m-t-10">
@@ -161,6 +165,14 @@ const Profile = () => {
                   <strong>Endereço: </strong>
                   <span>{profile.company.address || 'Não informado'}</span>
                 </div>
+                <div className="m-t-10">
+                  <strong>Plano: </strong>
+                  <span>
+                    {companyPlanLabels(profile.company.plan)} -{' '}
+                    {getLeftTrialDays(profile.company.createdAt)} dia(s)
+                    restante(s)
+                  </span>
+                </div>
               </div>
             </div>
           )}
@@ -176,10 +188,47 @@ const Profile = () => {
           onSubmit={handleSubmit(profileForm)}
           className="flexbox flexbox--column"
         >
+          <div className="m-b-16">
+            <strong>Meus dados</strong>
+          </div>
+          <div className="flexbox__item m-b-16">
+            <div className="m-b-5">
+              <label htmlFor="userName">Nome</label>
+            </div>
+            <input
+              id="userName"
+              name="userName"
+              type="text"
+              ref={register}
+              className="input input--dark"
+            />
+            <InputFormError
+              touched={touched.userName}
+              error={errors.userName}
+            />
+          </div>
+          <div className="flexbox__item m-b-16">
+            <div className="m-b-5">
+              <label htmlFor="userTelephone">Telefone</label>
+            </div>
+            <InputTelephone
+              id="userTelephone"
+              name="userTelephone"
+              className="input input--dark"
+              ref={register}
+              onChange={(event) =>
+                setValue('userTelephone', telephoneMask(event.target.value))
+              }
+            />
+            <InputFormError
+              touched={touched.userTelephone}
+              error={errors.userTelephone}
+            />
+          </div>
           {profile && profile.role === 'ADMIN' && (
             <Fragment>
               <div className="m-b-16">
-                <strong>Informações do estabelecimento</strong>
+                <strong>Dados do estabelecimento</strong>
               </div>
               <div className="flexbox__item m-b-16">
                 <div className="m-b-5">
@@ -218,7 +267,7 @@ const Profile = () => {
                   error={errors.companyTelephone}
                 />
               </div>
-              <div className="flexbox__item m-t-16 m-b-16">
+              <div className="flexbox__item m-b-16">
                 <div className="m-b-5">
                   <label htmlFor="companyAddress">Endereço</label>
                 </div>
@@ -237,43 +286,6 @@ const Profile = () => {
             </Fragment>
           )}
 
-          <div className="m-b-16">
-            <strong>Informações do usuário</strong>
-          </div>
-          <div className="flexbox__item m-b-16">
-            <div className="m-b-5">
-              <label htmlFor="userName">Nome</label>
-            </div>
-            <input
-              id="userName"
-              name="userName"
-              type="text"
-              ref={register}
-              className="input input--dark"
-            />
-            <InputFormError
-              touched={touched.userName}
-              error={errors.userName}
-            />
-          </div>
-          <div className="flexbox__item m-b-16">
-            <div className="m-b-5">
-              <label htmlFor="userTelephone">Telefone</label>
-            </div>
-            <InputTelephone
-              id="userTelephone"
-              name="userTelephone"
-              className="input input--dark"
-              ref={register}
-              onChange={(event) =>
-                setValue('userTelephone', telephoneMask(event.target.value))
-              }
-            />
-            <InputFormError
-              touched={touched.userTelephone}
-              error={errors.userTelephone}
-            />
-          </div>
           <div className="flexbox__item">
             <button
               type="submit"
