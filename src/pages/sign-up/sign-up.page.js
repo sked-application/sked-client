@@ -10,10 +10,9 @@ import InputFormError from '../../common/components/input-form-error';
 import { AuthContext } from '../../common/contexts/auth';
 import { replaceSpecialCharacters } from '../../common/utils/validator';
 import { handleError } from '../../common/utils/api';
-
-import './sign-up.page.scss';
 import InputTelephone from '../../common/components/input-telephone';
 import { telephoneMask } from '../../common/utils/telephone-mask';
+import './sign-up.page.scss';
 
 const SignUp = () => {
   const history = useHistory();
@@ -36,6 +35,7 @@ const SignUp = () => {
       const {
         companyName,
         companyUrl,
+        companyPlan,
         companyTelephone,
         userName,
         userEmail,
@@ -46,6 +46,7 @@ const SignUp = () => {
         company: {
           name: companyName,
           url: companyUrl,
+          plan: companyPlan,
           telephone: replaceSpecialCharacters(companyTelephone) || null,
         },
         user: {
@@ -89,7 +90,7 @@ const SignUp = () => {
         <div className="sign-up__field">
           <div className="grouped-button">
             <label htmlFor="account-url" className="grouped-button__label">
-              skedapp.com.br/
+              agenda.skedapp.com.br/
             </label>
             <input
               name="companyUrl"
@@ -139,6 +140,23 @@ const SignUp = () => {
           <InputFormError
             touched={touched.companyTelephone}
             error={errors.companyTelephone}
+          />
+        </div>
+        <div className="sign-up__field">
+          <select
+            name="companyPlan"
+            ref={register}
+            disabled={isLoading}
+            className="input"
+          >
+            <option value="">Escolha seu plano</option>
+            <option value="TRIAL">Avaliação gratuíta (30 dias)</option>
+            <option value="DEFAULT">Padrão (R$ 19,90)</option>
+            <option value="CUSTOM">Personalizado (R$ 49,90)</option>
+          </select>
+          <InputFormError
+            touched={touched.companyPlan}
+            error={errors.companyPlan}
           />
         </div>
         <div className="sign-up__title">

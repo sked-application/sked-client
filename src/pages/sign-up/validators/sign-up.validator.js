@@ -5,6 +5,7 @@ export default {
   form: {
     initialValues: {
       companyUrl: '',
+      companyPlan: '',
       companyName: '',
       companyTelephone: '',
       userName: '',
@@ -15,6 +16,7 @@ export default {
     validator: Yup.object({
       companyUrl: Yup.string().required('Este campo é obrigatório'),
       companyName: Yup.string().required('Este campo é obrigatório'),
+      companyPlan: Yup.string().required('Este campo é obrigatório'),
       companyTelephone: Yup.string().test(
         'company-telephone',
         'Por favor, verifique o número de telefone.',
