@@ -42,7 +42,7 @@ const Favorite = () => {
   const getFavorite = useCallback(
     async (companyId) => {
       try {
-        if (!isAuthenticated) {
+        if (!isAuthenticated || !companyId) {
           setIsPending(false);
           return false;
         }
