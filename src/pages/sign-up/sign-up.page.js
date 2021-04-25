@@ -90,7 +90,7 @@ const SignUp = () => {
         <div className="sign-up__field">
           <div className="grouped-button">
             <label htmlFor="account-url" className="grouped-button__label">
-              skedapp.com.br/
+              agenda.skedapp.com.br/
             </label>
             <input
               name="companyUrl"
