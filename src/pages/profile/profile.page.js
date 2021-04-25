@@ -168,9 +168,14 @@ const Profile = () => {
                 <div className="m-t-10">
                   <strong>Plano: </strong>
                   <span>
-                    {companyPlanLabels(profile.company.plan)} -{' '}
-                    {getLeftTrialDays(profile.company.createdAt)} dia(s)
-                    restante(s)
+                    {companyPlanLabels(profile.company.plan)}
+                    {profile.company.plan === 'TRIAL' && (
+                      <span>
+                        {` - ${getLeftTrialDays(
+                          profile.company.createdAt,
+                        )} dia(s) restante(s)`}
+                      </span>
+                    )}
                   </span>
                 </div>
               </div>
