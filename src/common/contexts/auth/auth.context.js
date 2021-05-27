@@ -9,27 +9,15 @@ export const AuthProvider = ({ children }) => {
   const history = useHistory();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
-  const [userAccountUrl, setUserAccountUrl] = useState();
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
-      setIsAuthenticated(true);
-      setUserAccountUrl(JSON.parse(localStorage.getItem('userAccountUrl')));
-    }
-
-    setIsAuthLoading(false);
-  }, []);
+  const [userCompany, setUserCompany] = useState();
 
   const handleSignIn = (token, company) => {
     localStorage.setItem('token', JSON.stringify(token));
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
     if (company) {
-      setUserAccountUrl(company.url);
-      localStorage.setItem('userAccountUrl', JSON.stringify(company.url));
+      setUserCompany(company);
+      localStorage.setItem('userCompany', JSON.stringify(company));
     }
 
     setIsAuthenticated(true);
@@ -38,21 +26,33 @@ export const AuthProvider = ({ children }) => {
   const handleSignOut = (withoutRedirect) => {
     api.defaults.headers.Authorization = undefined;
     localStorage.removeItem('token');
-    localStorage.removeItem('userAccountUrl');
+    localStorage.removeItem('userCompany');
     setIsAuthenticated(false);
-    setUserAccountUrl();
+    setUserCompany();
 
     if (!withoutRedirect) {
       history.push('/sign-in');
     }
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
+      setIsAuthenticated(true);
+      setUserCompany(JSON.parse(localStorage.getItem('userCompany')));
+    }
+
+    setIsAuthLoading(false);
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
         isAuthLoading,
-        userAccountUrl,
+        userCompany,
         handleSignIn,
         handleSignOut,
       }}

@@ -17,7 +17,7 @@ const ResetPassword = () => {
   const { token } = useParams();
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { isAuthenticated, userAccountUrl } = useContext(AuthContext);
+  const { isAuthenticated, userCompany } = useContext(AuthContext);
 
   const { register, handleSubmit, reset, formState, errors } = useForm({
     resolver: yupResolver(schema.form.validator),
@@ -54,7 +54,7 @@ const ResetPassword = () => {
   };
 
   if (isAuthenticated) {
-    const redirectUrl = userAccountUrl ? '/schedules' : '/customer-schedules';
+    const redirectUrl = userCompany ? '/schedules' : '/customer-schedules';
 
     return <Redirect to={redirectUrl} />;
   }

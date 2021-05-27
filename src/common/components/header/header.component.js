@@ -7,7 +7,7 @@ import { AuthContext } from '../../contexts/auth';
 import './header.component.scss';
 
 const Header = ({ currentPathname }) => {
-  const { isAuthenticated, handleSignOut, userAccountUrl } = useContext(
+  const { isAuthenticated, handleSignOut, userCompany } = useContext(
     AuthContext,
   );
   const [isOpen, setIsOpen] = useState(false);
@@ -73,14 +73,14 @@ const Header = ({ currentPathname }) => {
             className={`header__menu ${isOpen ? 'header__menu--active' : ''}`}
           >
             <ul className="header__list">
-              {userAccountUrl && (
+              {userCompany && (
                 <Fragment>
                   <li>
                     <strong>Agenda</strong>
                     <ul className="m-t-10">
                       <li>
                         <Link
-                          to={`/${userAccountUrl}`}
+                          to={`/${userCompany.url}`}
                           onClick={() => setIsOpen(false)}
                         >
                           Minha página
@@ -101,6 +101,16 @@ const Header = ({ currentPathname }) => {
                           Serviços
                         </Link>
                       </li>
+                      {userCompany.plan === 'CUSTOM' && (
+                        <li>
+                          <Link
+                            to="/professionals"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            Profissionais
+                          </Link>
+                        </li>
+                      )}
                       <li>
                         <Link to="/settings" onClick={() => setIsOpen(false)}>
                           Grade de horários
@@ -124,7 +134,7 @@ const Header = ({ currentPathname }) => {
                 </Fragment>
               )}
 
-              {!userAccountUrl && (
+              {!userCompany && (
                 <Fragment>
                   <li>
                     <Link to="/favorites" onClick={() => setIsOpen(false)}>

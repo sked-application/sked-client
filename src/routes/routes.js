@@ -12,9 +12,11 @@ import ResetPassword from '../pages/reset-password';
 import CustomerSignIn from '../pages/customer-sign-in';
 import CustomerProfile from '../pages/customer-profile';
 import RecoverPassword from '../pages/recover-password';
+import Professionals from '../pages/professionals';
 import Favorites from '../pages/favorites';
 import CustomerSchedules from '../pages/customer-schedule';
 import UserPrivateRoute from './private/user.route';
+import UserPrivatePlanRoute from './private/user-plan.route';
 import CustomerPrivateRoute from './private/customer.route';
 
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -26,6 +28,12 @@ const AppRoutes = () => {
       <UserPrivateRoute exact path="/services" component={Services} />
       <UserPrivateRoute exact path="/settings" component={Timegrid} />
       <UserPrivateRoute exact path="/profile" component={Profile} />
+      <UserPrivatePlanRoute
+        exact
+        path="/professionals"
+        component={Professionals}
+        plan="CUSTOM"
+      />
       <UserPrivateRoute
         exact
         path="/schedule-locks"

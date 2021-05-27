@@ -20,7 +20,7 @@ const ScheduleForm = () => {
     resetMainService,
   } = useContext(MainContext);
 
-  const { isAuthenticated, userAccountUrl, handleSignOut } = useContext(
+  const { isAuthenticated, userCompany, handleSignOut } = useContext(
     AuthContext,
   );
 
@@ -111,7 +111,7 @@ const ScheduleForm = () => {
         </div>
       )}
 
-      {isAuthenticated && !userAccountUrl && (
+      {isAuthenticated && !userCompany && (
         <div className="flexbox m-t-5">
           <div className="flexbox__item">
             <button
@@ -124,7 +124,7 @@ const ScheduleForm = () => {
         </div>
       )}
 
-      {isAuthenticated && userAccountUrl && (
+      {isAuthenticated && userCompany && (
         <div className="flexbox m-t-5">
           <div className="flexbox__item">
             <button
