@@ -7,6 +7,7 @@ import AuthService from '../../../../services/auth.service';
 import InputFormError from '../../../../common/components/input-form-error';
 import { handleError } from '../../../../common/utils/api';
 import { AuthContext } from '../../../../common/contexts/auth';
+import { Link } from 'react-router-dom';
 
 const CustomerSignInForm = ({ setIsLoading, setFormType }) => {
   const { handleSignIn } = useContext(AuthContext);
@@ -61,6 +62,9 @@ const CustomerSignInForm = ({ setIsLoading, setFormType }) => {
           autoComplete="off"
         />
         <InputFormError touched={touched.password} error={errors.password} />
+      </div>
+      <div className="m-t-16 sign-in__forgot-password">
+        <Link to="/recover-password">Esqueceu a senha?</Link>
       </div>
       <div className="m-t-16">
         <button
