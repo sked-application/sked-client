@@ -15,6 +15,17 @@ const updateProfile = ({ user, company }) => {
   });
 };
 
+const confirmInvitation = ({ password, confirmPassword, token }) => {
+  return api.post(
+    'v1/users/confirm-invitation',
+    {
+      password,
+      confirmPassword,
+    },
+    { params: { token } },
+  );
+};
+
 const findAllByCompanyId = ({ companyId }) => {
   return api.get(`v1/users/${companyId}/grouped`);
 };
@@ -29,4 +40,5 @@ export default {
   findAllByCompanyId,
   findAllBy,
   create,
+  confirmInvitation,
 };

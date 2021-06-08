@@ -12,6 +12,7 @@ import ResetPassword from '../pages/reset-password';
 import CustomerSignIn from '../pages/customer-sign-in';
 import CustomerProfile from '../pages/customer-profile';
 import RecoverPassword from '../pages/recover-password';
+import ProfessionalInvitation from '../pages/professional-invitation';
 import Professionals from '../pages/professionals';
 import Favorites from '../pages/favorites';
 import CustomerSchedules from '../pages/customer-schedule';
@@ -60,9 +61,14 @@ const AppRoutes = () => {
         component={RecoverPassword}
       />
       <Route exact path="/reset-password/:token" component={ResetPassword} />
+      <Route
+        exact
+        path="/professional-invitation/:token"
+        component={ProfessionalInvitation}
+      />
       <Route exact path="/not-found" component={NotFound} />
       <Route exact path="/:company" component={Main} />
-      <Redirect to="not-found" />
+      <Redirect to="/not-found" />
     </Switch>
   );
 };
