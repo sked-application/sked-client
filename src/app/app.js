@@ -17,7 +17,7 @@ const AppContexted = () => {
   }, [location.pathname]);
 
   return (
-    <>
+    <Fragment>
       {isAuthLoading ? (
         <div className="loading m-t-30"></div>
       ) : (
@@ -27,7 +27,7 @@ const AppContexted = () => {
           <Copyright />
         </Fragment>
       )}
-    </>
+    </Fragment>
   );
 };
 

@@ -8,7 +8,7 @@ export default {
     },
     validator: Yup.object({
       email: Yup.string()
-        .email('Insira um e-mail válido')
+        .email('Insira um email válido')
         .required('Este campo é obrigatório'),
       password: Yup.string().required('Este campo é obrigatório'),
     }),

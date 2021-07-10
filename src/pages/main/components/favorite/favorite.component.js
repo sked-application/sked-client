@@ -15,7 +15,7 @@ import './favorite.component.scss';
 
 const Favorite = () => {
   const { accountInfo } = useContext(MainContext);
-  const { isAuthenticated, userAccountUrl } = useContext(AuthContext);
+  const { isAuthenticated, userCompany } = useContext(AuthContext);
   const [isFavorited, setIsFavorited] = useState(false);
   const [isPending, setIsPending] = useState(true);
 
@@ -65,7 +65,7 @@ const Favorite = () => {
 
   return (
     <Fragment>
-      {!userAccountUrl && (
+      {!userCompany && (
         <div className={`favorite ${isFavorited ? 'favorite__active' : ''}`}>
           {!isPending && (
             <button

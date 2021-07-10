@@ -15,7 +15,7 @@ import './customer-sign-in.page.scss';
 const CustomerSignIn = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { isAuthenticated, handleSignIn, userAccountUrl } = useContext(
+  const { isAuthenticated, handleSignIn, userCompany } = useContext(
     AuthContext,
   );
 
@@ -45,7 +45,7 @@ const CustomerSignIn = () => {
   };
 
   if (isAuthenticated) {
-    const redirectUrl = userAccountUrl ? '/schedules' : '/customer-schedules';
+    const redirectUrl = userCompany ? '/schedules' : '/customer-schedules';
 
     return <Redirect to={redirectUrl} />;
   }

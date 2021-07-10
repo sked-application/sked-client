@@ -1,23 +1,20 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlineLock } from 'react-icons/ai';
 import { yupResolver } from '@hookform/resolvers/yup';
-import schema from './validators/reset-password.validator';
-import AuthService from '../../services/auth.service';
+import { Link, useParams, useHistory } from 'react-router-dom';
+import schema from './validators/professional-invitation.validator';
+import UserService from '../../services/user.service';
 import PageHeader from '../../common/components/page-header';
 import InputFormError from '../../common/components/input-form-error';
-import { AuthContext } from '../../common/contexts/auth';
 import { handleError } from '../../common/utils/api';
-import { Link, Redirect, useParams, useHistory } from 'react-router-dom';
+import './professional-invitation.page.scss';
 
-import './reset-password.page.scss';
-
-const ResetPassword = () => {
+const ProfessionalInvitation = () => {
   const history = useHistory();
   const { token } = useParams();
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { isAuthenticated, userCompany } = useContext(AuthContext);
 
   const { register, handleSubmit, reset, formState, errors } = useForm({
     resolver: yupResolver(schema.form.validator),
@@ -27,12 +24,12 @@ const ResetPassword = () => {
 
   const { touched, isValid, isDirty } = formState;
 
-  const resetPasswordForm = async (values) => {
+  const confirmInvatationForm = async (values) => {
     try {
       setIsLoading(true);
 
       const { password, confirmPassword } = values;
-      const { data } = await AuthService.resetPassword({
+      await UserService.confirmInvitation({
         password,
         confirmPassword,
         token,
@@ -41,11 +38,6 @@ const ResetPassword = () => {
       reset();
       setIsLoading(false);
 
-      if (data?.role === 'CUSTOMER') {
-        history.push('/customer-sign-in');
-        return;
-      }
-
       history.push('/sign-in');
     } catch (error) {
       setError(handleError(error));
@@ -53,38 +45,32 @@ const ResetPassword = () => {
     }
   };
 
-  if (isAuthenticated) {
-    const redirectUrl = userCompany ? '/schedules' : '/customer-schedules';
-
-    return <Redirect to={redirectUrl} />;
-  }
-
   return (
     <div className="container">
-      <PageHeader title="Informe a nova senha" />
+      <PageHeader title="Confirme o convite" />
       {isLoading && <span className="loading"></span>}
-      {error && <div className="reset-password__error">{error}</div>}
+      {error && <div className="professional-invitation__error">{error}</div>}
       <form
-        onSubmit={handleSubmit(resetPasswordForm)}
-        className="reset-password__form card card--outline"
+        onSubmit={handleSubmit(confirmInvatationForm)}
+        className="professional-invitation__form card card--outline"
       >
         <div className="card__header">
           <h2 className="card__title">
-            <AiOutlineLock /> Resetar
+            <AiOutlineLock /> Confirmar
           </h2>
         </div>
-        <div className="reset-password__field">
+        <div className="professional-invitation__field">
           <input
             name="password"
             type="password"
             ref={register}
-            placeholder="Nova senha"
+            placeholder="Senha"
             disabled={isLoading}
             className="input"
           />
           <InputFormError touched={touched.password} error={errors.password} />
         </div>
-        <div className="reset-password__field">
+        <div className="professional-invitation__field">
           <input
             name="confirmPassword"
             type="password"
@@ -103,15 +89,15 @@ const ResetPassword = () => {
             disabled={!isValid || !isDirty || isLoading}
             className="button button--block button--purple"
           >
-            Resetar
+            Confirmar
           </button>
         </div>
       </form>
-      <div className="reset-password__redirect">
+      <div className="professional-invitation__redirect">
         <Link to="/sign-in">Entrar</Link>
       </div>
     </div>
   );
 };
 
-export default ResetPassword;
+export default ProfessionalInvitation;

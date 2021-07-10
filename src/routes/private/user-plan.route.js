@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from '../../common/contexts/auth';
 
-const UserPrivateRoute = ({ component: Component, ...rest }) => {
+const UserPrivatePlanRoute = ({ component: Component, plan, ...rest }) => {
   const { isAuthenticated, userCompany } = useContext(AuthContext);
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated && userCompany ? (
+        isAuthenticated && userCompany && userCompany.plan === plan ? (
           <Component {...props} />
         ) : (
           <Redirect to="/sign-in" />
@@ -21,8 +21,9 @@ const UserPrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-UserPrivateRoute.propTypes = {
+UserPrivatePlanRoute.propTypes = {
   component: PropTypes.elementType.isRequired,
+  plan: PropTypes.string.isRequired,
 };
 
-export default UserPrivateRoute;
+export default UserPrivatePlanRoute;

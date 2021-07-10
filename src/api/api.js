@@ -11,12 +11,12 @@ const handleError = (error) => {
 
   if (response && response.data && response.data.message === 'Unauthorized') {
     const isProfessionalUser = !!JSON.parse(
-      localStorage.getItem('userAccountUrl'),
+      localStorage.getItem('userCompany'),
     );
     const href = isProfessionalUser ? '/sign-in' : '/customer-sign-in';
 
     localStorage.removeItem('token');
-    localStorage.removeItem('userAccountUrl');
+    localStorage.removeItem('userCompany');
     window.location.href = href;
 
     return Promise.reject({

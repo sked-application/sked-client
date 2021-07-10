@@ -5,13 +5,13 @@ import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from '../../common/contexts/auth';
 
 const CustomerPrivateRoute = ({ component: Component, ...rest }) => {
-  const { isAuthenticated, userAccountUrl } = useContext(AuthContext);
+  const { isAuthenticated, userCompany } = useContext(AuthContext);
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        userAccountUrl ? (
+        userCompany ? (
           <Redirect to="/schedules" />
         ) : isAuthenticated ? (
           <Component {...props} />

@@ -18,7 +18,7 @@ const SignUp = () => {
   const history = useHistory();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { isAuthenticated, userAccountUrl } = useContext(AuthContext);
+  const { isAuthenticated, userCompany } = useContext(AuthContext);
 
   const { errors, formState, setValue, register, handleSubmit } = useForm({
     resolver: yupResolver(schema.form.validator),
@@ -64,7 +64,7 @@ const SignUp = () => {
   };
 
   if (isAuthenticated) {
-    const redirectUrl = userAccountUrl ? '/schedules' : '/customer-schedules';
+    const redirectUrl = userCompany ? '/schedules' : '/customer-schedules';
 
     return <Redirect to={redirectUrl} />;
   }
