@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import api from '../../../api';
+import userService from '../../../services/user.service';
 
 export const AuthContext = createContext();
 
@@ -11,40 +12,48 @@ export const AuthProvider = ({ children }) => {
   const [isAuthLoading, setIsAuthLoading] = useState(true);
   const [userCompany, setUserCompany] = useState();
 
-  const handleSignIn = (token, company) => {
-    localStorage.setItem('token', JSON.stringify(token));
-    api.defaults.headers.Authorization = `Bearer ${token}`;
-
-    if (company) {
-      setUserCompany(company);
-      localStorage.setItem('userCompany', JSON.stringify(company));
-    }
-
-    setIsAuthenticated(true);
+  const handleSignIn = async (token) => {
+    setAuthData(token);
   };
 
-  const handleSignOut = (withoutRedirect) => {
-    api.defaults.headers.Authorization = undefined;
-    localStorage.removeItem('token');
-    localStorage.removeItem('userCompany');
-    setIsAuthenticated(false);
-    setUserCompany();
+  const handleSignOut = async (withoutRedirect) => {
+    await removeAuthData();
 
     if (!withoutRedirect) {
       history.push('/sign-in');
     }
   };
 
+  const setAuthData = async (token) => {
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+
+    const { data } = await userService.profile();
+
+    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem('userCompany', JSON.stringify(data.company));
+
+    setUserCompany(data.company);
+    setIsAuthenticated(true);
+    setIsAuthLoading(false);
+  };
+
+  const removeAuthData = async () => {
+    api.defaults.headers.Authorization = undefined;
+    localStorage.removeItem('token');
+    localStorage.removeItem('userCompany');
+    setIsAuthenticated(false);
+    setUserCompany();
+    setIsAuthLoading(false);
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('token');
 
     if (token) {
-      api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
-      setIsAuthenticated(true);
-      setUserCompany(JSON.parse(localStorage.getItem('userCompany')));
+      setAuthData(JSON.parse(token));
+    } else {
+      removeAuthData();
     }
-
-    setIsAuthLoading(false);
   }, []);
 
   return (
