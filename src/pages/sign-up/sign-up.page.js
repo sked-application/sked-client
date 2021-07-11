@@ -151,8 +151,8 @@ const SignUp = () => {
           >
             <option value="">Escolha seu plano</option>
             <option value="TRIAL">Avaliação gratuíta (30 dias)</option>
-            <option value="DEFAULT">Padrão (R$ 19,90)</option>
-            <option value="CUSTOM">Personalizado (R$ 49,90)</option>
+            <option value="DEFAULT">Padrão (R$ 14,90)</option>
+            <option value="CUSTOM">Personalizado (R$ 39,90)</option>
           </select>
           <InputFormError
             touched={touched.companyPlan}

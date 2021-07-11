@@ -3,8 +3,8 @@ import differenceInDays from 'date-fns/differenceInDays';
 export const companyPlanLabels = (plan) => {
   const planLabels = {
     TRIAL: 'Avaliação gratuita',
-    DEFAULT: 'Padrão (R$ 19,90)',
-    CUSTOM: 'Personalizado (R$ 49,90)',
+    DEFAULT: 'Padrão (R$ 14,90)',
+    CUSTOM: 'Personalizado (R$ 39,90)',
   };
 
   return planLabels[plan];
