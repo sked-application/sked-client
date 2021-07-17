@@ -4,6 +4,7 @@ import UserService from '../../services/user.service';
 import PageHeader from '../../common/components/page-header';
 import InputFormError from '../../common/components/input-form-error';
 import InputTelephone from '../../common/components/input-telephone';
+import ImageUpload from '../../common/components/image-upload';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -234,6 +235,12 @@ const Profile = () => {
             <Fragment>
               <div className="m-b-16">
                 <strong>Dados do estabelecimento</strong>
+              </div>
+              <div className="flexbox__item m-b-16">
+                <div className="m-b-5">
+                  <label htmlFor="companyName">Imagem do estabelecimento</label>
+                </div>
+                <ImageUpload />
               </div>
               <div className="flexbox__item m-b-16">
                 <div className="m-b-5">
