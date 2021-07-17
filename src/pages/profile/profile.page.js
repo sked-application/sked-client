@@ -4,6 +4,7 @@ import UserService from '../../services/user.service';
 import PageHeader from '../../common/components/page-header';
 import InputFormError from '../../common/components/input-form-error';
 import InputTelephone from '../../common/components/input-telephone';
+import CompanyThumb from '../../common/components/company-thumb';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -15,11 +16,14 @@ import {
   companyPlanLabels,
   getLeftTrialDays,
 } from '../../common/utils/company';
+import { firebaseApp } from '../../services/firebase.service';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [thumbnailIsLoading, setThumbnailIsLoading] = useState(false);
   const [profile, setProfile] = useState();
   const [toggleShow, setToggleShow] = useState(false);
+  const [thumbPreview, setThumbPreview] = useState();
 
   const {
     errors,
@@ -48,6 +52,8 @@ const Profile = () => {
       setValue('companyName', data.company.name);
       setValue('companyTelephone', telephoneMask(data.company.telephone));
       setValue('companyAddress', data.company.address);
+      setValue('companyThumbnail', data.company.thumbnail);
+      setThumbPreview(data.company.thumbnail);
     }
 
     setToggleShow(true);
@@ -61,6 +67,7 @@ const Profile = () => {
         companyName,
         companyTelephone,
         companyAddress,
+        companyThumbnail,
       } = values;
 
       await UserService.updateProfile({
@@ -72,6 +79,7 @@ const Profile = () => {
           name: companyName,
           telephone: replaceSpecialCharacters(companyTelephone) || null,
           address: companyAddress || null,
+          thumbnail: companyThumbnail || null,
         },
       });
 
@@ -96,6 +104,23 @@ const Profile = () => {
     }
   }, []);
 
+  const onChangeFile = async (event) => {
+    setThumbnailIsLoading(true);
+
+    const file = event.target.files[0];
+    const storageRef = firebaseApp.storage().ref('thumbnails');
+    const fileRef = storageRef.child(`${profile.id}-${file.name}`);
+    await fileRef.put(file);
+    const thumbnailUrl = await fileRef.getDownloadURL();
+
+    setValue('companyThumbnail', thumbnailUrl, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+    setThumbPreview(thumbnailUrl);
+    setThumbnailIsLoading(false);
+  };
+
   useEffect(() => {
     getProfile();
   }, [getProfile]);
@@ -118,7 +143,7 @@ const Profile = () => {
                   onClick={() => handleOpenModal(profile)}
                   className="card__subtitle color--purple cursor--pointer"
                 >
-                  Gerenciar
+                  Editar
                 </strong>
               </div>
               <div className="flexbox flexbox--column m-b-30">
@@ -288,16 +313,47 @@ const Profile = () => {
                   error={errors.companyAddress}
                 />
               </div>
+              <div className="flexbox__item m-b-16">
+                <div className="m-b-5">
+                  <label htmlFor="uploadFile">Foto/logo</label>
+                </div>
+                {thumbPreview ? (
+                  <Fragment>
+                    <div className="flexbox">
+                      <CompanyThumb src={thumbPreview} />
+                      <button
+                        onClick={() => setThumbPreview()}
+                        className="button button--small button--outline m-t-5 m-l-5"
+                      >
+                        Remover
+                      </button>
+                    </div>
+                  </Fragment>
+                ) : (
+                  <input
+                    id="uploadFile"
+                    type="file"
+                    accept=".jpg, .jpeg, .png"
+                    onChange={onChangeFile}
+                  />
+                )}
+                <input
+                  id="companyThumbnail"
+                  name="companyThumbnail"
+                  type="hidden"
+                  ref={register}
+                />
+                {thumbnailIsLoading && <div className="loading"></div>}
+              </div>
             </Fragment>
           )}
-
           <div className="flexbox__item">
             <button
               type="submit"
-              disabled={!isValid || !isDirty}
+              disabled={!isValid || !isDirty || thumbnailIsLoading}
               className="button button--block button--purple"
             >
-              Editar
+              Atualizar
             </button>
           </div>
         </form>

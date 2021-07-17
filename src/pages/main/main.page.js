@@ -9,6 +9,7 @@ import ScheduleForm from './components/schedule-form';
 import PageHeader from '../../common/components/page-header';
 import CompanyContact from './components/company-contact';
 import Favorite from './components/favorite';
+import CompanyThumb from '../../common/components/company-thumb';
 import './main.page.scss';
 
 const MainContexted = () => {
@@ -22,6 +23,9 @@ const MainContexted = () => {
 
   return (
     <div className="container">
+      <div className="main-company__thumbnail">
+        <CompanyThumb src={accountInfo.thumbnail} />
+      </div>
       <PageHeader
         title={accountInfo.name}
         description="Realize seu agendamento abaixo."
