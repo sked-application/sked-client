@@ -9,6 +9,7 @@ export default {
       companyName: '',
       companyTelephone: '',
       companyAddress: '',
+      companyThumbnail: '',
     },
     validator: Yup.object({
       userName: Yup.string().required('Este campo é obrigatório'),
@@ -36,6 +37,7 @@ export default {
         },
       ),
       companyAddress: Yup.string(),
+      companyThumbnail: Yup.string(),
     }),
   },
 };
