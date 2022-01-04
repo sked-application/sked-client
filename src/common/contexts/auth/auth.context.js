@@ -8,6 +8,8 @@ const initialState = {
   isAuthenticated: false,
   isAuthLoading: true,
   userCompany: null,
+  isProfessional: null,
+  isCustomer: null,
 };
 
 const actions = {
@@ -23,6 +25,8 @@ const reducer = (state, action) => {
         isAuthenticated: true,
         isAuthLoading: false,
         userCompany: action.value,
+        isProfessional: action.value ? true : false,
+        isCustomer: action.value ? false : true,
       };
     case actions.REMOVE_AUTH_DATA:
       return {
@@ -30,6 +34,8 @@ const reducer = (state, action) => {
         isAuthenticated: false,
         isAuthLoading: false,
         userCompany: null,
+        isProfessional: null,
+        isCustomer: null,
       };
     default:
       return state;
@@ -93,6 +99,8 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated: state.isAuthenticated,
         isAuthLoading: state.isAuthLoading,
         userCompany: state.userCompany,
+        isProfessional: state.isProfessional,
+        isCustomer: state.isCustomer,
         handleSignIn,
         handleSignOut,
       }}

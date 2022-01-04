@@ -15,9 +15,9 @@ import './favorite.component.scss';
 
 const Favorite = () => {
   const { accountInfo } = useContext(MainContext);
-  const { isAuthenticated, userCompany } = useContext(AuthContext);
   const [isFavorited, setIsFavorited] = useState(false);
   const [isPending, setIsPending] = useState(true);
+  const AUTH = useContext(AuthContext);
 
   const handleFavorite = async (favorite) => {
     try {
@@ -42,7 +42,7 @@ const Favorite = () => {
   const getFavorite = useCallback(
     async (companyId) => {
       try {
-        if (!isAuthenticated || !companyId) {
+        if (!AUTH.isAuthenticated || !companyId) {
           setIsPending(false);
           return false;
         }
@@ -56,7 +56,7 @@ const Favorite = () => {
         setIsPending(false);
       }
     },
-    [isAuthenticated],
+    [AUTH.isAuthenticated],
   );
 
   useEffect(() => {
@@ -65,13 +65,13 @@ const Favorite = () => {
 
   return (
     <Fragment>
-      {!userCompany && (
+      {AUTH.isCustomer && (
         <div className={`favorite ${isFavorited ? 'favorite__active' : ''}`}>
           {!isPending && (
             <button
               className="button button--block button--outline m-b-16"
               onClick={() => handleFavorite(!isFavorited)}
-              disabled={!isAuthenticated}
+              disabled={!AUTH.isAuthenticated}
             >
               <Fragment>
                 <AiFillStar className="favorite__star" />

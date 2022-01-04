@@ -20,9 +20,7 @@ const ScheduleForm = () => {
     resetMainService,
   } = useContext(MainContext);
 
-  const { isAuthenticated, userCompany, handleSignOut } = useContext(
-    AuthContext,
-  );
+  const AUTH = useContext(AuthContext);
 
   const getScheduleInfoPreview = ({ date, start, end }) => {
     if (!date) return 'Selecione um horário';
@@ -80,21 +78,21 @@ const ScheduleForm = () => {
 
       {isLoading && <span className="loading m-b-16" />}
 
-      {!isAuthenticated && !isLoading && formType === 'SIGN_UP' && (
+      {!AUTH.isAuthenticated && !isLoading && formType === 'SIGN_UP' && (
         <CustomerSignUpForm
           setIsLoading={setIsLoading}
           setFormType={setFormType}
         />
       )}
 
-      {!isAuthenticated && !isLoading && formType === 'SIGN_IN' && (
+      {!AUTH.isAuthenticated && !isLoading && formType === 'SIGN_IN' && (
         <CustomerSignInForm
           setIsLoading={setIsLoading}
           setFormType={setFormType}
         />
       )}
 
-      {!isAuthenticated && !formType && (
+      {!AUTH.isAuthenticated && !formType && (
         <div className="m-t-5">
           <button
             className="button button--block button--outline m-b-16"
@@ -111,7 +109,7 @@ const ScheduleForm = () => {
         </div>
       )}
 
-      {isAuthenticated && !userCompany && (
+      {AUTH.isCustomer && AUTH.isAuthenticated && (
         <div className="flexbox m-t-5">
           <div className="flexbox__item">
             <button
@@ -124,12 +122,12 @@ const ScheduleForm = () => {
         </div>
       )}
 
-      {isAuthenticated && userCompany && (
+      {AUTH.isProfessional && AUTH.isAuthenticated && (
         <div className="flexbox m-t-5">
           <div className="flexbox__item">
             <button
               className="button button--block button--outline"
-              onClick={() => handleSignOut(true)}
+              onClick={() => AUTH.handleSignOut(true)}
             >
               Entrar como cliente
             </button>

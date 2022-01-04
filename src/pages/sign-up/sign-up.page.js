@@ -1,13 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { AiOutlineForm } from 'react-icons/ai';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import AuthService from '../../services/auth.service';
 import schema from './validators/sign-up.validator';
 import PageHeader from '../../common/components/page-header';
 import InputFormError from '../../common/components/input-form-error';
-import { AuthContext } from '../../common/contexts/auth';
 import { replaceSpecialCharacters } from '../../common/utils/validator';
 import { handleError } from '../../common/utils/api';
 import InputTelephone from '../../common/components/input-telephone';
@@ -18,7 +17,6 @@ const SignUp = () => {
   const history = useHistory();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { isAuthenticated, userCompany } = useContext(AuthContext);
 
   const { errors, formState, setValue, register, handleSubmit } = useForm({
     resolver: yupResolver(schema.form.validator),
@@ -62,12 +60,6 @@ const SignUp = () => {
       setIsLoading(false);
     }
   };
-
-  if (isAuthenticated) {
-    const redirectUrl = userCompany ? '/schedules' : '/customer-schedules';
-
-    return <Redirect to={redirectUrl} />;
-  }
 
   return (
     <div className="container">

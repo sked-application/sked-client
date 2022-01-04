@@ -10,7 +10,7 @@ import { AuthContext } from '../../../../common/contexts/auth';
 import { Link } from 'react-router-dom';
 
 const CustomerSignInForm = ({ setIsLoading, setFormType }) => {
-  const { handleSignIn } = useContext(AuthContext);
+  const AUTH = useContext(AuthContext);
 
   const { register, handleSubmit, formState, errors, reset } = useForm({
     resolver: yupResolver(schema.form.validator),
@@ -32,7 +32,7 @@ const CustomerSignInForm = ({ setIsLoading, setFormType }) => {
 
       reset();
       setIsLoading(false);
-      handleSignIn(data);
+      AUTH.handleSignIn(data);
     } catch (error) {
       alert(handleError(error));
       setIsLoading(false);

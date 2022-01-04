@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Main from '../pages/main';
 import SignUp from '../pages/sign-up';
 import SignIn from '../pages/sign-in';
@@ -19,55 +20,91 @@ import CustomerSchedules from '../pages/customer-schedule';
 import UserPrivateRoute from './private/user.route';
 import UserPrivatePlanRoute from './private/user-plan.route';
 import CustomerPrivateRoute from './private/customer.route';
+import PublicRoute from './public.route';
 
-import { Route, Switch, Redirect } from 'react-router-dom';
+const routes = {
+  userPrivateRoutes: [
+    { path: '/schedules', component: Schedules },
+    { path: '/services', component: Services },
+    { path: '/settings', component: Timegrid },
+    { path: '/profile', component: Profile },
+    { path: '/schedule-locks', component: ScheduleLocks },
+  ],
+  userPrivatePlanRoute: [
+    { path: '/professionals', component: Professionals, plan: 'CUSTOM' },
+  ],
+  customerPrivateRoute: [
+    { path: '/customer-schedules', component: CustomerSchedules },
+    { path: '/customer-profile', component: CustomerProfile },
+    { path: '/favorites', component: Favorites },
+  ],
+  publicRoute: [
+    { path: '/sign-up', component: SignUp },
+    { path: '/sign-in', component: SignIn },
+    { path: '/customer-sign-in', component: CustomerSignIn },
+    { path: '/recover-password', component: RecoverPassword },
+    { path: '/recover-password-customer', component: RecoverPassword },
+    { path: '/reset-password/:token', component: ResetPassword },
+  ],
+  defaultRoute: [
+    {
+      path: '/professional-invitation/:token',
+      component: ProfessionalInvitation,
+    },
+    { path: '/not-found', component: NotFound },
+    { path: '/:company', component: Main },
+  ],
+};
 
 const AppRoutes = () => {
   return (
     <Switch>
-      <UserPrivateRoute exact path="/schedules" component={Schedules} />
-      <UserPrivateRoute exact path="/services" component={Services} />
-      <UserPrivateRoute exact path="/settings" component={Timegrid} />
-      <UserPrivateRoute exact path="/profile" component={Profile} />
-      <UserPrivatePlanRoute
-        exact
-        path="/professionals"
-        component={Professionals}
-        plan="CUSTOM"
-      />
-      <UserPrivateRoute
-        exact
-        path="/schedule-locks"
-        component={ScheduleLocks}
-      />
-      <CustomerPrivateRoute
-        exact
-        path="/customer-schedules"
-        component={CustomerSchedules}
-      />
-      <CustomerPrivateRoute
-        exact
-        path="/customer-profile"
-        component={CustomerProfile}
-      />
-      <CustomerPrivateRoute exact path="/favorites" component={Favorites} />
-      <Route exact path="/sign-up" component={SignUp} />
-      <Route exact path="/sign-in" component={SignIn} />
-      <Route exact path="/customer-sign-in" component={CustomerSignIn} />
-      <Route exact path="/recover-password" component={RecoverPassword} />
-      <Route
-        exact
-        path="/recover-password-customer"
-        component={RecoverPassword}
-      />
-      <Route exact path="/reset-password/:token" component={ResetPassword} />
-      <Route
-        exact
-        path="/professional-invitation/:token"
-        component={ProfessionalInvitation}
-      />
-      <Route exact path="/not-found" component={NotFound} />
-      <Route exact path="/:company" component={Main} />
+      {routes.userPrivateRoutes.map((route) => (
+        <UserPrivateRoute
+          exact
+          key={route.path}
+          path={route.path}
+          component={route.component}
+        />
+      ))}
+
+      {routes.userPrivatePlanRoute.map((route) => (
+        <UserPrivatePlanRoute
+          exact
+          key={route.path}
+          path={route.path}
+          component={route.component}
+          plan={route.plan}
+        />
+      ))}
+
+      {routes.customerPrivateRoute.map((route) => (
+        <CustomerPrivateRoute
+          exact
+          key={route.path}
+          path={route.path}
+          component={route.component}
+        />
+      ))}
+
+      {routes.publicRoute.map((route) => (
+        <PublicRoute
+          exact
+          key={route.path}
+          path={route.path}
+          component={route.component}
+        />
+      ))}
+
+      {routes.defaultRoute.map((route) => (
+        <Route
+          exact
+          key={route.path}
+          path={route.path}
+          component={route.component}
+        />
+      ))}
+
       <Redirect to="/not-found" />
     </Switch>
   );
