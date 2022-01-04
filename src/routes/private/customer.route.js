@@ -1,19 +1,18 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-
 import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from '../../common/contexts/auth';
 
 const CustomerPrivateRoute = ({ component: Component, ...rest }) => {
-  const { isAuthenticated, userCompany } = useContext(AuthContext);
+  const AUTH = useContext(AuthContext);
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        userCompany ? (
+        AUTH.isProfessional ? (
           <Redirect to="/schedules" />
-        ) : isAuthenticated ? (
+        ) : AUTH.isAuthenticated ? (
           <Component {...props} />
         ) : (
           <Redirect to="/sign-in" />

@@ -7,13 +7,11 @@ import { AuthContext } from '../../contexts/auth';
 import './header.component.scss';
 
 const Header = ({ currentPathname }) => {
-  const { isAuthenticated, handleSignOut, userCompany } = useContext(
-    AuthContext,
-  );
+  const AUTH = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
 
   const headerSignOut = () => {
-    handleSignOut();
+    AUTH.handleSignOut();
     setIsOpen(false);
   };
 
@@ -27,14 +25,14 @@ const Header = ({ currentPathname }) => {
             </span>
           </div>
 
-          {isAuthenticated && (
+          {AUTH.isAuthenticated && (
             <AiOutlineMenu
               className="header__toggle"
               onClick={() => setIsOpen(true)}
             />
           )}
 
-          {!isAuthenticated &&
+          {!AUTH.isAuthenticated &&
             ![
               '/sign-in',
               '/customer-sign-in',
@@ -47,21 +45,22 @@ const Header = ({ currentPathname }) => {
               </Link>
             )}
 
-          {!isAuthenticated && ['/sign-in'].includes(currentPathname) && (
+          {!AUTH.isAuthenticated && ['/sign-in'].includes(currentPathname) && (
             <Link to={`/customer-sign-in`} className="header__action">
               Sou cliente
             </Link>
           )}
 
-          {!isAuthenticated && ['/customer-sign-in'].includes(currentPathname) && (
-            <Link to={`/sign-in`} className="header__action">
-              Sou profissional
-            </Link>
-          )}
+          {!AUTH.isAuthenticated &&
+            ['/customer-sign-in'].includes(currentPathname) && (
+              <Link to={`/sign-in`} className="header__action">
+                Sou profissional
+              </Link>
+            )}
         </div>
       </div>
 
-      {isAuthenticated && (
+      {AUTH.isAuthenticated && (
         <div>
           <div
             className={`header__overlay ${
@@ -73,14 +72,14 @@ const Header = ({ currentPathname }) => {
             className={`header__menu ${isOpen ? 'header__menu--active' : ''}`}
           >
             <ul className="header__list">
-              {userCompany && (
+              {AUTH.isProfessional && (
                 <Fragment>
                   <li>
                     <strong>Agenda</strong>
                     <ul className="m-t-10">
                       <li>
                         <Link
-                          to={`/${userCompany.url}`}
+                          to={`/${AUTH.userCompany.url}`}
                           onClick={() => setIsOpen(false)}
                         >
                           Minha página
@@ -101,7 +100,7 @@ const Header = ({ currentPathname }) => {
                           Serviços
                         </Link>
                       </li>
-                      {userCompany.plan === 'CUSTOM' && (
+                      {AUTH.userCompany.plan === 'CUSTOM' && (
                         <li>
                           <Link
                             to="/professionals"
@@ -134,7 +133,7 @@ const Header = ({ currentPathname }) => {
                 </Fragment>
               )}
 
-              {!userCompany && (
+              {AUTH.isCustomer && (
                 <Fragment>
                   <li>
                     <Link to="/favorites" onClick={() => setIsOpen(false)}>

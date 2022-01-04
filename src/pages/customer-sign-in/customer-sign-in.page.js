@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AiOutlineLogin } from 'react-icons/ai';
 import AuthService from '../../services/auth.service';
 import schema from './validators/customer-sign-in.validator';
@@ -15,9 +15,7 @@ import './customer-sign-in.page.scss';
 const CustomerSignIn = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { isAuthenticated, handleSignIn, userCompany } = useContext(
-    AuthContext,
-  );
+  const AUTH = useContext(AuthContext);
 
   const { register, handleSubmit, formState, errors } = useForm({
     resolver: yupResolver(schema.form.validator),
@@ -37,18 +35,12 @@ const CustomerSignIn = () => {
         password,
       });
 
-      handleSignIn(data);
+      AUTH.handleSignIn(data);
     } catch (error) {
       setError(handleError(error));
       setIsLoading(false);
     }
   };
-
-  if (isAuthenticated) {
-    const redirectUrl = userCompany ? '/schedules' : '/customer-schedules';
-
-    return <Redirect to={redirectUrl} />;
-  }
 
   return (
     <div className="container">
