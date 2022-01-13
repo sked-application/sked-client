@@ -24,7 +24,7 @@ const ScheduleProfessionals = () => {
       const userValues = Object.values(data);
 
       if (userValues.length === 1) {
-        setUser(userValues[0]);
+        // setUser(userValues[0]);
       }
 
       setUsers(data);
