@@ -74,20 +74,6 @@ export const MainProvider = ({ children }) => {
   const { company } = useParams();
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const resetMainDate = () => {
-    dispatch({
-      type: actions.SET_START_DATE,
-      value: initialState.startDate,
-    });
-  };
-
-  const resetMainService = () => {
-    dispatch({
-      type: actions.SET_SERVICE,
-      value: initialState.service,
-    });
-  };
-
   const findCompany = useCallback(async () => {
     try {
       const { data } = await AccountService.find({ company });
@@ -113,25 +99,7 @@ export const MainProvider = ({ children }) => {
   }, [findCompany]);
 
   return (
-    <MainContext.Provider
-      value={{
-        startDate: state.startDate,
-        scheduleSlot: state.scheduleSlot,
-        accountInfo: state.accountInfo,
-        accountExists: state.accountExists,
-        isMainRequestPeding: state.isMainRequestPeding,
-        service: state.service,
-        user: state.user,
-        setStartDate: (value) =>
-          dispatch({ type: actions.SET_START_DATE, value }),
-        setScheduleSlot: (value) =>
-          dispatch({ type: actions.SET_SCHEDULE_SLOT, value }),
-        setService: (value) => dispatch({ type: actions.SET_SERVICE, value }),
-        setUser: (value) => dispatch({ type: actions.SET_USER, value }),
-        resetMainDate,
-        resetMainService,
-      }}
-    >
+    <MainContext.Provider value={[state, dispatch, actions]}>
       {children}
     </MainContext.Provider>
   );

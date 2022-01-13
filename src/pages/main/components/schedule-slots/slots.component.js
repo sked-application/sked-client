@@ -14,29 +14,31 @@ import { handleError } from '../../../../common/utils/api';
 import './slots.component.scss';
 
 const MainSlotGrid = () => {
-  const { user, service, startDate, accountInfo, setScheduleSlot } = useContext(
-    MainContext,
-  );
+  const [mainState, mainDispatch, mainActions] = useContext(MainContext);
   const [isLoading, setIsLoading] = useState();
   const [timegrid, setTimegrid] = useState([]);
   const [activedSlot, setActivedSlot] = useState();
 
   const handleSetSlot = (slot, index) => {
     setActivedSlot(index);
-    setScheduleSlot({
-      date: startDate,
-      ...slot,
+
+    mainDispatch({
+      type: mainActions.SET_SCHEDULE_SLOT,
+      value: {
+        ...slot,
+        date: mainState.startDate,
+      },
     });
   };
 
   const listSlots = useCallback(async () => {
     try {
-      if (!service.id || !user.id) {
+      if (!mainState.service.id || !mainState.user.id) {
         setTimegrid([]);
         return;
       }
 
-      if (!startDate) {
+      if (!mainState.startDate) {
         alert('Escolha uma data válida');
         return;
       }
@@ -44,11 +46,11 @@ const MainSlotGrid = () => {
       setIsLoading(true);
 
       const { data } = await TimegridService.findSlots({
-        userId: user.id,
-        date: startDate,
-        serviceId: service.id,
-        companyId: accountInfo.id,
-        serviceDuration: service.duration,
+        userId: mainState.user.id,
+        date: mainState.startDate,
+        serviceId: mainState.service.id,
+        companyId: mainState.accountInfo.id,
+        serviceDuration: mainState.service.duration,
       });
 
       if (data) {
@@ -60,7 +62,13 @@ const MainSlotGrid = () => {
     } catch (error) {
       alert(handleError(error));
     }
-  }, [accountInfo, startDate, service, user]);
+  }, [
+    mainState.user.id,
+    mainState.startDate,
+    mainState.service.id,
+    mainState.accountInfo.id,
+    mainState.service.duration,
+  ]);
 
   useEffect(() => {
     listSlots();
@@ -76,20 +84,20 @@ const MainSlotGrid = () => {
         </div>
         <div className="flexbox flexbox--column flexbox--end">
           <span className="card__subtitle card__subtitle--captalized m-b-5">
-            {getDayLabelByDate(startDate)}
+            {getDayLabelByDate(mainState.startDate)}
           </span>
         </div>
       </div>
 
-      {service.id && user.id && !!timegrid.length && (
+      {mainState.service.id && mainState.user.id && !!timegrid.length && (
         <Fragment>
           <div>
-            <span className="card__subtitle">{service.name}</span>
+            <span className="card__subtitle">{mainState.service.name}</span>
           </div>
-          {service.showPrice && (
+          {mainState.service.showPrice && (
             <div>
               <span className="card__subtitle color--green">
-                R$ {service.price}
+                R$ {mainState.service.price}
               </span>
             </div>
           )}
@@ -120,17 +128,17 @@ const MainSlotGrid = () => {
             </div>
           )}
 
-          {service.id && user.id && !timegrid.length && (
+          {mainState.service.id && mainState.user.id && !timegrid.length && (
             <div className="slot__pending">
               <span>Nenhum horário disponível</span>
             </div>
           )}
 
-          {!user.id ? (
+          {!mainState.user.id ? (
             <div className="slot__pending">
               <span>Selecione um profissional.</span>
             </div>
-          ) : !service.id ? (
+          ) : !mainState.service.id ? (
             <div className="slot__pending">
               <span>Selecione um serviço.</span>
             </div>

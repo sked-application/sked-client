@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { AiOutlineCarryOut } from 'react-icons/ai';
+import moment from 'moment';
 import ScheduleService from '../../../../services/schedule.service';
 import CustomerSignInForm from '../customer-sign-in-form';
 import CustomerSignUpForm from '../customer-sign-up-form';
@@ -10,16 +11,7 @@ import { handleError } from '../../../../common/utils/api';
 const ScheduleForm = () => {
   const [formType, setFormType] = useState();
   const [isLoading, setIsLoading] = useState(false);
-
-  const {
-    scheduleSlot,
-    accountInfo,
-    service,
-    user,
-    resetMainDate,
-    resetMainService,
-  } = useContext(MainContext);
-
+  const [mainState, mainDispatch, mainActions] = useContext(MainContext);
   const AUTH = useContext(AuthContext);
 
   const getScheduleInfoPreview = ({ date, start, end }) => {
@@ -30,14 +22,14 @@ const ScheduleForm = () => {
 
   const submitSchedule = async () => {
     try {
-      const { date, start, end } = scheduleSlot;
+      const { date, start, end } = mainState.scheduleSlot;
 
-      if (!service.id) {
+      if (!mainState.service.id) {
         alert('Escolha um serviço');
         return;
       }
 
-      if (!user.id) {
+      if (!mainState.user.id) {
         alert('Escolha um profissional');
         return;
       }
@@ -51,16 +43,28 @@ const ScheduleForm = () => {
         date,
         start,
         end,
-        companyId: accountInfo.id,
-        serviceId: service.id,
-        userId: user.id,
+        companyId: mainState.accountInfo.id,
+        serviceId: mainState.service.id,
+        userId: mainState.user.id,
       });
 
-      resetMainService();
-      resetMainDate();
+      mainDispatch({
+        type: mainActions.SET_START_DATE,
+        value: moment().format('YYYY-MM-DD'),
+      });
+
+      mainDispatch({
+        type: mainActions.SET_SERVICE,
+        value: {},
+      });
+
       alert('Agendamento realizado com sucesso!');
     } catch (error) {
-      resetMainDate();
+      mainDispatch({
+        type: mainActions.SET_START_DATE,
+        value: moment().format('YYYY-MM-DD'),
+      });
+
       alert(handleError(error));
     }
   };
@@ -72,7 +76,7 @@ const ScheduleForm = () => {
           <AiOutlineCarryOut /> Agende
         </h2>
         <span className="card__subtitle">
-          {getScheduleInfoPreview(scheduleSlot)}
+          {getScheduleInfoPreview(mainState.scheduleSlot)}
         </span>
       </div>
 

@@ -14,24 +14,23 @@ import { AuthContext } from '../../../../common/contexts/auth';
 import './favorite.component.scss';
 
 const Favorite = () => {
-  const { accountInfo } = useContext(MainContext);
+  const [mainState] = useContext(MainContext);
   const [isFavorited, setIsFavorited] = useState(false);
   const [isPending, setIsPending] = useState(true);
   const AUTH = useContext(AuthContext);
 
-  const handleFavorite = async (favorite) => {
+  const handleFavorite = (favorite) => {
     try {
       setIsFavorited(favorite);
 
       if (favorite) {
-        await FavoriteService.create({
-          companyId: accountInfo.id,
+        return FavoriteService.create({
+          companyId: mainState.accountInfo.id,
         });
-        return;
       }
 
-      await FavoriteService.remove({
-        companyId: accountInfo.id,
+      return FavoriteService.remove({
+        companyId: mainState.accountInfo.id,
       });
     } catch (error) {
       alert(handleError(error));
@@ -60,8 +59,8 @@ const Favorite = () => {
   );
 
   useEffect(() => {
-    getFavorite(accountInfo.id);
-  }, [accountInfo.id, getFavorite]);
+    getFavorite(mainState.accountInfo.id);
+  }, [mainState.accountInfo.id, getFavorite]);
 
   return (
     <Fragment>
