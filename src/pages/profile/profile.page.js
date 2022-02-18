@@ -17,6 +17,7 @@ import {
   getLeftTrialDays,
 } from '../../common/utils/company';
 import { firebaseApp } from '../../services/firebase.service';
+import { resizeFile } from '../../common/utils/image';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -107,18 +108,25 @@ const Profile = () => {
   const onChangeFile = async (event) => {
     setThumbnailIsLoading(true);
 
-    const file = event.target.files[0];
-    const storageRef = firebaseApp.storage().ref('thumbnails');
-    const fileRef = storageRef.child(`${profile.id}-${file.name}`);
-    await fileRef.put(file);
-    const thumbnailUrl = await fileRef.getDownloadURL();
+    try {
+      const file = event.target.files[0];
 
-    setValue('companyThumbnail', thumbnailUrl, {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-    setThumbPreview(thumbnailUrl);
-    setThumbnailIsLoading(false);
+      const image = await resizeFile(file);
+      const storageRef = firebaseApp.storage().ref('thumbnails');
+      const fileRef = storageRef.child(`${profile.id}-${image.name}`);
+      await fileRef.put(image);
+      const thumbnailUrl = await fileRef.getDownloadURL();
+
+      setValue('companyThumbnail', thumbnailUrl, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      setThumbPreview(thumbnailUrl);
+      setThumbnailIsLoading(false);
+    } catch (error) {
+      setThumbnailIsLoading(false);
+      alert(handleError(error));
+    }
   };
 
   useEffect(() => {
