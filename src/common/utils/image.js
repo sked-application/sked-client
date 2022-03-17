@@ -5,9 +5,9 @@ export const resizeFile = (file) => {
     try {
       Resizer.imageFileResizer(
         file,
-        70,
-        70,
-        'JPEG',
+        170,
+        170,
+        'PNG',
         100,
         0,
         (uri) => {

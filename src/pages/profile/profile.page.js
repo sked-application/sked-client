@@ -18,6 +18,7 @@ import {
 } from '../../common/utils/company';
 import { firebaseApp } from '../../services/firebase.service';
 import { resizeFile } from '../../common/utils/image';
+import { getUnixHash } from '../../common/utils/date';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -113,7 +114,9 @@ const Profile = () => {
 
       const image = await resizeFile(file);
       const storageRef = firebaseApp.storage().ref('thumbnails');
-      const fileRef = storageRef.child(`${profile.id}-${image.name}`);
+      const fileRef = storageRef.child(
+        `${profile.id}-${getUnixHash()}-${image.name}`,
+      );
       await fileRef.put(image);
       const thumbnailUrl = await fileRef.getDownloadURL();
 

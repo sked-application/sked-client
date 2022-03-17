@@ -1,4 +1,4 @@
-import { format, parseISO, isValid } from 'date-fns';
+import { format, parseISO, isValid, getUnixTime } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
 export const getDayLabelByDate = (date, short) => {
@@ -23,4 +23,8 @@ export const getFormattedDatePreview = (date) => {
   if (!isValid(parseISO(date))) return '';
 
   return format(parseISO(date.slice(0, 10)), 'dd/MM/yyyy');
+};
+
+export const getUnixHash = () => {
+  return getUnixTime(new Date());
 };
