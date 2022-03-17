@@ -14,23 +14,24 @@ import { AuthContext } from '../../../../common/contexts/auth';
 import './favorite.component.scss';
 
 const Favorite = () => {
-  const [mainState] = useContext(MainContext);
+  const [MainState] = useContext(MainContext);
   const [isFavorited, setIsFavorited] = useState(false);
   const [isPending, setIsPending] = useState(true);
-  const AUTH = useContext(AuthContext);
+  const [AuthState] = useContext(AuthContext);
 
   const handleFavorite = (favorite) => {
     try {
       setIsFavorited(favorite);
 
       if (favorite) {
-        return FavoriteService.create({
-          companyId: mainState.accountInfo.id,
+        FavoriteService.create({
+          companyId: MainState.accountInfo.id,
         });
+        return;
       }
 
-      return FavoriteService.remove({
-        companyId: mainState.accountInfo.id,
+      FavoriteService.remove({
+        companyId: MainState.accountInfo.id,
       });
     } catch (error) {
       alert(handleError(error));
@@ -41,7 +42,7 @@ const Favorite = () => {
   const getFavorite = useCallback(
     async (companyId) => {
       try {
-        if (!AUTH.isAuthenticated || !companyId) {
+        if (!AuthState.isAuthenticated || !companyId) {
           setIsPending(false);
           return false;
         }
@@ -55,22 +56,22 @@ const Favorite = () => {
         setIsPending(false);
       }
     },
-    [AUTH.isAuthenticated],
+    [AuthState.isAuthenticated],
   );
 
   useEffect(() => {
-    getFavorite(mainState.accountInfo.id);
-  }, [mainState.accountInfo.id, getFavorite]);
+    getFavorite(MainState.accountInfo.id);
+  }, [MainState.accountInfo.id, getFavorite]);
 
   return (
     <Fragment>
-      {AUTH.isCustomer && (
+      {AuthState.isCustomer && (
         <div className={`favorite ${isFavorited ? 'favorite__active' : ''}`}>
           {!isPending && (
             <button
               className="button button--block button--outline m-b-16"
               onClick={() => handleFavorite(!isFavorited)}
-              disabled={!AUTH.isAuthenticated}
+              disabled={!AuthState.isAuthenticated}
             >
               <Fragment>
                 <AiFillStar className="favorite__star" />

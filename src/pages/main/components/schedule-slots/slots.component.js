@@ -14,7 +14,7 @@ import { handleError } from '../../../../common/utils/api';
 import './slots.component.scss';
 
 const MainSlotGrid = () => {
-  const [mainState, mainDispatch, mainActions] = useContext(MainContext);
+  const [MainState, MainDispatch, MainActions] = useContext(MainContext);
   const [isLoading, setIsLoading] = useState();
   const [timegrid, setTimegrid] = useState([]);
   const [activedSlot, setActivedSlot] = useState();
@@ -22,23 +22,23 @@ const MainSlotGrid = () => {
   const handleSetSlot = (slot, index) => {
     setActivedSlot(index);
 
-    mainDispatch({
-      type: mainActions.SET_SCHEDULE_SLOT,
+    MainDispatch({
+      type: MainActions.SET_SCHEDULE_SLOT,
       value: {
         ...slot,
-        date: mainState.startDate,
+        date: MainState.startDate,
       },
     });
   };
 
   const listSlots = useCallback(async () => {
     try {
-      if (!mainState.service.id || !mainState.user.id) {
+      if (!MainState.service.id || !MainState.user.id) {
         setTimegrid([]);
         return;
       }
 
-      if (!mainState.startDate) {
+      if (!MainState.startDate) {
         alert('Escolha uma data válida');
         return;
       }
@@ -46,11 +46,11 @@ const MainSlotGrid = () => {
       setIsLoading(true);
 
       const { data } = await TimegridService.findSlots({
-        userId: mainState.user.id,
-        date: mainState.startDate,
-        serviceId: mainState.service.id,
-        companyId: mainState.accountInfo.id,
-        serviceDuration: mainState.service.duration,
+        userId: MainState.user.id,
+        date: MainState.startDate,
+        serviceId: MainState.service.id,
+        companyId: MainState.accountInfo.id,
+        serviceDuration: MainState.service.duration,
       });
 
       if (data) {
@@ -63,11 +63,11 @@ const MainSlotGrid = () => {
       alert(handleError(error));
     }
   }, [
-    mainState.user.id,
-    mainState.startDate,
-    mainState.service.id,
-    mainState.accountInfo.id,
-    mainState.service.duration,
+    MainState.user.id,
+    MainState.startDate,
+    MainState.service.id,
+    MainState.accountInfo.id,
+    MainState.service.duration,
   ]);
 
   useEffect(() => {
@@ -84,20 +84,20 @@ const MainSlotGrid = () => {
         </div>
         <div className="flexbox flexbox--column flexbox--end">
           <span className="card__subtitle card__subtitle--captalized m-b-5">
-            {getDayLabelByDate(mainState.startDate)}
+            {getDayLabelByDate(MainState.startDate)}
           </span>
         </div>
       </div>
 
-      {mainState.service.id && mainState.user.id && !!timegrid.length && (
+      {MainState.service.id && MainState.user.id && !!timegrid.length && (
         <Fragment>
           <div>
-            <span className="card__subtitle">{mainState.service.name}</span>
+            <span className="card__subtitle">{MainState.service.name}</span>
           </div>
-          {mainState.service.showPrice && (
+          {MainState.service.showPrice && (
             <div>
               <span className="card__subtitle color--green">
-                R$ {mainState.service.price}
+                R$ {MainState.service.price}
               </span>
             </div>
           )}
@@ -128,17 +128,17 @@ const MainSlotGrid = () => {
             </div>
           )}
 
-          {mainState.service.id && mainState.user.id && !timegrid.length && (
+          {MainState.service.id && MainState.user.id && !timegrid.length && (
             <div className="slot__pending">
               <span>Nenhum horário disponível</span>
             </div>
           )}
 
-          {!mainState.user.id ? (
+          {!MainState.user.id ? (
             <div className="slot__pending">
               <span>Selecione um profissional.</span>
             </div>
-          ) : !mainState.service.id ? (
+          ) : !MainState.service.id ? (
             <div className="slot__pending">
               <span>Selecione um serviço.</span>
             </div>

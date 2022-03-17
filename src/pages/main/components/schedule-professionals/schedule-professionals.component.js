@@ -5,34 +5,34 @@ import { MainContext } from '../../contexts/main';
 import { handleError } from '../../../../common/utils/api';
 
 const ScheduleProfessionals = () => {
-  const [mainState, mainDispatch, mainActions] = useContext(MainContext);
+  const [MainState, MainDispatch, MainActions] = useContext(MainContext);
   const [users, setUsers] = useState({});
 
   const handleChangeUser = (userId) => {
-    mainDispatch({
-      type: mainActions.SET_USER,
+    MainDispatch({
+      type: MainActions.SET_USER,
       value: users[userId] || {},
     });
 
-    mainDispatch({
-      type: mainActions.SET_SERVICE,
+    MainDispatch({
+      type: MainActions.SET_SERVICE,
       value: {},
     });
   };
 
   const listUsers = useCallback(async () => {
     try {
-      if (!mainState.accountInfo.id) return;
+      if (!MainState.accountInfo.id) return;
 
       const { data } = await UserService.findAllByCompanyId({
-        companyId: mainState.accountInfo.id,
+        companyId: MainState.accountInfo.id,
       });
 
       const userValues = Object.values(data);
 
       if (userValues.length === 1) {
-        mainDispatch({
-          type: mainActions.SET_USER,
+        MainDispatch({
+          type: MainActions.SET_USER,
           value: userValues[0] || {},
         });
       }
@@ -41,7 +41,7 @@ const ScheduleProfessionals = () => {
     } catch (error) {
       alert(handleError(error));
     }
-  }, [mainState.accountInfo.id, mainDispatch, mainActions.SET_USER]);
+  }, [MainState.accountInfo.id, MainDispatch, MainActions.SET_USER]);
 
   useEffect(() => {
     listUsers();
@@ -56,7 +56,7 @@ const ScheduleProfessionals = () => {
       </div>
       <div className="m-t-5">
         <select
-          value={mainState.user.id || ''}
+          value={MainState.user.id || ''}
           onChange={(event) => handleChangeUser(event.target.value)}
           className="select select--dark"
         >

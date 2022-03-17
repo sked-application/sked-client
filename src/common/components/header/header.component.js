@@ -7,11 +7,14 @@ import { AuthContext } from '../../contexts/auth';
 import './header.component.scss';
 
 const Header = ({ currentPathname }) => {
-  const AUTH = useContext(AuthContext);
+  const [AuthState, AuthDispatch, AuthActions] = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
 
   const headerSignOut = () => {
-    AUTH.handleSignOut();
+    AuthDispatch({
+      type: AuthActions.SET_SIGN_OUT,
+    });
+
     setIsOpen(false);
   };
 
@@ -25,14 +28,14 @@ const Header = ({ currentPathname }) => {
             </span>
           </div>
 
-          {AUTH.isAuthenticated && (
+          {AuthState.isAuthenticated && (
             <AiOutlineMenu
               className="header__toggle"
               onClick={() => setIsOpen(true)}
             />
           )}
 
-          {!AUTH.isAuthenticated &&
+          {!AuthState.isAuthenticated &&
             ![
               '/sign-in',
               '/customer-sign-in',
@@ -45,13 +48,14 @@ const Header = ({ currentPathname }) => {
               </Link>
             )}
 
-          {!AUTH.isAuthenticated && ['/sign-in'].includes(currentPathname) && (
-            <Link to={`/customer-sign-in`} className="header__action">
-              Sou cliente
-            </Link>
-          )}
+          {!AuthState.isAuthenticated &&
+            ['/sign-in'].includes(currentPathname) && (
+              <Link to={`/customer-sign-in`} className="header__action">
+                Sou cliente
+              </Link>
+            )}
 
-          {!AUTH.isAuthenticated &&
+          {!AuthState.isAuthenticated &&
             ['/customer-sign-in'].includes(currentPathname) && (
               <Link to={`/sign-in`} className="header__action">
                 Sou profissional
@@ -60,7 +64,7 @@ const Header = ({ currentPathname }) => {
         </div>
       </div>
 
-      {AUTH.isAuthenticated && (
+      {AuthState.isAuthenticated && (
         <div>
           <div
             className={`header__overlay ${
@@ -72,14 +76,14 @@ const Header = ({ currentPathname }) => {
             className={`header__menu ${isOpen ? 'header__menu--active' : ''}`}
           >
             <ul className="header__list">
-              {AUTH.isProfessional && (
+              {AuthState.isProfessional && (
                 <Fragment>
                   <li>
                     <strong>Agenda</strong>
                     <ul className="m-t-10">
                       <li>
                         <Link
-                          to={`/${AUTH.userCompany.url}`}
+                          to={`/${AuthState.userCompany.url}`}
                           onClick={() => setIsOpen(false)}
                         >
                           Minha página
@@ -100,7 +104,7 @@ const Header = ({ currentPathname }) => {
                           Serviços
                         </Link>
                       </li>
-                      {AUTH.userCompany.plan === 'CUSTOM' && (
+                      {AuthState.userCompany.plan === 'CUSTOM' && (
                         <li>
                           <Link
                             to="/professionals"
@@ -133,7 +137,7 @@ const Header = ({ currentPathname }) => {
                 </Fragment>
               )}
 
-              {AUTH.isCustomer && (
+              {AuthState.isCustomer && (
                 <Fragment>
                   <li>
                     <Link to="/favorites" onClick={() => setIsOpen(false)}>
