@@ -15,7 +15,7 @@ import './customer-sign-in.page.scss';
 const CustomerSignIn = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [, AuthDispatch, AuthActions] = useContext(AuthContext);
+  const { AUTH_DISPATCH, AUTH_ACTIONS } = useContext(AuthContext);
 
   const { register, handleSubmit, formState, errors } = useForm({
     resolver: yupResolver(schema.form.validator),
@@ -35,8 +35,8 @@ const CustomerSignIn = () => {
         password,
       });
 
-      AuthDispatch({
-        type: AuthActions.SET_SIGN_IN,
+      AUTH_DISPATCH({
+        type: AUTH_ACTIONS.SET_SIGN_IN,
         value: data,
       });
     } catch (error) {

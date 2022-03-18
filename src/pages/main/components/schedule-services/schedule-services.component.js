@@ -5,30 +5,30 @@ import { MainContext } from '../../contexts/main';
 import { handleError } from '../../../../common/utils/api';
 
 const ScheduleServices = () => {
-  const [MainState, MainDispatch, MainActions] = useContext(MainContext);
+  const { MAIN_STATE, MAIN_DISPATCH, MAIN_ACTIONS } = useContext(MainContext);
   const [services, setServices] = useState({});
 
   const handleChangeService = (value) => {
-    MainDispatch({
-      type: MainActions.SET_SERVICE,
+    MAIN_DISPATCH({
+      type: MAIN_ACTIONS.SET_SERVICE,
       value: services[value] || {},
     });
   };
 
   const listServices = useCallback(async () => {
     try {
-      if (!MainState.accountInfo.id || !MainState.user.id) return;
+      if (!MAIN_STATE.accountInfo.id || !MAIN_STATE.user.id) return;
 
       const { data } = await ServiveService.findAllByCompanyId({
-        companyId: MainState.accountInfo.id,
-        userId: MainState.user.id,
+        companyId: MAIN_STATE.accountInfo.id,
+        userId: MAIN_STATE.user.id,
       });
 
       setServices(data);
     } catch (error) {
       alert(handleError(error));
     }
-  }, [MainState.accountInfo.id, MainState.user.id]);
+  }, [MAIN_STATE.accountInfo.id, MAIN_STATE.user.id]);
 
   useEffect(() => {
     listServices();
@@ -43,7 +43,7 @@ const ScheduleServices = () => {
       </div>
       <div className="m-t-5">
         <select
-          value={MainState.service.id || ''}
+          value={MAIN_STATE.service.id || ''}
           onChange={(event) => handleChangeService(event.target.value)}
           className="select select--dark"
         >

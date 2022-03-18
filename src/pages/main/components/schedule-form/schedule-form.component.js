@@ -11,8 +11,8 @@ import { handleError } from '../../../../common/utils/api';
 const ScheduleForm = () => {
   const [formType, setFormType] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [MainState, MainDispatch, MainActions] = useContext(MainContext);
-  const [AuthState, AuthDispatch, AuthActions] = useContext(AuthContext);
+  const { MAIN_STATE, MAIN_DISPATCH, MAIN_ACTIONS } = useContext(MainContext);
+  const { AUTH_STATE, AUTH_DISPATCH, AUTH_ACTIONS } = useContext(AuthContext);
 
   const getScheduleInfoPreview = ({ date, start, end }) => {
     if (!date) return 'Selecione um horário';
@@ -22,14 +22,14 @@ const ScheduleForm = () => {
 
   const submitSchedule = async () => {
     try {
-      const { date, start, end } = MainState.scheduleSlot;
+      const { date, start, end } = MAIN_STATE.scheduleSlot;
 
-      if (!MainState.service.id) {
+      if (!MAIN_STATE.service.id) {
         alert('Escolha um serviço');
         return;
       }
 
-      if (!MainState.user.id) {
+      if (!MAIN_STATE.user.id) {
         alert('Escolha um profissional');
         return;
       }
@@ -43,25 +43,25 @@ const ScheduleForm = () => {
         date,
         start,
         end,
-        companyId: MainState.accountInfo.id,
-        serviceId: MainState.service.id,
-        userId: MainState.user.id,
+        companyId: MAIN_STATE.accountInfo.id,
+        serviceId: MAIN_STATE.service.id,
+        userId: MAIN_STATE.user.id,
       });
 
-      MainDispatch({
-        type: MainActions.SET_START_DATE,
+      MAIN_DISPATCH({
+        type: MAIN_ACTIONS.SET_START_DATE,
         value: moment().format('YYYY-MM-DD'),
       });
 
-      MainDispatch({
-        type: MainActions.SET_SERVICE,
+      MAIN_DISPATCH({
+        type: MAIN_ACTIONS.SET_SERVICE,
         value: {},
       });
 
       alert('Agendamento realizado com sucesso!');
     } catch (error) {
-      MainDispatch({
-        type: MainActions.SET_START_DATE,
+      MAIN_DISPATCH({
+        type: MAIN_ACTIONS.SET_START_DATE,
         value: moment().format('YYYY-MM-DD'),
       });
 
@@ -76,27 +76,27 @@ const ScheduleForm = () => {
           <AiOutlineCarryOut /> Agende
         </h2>
         <span className="card__subtitle">
-          {getScheduleInfoPreview(MainState.scheduleSlot)}
+          {getScheduleInfoPreview(MAIN_STATE.scheduleSlot)}
         </span>
       </div>
 
       {isLoading && <span className="loading m-b-16" />}
 
-      {!AuthState.isAuthenticated && !isLoading && formType === 'SIGN_UP' && (
+      {!AUTH_STATE.isAuthenticated && !isLoading && formType === 'SIGN_UP' && (
         <CustomerSignUpForm
           setIsLoading={setIsLoading}
           setFormType={setFormType}
         />
       )}
 
-      {!AuthState.isAuthenticated && !isLoading && formType === 'SIGN_IN' && (
+      {!AUTH_STATE.isAuthenticated && !isLoading && formType === 'SIGN_IN' && (
         <CustomerSignInForm
           setIsLoading={setIsLoading}
           setFormType={setFormType}
         />
       )}
 
-      {!AuthState.isAuthenticated && !formType && (
+      {!AUTH_STATE.isAuthenticated && !formType && (
         <div className="m-t-5">
           <button
             className="button button--block button--outline m-b-16"
@@ -113,7 +113,7 @@ const ScheduleForm = () => {
         </div>
       )}
 
-      {AuthState.isCustomer && AuthState.isAuthenticated && (
+      {AUTH_STATE.isCustomer && AUTH_STATE.isAuthenticated && (
         <div className="flexbox m-t-5">
           <div className="flexbox__item">
             <button
@@ -126,14 +126,14 @@ const ScheduleForm = () => {
         </div>
       )}
 
-      {AuthState.isProfessional && AuthState.isAuthenticated && (
+      {AUTH_STATE.isProfessional && AUTH_STATE.isAuthenticated && (
         <div className="flexbox m-t-5">
           <div className="flexbox__item">
             <button
               className="button button--block button--outline"
               onClick={() =>
-                AuthDispatch({
-                  type: AuthActions.SET_SIGN_OUT_WITHOUT_REDIRECT,
+                AUTH_DISPATCH({
+                  type: AUTH_ACTIONS.SET_SIGN_OUT_WITHOUT_REDIRECT,
                 })
               }
             >

@@ -3,16 +3,16 @@ import { AiOutlineCalendar } from 'react-icons/ai';
 import { MainContext } from '../../contexts/main';
 
 const ScheduleDate = () => {
-  const [MainState, MainDispatch, MainActions] = useContext(MainContext);
+  const { MAIN_STATE, MAIN_DISPATCH, MAIN_ACTIONS } = useContext(MainContext);
 
   const handleChangeDate = async (event) => {
-    MainDispatch({
-      type: MainActions.SET_START_DATE,
+    MAIN_DISPATCH({
+      type: MAIN_ACTIONS.SET_START_DATE,
       value: event.target.value,
     });
 
-    MainDispatch({
-      type: MainActions.SET_SCHEDULE_SLOT,
+    MAIN_DISPATCH({
+      type: MAIN_ACTIONS.SET_SCHEDULE_SLOT,
       value: '',
     });
   };
@@ -27,7 +27,7 @@ const ScheduleDate = () => {
       <div className="m-t-5">
         <input
           type="date"
-          value={MainState.startDate}
+          value={MAIN_STATE.startDate}
           onChange={(event) => handleChangeDate(event)}
           className="input input--dark"
         />

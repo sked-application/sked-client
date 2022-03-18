@@ -114,7 +114,13 @@ export const AuthProvider = ({ children }) => {
   }, [state.token, history, state.redirectToSignIn]);
 
   return (
-    <AuthContext.Provider value={[state, dispatch, actions]}>
+    <AuthContext.Provider
+      value={{
+        AUTH_STATE: state,
+        AUTH_DISPATCH: dispatch,
+        AUTH_ACTIONS: actions,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

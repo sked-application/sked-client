@@ -8,7 +8,7 @@ import { AuthProvider, AuthContext } from '../common/contexts/auth';
 import '../common/styles/main.scss';
 
 const AppContexted = () => {
-  const [AuthState] = useContext(AuthContext);
+  const { AUTH_STATE } = useContext(AuthContext);
   const [currentPathname, setCurrentPathname] = useState('');
   const location = useLocation();
 
@@ -18,7 +18,7 @@ const AppContexted = () => {
 
   return (
     <Fragment>
-      {AuthState.isAuthLoading ? (
+      {AUTH_STATE.isAuthLoading ? (
         <div className="loading m-t-30"></div>
       ) : (
         <Fragment>

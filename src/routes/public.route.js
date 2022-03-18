@@ -4,8 +4,8 @@ import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from '../common/contexts/auth';
 
 const PublicRoute = ({ component: Component, ...rest }) => {
-  const [AuthState] = useContext(AuthContext);
-  const redirectUrl = AuthState.isProfessional
+  const { AUTH_STATE } = useContext(AuthContext);
+  const redirectUrl = AUTH_STATE.isProfessional
     ? '/schedules'
     : '/customer-schedules';
 
@@ -13,7 +13,7 @@ const PublicRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        AuthState.isAuthenticated ? (
+        AUTH_STATE.isAuthenticated ? (
           <Redirect to={redirectUrl} />
         ) : (
           <Component {...props} />
