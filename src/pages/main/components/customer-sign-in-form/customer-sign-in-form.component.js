@@ -10,7 +10,7 @@ import { AuthContext } from '../../../../common/contexts/auth';
 import { Link } from 'react-router-dom';
 
 const CustomerSignInForm = ({ setIsLoading, setFormType }) => {
-  const AUTH = useContext(AuthContext);
+  const { AUTH_DISPATCH, AUTH_ACTIONS } = useContext(AuthContext);
 
   const { register, handleSubmit, formState, errors, reset } = useForm({
     resolver: yupResolver(schema.form.validator),
@@ -32,7 +32,10 @@ const CustomerSignInForm = ({ setIsLoading, setFormType }) => {
 
       reset();
       setIsLoading(false);
-      AUTH.handleSignIn(data);
+      AUTH_DISPATCH({
+        type: AUTH_ACTIONS.SET_SIGN_IN,
+        value: data,
+      });
     } catch (error) {
       alert(handleError(error));
       setIsLoading(false);

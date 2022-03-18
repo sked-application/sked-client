@@ -99,7 +99,13 @@ export const MainProvider = ({ children }) => {
   }, [findCompany]);
 
   return (
-    <MainContext.Provider value={[state, dispatch, actions]}>
+    <MainContext.Provider
+      value={{
+        MAIN_STATE: state,
+        MAIN_DISPATCH: dispatch,
+        MAIN_ACTIONS: actions,
+      }}
+    >
       {children}
     </MainContext.Provider>
   );

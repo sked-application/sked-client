@@ -11,8 +11,8 @@ import { handleError } from '../../../../common/utils/api';
 const ScheduleForm = () => {
   const [formType, setFormType] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [mainState, mainDispatch, mainActions] = useContext(MainContext);
-  const AUTH = useContext(AuthContext);
+  const { MAIN_STATE, MAIN_DISPATCH, MAIN_ACTIONS } = useContext(MainContext);
+  const { AUTH_STATE, AUTH_DISPATCH, AUTH_ACTIONS } = useContext(AuthContext);
 
   const getScheduleInfoPreview = ({ date, start, end }) => {
     if (!date) return 'Selecione um horário';
@@ -22,14 +22,14 @@ const ScheduleForm = () => {
 
   const submitSchedule = async () => {
     try {
-      const { date, start, end } = mainState.scheduleSlot;
+      const { date, start, end } = MAIN_STATE.scheduleSlot;
 
-      if (!mainState.service.id) {
+      if (!MAIN_STATE.service.id) {
         alert('Escolha um serviço');
         return;
       }
 
-      if (!mainState.user.id) {
+      if (!MAIN_STATE.user.id) {
         alert('Escolha um profissional');
         return;
       }
@@ -43,25 +43,25 @@ const ScheduleForm = () => {
         date,
         start,
         end,
-        companyId: mainState.accountInfo.id,
-        serviceId: mainState.service.id,
-        userId: mainState.user.id,
+        companyId: MAIN_STATE.accountInfo.id,
+        serviceId: MAIN_STATE.service.id,
+        userId: MAIN_STATE.user.id,
       });
 
-      mainDispatch({
-        type: mainActions.SET_START_DATE,
+      MAIN_DISPATCH({
+        type: MAIN_ACTIONS.SET_START_DATE,
         value: moment().format('YYYY-MM-DD'),
       });
 
-      mainDispatch({
-        type: mainActions.SET_SERVICE,
+      MAIN_DISPATCH({
+        type: MAIN_ACTIONS.SET_SERVICE,
         value: {},
       });
 
       alert('Agendamento realizado com sucesso!');
     } catch (error) {
-      mainDispatch({
-        type: mainActions.SET_START_DATE,
+      MAIN_DISPATCH({
+        type: MAIN_ACTIONS.SET_START_DATE,
         value: moment().format('YYYY-MM-DD'),
       });
 
@@ -76,27 +76,27 @@ const ScheduleForm = () => {
           <AiOutlineCarryOut /> Agende
         </h2>
         <span className="card__subtitle">
-          {getScheduleInfoPreview(mainState.scheduleSlot)}
+          {getScheduleInfoPreview(MAIN_STATE.scheduleSlot)}
         </span>
       </div>
 
       {isLoading && <span className="loading m-b-16" />}
 
-      {!AUTH.isAuthenticated && !isLoading && formType === 'SIGN_UP' && (
+      {!AUTH_STATE.isAuthenticated && !isLoading && formType === 'SIGN_UP' && (
         <CustomerSignUpForm
           setIsLoading={setIsLoading}
           setFormType={setFormType}
         />
       )}
 
-      {!AUTH.isAuthenticated && !isLoading && formType === 'SIGN_IN' && (
+      {!AUTH_STATE.isAuthenticated && !isLoading && formType === 'SIGN_IN' && (
         <CustomerSignInForm
           setIsLoading={setIsLoading}
           setFormType={setFormType}
         />
       )}
 
-      {!AUTH.isAuthenticated && !formType && (
+      {!AUTH_STATE.isAuthenticated && !formType && (
         <div className="m-t-5">
           <button
             className="button button--block button--outline m-b-16"
@@ -113,7 +113,7 @@ const ScheduleForm = () => {
         </div>
       )}
 
-      {AUTH.isCustomer && AUTH.isAuthenticated && (
+      {AUTH_STATE.isCustomer && AUTH_STATE.isAuthenticated && (
         <div className="flexbox m-t-5">
           <div className="flexbox__item">
             <button
@@ -126,12 +126,16 @@ const ScheduleForm = () => {
         </div>
       )}
 
-      {AUTH.isProfessional && AUTH.isAuthenticated && (
+      {AUTH_STATE.isProfessional && AUTH_STATE.isAuthenticated && (
         <div className="flexbox m-t-5">
           <div className="flexbox__item">
             <button
               className="button button--block button--outline"
-              onClick={() => AUTH.handleSignOut(true)}
+              onClick={() =>
+                AUTH_DISPATCH({
+                  type: AUTH_ACTIONS.SET_SIGN_OUT_WITHOUT_REDIRECT,
+                })
+              }
             >
               Entrar como cliente
             </button>

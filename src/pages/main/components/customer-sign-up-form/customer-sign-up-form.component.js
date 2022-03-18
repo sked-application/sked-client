@@ -12,7 +12,7 @@ import { telephoneMask } from '../../../../common/utils/telephone-mask';
 import { replaceSpecialCharacters } from '../../../../common/utils/validator';
 
 const CustomerSignUpForm = ({ setIsLoading, setFormType }) => {
-  const AUTH = useContext(AuthContext);
+  const { AUTH_DISPATCH, AUTH_ACTIONS } = useContext(AuthContext);
 
   const {
     register,
@@ -43,7 +43,10 @@ const CustomerSignUpForm = ({ setIsLoading, setFormType }) => {
 
       reset();
       setIsLoading(false);
-      AUTH.handleSignIn(data);
+      AUTH_DISPATCH({
+        type: AUTH_ACTIONS.SET_SIGN_IN,
+        value: data,
+      });
       alert('Cadastro realizado com sucesso, realize agora seu agendamento!');
     } catch (error) {
       alert(handleError(error));

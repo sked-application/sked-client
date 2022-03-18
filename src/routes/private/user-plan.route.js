@@ -5,15 +5,15 @@ import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from '../../common/contexts/auth';
 
 const UserPrivatePlanRoute = ({ component: Component, plan, ...rest }) => {
-  const AUTH = useContext(AuthContext);
+  const { AUTH_STATE } = useContext(AuthContext);
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        AUTH.isAuthenticated &&
-        AUTH.isProfessional &&
-        AUTH.userCompany.plan === plan ? (
+        AUTH_STATE.isAuthenticated &&
+        AUTH_STATE.isProfessional &&
+        AUTH_STATE.userCompany.plan === plan ? (
           <Component {...props} />
         ) : (
           <Redirect to="/sign-in" />

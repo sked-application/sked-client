@@ -13,23 +13,23 @@ import CompanyThumb from '../../common/components/company-thumb';
 import './main.page.scss';
 
 const MainContexted = () => {
-  const [mainState] = useContext(MainContext);
+  const { MAIN_STATE } = useContext(MainContext);
 
-  if (!mainState.accountExists) {
+  if (!MAIN_STATE.accountExists) {
     return <Redirect to="/not-found" />;
   }
 
   return (
     <div className="container">
       <div className="main-company__thumbnail">
-        <CompanyThumb src={mainState.accountInfo.thumbnail} />
+        <CompanyThumb src={MAIN_STATE.accountInfo.thumbnail} />
       </div>
       <PageHeader
-        title={mainState.accountInfo.name}
+        title={MAIN_STATE.accountInfo.name}
         description="Realize seu agendamento abaixo."
       />
       <Fragment>
-        {mainState.isMainRequestPeding ? (
+        {MAIN_STATE.isMainRequestPeding ? (
           <div className="loading"></div>
         ) : (
           <Fragment>
@@ -39,7 +39,7 @@ const MainContexted = () => {
             <ScheduleServices />
             <ScheduleSlots />
             <ScheduleForm />
-            <CompanyContact accountInfo={mainState.accountInfo} />
+            <CompanyContact accountInfo={MAIN_STATE.accountInfo} />
           </Fragment>
         )}
       </Fragment>

@@ -15,7 +15,7 @@ import './sign-in.page.scss';
 const SignIn = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const AUTH = useContext(AuthContext);
+  const { AUTH_DISPATCH, AUTH_ACTIONS } = useContext(AuthContext);
 
   const { register, handleSubmit, formState, errors } = useForm({
     resolver: yupResolver(schema.form.validator),
@@ -35,7 +35,10 @@ const SignIn = () => {
         password,
       });
 
-      AUTH.handleSignIn(data.token);
+      AUTH_DISPATCH({
+        type: AUTH_ACTIONS.SET_SIGN_IN,
+        value: data.token,
+      });
     } catch (error) {
       setError(handleError(error));
       setIsLoading(false);
