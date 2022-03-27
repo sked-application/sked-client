@@ -129,7 +129,7 @@ const Statistics = () => {
             </select>
           </div>
           <div className="flexbox m-b-16">
-            <div className="m-r-16">
+            <div className="flexbox__item m-r-16">
               <input
                 type="date"
                 value={dates.start}
@@ -139,7 +139,7 @@ const Statistics = () => {
                 className="input input--dark"
               />
             </div>
-            <div>
+            <div className="flexbox__item">
               <input
                 type="date"
                 value={dates.end}

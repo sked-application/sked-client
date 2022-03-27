@@ -4,6 +4,9 @@
   width: 100%;
   font-size: 14px;
   outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   height: 48px;
   background-color: var(--light-gray);
   border-radius: 6px;
