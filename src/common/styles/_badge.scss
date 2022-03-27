@@ -6,7 +6,7 @@
   display: inline-block;
 
   &--outline {
-    border-color: $text-color;
+    border-color: var(--dark);
   }
 
   &--dark {

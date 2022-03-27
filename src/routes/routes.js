@@ -9,6 +9,7 @@ import Timegrid from '../pages/timegrid';
 import NotFound from '../pages/not-found';
 import Schedules from '../pages/schedules';
 import ScheduleLocks from '../pages/schedule-locks';
+import Statistics from '../pages/statistics';
 import ResetPassword from '../pages/reset-password';
 import CustomerSignIn from '../pages/customer-sign-in';
 import CustomerProfile from '../pages/customer-profile';
@@ -29,6 +30,7 @@ const routes = {
     { path: '/settings', component: Timegrid },
     { path: '/profile', component: Profile },
     { path: '/schedule-locks', component: ScheduleLocks },
+    { path: '/statistics', component: Statistics },
   ],
   userPrivatePlanRoute: [
     { path: '/professionals', component: Professionals, plan: 'CUSTOM' },

@@ -1,4 +1,17 @@
-import { format, parseISO, isValid, getUnixTime } from 'date-fns';
+import {
+  format,
+  parseISO,
+  isValid,
+  getUnixTime,
+  startOfDay,
+  endOfDay,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  startOfYear,
+  endOfYear,
+} from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
 export const getDayLabelByDate = (date, short) => {
@@ -27,4 +40,29 @@ export const getFormattedDatePreview = (date) => {
 
 export const getUnixHash = () => {
   return getUnixTime(new Date());
+};
+
+export const getDatesByPeriod = (period) => {
+  const date = new Date();
+  const pattern = 'yyyy-MM-dd';
+  const periods = {
+    TODAY: {
+      start: format(startOfDay(date), pattern),
+      end: format(endOfDay(date), pattern),
+    },
+    WEEK: {
+      start: format(startOfWeek(date), pattern),
+      end: format(endOfWeek(date), pattern),
+    },
+    MONTH: {
+      start: format(startOfMonth(date), pattern),
+      end: format(endOfMonth(date), pattern),
+    },
+    YEAR: {
+      start: format(startOfYear(date), pattern),
+      end: format(endOfYear(date), pattern),
+    },
+  };
+
+  return periods[period] || { start: '', end: '' };
 };

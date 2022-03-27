@@ -30,7 +30,7 @@ const findAllByCompanyId = ({ companyId }) => {
   return api.get(`v1/users/${companyId}/grouped`);
 };
 
-const findAllBy = () => {
+const findAll = () => {
   return api.get(`v1/users`);
 };
 
@@ -38,7 +38,7 @@ export default {
   profile,
   updateProfile,
   findAllByCompanyId,
-  findAllBy,
+  findAll,
   create,
   confirmInvitation,
 };
