@@ -97,6 +97,16 @@ const Header = ({ currentPathname }) => {
                     </ul>
                   </li>
                   <li>
+                    <strong>Finanças</strong>
+                    <ul className="m-t-10">
+                      <li>
+                        <Link to="/statistics" onClick={() => setIsOpen(false)}>
+                          Relatórios
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
                     <strong>Configurações</strong>
                     <ul className="m-t-10">
                       <li>

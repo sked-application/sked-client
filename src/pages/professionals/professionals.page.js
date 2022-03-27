@@ -53,7 +53,7 @@ const Professionals = () => {
     try {
       setIsLoading(true);
 
-      const { data } = await UserService.findAllBy();
+      const { data } = await UserService.findAll();
 
       setProfessionals(data);
       setIsLoading(false);
