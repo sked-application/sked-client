@@ -4,6 +4,7 @@ import CalendarTimeline from '../../common/components/calendar-timeline';
 import ScheduleService from '../../services/schedule.service';
 import PageHeader from '../../common/components/page-header';
 import { handleError } from '../../common/utils/api';
+import { useLocation } from 'react-router-dom';
 
 const statusLabels = {
   CONFIRMED: 'confirmar',
@@ -11,10 +12,14 @@ const statusLabels = {
 };
 
 const CustomerSchedules = () => {
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [schedules, setSchedules] = useState([]);
   const [status, setStatus] = useState('SCHEDULED');
-  const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
+  const [initialDate, setInitialDate] = useState(
+    location.state ? location.state.date : moment().format('YYYY-MM-DD'),
+  );
+  const [date, setDate] = useState(initialDate);
 
   const updateStatus = async (id, updateStatus) => {
     try {
@@ -67,6 +72,8 @@ const CustomerSchedules = () => {
         list={schedules}
         isLoading={isLoading}
         date={date}
+        initialDate={initialDate}
+        clearInitialDate={setInitialDate}
         updateStatus={updateStatus}
         setDate={setDate}
         setStatus={setStatus}

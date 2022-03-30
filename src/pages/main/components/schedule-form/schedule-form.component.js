@@ -7,8 +7,10 @@ import CustomerSignUpForm from '../customer-sign-up-form';
 import { MainContext } from '../../contexts/main';
 import { AuthContext } from '../../../../common/contexts/auth';
 import { handleError } from '../../../../common/utils/api';
+import { useHistory } from 'react-router-dom';
 
 const ScheduleForm = () => {
+  const history = useHistory();
   const [formType, setFormType] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const { MAIN_STATE, MAIN_DISPATCH, MAIN_ACTIONS } = useContext(MainContext);
@@ -48,17 +50,11 @@ const ScheduleForm = () => {
         userId: MAIN_STATE.user.id,
       });
 
-      MAIN_DISPATCH({
-        type: MAIN_ACTIONS.SET_START_DATE,
-        value: moment().format('YYYY-MM-DD'),
-      });
-
-      MAIN_DISPATCH({
-        type: MAIN_ACTIONS.SET_SERVICE,
-        value: {},
-      });
-
       alert('Agendamento realizado com sucesso!');
+
+      history.push('/customer-schedules', {
+        date,
+      });
     } catch (error) {
       MAIN_DISPATCH({
         type: MAIN_ACTIONS.SET_START_DATE,

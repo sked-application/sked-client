@@ -37,6 +37,8 @@ const CalendarTimeline = ({
   status,
   isLoading,
   date,
+  initialDate,
+  clearInitialDate,
   setStatus,
   updateStatus,
   setDate,
@@ -50,12 +52,19 @@ const CalendarTimeline = ({
   const handlePrev = () => {
     setStartDate(moment(startDate).subtract(7, 'day'));
     setEndDate(moment(endDate).subtract(7, 'day'));
+
+    if (isCustomerSchudule) {
+      clearInitialDate('');
+    }
   };
 
   const handleNext = () => {
     setStartDate(moment(startDate).add(7, 'days'));
     setEndDate(moment(endDate).add(7, 'days'));
-    setEndDate(moment(endDate).add(7, 'days'));
+
+    if (isCustomerSchudule) {
+      clearInitialDate('');
+    }
   };
 
   const handleChangeDate = (currentDate) => {
@@ -65,11 +74,13 @@ const CalendarTimeline = ({
   useEffect(() => {
     const newDates = generateCalendarDates(startDate, endDate);
     const activeDate =
-      newDates.find((currentDate) => currentDate === today) || newDates[0];
+      initialDate ||
+      newDates.find((currentDate) => currentDate === today) ||
+      newDates[0];
 
     setDates(newDates);
     setDate(activeDate);
-  }, [startDate, endDate, today, setDate]);
+  }, [startDate, endDate, today, setDate, initialDate]);
 
   return (
     <div>
@@ -267,6 +278,8 @@ CalendarTimeline.propTypes = {
   setDate: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   date: PropTypes.string.isRequired,
+  initialDate: PropTypes.string,
+  clearInitialDate: PropTypes.func,
   setStatus: PropTypes.func.isRequired,
   isCustomerSchudule: PropTypes.bool,
 };
