@@ -168,6 +168,9 @@ const Statistics = () => {
               </select>
             </div>
           )}
+          <div>
+            <h3 className="m-t-8 m-b-16 text--center">Agendamentos</h3>
+          </div>
           <div className="flexbox">
             <div className="card card--outline ">
               <div className="card__header">
