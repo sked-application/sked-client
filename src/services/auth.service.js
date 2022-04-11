@@ -21,6 +21,19 @@ const customerSignIn = ({ email, password }) => {
   });
 };
 
+const customerSignInWithGoogle = ({ accessToken, tokenId }) => {
+  return api.post('v1/auth/signin-customer/google', {
+    accessToken,
+    tokenId,
+  });
+};
+
+const customerSignIngGoogle = ({ token }) => {
+  return api.post('v1/auth/google', {
+    token,
+  });
+};
+
 const customerSignUp = ({ email, name, telephone, password }) => {
   return api.post('v1/auth/signup-customer', {
     email,
@@ -54,4 +67,6 @@ export default {
   resetPassword,
   customerSignIn,
   customerSignUp,
+  customerSignIngGoogle,
+  customerSignInWithGoogle,
 };

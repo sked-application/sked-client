@@ -43,50 +43,52 @@ const CustomerSignInForm = ({ setIsLoading, setFormType }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(signInForm)}>
-      <div className="m-t-16">
-        <input
-          name="email"
-          type="email"
-          ref={register}
-          placeholder="Email"
-          className="input input--dark"
-          autoComplete="off"
-        />
-        <InputFormError touched={touched.email} error={errors.email} />
-      </div>
-      <div className="m-t-16">
-        <input
-          name="password"
-          type="password"
-          ref={register}
-          placeholder="Senha"
-          className="input input--dark"
-          autoComplete="off"
-        />
-        <InputFormError touched={touched.password} error={errors.password} />
-      </div>
-      <div className="m-t-16 sign-in__forgot-password">
-        <Link to="/recover-password">Esqueceu a senha?</Link>
-      </div>
-      <div className="m-t-16">
-        <button
-          type="submit"
-          className="button button--block button--purple"
-          disabled={!isValid || !isDirty}
-        >
-          Entrar
-        </button>
-      </div>
-      <div className="text--center m-t-25 m-b-16">
-        <div
-          onClick={() => setFormType('SIGN_UP')}
-          className="cursor--pointer color--purple"
-        >
-          <strong>Não tenho cadastro</strong>
+    <div>
+      <form onSubmit={handleSubmit(signInForm)}>
+        <div className="m-t-16">
+          <input
+            name="email"
+            type="email"
+            ref={register}
+            placeholder="Email"
+            className="input input--dark"
+            autoComplete="off"
+          />
+          <InputFormError touched={touched.email} error={errors.email} />
         </div>
-      </div>
-    </form>
+        <div className="m-t-16">
+          <input
+            name="password"
+            type="password"
+            ref={register}
+            placeholder="Senha"
+            className="input input--dark"
+            autoComplete="off"
+          />
+          <InputFormError touched={touched.password} error={errors.password} />
+        </div>
+        <div className="m-t-16 sign-in__forgot-password">
+          <Link to="/recover-password">Esqueceu a senha?</Link>
+        </div>
+        <div className="m-t-16">
+          <button
+            type="submit"
+            className="button button--block button--purple"
+            disabled={!isValid || !isDirty}
+          >
+            Entrar
+          </button>
+        </div>
+        <div className="text--center m-t-25 m-b-16">
+          <div
+            onClick={() => setFormType('SIGN_UP')}
+            className="cursor--pointer color--purple"
+          >
+            <strong>Não tenho cadastro</strong>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 };
 

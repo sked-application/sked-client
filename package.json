@@ -17,6 +17,7 @@
         "react-currency-input-field": "^2.7.0",
         "react-currency-masked-input": "^2.5.0",
         "react-dom": "^16.13.1",
+        "react-google-login": "^5.2.2",
         "react-hook-form": "^6.15.5",
         "react-icons": "^3.10.0",
         "react-image-file-resizer": "^0.4.7",

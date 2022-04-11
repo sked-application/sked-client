@@ -8,6 +8,7 @@ import { MainContext } from '../../contexts/main';
 import { AuthContext } from '../../../../common/contexts/auth';
 import { handleError } from '../../../../common/utils/api';
 import { useHistory } from 'react-router-dom';
+import SignInGoogleButton from '../../../../common/components/signin-google-button';
 
 const ScheduleForm = () => {
   const history = useHistory();
@@ -106,6 +107,10 @@ const ScheduleForm = () => {
           >
             Não tenho cadastro
           </button>
+
+          <div className="text--center m-t-16">
+            <SignInGoogleButton />
+          </div>
         </div>
       )}
 
