@@ -107,10 +107,12 @@ const ScheduleForm = () => {
           >
             Não tenho cadastro
           </button>
+        </div>
+      )}
 
-          <div className="text--center m-t-16">
-            <SignInGoogleButton />
-          </div>
+      {!AUTH_STATE.isAuthenticated && (
+        <div className="text--center m-t-16">
+          <SignInGoogleButton />
         </div>
       )}
 
