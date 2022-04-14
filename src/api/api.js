@@ -9,7 +9,7 @@ const handleResponse = ({ data }) => data;
 const handleError = (error) => {
   const response = error.response;
 
-  if (response && response.data && response.data.statusCode === 401) {
+  if (response && response.data && response.data.message === 'Unauthorized') {
     const isProfessionalUser = !!JSON.parse(
       localStorage.getItem('userCompany'),
     );
