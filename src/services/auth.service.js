@@ -7,10 +7,11 @@ const signIn = ({ email, password }) => {
   });
 };
 
-const signUp = ({ company, user }) => {
+const signUp = ({ name, email, password }) => {
   return api.post('v1/auth/signup-admin', {
-    company,
-    user,
+    name,
+    email,
+    password,
   });
 };
 

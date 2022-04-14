@@ -7,6 +7,8 @@ import { AuthProvider, AuthContext } from '../common/contexts/auth';
 
 import '../common/styles/main.scss';
 
+const skipHeader = ['/sign-up', '/sign-up-new'];
+
 const AppContexted = () => {
   const { AUTH_STATE } = useContext(AuthContext);
   const [currentPathname, setCurrentPathname] = useState('');
@@ -22,7 +24,9 @@ const AppContexted = () => {
         <div className="loading m-t-30"></div>
       ) : (
         <Fragment>
-          <AppHeader currentPathname={currentPathname} />
+          {!skipHeader.includes(currentPathname) && (
+            <AppHeader currentPathname={currentPathname} />
+          )}
           <AppRoutes />
           <Copyright />
         </Fragment>

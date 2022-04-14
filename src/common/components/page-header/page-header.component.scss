@@ -7,11 +7,15 @@
 
   &__title {
     font-size: 26px;
+
+    &--medium {
+      font-size: 22px;
+    }
   }
 
   &__description {
     font-weight: 300;
-    margin-top: 8px;
+    margin-top: 16px;
 
     span {
       font-size: 14px;

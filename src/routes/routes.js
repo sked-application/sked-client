@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Main from '../pages/main';
 import SignUp from '../pages/sign-up';
+import SignUpNew from '../pages/sign-up-new';
 import SignIn from '../pages/sign-in';
 import Profile from '../pages/profile';
 import Services from '../pages/services';
@@ -42,6 +43,7 @@ const routes = {
   ],
   publicRoute: [
     { path: '/sign-up', component: SignUp },
+    { path: '/sign-up-new', component: SignUpNew },
     { path: '/sign-in', component: SignIn },
     { path: '/customer-sign-in', component: CustomerSignIn },
     { path: '/recover-password', component: RecoverPassword },
