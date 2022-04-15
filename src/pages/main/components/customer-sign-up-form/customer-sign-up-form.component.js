@@ -123,7 +123,7 @@ const CustomerSignUpForm = ({ setIsLoading, setFormType }) => {
           Casdastrar
         </button>
       </div>
-      <div className="text--center m-t-25 m-b-16">
+      <div className="text--center m-t-24 m-b-16">
         <div
           onClick={() => setFormType('SIGN_IN')}
           className="cursor--pointer color--purple"

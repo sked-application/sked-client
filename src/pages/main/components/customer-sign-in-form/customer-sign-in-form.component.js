@@ -79,7 +79,7 @@ const CustomerSignInForm = ({ setIsLoading, setFormType }) => {
             Entrar
           </button>
         </div>
-        <div className="text--center m-t-25 m-b-16">
+        <div className="text--center m-t-24 m-b-16">
           <div
             onClick={() => setFormType('SIGN_UP')}
             className="cursor--pointer color--purple"

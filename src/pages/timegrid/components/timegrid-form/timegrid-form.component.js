@@ -104,7 +104,7 @@ const TimegridForm = () => {
   }, []);
 
   return (
-    <div className="p-b-20">
+    <div className="p-b-24">
       {error && (
         <div className="m-t-16 m-b-16">
           <span>{error.message}</span>

@@ -157,7 +157,7 @@ const Profile = () => {
                   Editar
                 </strong>
               </div>
-              <div className="flexbox flexbox--column m-b-30">
+              <div className="flexbox flexbox--column m-b-32">
                 <div className="m-t-10">
                   <strong>Nome: </strong>
                   <span>{profile.name}</span>
@@ -181,7 +181,7 @@ const Profile = () => {
               <div className="card__header">
                 <h2 className="card__title">Dados do estabelecimento</h2>
               </div>
-              <div className="flexbox flexbox--column m-b-30">
+              <div className="flexbox flexbox--column m-b-32">
                 <div className="m-t-10">
                   <strong>Conta: </strong>
                   <span>{profile.company.name}</span>

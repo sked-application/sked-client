@@ -103,7 +103,7 @@ const Profile = () => {
                   Gerenciar
                 </strong>
               </div>
-              <div className="flexbox flexbox--column m-b-30">
+              <div className="flexbox flexbox--column m-b-32">
                 <div className="m-t-10">
                   <strong>Nome: </strong>
                   <span>{profile.name}</span>

@@ -9,6 +9,13 @@
     margin-bottom: 16px;
   }
 
+  &__label {
+    font-size: 14px;
+    color: var(--dark);
+    margin-bottom: 8px;
+    display: block;
+  }
+
   &__error {
     margin-bottom: 8px;
     text-align: center;

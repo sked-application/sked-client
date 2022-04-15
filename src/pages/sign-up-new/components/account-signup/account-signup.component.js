@@ -4,27 +4,42 @@ import { useForm } from 'react-hook-form';
 import StepWizard from 'react-step-wizard';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import schema from './validators/account-validation.validator';
+import schema from './validators/account-signup.validator';
 import PageHeader from '../../../../common/components/page-header';
 import { handleError } from '../../../../common/utils/api';
-import authService from '../../../../services/auth.service';
+import AuthService from '../../../../services/auth.service';
 import InputFormError from '../../../../common/components/input-form-error';
-import Button from '../../../../common/components/Button';
-import logoSvg from '../../../../common/assets/svg/logo.svg';
+import Button from '../../../../common/components/button';
+import UserService from '../../../../services/user.service';
+import WizardHeader from '../../../../common/components/wizard-header';
 
 const AccountSignUp = () => {
   const [userData, setUserData] = useState({});
+  const [allowBackButton, setAllowBackButton] = useState(false);
+  const [wizardInstance, setWizardInstance] = useState({});
+
+  const onStepChange = () => {
+    const allow = !!(
+      wizardInstance.currentStep > 1 &&
+      wizardInstance.currentStep < wizardInstance.totalSteps
+    );
+
+    setAllowBackButton(allow);
+  };
 
   return (
     <Fragment>
-      <div className="flexbox flexbox__justify--center m-b-16">
-        <span className="header__logo">
-          <img src={logoSvg} alt="Logo Sked App" />
-        </span>
-      </div>
+      <WizardHeader
+        allowBackButton={allowBackButton}
+        wizardInstance={wizardInstance}
+      />
       <div className="wizard-wrapper m-t-16">
-        <StepWizard>
-          <AccountSignUpValidation setUserData={setUserData} />
+        <StepWizard instance={setWizardInstance} onStepChange={onStepChange}>
+          <AccountSignUpEmail setUserData={setUserData} />
+          <AccountSignUpValidation
+            setUserData={setUserData}
+            userData={userData}
+          />
           <AccountSignUpConfirmation userData={userData} />
         </StepWizard>
       </div>
@@ -32,13 +47,13 @@ const AccountSignUp = () => {
   );
 };
 
-const AccountSignUpValidation = ({ nextStep, setUserData }) => {
+const AccountSignUpEmail = ({ nextStep, setUserData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const { errors, formState, register, handleSubmit } = useForm({
-    resolver: yupResolver(schema.form.validator),
-    defaultValues: schema.form.initialValues,
+    resolver: yupResolver(schema.formEmail.validator),
+    defaultValues: schema.formEmail.initialValues,
     mode: 'onChange',
   });
 
@@ -48,14 +63,12 @@ const AccountSignUpValidation = ({ nextStep, setUserData }) => {
     try {
       setIsLoading(true);
 
-      const { userName, userEmail, userPassword } = values;
+      const { userEmail } = values;
       const userData = {
         email: userEmail,
-        name: userName,
-        password: userPassword,
       };
 
-      await authService.signUp(userData);
+      await UserService.verifyEmail(userData);
 
       setUserData(userData);
       setIsLoading(false);
@@ -81,45 +94,20 @@ const AccountSignUpValidation = ({ nextStep, setUserData }) => {
           {error && <div className="form__error">{error}</div>}
           <div className="card card--outline">
             <div className="form__field">
+              <label className="form__label" htmlFor="userEmail">
+                Digite seu e-mail
+              </label>
               <input
+                id="userEmail"
                 name="userEmail"
                 type="email"
                 ref={register}
-                placeholder="Email"
                 disabled={isLoading}
                 className="input"
               />
               <InputFormError
                 touched={touched.userEmail}
                 error={errors.userEmail}
-              />
-            </div>
-            <div className="form__field">
-              <input
-                name="userName"
-                type="text"
-                ref={register}
-                placeholder="Nome"
-                disabled={isLoading}
-                className="input"
-              />
-              <InputFormError
-                touched={touched.userName}
-                error={errors.userName}
-              />
-            </div>
-            <div className="form__field">
-              <input
-                name="userPassword"
-                type="password"
-                ref={register}
-                placeholder="Senha"
-                disabled={isLoading}
-                className="input"
-              />
-              <InputFormError
-                touched={touched.userPassword}
-                error={errors.userPassword}
               />
             </div>
             <div>
@@ -142,8 +130,119 @@ const AccountSignUpValidation = ({ nextStep, setUserData }) => {
   );
 };
 
+AccountSignUpEmail.propTypes = {
+  nextStep: PropTypes.func,
+  setUserData: PropTypes.func.isRequired,
+};
+
+const AccountSignUpValidation = ({ nextStep, setUserData, userData }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const { errors, formState, register, handleSubmit } = useForm({
+    resolver: yupResolver(schema.formSignUp.validator),
+    defaultValues: schema.formSignUp.initialValues,
+    mode: 'onChange',
+  });
+
+  const { touched, isValid, isDirty } = formState;
+
+  const formSubmit = async (values) => {
+    try {
+      setIsLoading(true);
+
+      const { userName, userPassword } = values;
+      const user = {
+        email: userData.email,
+        name: userName,
+        password: userPassword,
+      };
+
+      await AuthService.signUp(user);
+
+      setUserData(user);
+      setIsLoading(false);
+      nextStep();
+    } catch (error) {
+      setError(handleError(error));
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <PageHeader
+        title="Preencha as informações abaixo"
+        description="Falta pouco, sua agenda online logo estará disponível."
+        titleSize="medium"
+      />
+      <div className="flexbox flexbox--column" style={{ overflow: 'hidden' }}>
+        <form
+          onSubmit={handleSubmit(formSubmit)}
+          className="form flexbox__item"
+        >
+          {error && <div className="form__error">{error}</div>}
+          <div className="card card--outline">
+            <div className="form__field">
+              <strong>{userData.email}</strong>
+            </div>
+            <div className="form__field">
+              <label className="form__label" htmlFor="userName">
+                Digite seu nome completo
+              </label>
+              <input
+                id="userName"
+                name="userName"
+                type="text"
+                ref={register}
+                disabled={isLoading}
+                className="input"
+              />
+              <InputFormError
+                touched={touched.userName}
+                error={errors.userName}
+              />
+            </div>
+            <div className="form__field">
+              <label className="form__label" htmlFor="userPassword">
+                Escolha uma senha com no mínimo 8 caracteres
+              </label>
+              <input
+                id="userPassword"
+                name="userPassword"
+                type="password"
+                ref={register}
+                disabled={isLoading}
+                className="input"
+              />
+              <InputFormError
+                touched={touched.userPassword}
+                error={errors.userPassword}
+              />
+            </div>
+            <div>
+              <Button
+                type="submit"
+                disabled={!isValid || !isDirty || isLoading}
+                isLoading={isLoading}
+                className="button button--block button--purple"
+              >
+                <span>Continuar</span>
+              </Button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div className="action__link text--center">
+        <Link to="/sign-in">Já tem uma conta? Iniciar sessão</Link>
+      </div>
+    </div>
+  );
+};
+
 AccountSignUpValidation.propTypes = {
   nextStep: PropTypes.func,
+  userData: PropTypes.object,
   setUserData: PropTypes.func.isRequired,
 };
 
@@ -153,7 +252,7 @@ const AccountSignUpConfirmation = ({ userData }) => {
 
   const retrySendEmail = async () => {
     try {
-      await authService.signUp(userData);
+      await AuthService.signUp(userData);
       setResent(true);
     } catch (error) {
       setError(handleError(error));

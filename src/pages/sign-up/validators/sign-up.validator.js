@@ -34,10 +34,10 @@ export default {
         .email('Por favor, digite um email válido.'),
       userPassword: Yup.string()
         .required('Este campo é obrigatório')
-        .min(4, 'Este campo deve conter ao menos 4 caracteres'),
+        .min(8, 'Este campo deve conter ao menos 8 caracteres'),
       userConfirmPassword: Yup.string()
         .required('Este campo é obrigatório')
-        .min(4, 'Este campo deve conter ao menos 4 caracteres')
+        .min(8, 'Este campo deve conter ao menos 8 caracteres')
         .oneOf([Yup.ref('userPassword')], 'As senhas devem ser iguais'),
     }),
   },

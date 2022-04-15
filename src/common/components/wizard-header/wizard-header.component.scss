@@ -1,0 +1,23 @@
+.wizard-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+  position: relative;
+
+  &__previous {
+    position: absolute;
+    left: 16px;
+    top: 4px;
+    color: var(--purple);
+
+    &__icon {
+      position: relative;
+      top: 4px;
+      margin-right: 2px;
+    }
+
+    &__label {
+      font-size: 14px;
+    }
+  }
+}
