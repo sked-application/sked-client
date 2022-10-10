@@ -69,14 +69,14 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
         <div>
           <div
             className={classNames(
-              'fixed h-screen w-full bg-slate-800 top-0 left-0 transition-all duration-300 md:invisible z-50',
+              'fixed h-screen w-full bg-slate-800 top-0 left-0 transition-all duration-300 md:invisible z-10',
               isMenuOpen ? 'opacity-60 visible' : 'opacity-0 invisible',
             )}
             onClick={() => setIsMenuOpen(false)}
           ></div>
           <div
             className={classNames(
-              'h-screen w-64 bg-white transition-all duration-300 z-50',
+              'h-screen w-64 bg-white transition-all duration-300 z-10',
               'fixed right-0 top-0 w-64 p-4',
               'md:sticky md:top-4 md:p-0 md:translate-x-0 md:pl-4',
               isMenuOpen ? 'translate-x-0' : 'translate-x-64',
