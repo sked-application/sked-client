@@ -35,17 +35,16 @@ const ScheduleServices = () => {
   }, [listServices]);
 
   return (
-    <div className="card card--service card--outline">
-      <div className="card__header">
-        <h2 className="card__title">
-          <AiOutlineCarryOut /> Serviço
-        </h2>
+    <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
+      <div className="mb-2 flex">
+        <AiOutlineCarryOut size={18} className="mr-2" />
+        <h2 className="text-md font-semibold">Serviço</h2>
       </div>
-      <div className="m-t-5">
+      <div>
         <select
           value={MAIN_STATE.service.id || ''}
           onChange={(event) => handleChangeService(event.target.value)}
-          className="select select--dark"
+          className="select"
         >
           <option>Selecione</option>
           {Object.values(services).map((item) => (

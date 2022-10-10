@@ -4,6 +4,7 @@ import { handleError } from '../../common/utils/api';
 import { getDatesByPeriod } from '../../common/utils/date';
 import UserService from '../../services/user.service';
 import StatisticsService from '../../services/statistics.service';
+import Loading from '../../common/components/loading';
 
 const mountStatisticsData = (data = []) => {
   const filteredData = {};
@@ -106,20 +107,20 @@ const Statistics = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container mx-auto px-4 max-w-screen-lg flex-1">
       <PageHeader
         title="Relatórios"
-        description="Confira como vai suas finanças."
+        description="Confira as estatísticas de seus agendamentos e veja como vai suas finanças."
       />
       {isLoading ? (
-        <div className="loading"></div>
+        <Loading />
       ) : (
         <Fragment>
           <div>
             <select
               value={period}
               onChange={(event) => handleFilter('PERIOD', event.target.value)}
-              className="select select--dark m-b-16"
+              className="select mb-1"
             >
               <option value="">Selecione</option>
               <option value="TODAY">Hoje</option>
@@ -128,36 +129,36 @@ const Statistics = () => {
               <option value="YEAR">Este ano</option>
             </select>
           </div>
-          <div className="flexbox m-b-16">
-            <div className="flexbox__item m-r-16">
+          <div className="flex mb-1">
+            <div className="flex-1 mr-1">
               <input
                 type="date"
                 value={dates.start}
                 onChange={(event) =>
                   handleFilter('START_DATE', event.target.value)
                 }
-                className="input input--dark"
+                className="input"
               />
             </div>
-            <div className="flexbox__item">
+            <div className="flex-1">
               <input
                 type="date"
                 value={dates.end}
                 onChange={(event) =>
                   handleFilter('END_DATE', event.target.value)
                 }
-                className="input input--dark"
+                className="input"
               />
             </div>
           </div>
           {users.length > 1 && (
-            <div className="m-b-16">
+            <div>
               <select
                 value={professionalId}
                 onChange={(event) =>
                   handleFilter('PROFESSIONAL', event.target.value)
                 }
-                className="select m-t-0 select--dark"
+                className="select"
               >
                 <option value="">Todos profissionais</option>
                 {users.map((item) => (
@@ -168,79 +169,68 @@ const Statistics = () => {
               </select>
             </div>
           )}
-          <div>
-            <h3 className="m-t-8 m-b-16 text--center">Agendamentos</h3>
-          </div>
-          <div className="flexbox">
-            <div className="card card--outline ">
-              <div className="card__header">
-                <h2 className="card__title m-r-16">Em aberto</h2>
+          <div className="grid grid-cols-2 gap-2 mt-4">
+            <div className="border divide-solid border-stone-200 rounded-xl p-4">
+              <div className="mb-4">
+                <h2 className="text-md font-semibold">Em aberto</h2>
               </div>
-              <div className="card__content">
-                <div className="flexbox flexbox__justify--between">
-                  <strong>Total:</strong>
-                  <strong className="color--purple">
-                    {statistics.open.quantity}
-                  </strong>
-                </div>
-                <div className="flexbox flexbox__justify--between m-t-8">
-                  <strong>Valor:</strong>
-                  <strong className="color--purple">
+              <ul className="font-semibold">
+                <li className="text-sm mb-1">
+                  <span className="mr-2">Total:</span>
+                  <span>{statistics.open.quantity}</span>
+                </li>
+                <li className="text-sm">
+                  <span className="mr-2">Valor:</span>
+                  <span className="text-indigo-500">
                     R$ {statistics.open.amount}
-                  </strong>
-                </div>
-              </div>
+                  </span>
+                </li>
+              </ul>
             </div>
-            <div className="card card--outline m-l-16">
-              <div className="card__header">
-                <h2 className="card__title m-r-16">Realizados</h2>
+            <div className="border divide-solid border-stone-200 rounded-xl p-4">
+              <div className="mb-4">
+                <h2 className="text-md font-semibold">Realizados</h2>
               </div>
-              <div className="card__content">
-                <div className="flexbox flexbox__justify--between">
-                  <strong>Total:</strong>
-                  <strong className="color--green">
-                    {statistics.finished.quantity}
-                  </strong>
-                </div>
-                <div className="flexbox flexbox__justify--between m-t-8">
-                  <strong>Valor:</strong>
-                  <strong className="color--green">
+              <ul className="font-semibold">
+                <li className="text-sm mb-1">
+                  <span className="mr-2">Total:</span>
+                  <span>{statistics.finished.quantity}</span>
+                </li>
+                <li className="text-sm">
+                  <span className="mr-2">Valor:</span>
+                  <span className="text-green-500">
                     R$ {statistics.finished.amount}
-                  </strong>
-                </div>
-              </div>
+                  </span>
+                </li>
+              </ul>
             </div>
-          </div>
-          <div className="flexbox">
-            <div className="card card--outline ">
-              <div className="card__header">
-                <h2 className="card__title m-r-16">Cancelados</h2>
+            <div className="border divide-solid border-stone-200 rounded-xl p-4">
+              <div className="mb-4">
+                <h2 className="text-md font-semibold">Cancelados</h2>
               </div>
-              <div className="card__content">
-                <div className="flexbox flexbox__justify--between">
-                  <strong>Total:</strong>
-                  <strong className="color--orange">
-                    {statistics.canceled.quantity}
-                  </strong>
-                </div>
-                <div className="flexbox flexbox__justify--between m-t-8">
-                  <strong>Valor:</strong>
-                  <strong className="color--orange">
+              <ul className="font-semibold">
+                <li className="text-sm mb-1">
+                  <span className="mr-2">Total:</span>
+                  <span>{statistics.canceled.quantity}</span>
+                </li>
+                <li className="text-sm">
+                  <span className="mr-2">Valor:</span>
+                  <span className="text-red-500">
                     R$ {statistics.canceled.amount}
-                  </strong>
-                </div>
-              </div>
+                  </span>
+                </li>
+              </ul>
             </div>
-            <div className="card card--outline m-l-16">
-              <div className="card__header">
-                <h2 className="card__title m-r-16">Todos</h2>
+            <div className="border divide-solid border-stone-200 rounded-xl p-4">
+              <div className="mb-4">
+                <h2 className="text-md font-semibold">Todos</h2>
               </div>
-              <div className="card__content">
-                <div className="flexbox flexbox__justify--between">
-                  <strong>Total:</strong>
-                  <strong>{statistics.total.quantity}</strong>
-                </div>
-              </div>
+              <ul className="font-semibold">
+                <li className="text-sm">
+                  <span className="mr-2">Total:</span>
+                  <span>{statistics.total.quantity}</span>
+                </li>
+              </ul>
             </div>
           </div>
         </Fragment>

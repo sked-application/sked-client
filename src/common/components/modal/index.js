@@ -1,2 +1,2 @@
-import { Modal, ModalOpenButton } from './modal.component';
-export { Modal, ModalOpenButton };
+import { Modal } from './modal.component';
+export { Modal };

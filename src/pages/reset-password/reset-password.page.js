@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { AiOutlineLock } from 'react-icons/ai';
-import { yupResolver } from '@hookform/resolvers/yup';
-import schema from './validators/reset-password.validator';
 import AuthService from '../../services/auth.service';
 import PageHeader from '../../common/components/page-header';
-import InputFormError from '../../common/components/input-form-error';
 import { handleError } from '../../common/utils/api';
 import { Link, useParams, useHistory } from 'react-router-dom';
-
-import './reset-password.page.scss';
+import Input from '../../common/components/input';
+import Button from '../../common/components/button';
 
 const ResetPassword = () => {
   const history = useHistory();
@@ -17,22 +13,23 @@ const ResetPassword = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, handleSubmit, reset, formState, errors } = useForm({
-    resolver: yupResolver(schema.form.validator),
-    defaultValues: schema.form.initialValues,
-    mode: 'onChange',
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isDirty },
+  } = useForm({
+    defaultValues: { password: '' },
+    mode: 'onSubmit',
   });
-
-  const { touched, isValid, isDirty } = formState;
 
   const resetPasswordForm = async (values) => {
     try {
       setIsLoading(true);
 
-      const { password, confirmPassword } = values;
+      const { password } = values;
       const { data } = await AuthService.resetPassword({
         password,
-        confirmPassword,
         token,
       });
 
@@ -52,55 +49,50 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="container">
-      <PageHeader title="Informe a nova senha" />
-      {isLoading && <span className="loading"></span>}
-      {error && <div className="reset-password__error">{error}</div>}
-      <form
-        onSubmit={handleSubmit(resetPasswordForm)}
-        className="reset-password__form card card--outline"
-      >
-        <div className="card__header">
-          <h2 className="card__title">
-            <AiOutlineLock /> Resetar
-          </h2>
-        </div>
-        <div className="reset-password__field">
-          <input
-            name="password"
-            type="password"
-            ref={register}
-            placeholder="Nova senha"
-            disabled={isLoading}
-            className="input"
-          />
-          <InputFormError touched={touched.password} error={errors.password} />
-        </div>
-        <div className="reset-password__field">
-          <input
-            name="confirmPassword"
-            type="password"
-            ref={register}
-            placeholder="Confirme sua senha"
-            disabled={isLoading}
-            className="input"
-          />
-          <InputFormError
-            touched={touched.confirmPassword}
-            error={errors.confirmPassword}
-          />
-        </div>
-        <div>
-          <button
-            disabled={!isValid || !isDirty || isLoading}
-            className="button button--block button--purple"
-          >
-            Resetar
-          </button>
-        </div>
-      </form>
-      <div className="reset-password__redirect">
-        <Link to="/sign-in">Entrar</Link>
+    <div className="container mx-auto px-4 max-w-md flex-1">
+      <PageHeader
+        title="Redefina uma nova senha"
+        description="Sua senha deve conter no mínimo 8 caracteres."
+      />
+      {error && <div className="mb-2 text-sm text-red-500">{error}</div>}
+      <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
+        <form onSubmit={handleSubmit(resetPasswordForm)}>
+          <div className="mb-4">
+            <label className="text-sm" htmlFor="password">
+              Nova senha
+            </label>
+            <Input
+              id="password"
+              type="password"
+              disabled={isLoading}
+              className="input"
+              fieldName="password"
+              errors={errors}
+              {...register('password', {
+                required: 'Este campo é obrigatório.',
+                minLength: {
+                  value: 8,
+                  message: 'Este campo deve conter ao menos 8 caracteres',
+                },
+              })}
+            />
+          </div>
+          <div>
+            <Button
+              disabled={!isDirty || isLoading}
+              isLoading={isLoading}
+              className="button button--block button--primary"
+            >
+              <span>Redefinir</span>
+            </Button>
+          </div>
+        </form>
+      </div>
+      <div className="text-center mb-6">
+        <span className="text-sm mr-1">Já é cadastrado?</span>
+        <Link to="/sign-in" className="font-semibold">
+          Iniciar sessão
+        </Link>
       </div>
     </div>
   );

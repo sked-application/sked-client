@@ -13,13 +13,16 @@ const statusLabels = {
 
 const CustomerSchedules = () => {
   const location = useLocation();
+  const initialDate = location.state?.date
+    ? moment(location.state.date)
+    : moment();
   const [isLoading, setIsLoading] = useState(true);
-  const [schedules, setSchedules] = useState([]);
+  const [schedules, setSchedules] = useState({});
   const [status, setStatus] = useState('SCHEDULED');
-  const [initialDate, setInitialDate] = useState(
-    location.state ? location.state.date : moment().format('YYYY-MM-DD'),
-  );
-  const [date, setDate] = useState(initialDate);
+  const [date, setDate] = useState({
+    startDate: moment(initialDate).format('YYYY-MM-DD'),
+    endDate: moment(initialDate).add(7, 'days').format('YYYY-MM-DD'),
+  });
 
   const updateStatus = async (id, updateStatus) => {
     try {
@@ -45,7 +48,8 @@ const CustomerSchedules = () => {
       setIsLoading(true);
 
       const { data } = await ScheduleService.findAll({
-        date,
+        startDate: date.startDate,
+        endDate: date.endDate,
         status,
       });
 
@@ -62,7 +66,7 @@ const CustomerSchedules = () => {
   }, [listSchedules]);
 
   return (
-    <div className="container">
+    <div className="container mx-auto px-4 max-w-screen-lg flex-1">
       <PageHeader
         title="Meus compromissos"
         description="Acompanhe seu histórico de agendamentos."
@@ -72,8 +76,6 @@ const CustomerSchedules = () => {
         list={schedules}
         isLoading={isLoading}
         date={date}
-        initialDate={initialDate}
-        clearInitialDate={setInitialDate}
         updateStatus={updateStatus}
         setDate={setDate}
         setStatus={setStatus}

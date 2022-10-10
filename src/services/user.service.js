@@ -15,12 +15,11 @@ const updateProfile = ({ user, company }) => {
   });
 };
 
-const confirmInvitation = ({ password, confirmPassword, token }) => {
+const confirmInvitation = ({ password, token }) => {
   return api.post(
     'v1/users/confirm-invitation',
     {
       password,
-      confirmPassword,
     },
     { params: { token } },
   );
@@ -28,6 +27,23 @@ const confirmInvitation = ({ password, confirmPassword, token }) => {
 
 const findAllByCompanyId = ({ companyId }) => {
   return api.get(`v1/users/${companyId}/grouped`);
+};
+
+const findByConfirmationToken = ({ token, password }) => {
+  return api.get('v1/users/by-confirmation-token', {
+    params: {
+      token,
+      password,
+    },
+  });
+};
+
+const verifyEmail = ({ email }) => {
+  return api.get('v1/users/verify-email', {
+    params: {
+      email,
+    },
+  });
 };
 
 const findAll = () => {
@@ -41,4 +57,6 @@ export default {
   findAll,
   create,
   confirmInvitation,
+  findByConfirmationToken,
+  verifyEmail,
 };

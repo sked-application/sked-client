@@ -41,12 +41,13 @@ const routes = {
     { path: '/favorites', component: Favorites },
   ],
   publicRoute: [
-    { path: '/sign-up', component: SignUp },
+    { path: '/sign-up/:token?', component: SignUp },
     { path: '/sign-in', component: SignIn },
     { path: '/customer-sign-in', component: CustomerSignIn },
     { path: '/recover-password', component: RecoverPassword },
     { path: '/recover-password-customer', component: RecoverPassword },
     { path: '/reset-password/:token', component: ResetPassword },
+    { path: '/', component: SignIn },
   ],
   defaultRoute: [
     {

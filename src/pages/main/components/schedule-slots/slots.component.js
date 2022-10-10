@@ -10,8 +10,7 @@ import TimegridService from '../../../../services/timegrid.service';
 import { MainContext } from '../../contexts/main';
 import { getDayLabelByDate } from '../../../../common/utils/date';
 import { handleError } from '../../../../common/utils/api';
-
-import './slots.component.scss';
+import Loading from '../../../../common/components/loading';
 
 const MainSlotGrid = () => {
   const { MAIN_STATE, MAIN_DISPATCH, MAIN_ACTIONS } = useContext(MainContext);
@@ -35,6 +34,10 @@ const MainSlotGrid = () => {
     try {
       if (!MAIN_STATE.service.id || !MAIN_STATE.user.id) {
         setTimegrid([]);
+        MAIN_DISPATCH({
+          type: MAIN_ACTIONS.SET_SCHEDULE_SLOT,
+          value: {},
+        });
         return;
       }
 
@@ -68,6 +71,8 @@ const MainSlotGrid = () => {
     MAIN_STATE.service.id,
     MAIN_STATE.accountInfo.id,
     MAIN_STATE.service.duration,
+    MAIN_ACTIONS.SET_SCHEDULE_SLOT,
+    MAIN_DISPATCH,
   ]);
 
   useEffect(() => {
@@ -75,77 +80,57 @@ const MainSlotGrid = () => {
   }, [listSlots]);
 
   return (
-    <div className="card card--slots card--outline">
-      <div className="card__header">
-        <div>
-          <h2 className="card__title">
-            <AiOutlineClockCircle /> Horários
-          </h2>
+    <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
+      <div className="flex justify-between mb-2">
+        <div className="flex">
+          <AiOutlineClockCircle size={18} className="mr-2" />
+          <h2 className="text-md font-semibold">Horários</h2>
         </div>
-        <div className="flexbox flexbox--column flexbox--end">
-          <span className="card__subtitle card__subtitle--captalized m-b-5">
+        <div>
+          <span className="text-sm">
             {getDayLabelByDate(MAIN_STATE.startDate)}
           </span>
         </div>
       </div>
 
-      {MAIN_STATE.service.id && MAIN_STATE.user.id && !!timegrid.length && (
-        <Fragment>
-          <div>
-            <span className="card__subtitle">{MAIN_STATE.service.name}</span>
-          </div>
-          {MAIN_STATE.service.showPrice && (
-            <div>
-              <span className="card__subtitle color--green">
-                R$ {MAIN_STATE.service.price}
-              </span>
-            </div>
-          )}
-        </Fragment>
-      )}
-
       {isLoading ? (
-        <div className="loading"></div>
+        <Loading />
       ) : (
-        <Fragment>
+        <div>
           {!!timegrid.length && (
-            <div className="slot__box">
+            <div className="grid grid-cols-4 gap-2">
               {timegrid.map((slot, index) => (
-                <div key={index} className="slot__item">
-                  <div
-                    onClick={() => handleSetSlot(slot, index)}
-                    className={`badge badge--light badge--outline m-t-5 m-b-5 ${
-                      activedSlot === index ? 'actived' : ''
-                    }`}
-                  >
-                    <div className="badge__content">
-                      <span>{slot.start.slice(0, 5)}</span>
-                      <span>{slot.end.slice(0, 5)}</span>
-                    </div>
-                  </div>
+                <div
+                  key={index}
+                  onClick={() => handleSetSlot(slot, index)}
+                  className={`border divide-solid border-stone-200 rounded-lg p-2 cursor-pointer text-center text-sm ${
+                    activedSlot === index ? 'bg-slate-800 text-white' : ''
+                  }`}
+                >
+                  <span>{slot.start.slice(0, 5)}</span>
                 </div>
               ))}
             </div>
           )}
 
           {MAIN_STATE.service.id && MAIN_STATE.user.id && !timegrid.length && (
-            <div className="slot__pending">
-              <span>Nenhum horário disponível</span>
+            <div className="text-sm text-amber-500">
+              <span>Nenhum horário disponível para esta pesquisa</span>
             </div>
           )}
 
           {!MAIN_STATE.user.id ? (
-            <div className="slot__pending">
+            <div className="text-sm text-amber-500">
               <span>Selecione um profissional.</span>
             </div>
           ) : !MAIN_STATE.service.id ? (
-            <div className="slot__pending">
+            <div className="text-sm text-amber-500">
               <span>Selecione um serviço.</span>
             </div>
           ) : (
             <Fragment />
           )}
-        </Fragment>
+        </div>
       )}
     </div>
   );

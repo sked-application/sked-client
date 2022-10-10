@@ -7,17 +7,29 @@ const signIn = ({ email, password }) => {
   });
 };
 
-const signUp = ({ company, user }) => {
+const signUp = ({ name, email, password }) => {
   return api.post('v1/auth/signup-admin', {
-    company,
-    user,
+    name,
+    email,
+    password,
   });
 };
 
-const customerSignIn = ({ email, password }) => {
-  return api.post('v1/auth/signin-customer', {
+const setup = ({ name, url, timeGrids, email, services, token }) => {
+  return api.post('v1/auth/setup-admin', {
+    name,
+    url,
     email,
-    password,
+    timeGrids,
+    services,
+    token,
+  });
+};
+
+const customerSignIn = ({ name, confirmationSmsCode }) => {
+  return api.post('v1/auth/signin-customer', {
+    name,
+    confirmationSmsCode,
   });
 };
 
@@ -34,12 +46,10 @@ const customerSignIngGoogle = ({ token }) => {
   });
 };
 
-const customerSignUp = ({ email, name, telephone, password }) => {
+const customerSignUp = ({ name, telephone }) => {
   return api.post('v1/auth/signup-customer', {
-    email,
     name,
     telephone,
-    password,
   });
 };
 
@@ -49,12 +59,11 @@ const sendRecoverEmail = ({ email }) => {
   });
 };
 
-const resetPassword = ({ password, confirmPassword, token }) => {
+const resetPassword = ({ password, token }) => {
   return api.post(
     'v1/auth/reset-password',
     {
       password,
-      confirmPassword,
     },
     { params: { token } },
   );
@@ -63,6 +72,7 @@ const resetPassword = ({ password, confirmPassword, token }) => {
 export default {
   signIn,
   signUp,
+  setup,
   sendRecoverEmail,
   resetPassword,
   customerSignIn,

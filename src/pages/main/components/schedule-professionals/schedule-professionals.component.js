@@ -48,17 +48,16 @@ const ScheduleProfessionals = () => {
   }, [listUsers]);
 
   return (
-    <div className="card card--professional card--outline">
-      <div className="card__header">
-        <h2 className="card__title">
-          <AiOutlineUser /> Profissional
-        </h2>
+    <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
+      <div className="mb-2 flex">
+        <AiOutlineUser size={18} className="mr-2" />
+        <h2 className="text-md font-semibold">Profissional</h2>
       </div>
-      <div className="m-t-5">
+      <div>
         <select
           value={MAIN_STATE.user.id || ''}
           onChange={(event) => handleChangeUser(event.target.value)}
-          className="select select--dark"
+          className="select"
         >
           <option>Selecione</option>
           {Object.values(users).map((item) => (

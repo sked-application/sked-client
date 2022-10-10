@@ -3,19 +3,22 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import {
-  AiOutlineClockCircle,
   AiOutlineCheck,
-  AiOutlineCarryOut,
   AiOutlineLeft,
   AiOutlineRight,
-  AiOutlineMobile,
   AiOutlineCloseCircle,
   AiOutlineCheckCircle,
-  AiOutlineUser,
 } from 'react-icons/ai';
-import { getDayLabelByDate, getMonthLabelByDate } from '../../utils/date';
+import {
+  getDayLabelByDate,
+  getFormattedDatePreview,
+  getMonthLabelByDate,
+} from '../../utils/date';
 import { telephoneMask } from '../../utils/telephone-mask';
-import './calendar-timeline.component.scss';
+import { getFormattedPrice } from '../../utils/price';
+import Loading from '../loading';
+import { Tab } from '@headlessui/react';
+import { classNames } from '../../utils/helper';
 
 const generateCalendarDates = (startDate, endDate) => {
   const start = startDate.clone();
@@ -37,249 +40,278 @@ const CalendarTimeline = ({
   status,
   isLoading,
   date,
-  initialDate,
-  clearInitialDate,
   setStatus,
   updateStatus,
   setDate,
   isCustomerSchudule,
 }) => {
-  const today = moment().format('YYYY-MM-DD');
-  const [startDate, setStartDate] = useState(moment(date).startOf('week'));
-  const [endDate, setEndDate] = useState(moment(date).endOf('week'));
+  const [startDate, setStartDate] = useState(moment(date.startDate));
+  const [endDate, setEndDate] = useState(moment(date.endDate));
   const [dates, setDates] = useState([]);
+  const [tabStatus] = useState([
+    {
+      name: 'Agendados',
+      value: 'SCHEDULED',
+    },
+    {
+      name: 'Cancelados',
+      value: 'CANCELED',
+    },
+    {
+      name: 'Finalizados',
+      value: 'FINISHED',
+    },
+  ]);
 
   const handlePrev = () => {
     setStartDate(moment(startDate).subtract(7, 'day'));
     setEndDate(moment(endDate).subtract(7, 'day'));
-
-    if (isCustomerSchudule) {
-      clearInitialDate('');
-    }
   };
 
   const handleNext = () => {
     setStartDate(moment(startDate).add(7, 'days'));
     setEndDate(moment(endDate).add(7, 'days'));
-
-    if (isCustomerSchudule) {
-      clearInitialDate('');
-    }
-  };
-
-  const handleChangeDate = (currentDate) => {
-    setDate(currentDate);
   };
 
   useEffect(() => {
     const newDates = generateCalendarDates(startDate, endDate);
-    const activeDate =
-      initialDate ||
-      newDates.find((currentDate) => currentDate === today) ||
-      newDates[0];
 
     setDates(newDates);
-    setDate(activeDate);
-  }, [startDate, endDate, today, setDate, initialDate]);
+    setDate({
+      startDate: startDate.format('YYYY-MM-DD'),
+      endDate: endDate.format('YYYY-MM-DD'),
+    });
+  }, [startDate, endDate, setDate]);
 
   return (
     <div>
-      <div className="filter__body">
-        <div className="input-month__switch">
-          <span className="input-month__button" onClick={handlePrev}>
-            <AiOutlineLeft />
-          </span>
-          <span className="input-month__label">
-            {getMonthLabelByDate(date)}
-          </span>
-          <span className="input-month__button" onClick={handleNext}>
-            <AiOutlineRight />
-          </span>
-        </div>
-        <div className="select-month__status">
-          <select
-            value={status}
-            onChange={(event) => setStatus(event.target.value)}
-            className="select select--dark"
-          >
-            <option value="SCHEDULED">Agendados</option>
-            <option value="CANCELED">Cancelados</option>
-            <option value="FINISHED">Finalizados</option>
-          </select>
-        </div>
-      </div>
-      <div className="calendar-timeline__body">
-        <aside className="calendar-timeline__date">
-          {dates.map((currentDate) => (
-            <div
-              key={currentDate}
-              onClick={() => handleChangeDate(currentDate)}
-              className={`
-								calendar-timeline__date__item
-								${currentDate === date ? 'calendar-timeline__date__item--active' : ''} `}
+      <Tab.Group>
+        <Tab.List className="flex space-x-1 rounded-xl bg-gray-200 p-1">
+          {tabStatus.map((status) => (
+            <Tab
+              key={status.name}
+              onClick={() => setStatus(status.value)}
+              className={({ selected }) =>
+                classNames(
+                  'w-full rounded-lg py-2.5 text-sm font-semibold ',
+                  'ring-none outline-none focus:outline-none focus:ring-none',
+                  selected ? 'bg-indigo-500 text-white' : 'text-slate-800',
+                )
+              }
             >
-              <div>
-                <strong className="calendar-timeline__date__title">
-                  {currentDate.split('-')[2]}
-                </strong>
-              </div>
-              <div>
-                <span className="calendar-timeline__date__label">
-                  {getDayLabelByDate(currentDate, 'SHORT')}
-                </span>
-              </div>
-            </div>
+              {status.name}
+            </Tab>
           ))}
-        </aside>
-        <section className="calendar-timeline__list">
-          {isLoading ? (
-            <div className="loading"></div>
-          ) : (
-            <Fragment>
-              {list.map((schedule) => (
-                <div key={schedule.id} className="calendar-timeline__card">
-                  <div className="calendar-timeline__card__header">
-                    {isCustomerSchudule ? (
-                      <h2 className="calendar-timeline__card__title">
-                        <Link to={`/${schedule.company.url}`}>
-                          {schedule.company.name}
-                        </Link>
-                      </h2>
-                    ) : (
-                      <h2 className="calendar-timeline__card__title">
-                        {schedule.customer.name}
-                      </h2>
-                    )}
-
-                    <div>
-                      {status === 'SCHEDULED' && !schedule.confirmedAt && (
-                        <div className="calendar-timeline__card__status">
-                          Agendado
-                        </div>
-                      )}
-
-                      {status === 'SCHEDULED' && schedule.confirmedAt && (
-                        <div className="calendar-timeline__card__status">
-                          Confirmado
-                        </div>
-                      )}
-
-                      {status === 'CANCELED' && (
-                        <div className="calendar-timeline__card__status">
-                          Cancelado
-                        </div>
-                      )}
-
-                      {status === 'FINISHED' && (
-                        <div className="calendar-timeline__card__status">
-                          Finalizado
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="calendar-timeline__card__body">
-                    <div className="calendar-timeline__card__content">
-                      <div className="calendar-timeline__card__item">
-                        <span>
-                          <AiOutlineCarryOut />
-                        </span>
-                        {schedule.service.name}
-                      </div>
-
+        </Tab.List>
+      </Tab.Group>
+      <div className="h-12 p-1 bg-gray-200 rounded-xl flex justify-between mt-1">
+        <a
+          onClick={handlePrev}
+          className="flex items-center justify-center cursor-pointer bg-indigo-500 rounded-lg w-10"
+        >
+          <AiOutlineLeft className="text-white" />
+        </a>
+        <div className="flex justify-around flex-1 items-center">
+          <div className="pt-1">
+            <span className="mr-1">De</span>
+            <span className="mr-1 font-semibold">
+              {dates[0]?.split('-')[2]}
+            </span>
+            <span className="text-sm">{getMonthLabelByDate(dates[0])}</span>
+          </div>
+          <div className="pt-1">
+            <span className="mr-1">Até</span>
+            <span className="mr-1 font-semibold">
+              {dates[dates.length - 1]?.split('-')[2]}
+            </span>
+            <span className="text-sm">
+              {getMonthLabelByDate(dates[dates.length - 1])}
+            </span>
+          </div>
+        </div>
+        <a
+          onClick={handleNext}
+          className="flex items-center justify-center cursor-pointer bg-indigo-500 rounded-lg w-10"
+        >
+          <AiOutlineRight className="text-white" />
+        </a>
+      </div>
+      <section className="mt-4">
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Fragment>
+            {Object.entries(list).map(([date, schedules]) => (
+              <div key={date} className="mb-4">
+                <div className="flex items-center justify-between px-4 py-2 bg-white">
+                  <h3 className="font-semibold text-lg mr-2">
+                    {getFormattedDatePreview(date)}
+                  </h3>
+                  <span className="font-semibold">
+                    {getDayLabelByDate(date)}
+                  </span>
+                </div>
+                {schedules.map((schedule) => (
+                  <div
+                    key={schedule.id}
+                    className="mb-4 border divide-solid border-stone-200 rounded-xl p-4 bg-white"
+                  >
+                    <div className="flex justify-between mb-2">
                       {isCustomerSchudule ? (
-                        <div className="calendar-timeline__card__item">
-                          <span>
-                            <AiOutlineUser />
-                          </span>
-                          {schedule.user.name}
-                        </div>
+                        <h2 className="text-md font-semibold">
+                          <Link to={`/${schedule.company.url}`}>
+                            {schedule.company.name}
+                          </Link>
+                        </h2>
                       ) : (
-                        <div className="calendar-timeline__card__item">
-                          <span>
-                            <AiOutlineMobile />
-                          </span>
-                          <a href={`tel:+55${schedule.customer.telephone}`}>
-                            {telephoneMask(schedule.customer.telephone)}
+                        <h2 className="text-md font-semibold">
+                          {schedule.customer.name}
+                        </h2>
+                      )}
+
+                      <div>
+                        {status === 'SCHEDULED' && !schedule.confirmedAt && (
+                          <div className="text-xs">Agendado</div>
+                        )}
+
+                        {status === 'SCHEDULED' && schedule.confirmedAt && (
+                          <div className="text-xs">Confirmado</div>
+                        )}
+
+                        {status === 'CANCELED' && (
+                          <div className="text-xs">Cancelado</div>
+                        )}
+
+                        {status === 'FINISHED' && (
+                          <div className="text-xs">Finalizado</div>
+                        )}
+                      </div>
+                    </div>
+                    <ul className="mb-2">
+                      <li className="text-sm mb-1">
+                        <span className="font-semibold mr-2">Serviço:</span>
+                        <span>{schedule.service.name}</span>
+                      </li>
+                      <li className="text-sm mb-1">
+                        {isCustomerSchudule ? (
+                          <Fragment>
+                            <span className="font-semibold mr-2">
+                              Profissional:
+                            </span>
+                            <span>{schedule.user.name}</span>
+                          </Fragment>
+                        ) : (
+                          <Fragment>
+                            <span className="font-semibold mr-2">
+                              Telefone:
+                            </span>
+                            <a href={`tel:+351${schedule.customer.telephone}`}>
+                              {telephoneMask(schedule.customer.telephone)}
+                            </a>
+                          </Fragment>
+                        )}
+                      </li>
+                      <li className="text-sm mb-1">
+                        <span className="font-semibold mr-2">Data/Hora:</span>
+                        <span>
+                          {`${getFormattedDatePreview(
+                            schedule.date,
+                          )} ${schedule.start.slice(0, 5)}`}
+                        </span>
+                      </li>
+                      <li className="text-sm mb-1">
+                        <span className="font-semibold mr-2">Preço:</span>
+                        <span>{getFormattedPrice(schedule.price, 'R$')}</span>
+                      </li>
+                    </ul>
+
+                    {status === 'SCHEDULED' && (
+                      <Fragment>
+                        <div className="flex">
+                          {!schedule.confirmedAt && (
+                            <a
+                              className="mr-4 cursor-pointer"
+                              onClick={() =>
+                                updateStatus(schedule.id, 'CONFIRMED')
+                              }
+                            >
+                              <div className="flex items-center justify-center text-indigo-500">
+                                <AiOutlineCheck size={18} className="mr-1" />
+                                <span className="text-xs pt-1 font-semibold">
+                                  Confirmar
+                                </span>
+                              </div>
+                            </a>
+                          )}
+
+                          {!isCustomerSchudule && schedule.confirmedAt && (
+                            <a
+                              className="mr-4 cursor-pointer"
+                              onClick={() =>
+                                updateStatus(schedule.id, 'FINISHED')
+                              }
+                            >
+                              <div className="flex items-center justify-center text-green-600">
+                                <AiOutlineCheckCircle
+                                  size={18}
+                                  className="mr-1"
+                                />
+                                <span className="text-xs pt-1 font-semibold">
+                                  Finalizar
+                                </span>
+                              </div>
+                            </a>
+                          )}
+
+                          <a
+                            className="cursor-pointer"
+                            onClick={() =>
+                              updateStatus(schedule.id, 'CANCELED')
+                            }
+                          >
+                            <div className="flex items-center justify-center text-red-500">
+                              <AiOutlineCloseCircle
+                                size={18}
+                                className="mr-1"
+                              />
+                              <span className="text-xs pt-1 font-semibold">
+                                Cancelar
+                              </span>
+                            </div>
                           </a>
                         </div>
-                      )}
-                    </div>
-                    <div className="calendar-timeline__card__info">
-                      <strong className="calendar-timeline__card__item">
-                        <span>
-                          <AiOutlineClockCircle />
-                        </span>
-                        {schedule.start.slice(0, 5)}
-                      </strong>
-                      <strong className="calendar-timeline__card__item">
-                        R$ {schedule.price}
-                      </strong>
-                    </div>
+                      </Fragment>
+                    )}
                   </div>
-
-                  {status === 'SCHEDULED' && (
-                    <Fragment>
-                      <div className="calendar-timeline__card__separator"></div>
-                      <div className="calendar-timeline__card__actions">
-                        {!schedule.confirmedAt && (
-                          <button
-                            onClick={() =>
-                              updateStatus(schedule.id, 'CONFIRMED')
-                            }
-                            className="button button--small"
-                          >
-                            <AiOutlineCheck /> Confirmar
-                          </button>
-                        )}
-
-                        {!isCustomerSchudule && schedule.confirmedAt && (
-                          <button
-                            onClick={() =>
-                              updateStatus(schedule.id, 'FINISHED')
-                            }
-                            className="button button--small"
-                          >
-                            <AiOutlineCheckCircle /> Finalizar
-                          </button>
-                        )}
-
-                        <button
-                          onClick={() => updateStatus(schedule.id, 'CANCELED')}
-                          className="button button--small"
-                        >
-                          <AiOutlineCloseCircle /> Cancelar
-                        </button>
-                      </div>
-                    </Fragment>
-                  )}
-                </div>
-              ))}
-            </Fragment>
-          )}
-
-          {!isLoading && !list.length && (
-            <div className="calendar-timeline__card calendar-timeline__card--not-found">
-              <span>
-                Nenhum {isCustomerSchudule ? 'compromisso' : 'agendamento'} para
-                este dia.
-              </span>
-            </div>
-          )}
-        </section>
-      </div>
+                ))}
+              </div>
+            ))}
+            {!Object.keys(list).length && (
+              <div className="text-center p-4">
+                <span className="text-sm">
+                  {`Nenhum ${
+                    isCustomerSchudule ? 'compromisso' : 'agendamento'
+                  } para esta pesquisa.`}
+                </span>
+              </div>
+            )}
+          </Fragment>
+        )}
+      </section>
     </div>
   );
 };
 
 CalendarTimeline.propTypes = {
-  list: PropTypes.array.isRequired,
+  list: PropTypes.object.isRequired,
   status: PropTypes.string.isRequired,
   updateStatus: PropTypes.func.isRequired,
   setDate: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  date: PropTypes.string.isRequired,
-  initialDate: PropTypes.string,
-  clearInitialDate: PropTypes.func,
+  date: PropTypes.shape({
+    startDate: PropTypes.string.isRequired,
+    endDate: PropTypes.string.isRequired,
+  }),
   setStatus: PropTypes.func.isRequired,
   isCustomerSchudule: PropTypes.bool,
 };

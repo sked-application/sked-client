@@ -1,29 +1,30 @@
 import React, { useContext, useState } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { AiOutlineLogin } from 'react-icons/ai';
 import AuthService from '../../services/auth.service';
-import schema from './validators/sign-in.validator';
 import PageHeader from '../../common/components/page-header';
-import InputFormError from '../../common/components/input-form-error';
 import { AuthContext } from '../../common/contexts/auth';
 import { handleError } from '../../common/utils/api';
-
-import './sign-in.page.scss';
+import Input from '../../common/components/input';
+import { emailRegex } from '../../common/utils/validator';
+import Button from '../../common/components/button';
 
 const SignIn = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { AUTH_DISPATCH, AUTH_ACTIONS } = useContext(AuthContext);
 
-  const { register, handleSubmit, formState, errors } = useForm({
-    resolver: yupResolver(schema.form.validator),
-    defaultValues: schema.form.initialValues,
-    mode: 'onChange',
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty },
+  } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    mode: 'onSubmit',
   });
-
-  const { touched, isValid, isDirty } = formState;
 
   const signInForm = async (values) => {
     try {
@@ -46,59 +47,71 @@ const SignIn = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container mx-auto px-4 max-w-md flex-1">
       <PageHeader
-        title="Sou profissional"
+        title="Entrar como profissional"
         description="Gerencie seus agendamentos."
       />
-      {isLoading && <span className="loading"></span>}
-      {error && <div className="sign-in__error">{error}</div>}
-      <form
-        onSubmit={handleSubmit(signInForm)}
-        className="sign-in__form card card--outline"
-      >
-        <div className="card__header">
-          <h2 className="card__title">
-            <AiOutlineLogin /> Entrar
-          </h2>
-        </div>
-        <div className="sign-in__field">
-          <input
-            name="email"
-            type="email"
-            ref={register}
-            placeholder="Email"
-            disabled={isLoading}
-            className="input"
-          />
-          <InputFormError touched={touched.email} error={errors.email} />
-        </div>
-        <div className="sign-in__field">
-          <input
-            name="password"
-            type="password"
-            ref={register}
-            placeholder="Password"
-            disabled={isLoading}
-            className="input"
-          />
-          <InputFormError touched={touched.password} error={errors.password} />
-        </div>
-        <div className="sign-in__forgot-password">
-          <Link to="/recover-password">Esqueceu a senha?</Link>
-        </div>
-        <div>
-          <button
-            type="submit"
-            disabled={!isValid || !isDirty || isLoading}
-            className="button button--block button--purple"
-          >
-            Entrar
-          </button>
-        </div>
-      </form>
-      <div className="sign-in__redirect">
-        <Link to="/sign-up">Cadastrar-se</Link>
+      {error && <div className="mb-2 text-sm text-red-500">{error}</div>}
+      <div className="mb-4 border divide-solid border-stone-200 rounded-xl p-4">
+        <form onSubmit={handleSubmit(signInForm)}>
+          <div className="mb-4">
+            <label className="text-sm" htmlFor="email">
+              E-mail
+            </label>
+            <Input
+              id="email"
+              disabled={isLoading}
+              className="input"
+              fieldName="email"
+              errors={errors}
+              {...register('email', {
+                required: 'Este campo é obrigatório.',
+                pattern: {
+                  value: emailRegex,
+                  message: 'Insira um email válido.',
+                },
+              })}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="text-sm" htmlFor="password">
+              Senha
+            </label>
+            <Input
+              id="password"
+              type="password"
+              disabled={isLoading}
+              className="input"
+              fieldName="password"
+              errors={errors}
+              {...register('password', {
+                required: 'Este campo é obrigatório.',
+              })}
+            />
+          </div>
+          <div className="mb-4">
+            <Link to="/recover-password" className="text-sm">
+              Esqueceu a senha?
+            </Link>
+          </div>
+          <div>
+            <Button
+              type="submit"
+              disabled={!isDirty || isLoading}
+              isLoading={isLoading}
+              className="button button--block button--primary"
+            >
+              <span>Entrar</span>
+            </Button>
+          </div>
+        </form>
+      </div>
+      <div className="text-center mb-6">
+        <span className="text-sm mr-1">Ainda não tem uma conta?</span>
+        <Link to="/sign-up" className="font-semibold">
+          Cadastrar-se
+        </Link>
       </div>
     </div>
   );

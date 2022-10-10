@@ -1,14 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import App from './app';
 
 const history = createBrowserHistory();
+const root = createRoot(document.getElementById('root'));
 
-ReactDOM.render(
+root.render(
   <Router location={history}>
     <App />
   </Router>,
-  document.getElementById('root'),
 );

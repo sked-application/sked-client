@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
+import srcPlaceholder from '../../assets/images/logo-placeholder.png';
 
-import './company-thumb.component.scss';
+const CompanyThumb = memo(({ src }) => {
+  const imageSrc = src || srcPlaceholder;
 
-const CompanyThumb = ({ src }) => {
   return (
-    <div className="company-thumb">
-      {src && <img className="company-thumb__image" src={src} />}
+    <div className="rounded-xl w-20 h-20 overflow-hidden flex items-center bg-gray-200">
+      <img className="w-full" src={imageSrc} />
     </div>
   );
-};
+});
 
+CompanyThumb.displayName = 'CompanyThumb';
 CompanyThumb.propTypes = {
   src: PropTypes.string,
 };

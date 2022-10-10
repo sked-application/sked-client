@@ -1,28 +1,37 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { BsPlus } from 'react-icons/bs';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
 import UserService from '../../services/user.service';
-import schema from './validators/professionals-form.validator';
 import PageHeader from '../../common/components/page-header';
-import InputFormError from '../../common/components/input-form-error';
-import { Modal, ModalOpenButton } from '../../common/components/modal';
+import { Modal } from '../../common/components/modal';
 import { handleError } from '../../common/utils/api';
+import Button from '../../common/components/button';
+import Input from '../../common/components/input';
+import { emailRegex } from '../../common/utils/validator';
+import Loading from '../../common/components/loading';
 
 const Professionals = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingModal, setIsLoadingModal] = useState(false);
   const [professionals, setProfessionals] = useState([]);
   const [toggleShow, setToggleShow] = useState(false);
 
-  const { register, handleSubmit, reset, formState, errors } = useForm({
-    resolver: yupResolver(schema.form.validator),
-    defaultValues: schema.form.initialValues,
-    mode: 'onChange',
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isDirty, errors },
+  } = useForm({
+    defaultValues: {
+      name: '',
+      email: '',
+    },
+    mode: 'onSubmit',
   });
 
-  const { touched, isValid, isDirty } = formState;
-
   const professionalForm = async (values) => {
+    setIsLoadingModal(true);
+
     try {
       const { name, email } = values;
 
@@ -32,10 +41,12 @@ const Professionals = () => {
       });
 
       reset();
+      setIsLoadingModal(false);
       listProfessionals();
       handleCloseModal();
       alert('Solicitação enviada para o email do profissional!');
     } catch (error) {
+      setIsLoadingModal(false);
       alert(handleError(error));
     }
   };
@@ -67,95 +78,101 @@ const Professionals = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container mx-auto px-4 max-w-screen-lg flex-1">
       <PageHeader
         title="Profissionais"
         description="Adicione e gerencie os profissionais de seu estabelecimentos."
       />
       {isLoading ? (
-        <div className="loading"></div>
+        <Loading />
       ) : (
         <Fragment>
-          <div className="flexbox flexbox__justify--end m-b-16">
-            <ModalOpenButton onClick={() => handleOpenModal()}>
-              <BsPlus fontSize="30" fontWeight="700" />
-            </ModalOpenButton>
-          </div>
+          <Button
+            type="button"
+            onClick={() => handleOpenModal()}
+            className="button button--block button--primary mb-4"
+          >
+            <div className="flex items-center justify-center">
+              <AiOutlinePlus size={18} className="mr-2" />
+              <span>Adicionar novo profissional</span>
+            </div>
+          </Button>
+
           {professionals.map((professional) => (
-            <div key={professional.id} className="card card--outline">
-              <div className="card__header">
-                <h2 className="card__title m-r-16">{professional.name}</h2>
-                <div className="flexbox flexbox--column flexbox--end">
-                  {professional.confirmationToken ? (
-                    <span className="card__subtitle color--orange m-b-5">
-                      Pendente
-                    </span>
-                  ) : (
-                    <span className="card__subtitle color--green m-b-5">
-                      Ativo
-                    </span>
-                  )}
-                </div>
+            <div
+              key={professional.id}
+              className="mb-4 border divide-solid border-stone-200 rounded-xl p-4"
+            >
+              <div className="mb-4 flex justify-between">
+                <h2 className="text-md font-semibold">{professional.name}</h2>
+                {professional.confirmationToken ? (
+                  <span className="text-indigo-500 text-sm">Pendente</span>
+                ) : (
+                  <span className="text-green-500 text-sm">Ativo</span>
+                )}
               </div>
-              <div className="card__content flexbox flexbox--center flexbox__justify--between">
-                <div>
-                  <div className="flexbox">{professional.email}</div>
-                </div>
+              <div>
+                <div className="text-sm">{professional.email}</div>
               </div>
             </div>
           ))}
           {!professionals.length && (
-            <div className="text--center">
-              <span>Clique no botão acima e adicione profissionais.</span>
+            <div className="text-center">
+              <span className="text-sm">
+                Clique no botão acima e adicione profissionais.
+              </span>
             </div>
           )}
         </Fragment>
       )}
+
       <Modal
-        title="Adicione um profissional"
         isOpen={toggleShow}
         handleClose={handleCloseModal}
+        title="Convidar um novo profissional"
       >
-        <form
-          onSubmit={handleSubmit(professionalForm)}
-          className="flexbox flexbox--column"
-        >
-          <div className="flexbox__item">
-            <div className="m-b-5">
-              <label htmlFor="name">Nome</label>
-            </div>
-            <input
+        <form onSubmit={handleSubmit(professionalForm)}>
+          <div className="mb-4">
+            <label className="text-sm" htmlFor="name">
+              Nome
+            </label>
+            <Input
               id="name"
-              name="name"
-              type="text"
-              ref={register}
-              className="input input--dark"
+              className="input"
+              fieldName="name"
+              errors={errors}
+              {...register('name', {
+                required: 'Este campo é obrigatório.',
+              })}
             />
-            <InputFormError touched={touched.name} error={errors.name} />
           </div>
-          <div className="flexbox__item m-t-16">
-            <div className="m-b-5">
-              <label htmlFor="email">Email</label>
-            </div>
-            <input
-              name="email"
+          <div className="mb-4">
+            <label className="text-sm" htmlFor="email">
+              Email
+            </label>
+            <Input
               type="email"
-              ref={register}
-              placeholder="Email"
               disabled={isLoading}
               className="input"
+              fieldName="email"
+              errors={errors}
+              {...register('email', {
+                required: 'Este campo é obrigatório.',
+                pattern: {
+                  value: emailRegex,
+                  message: 'Insira um email válido.',
+                },
+              })}
             />
-            <InputFormError touched={touched.email} error={errors.email} />
           </div>
-          <div className="flexbox__item m-t-16">
-            <button
-              type="submit"
-              disabled={!isValid || !isDirty}
-              className="button button--block button--purple"
-            >
-              Adicionar
-            </button>
-          </div>
+          <Button
+            type="submit"
+            disabled={!isDirty || isLoadingModal}
+            isLoading={isLoadingModal}
+            className="button button--block button--primary"
+          >
+            <span>Convidar</span>
+          </Button>
         </form>
       </Modal>
     </div>

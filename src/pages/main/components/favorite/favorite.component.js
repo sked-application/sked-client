@@ -5,13 +5,11 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { AiFillStar } from 'react-icons/ai';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import FavoriteService from '../../../../services/favorite.service';
 import { handleError } from '../../../../common/utils/api';
 import { MainContext } from '../../contexts/main';
 import { AuthContext } from '../../../../common/contexts/auth';
-
-import './favorite.component.scss';
 
 const Favorite = () => {
   const { MAIN_STATE } = useContext(MainContext);
@@ -66,18 +64,27 @@ const Favorite = () => {
   return (
     <Fragment>
       {AUTH_STATE.isCustomer && (
-        <div className={`favorite ${isFavorited ? 'favorite__active' : ''}`}>
+        <div className="flex">
           {!isPending && (
-            <button
-              className="button button--block button--outline m-b-16"
+            <a
+              className="mb-4 cursor-pointer"
               onClick={() => handleFavorite(!isFavorited)}
               disabled={!AUTH_STATE.isAuthenticated}
             >
-              <Fragment>
-                <AiFillStar className="favorite__star" />
-                {isFavorited ? 'Favoritado' : 'Adicionar aos favoritos'}
-              </Fragment>
-            </button>
+              {isFavorited ? (
+                <span className="flex">
+                  <AiFillHeart size={18} className="mr-1" />
+                  <span className="text-sm font-semibold">Favoritado</span>
+                </span>
+              ) : (
+                <span className="flex">
+                  <AiOutlineHeart size={18} className="mr-1" />
+                  <span className="text-sm font-semibold">
+                    Adicionar aos favoritos
+                  </span>
+                </span>
+              )}
+            </a>
           )}
         </div>
       )}
