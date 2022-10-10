@@ -1,196 +1,141 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 import logoSvg from '../../assets/svg/logo.svg';
 import { Link } from 'react-router-dom';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { AuthContext } from '../../contexts/auth';
-import './header.component.scss';
 
-const Header = ({ currentPathname }) => {
-  const { AUTH_STATE, AUTH_DISPATCH, AUTH_ACTIONS } = useContext(AuthContext);
-  const [isOpen, setIsOpen] = useState(false);
+const Header = ({ currentPathname, setIsMenuOpen }) => {
+  const { AUTH_STATE } = useContext(AuthContext);
 
-  const headerSignOut = () => {
-    AUTH_DISPATCH({
-      type: AUTH_ACTIONS.SET_SIGN_OUT,
-    });
-
-    setIsOpen(false);
+  const allowProfessionalLink = (path) => {
+    return (
+      !AUTH_STATE.isAuthenticated &&
+      !['/sign-in', '/recover-password', '/reset-password'].some((state) =>
+        path.includes(state),
+      )
+    );
   };
 
   return (
-    <div className="header">
-      <div className="container">
-        <div className="header__content">
-          <div>
-            <span className="header__logo">
-              <img src={logoSvg} alt="Logo Sked App" />
-            </span>
-          </div>
+    <div>
+      <div className="container mx-auto p-4 max-w-screen-lg">
+        <div className="flex justify-between items-center">
+          <span>
+            <img src={logoSvg} alt="Logo Sked App" />
+          </span>
 
-          {AUTH_STATE.isAuthenticated && (
+          {AUTH_STATE.isAuthenticated ? (
             <AiOutlineMenu
-              className="header__toggle"
-              onClick={() => setIsOpen(true)}
+              className="cursor-pointer md:hidden"
+              size={28}
+              onClick={() => setIsMenuOpen(true)}
             />
+          ) : (
+            <Fragment>
+              {allowProfessionalLink(currentPathname) && (
+                <Link
+                  to="/sign-in"
+                  className="text-sm underline font-semibold underline-offset-4"
+                >
+                  Sou profissional
+                </Link>
+              )}
+
+              {['/sign-in'].includes(currentPathname) && (
+                <Link
+                  to="/customer-sign-in"
+                  className="text-sm underline font-semibold underline-offset-4"
+                >
+                  Sou cliente
+                </Link>
+              )}
+            </Fragment>
           )}
-
-          {!AUTH_STATE.isAuthenticated &&
-            ![
-              '/sign-in',
-              '/customer-sign-in',
-              '/sign-up',
-              '/recover-password',
-              '/reset-password',
-            ].some((state) => currentPathname.includes(state)) && (
-              <Link to={`/sign-in`} className="header__action">
-                Sou profissional
-              </Link>
-            )}
-
-          {!AUTH_STATE.isAuthenticated &&
-            ['/sign-in'].includes(currentPathname) && (
-              <Link to={`/customer-sign-in`} className="header__action">
-                Sou cliente
-              </Link>
-            )}
-
-          {!AUTH_STATE.isAuthenticated &&
-            ['/customer-sign-in'].includes(currentPathname) && (
-              <Link to={`/sign-in`} className="header__action">
-                Sou profissional
-              </Link>
-            )}
         </div>
       </div>
 
-      {AUTH_STATE.isAuthenticated && (
+      {/* {AUTH_STATE.isAuthenticated && (
         <div>
           <div
-            className={`header__overlay ${
-              isOpen ? 'header__overlay--active' : ''
+            className={`fixed h-screen w-full bg-slate-800 top-0 left-0 transition-all duration-300 ${
+              isOpen ? 'opacity-60 visible' : 'opacity-0 invisible'
             }`}
             onClick={() => setIsOpen(false)}
           ></div>
           <div
-            className={`header__menu ${isOpen ? 'header__menu--active' : ''}`}
+            className={`fixed h-screen right-0 top-0 w-64 bg-white transition-all duration-300 ${
+              isOpen ? 'visible translate-x-0' : 'invisible translate-x-64'
+            }`}
           >
-            <ul className="header__list">
+            <ul className="p-4 pb-0">
               {AUTH_STATE.isProfessional && (
                 <Fragment>
-                  <li>
-                    <strong>Agenda</strong>
-                    <ul className="m-t-10">
-                      <li>
-                        <Link
-                          to={`/${AUTH_STATE.userCompany.url}`}
-                          onClick={() => setIsOpen(false)}
-                        >
-                          Minha página
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/schedules" onClick={() => setIsOpen(false)}>
-                          Agendamentos
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <strong>Finanças</strong>
-                    <ul className="m-t-10">
-                      <li>
-                        <Link to="/statistics" onClick={() => setIsOpen(false)}>
-                          Relatórios
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <strong>Configurações</strong>
-                    <ul className="m-t-10">
-                      <li>
-                        <Link to="/services" onClick={() => setIsOpen(false)}>
-                          Serviços
-                        </Link>
-                      </li>
-                      {AUTH_STATE.userCompany.plan === 'CUSTOM' && (
-                        <li>
-                          <Link
-                            to="/professionals"
-                            onClick={() => setIsOpen(false)}
-                          >
-                            Profissionais
-                          </Link>
-                        </li>
-                      )}
-                      <li>
-                        <Link to="/settings" onClick={() => setIsOpen(false)}>
-                          Grade de horários
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/schedule-locks"
-                          onClick={() => setIsOpen(false)}
-                        >
-                          Bloqueio de agenda
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/profile" onClick={() => setIsOpen(false)}>
-                          Perfil
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
+                  {Object.entries(professionalMenu).map(([category, menu]) => (
+                    <li
+                      key={category}
+                      className="mb-4 border divide-solid border-stone-200 rounded-xl p-4"
+                    >
+                      <span className="text-md font-semibold">{category}</span>
+                      <ul>
+                        {menu
+                          .filter((menuIem) => !menuIem.isUnavailable)
+                          .map(({ name, link }) => (
+                            <li key={name} className="mt-1">
+                              <Link to={link} onClick={() => setIsOpen(false)}>
+                                - {name}
+                              </Link>
+                            </li>
+                          ))}
+                      </ul>
+                    </li>
+                  ))}
                 </Fragment>
               )}
 
               {AUTH_STATE.isCustomer && (
                 <Fragment>
-                  <li>
-                    <Link to="/favorites" onClick={() => setIsOpen(false)}>
-                      Favoritos
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/customer-schedules"
-                      onClick={() => setIsOpen(false)}
+                  {Object.entries(customerMenu).map(([category, menu]) => (
+                    <li
+                      key={category}
+                      className="mb-4 border divide-solid border-stone-200 rounded-xl p-4"
                     >
-                      Meus compromissos
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/customer-profile"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Perfil
-                    </Link>
-                  </li>
+                      <span className="text-md font-semibold">{category}</span>
+                      <ul>
+                        {menu
+                          .filter((menuIem) => !menuIem.isUnavailable)
+                          .map(({ name, link }) => (
+                            <li key={name} className="mt-1">
+                              <Link to={link} onClick={() => setIsOpen(false)}>
+                                - {name}
+                              </Link>
+                            </li>
+                          ))}
+                      </ul>
+                    </li>
+                  ))}
                 </Fragment>
               )}
-
-              <li>
-                <button
-                  className="button button--purple"
-                  onClick={headerSignOut}
-                >
-                  Sair
-                </button>
-              </li>
             </ul>
+            <div className="px-4">
+              <Button
+                type="button"
+                className="button button--primary"
+                onClick={headerSignOut}
+              >
+                <span>Sair</span>
+              </Button>
+            </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
 
 Header.propTypes = {
   currentPathname: PropTypes.string,
+  setIsMenuOpen: PropTypes.func.isRequired,
 };
 
 export default Header;

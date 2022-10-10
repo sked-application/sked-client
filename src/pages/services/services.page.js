@@ -1,39 +1,44 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { BsPlus } from 'react-icons/bs';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Controller, useForm } from 'react-hook-form';
-import { AiOutlineClockCircle } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineForm, AiOutlinePlus } from 'react-icons/ai';
 import ServiceService from '../../services/service.service';
-import schema from './validators/service-form.validator';
-import NumberFormat from 'react-number-format';
 import PageHeader from '../../common/components/page-header';
-import InputFormError from '../../common/components/input-form-error';
-import { Modal, ModalOpenButton } from '../../common/components/modal';
 import { handleError } from '../../common/utils/api';
+import ServiceFormModal from '../../common/components/modal-service-form';
+import { Modal } from '../../common/components/modal';
+import Button from '../../common/components/button';
+import Loading from '../../common/components/loading';
+import { getFormattedPrice } from '../../common/utils/price';
 
 const Services = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
   const [services, setServices] = useState([]);
   const [toggleShow, setToggleShow] = useState(false);
+  const [formData, setFormData] = useState(null);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState,
-    errors,
-    setValue,
-    control,
-  } = useForm({
-    resolver: yupResolver(schema.form.validator),
-    defaultValues: schema.form.initialValues,
-    mode: 'onChange',
-  });
+  const removeService = async (id) => {
+    try {
+      const alertQuestion = 'Deseja remover esse serviço?';
 
-  const { touched, isValid, isDirty } = formState;
+      if (window.confirm(alertQuestion)) {
+        await ServiceService.remove(id);
 
-  const serviceForm = async (values) => {
+        listServices();
+      }
+    } catch (error) {
+      alert(handleError(error));
+    }
+  };
+
+  const handleOpenModal = (data) => {
+    setFormData(data);
+    setToggleShow(true);
+  };
+
+  const handleCloseModal = () => setToggleShow(false);
+
+  const handleSubmitModal = async (values) => {
+    setToggleShow(false);
+
     try {
       const { id, name, duration, price, showPrice } = values;
       let message;
@@ -58,49 +63,12 @@ const Services = () => {
         message = 'Serviço cadastrado com sucesso!';
       }
 
-      reset();
-      listServices();
-      handleCloseModal();
       alert(message);
     } catch (error) {
       alert(handleError(error));
     }
-  };
 
-  const removeService = async (id) => {
-    try {
-      const alertQuestion = 'Deseja remover esse serviço?';
-
-      if (window.confirm(alertQuestion)) {
-        await ServiceService.remove(id);
-
-        listServices();
-      }
-    } catch (error) {
-      alert(handleError(error));
-    }
-  };
-
-  const handleCloseModal = () => {
-    reset();
-    setToggleShow(false);
-
-    if (isEdit) {
-      setIsEdit(false);
-    }
-  };
-
-  const handleOpenModal = (data) => {
-    if (data) {
-      setValue('id', data.id);
-      setValue('name', data.name);
-      setValue('duration', data.duration);
-      setValue('price', data.price);
-      setValue('showPrice', data.showPrice);
-      setIsEdit(true);
-    }
-
-    setToggleShow(true);
+    listServices();
   };
 
   const listServices = async () => {
@@ -121,141 +89,75 @@ const Services = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container mx-auto px-4 max-w-screen-lg flex-1">
       <PageHeader
         title="Serviços"
-        description="Adicione e gerencie seus serviços."
+        description="Adicione e gerencie seus serviços para que as pessoas possam agendar com você"
       />
       {isLoading ? (
-        <div className="loading"></div>
+        <Loading />
       ) : (
         <Fragment>
-          <div className="flexbox flexbox__justify--end m-b-16">
-            <ModalOpenButton onClick={() => handleOpenModal()}>
-              <BsPlus fontSize="30" fontWeight="700" />
-            </ModalOpenButton>
-          </div>
+          <Button
+            type="button"
+            onClick={() => handleOpenModal()}
+            className="button button--block button--primary mb-4"
+          >
+            <div className="flex items-center justify-center">
+              <AiOutlinePlus size={18} className="mr-2" />
+              <span>Adicionar novo serviço</span>
+            </div>
+          </Button>
           {services.map((item) => (
-            <div key={item.id} className="card card--outline">
-              <div className="card__header">
-                <h2 className="card__title m-r-16">{item.name}</h2>
-                <strong
+            <div
+              key={item.id}
+              className="mb-4 border divide-solid border-stone-200 rounded-xl p-4"
+            >
+              <div className="flex justify-between">
+                <h2 className="text-sm font-semibold">{item.name}</h2>
+                <AiOutlineForm
                   onClick={() => handleOpenModal(item)}
-                  className="card__subtitle color--purple cursor--pointer"
-                >
-                  Editar
-                </strong>
+                  size={18}
+                  className="cursor-pointer"
+                />
               </div>
-              <div className="card__content flexbox flexbox--end flexbox__justify--between">
-                <div>
-                  <div className="flexbox">
-                    <AiOutlineClockCircle /> {item.duration} minutos
-                  </div>
-                  <div className="flexbox m-t-16">
-                    <strong>R$ {item.price}</strong>
-                  </div>
-                </div>
-                <div className="flexbox m-t-16">
-                  <button
+              <div className="flex items-end justify-between mt-4">
+                <ul>
+                  <li className="text-sm mb-1">
+                    <span className="font-semibold mr-2">Duração:</span>
+                    <span>{item.duration} minutos</span>
+                  </li>
+                  <li className="text-sm">
+                    <span className="font-semibold mr-2">Preço:</span>
+                    <span>{getFormattedPrice(item.price, 'R$')}</span>
+                  </li>
+                </ul>
+                <div className="flex">
+                  <AiOutlineDelete
                     onClick={() => removeService(item.id)}
-                    className="button button--small button--outline"
-                  >
-                    Remover
-                  </button>
+                    size={18}
+                    className="cursor-pointer"
+                  />
                 </div>
               </div>
             </div>
           ))}
           {!services.length && (
-            <div className="text--center">
-              <span>Clique no botão acima e adicione seus serviços.</span>
+            <div className="text-center mt-4">
+              <span className="text-sm">
+                Clique no botão acima e adicione seus serviços.
+              </span>
             </div>
           )}
         </Fragment>
       )}
+
       <Modal
-        title={`${isEdit ? 'Atualizar serviço' : 'Adicione um serviço'}`}
         isOpen={toggleShow}
         handleClose={handleCloseModal}
+        title={formData ? 'Adicionar serviço' : 'Editar serviço'}
       >
-        <form
-          onSubmit={handleSubmit(serviceForm)}
-          className="flexbox flexbox--column"
-        >
-          <div className="flexbox__item">
-            <div className="m-b-5">
-              <label htmlFor="name">Nome</label>
-            </div>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              ref={register}
-              className="input input--dark"
-            />
-            <InputFormError touched={touched.name} error={errors.name} />
-          </div>
-          <div className="flexbox__item m-t-16">
-            <div className="m-b-5">
-              <label htmlFor="duration">Duração em minutos</label>
-            </div>
-            <input
-              id="duration"
-              name="duration"
-              type="number"
-              ref={register}
-              className="input input--dark"
-            />
-            <InputFormError
-              touched={touched.duration}
-              error={errors.duration}
-            />
-          </div>
-          <div className="flexbox__item m-t-16">
-            <div className="m-b-5">
-              <label htmlFor="price">Valor</label>
-            </div>
-            <Controller
-              id="price"
-              name="price"
-              control={control}
-              as={
-                <NumberFormat
-                  decimalSeparator={'.'}
-                  decimalScale={2}
-                  allowNegative={false}
-                  className="input input--dark"
-                />
-              }
-            />
-            <InputFormError touched={touched.price} error={errors.price} />
-          </div>
-          <div className="flexbox__item m-t-16">
-            <div className="m-b-5">
-              <label className="flexbox cursor--pointer">
-                <input
-                  name="showPrice"
-                  type="checkbox"
-                  ref={register}
-                  className="checkbox"
-                />
-                <span className="m-l-10">Mostrar preço</span>
-              </label>
-            </div>
-          </div>
-          <div>
-            <input name="id" type="hidden" ref={register} />
-          </div>
-          <div className="flexbox__item m-t-16">
-            <button
-              type="submit"
-              disabled={!isValid || !isDirty}
-              className="button button--block button--purple"
-            >
-              {isEdit ? 'Atualizar' : 'Adicionar'}
-            </button>
-          </div>
-        </form>
+        <ServiceFormModal data={formData} onSubmit={handleSubmitModal} />
       </Modal>
     </div>
   );

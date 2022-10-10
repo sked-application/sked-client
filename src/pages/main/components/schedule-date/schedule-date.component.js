@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { AiOutlineCalendar } from 'react-icons/ai';
+import Input from '../../../../common/components/input';
 import { MainContext } from '../../contexts/main';
 
 const ScheduleDate = () => {
@@ -18,18 +19,17 @@ const ScheduleDate = () => {
   };
 
   return (
-    <div className="card card--date card--outline">
-      <div className="card__header">
-        <h2 className="card__title">
-          <AiOutlineCalendar /> Selecione a data
-        </h2>
+    <div className="mb-4 border divide-solid border-stone-200 rounded-xl p-4">
+      <div className="mb-2 flex">
+        <AiOutlineCalendar size={18} className="mr-2" />
+        <h2 className="text-md font-semibold">Selecione a data</h2>
       </div>
-      <div className="m-t-5">
-        <input
+      <div>
+        <Input
           type="date"
           value={MAIN_STATE.startDate}
           onChange={(event) => handleChangeDate(event)}
-          className="input input--dark"
+          className="input"
         />
       </div>
     </div>

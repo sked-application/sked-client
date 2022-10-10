@@ -15,12 +15,11 @@ const updateProfile = ({ user, company }) => {
   });
 };
 
-const confirmInvitation = ({ password, confirmPassword, token }) => {
+const confirmInvitation = ({ password, token }) => {
   return api.post(
     'v1/users/confirm-invitation',
     {
       password,
-      confirmPassword,
     },
     { params: { token } },
   );

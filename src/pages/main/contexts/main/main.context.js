@@ -7,11 +7,12 @@ import React, {
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
-import AccountService from '../../../../services/company.service';
+import CompanyService from '../../../../services/company.service';
 import { handleError } from '../../../../common/utils/api';
+import { replaceSpecialCharacters } from '../../../../common/utils/validator';
 
 const initialState = {
-  scheduleSlot: '',
+  scheduleSlot: {},
   accountInfo: {},
   accountExists: true,
   isMainRequestPeding: true,
@@ -76,7 +77,9 @@ export const MainProvider = ({ children }) => {
 
   const findCompany = useCallback(async () => {
     try {
-      const { data } = await AccountService.find({ company });
+      const { data } = await CompanyService.find({
+        url: replaceSpecialCharacters(company),
+      });
 
       if (!data) {
         dispatch({

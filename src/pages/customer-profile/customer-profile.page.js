@@ -1,60 +1,32 @@
 import React, { useState, useEffect, useCallback, Fragment } from 'react';
-import schema from './validators/customer-profile-form.validator';
 import UserService from '../../services/user.service';
 import PageHeader from '../../common/components/page-header';
-import InputFormError from '../../common/components/input-form-error';
-import InputTelephone from '../../common/components/input-telephone';
-
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 import { Modal } from '../../common/components/modal';
 import { handleError } from '../../common/utils/api';
-import { replaceSpecialCharacters } from '../../common/utils/validator';
 import { telephoneMask } from '../../common/utils/telephone-mask';
+import ProfileForm from '../../common/components/profile-form';
+import Loading from '../../common/components/loading';
+import { AiOutlineForm } from 'react-icons/ai';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState();
   const [toggleShow, setToggleShow] = useState(false);
 
-  const {
-    errors,
-    formState,
-    reset,
-    setValue,
-    register,
-    handleSubmit,
-  } = useForm({
-    resolver: yupResolver(schema.form.validator),
-    defaultValues: schema.form.initialValues,
-    mode: 'onChange',
-  });
-
-  const { touched, isValid, isDirty } = formState;
-
   const handleCloseModal = () => {
-    reset();
     setToggleShow(false);
   };
 
-  const handleOpenModal = (data) => {
-    if (data) {
-      setValue('userName', data.name);
-      setValue('userTelephone', telephoneMask(data.telephone));
-    }
-
+  const handleOpenModal = () => {
     setToggleShow(true);
   };
 
-  const profileForm = async (values) => {
+  const handleSubmitModal = async (values) => {
     try {
-      const { userName, userTelephone } = values;
+      const { user } = values;
 
       await UserService.updateProfile({
-        user: {
-          telephone: replaceSpecialCharacters(userTelephone) || null,
-          name: userName,
-        },
+        user,
       });
 
       getProfile();
@@ -83,101 +55,52 @@ const Profile = () => {
   }, [getProfile]);
 
   return (
-    <div className="container">
+    <div className="container mx-auto px-4 max-w-screen-lg flex-1">
       <PageHeader
         title="Perfil"
         description="Gerencie os dados de sua conta."
       />
       {isLoading ? (
-        <div className="loading"></div>
+        <Loading />
       ) : (
         <Fragment>
           {profile && (
-            <div className="card card--outline">
-              <div className="card__header">
-                <h2 className="card__title">Meus dados</h2>
-                <strong
+            <div className="mb-4 border divide-solid border-stone-200 rounded-xl p-4">
+              <div className="flex justify-between mb-2">
+                <h2 className="text-md font-semibold">Meus dados:</h2>
+                <AiOutlineForm
                   onClick={() => handleOpenModal(profile)}
-                  className="card__subtitle color--purple cursor--pointer"
-                >
-                  Gerenciar
-                </strong>
+                  size={18}
+                  className="cursor-pointer"
+                />
               </div>
-              <div className="flexbox flexbox--column m-b-32">
-                <div className="m-t-10">
-                  <strong>Nome: </strong>
+              <ul>
+                <li className="text-sm mb-1">
+                  <span className="font-semibold mr-2">Nome:</span>
                   <span>{profile.name}</span>
-                </div>
-                <div className="m-t-10">
-                  <strong>Email: </strong>
-                  <span>{profile.email}</span>
-                </div>
-                <div className="m-t-10">
-                  <strong>Meu telefone: </strong>
+                </li>
+                <li className="text-sm mb-1">
+                  <span className="font-semibold mr-2">Meu telefone:</span>
                   <span>
                     {telephoneMask(profile.telephone) || 'Não informado'}
                   </span>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
           )}
         </Fragment>
       )}
 
       <Modal
-        title="Edição de perfil"
         isOpen={toggleShow}
         handleClose={handleCloseModal}
+        title="Editar perfil"
       >
-        <form
-          onSubmit={handleSubmit(profileForm)}
-          className="flexbox flexbox--column"
-        >
-          <div className="flexbox__item">
-            <div className="m-b-5">
-              <label htmlFor="userName">Meu nome</label>
-            </div>
-            <input
-              id="userName"
-              name="userName"
-              type="text"
-              ref={register}
-              className="input input--dark"
-            />
-            <InputFormError
-              touched={touched.userName}
-              error={errors.userName}
-            />
-          </div>
-          <div className="flexbox__item m-t-16">
-            <div className="m-b-5">
-              <label htmlFor="userTelephone">Meu telefone</label>
-            </div>
-            <InputTelephone
-              id="userTelephone"
-              name="userTelephone"
-              className="input input--dark"
-              ref={register}
-              onChange={(event) =>
-                setValue('userTelephone', telephoneMask(event.target.value))
-              }
-            />
-            <InputFormError
-              touched={touched.userTelephone}
-              error={errors.userTelephone}
-            />
-          </div>
-
-          <div className="flexbox__item m-t-16">
-            <button
-              type="submit"
-              disabled={!isValid || !isDirty}
-              className="button button--block button--purple"
-            >
-              Editar
-            </button>
-          </div>
-        </form>
+        <ProfileForm
+          data={profile}
+          isProfessional={false}
+          onSubmit={handleSubmitModal}
+        />
       </Modal>
     </div>
   );

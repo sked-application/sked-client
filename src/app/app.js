@@ -1,38 +1,21 @@
-import React, { useContext, useEffect, useState, Fragment } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useContext, Fragment } from 'react';
 import AppRoutes from '../routes/routes';
-import AppHeader from '../common/components/header';
-import Copyright from '../common/components/copyright';
 import { AuthProvider, AuthContext } from '../common/contexts/auth';
-
 import '../common/styles/main.scss';
-
-const skipHeader = ['/sign-up'];
+import Loading from '../common/components/loading';
+import Layout from '../common/components/layout/layout.component';
 
 const AppContexted = () => {
   const { AUTH_STATE } = useContext(AuthContext);
-  const [currentPathname, setCurrentPathname] = useState('');
-  const location = useLocation();
-  const routeMatches = (pathname) => {
-    return skipHeader.some((route) => pathname.indexOf(route) !== -1);
-  };
-
-  useEffect(() => {
-    setCurrentPathname(location.pathname);
-  }, [location.pathname]);
 
   return (
     <Fragment>
       {AUTH_STATE.isAuthLoading ? (
-        <div className="loading m-t-32"></div>
+        <Loading className="mt-6" />
       ) : (
-        <Fragment>
-          {!routeMatches(currentPathname) && (
-            <AppHeader currentPathname={currentPathname} />
-          )}
+        <Layout>
           <AppRoutes />
-          <Copyright />
-        </Fragment>
+        </Layout>
       )}
     </Fragment>
   );

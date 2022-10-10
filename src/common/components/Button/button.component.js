@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Loading from '../loading';
 
 const Button = ({ isLoading, children, ...rest }) => {
-  return (
-    <button {...rest}>
-      {isLoading ? <div className="loading"></div> : <span>{children}</span>}
-    </button>
-  );
+  return <button {...rest}>{isLoading ? <Loading /> : children}</button>;
 };
 
 Button.propTypes = {

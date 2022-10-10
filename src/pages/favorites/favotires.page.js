@@ -4,6 +4,7 @@ import FavoriteService from '../../services/favorite.service';
 import PageHeader from '../../common/components/page-header';
 import { handleError } from '../../common/utils/api';
 import { telephoneMask } from '../../common/utils/telephone-mask';
+import Loading from '../../common/components/loading';
 
 const Favorites = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,43 +29,46 @@ const Favorites = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container mx-auto px-4 max-w-screen-lg flex-1">
       <PageHeader
         title="Favoritos"
         description="Lista de estabelecimentos favoritos."
       />
       {isLoading ? (
-        <div className="loading"></div>
+        <Loading />
       ) : (
         <Fragment>
           {favorites.map((item) => (
-            <div key={item.id} className="card card--outline">
-              <div className="card__header">
-                <h2 className="card__title m-r-16">{item.company.name}</h2>
+            <div
+              key={item.id}
+              className="mb-4 border divide-solid border-stone-200 rounded-xl p-4"
+            >
+              <div className="mb-4 flex justify-between">
+                <h2 className="text-sm font-semibold">{item.company.name}</h2>
                 <Link
                   to={`/${item.company.url}`}
-                  className="card__subtitle color--purple cursor--pointer"
+                  className="text-sm font-weight cursor-pointer"
                 >
                   <strong>Ver agenda</strong>
                 </Link>
               </div>
-              <div className="card__content flexbox flexbox--end flexbox__justify--between">
-                <div>
-                  <div>
-                    <strong>Endereço: </strong>
-                    {item.company.address || 'Não informado'}
-                  </div>
-                  <div className="m-t-10">
-                    <strong>Telefone: </strong>
+              <ul>
+                <li className="text-sm mb-1">
+                  <span className="font-semibold mr-2">Endereço:</span>
+                  <span>{item.company.address || 'Não informado'}</span>
+                </li>
+                <li className="text-sm">
+                  <span className="font-semibold mr-2">Telefone:</span>
+                  <span>
                     {telephoneMask(item.company.telephone) || 'Não informado'}
-                  </div>
-                </div>
-              </div>
+                  </span>
+                </li>
+              </ul>
             </div>
           ))}
           {!favorites.length && (
-            <div className="text--center">
-              <span>
+            <div className="text-center">
+              <span className="text-sm">
                 Você ainda não adicionou nenhum estabelecimento aos favoritos.
               </span>
             </div>

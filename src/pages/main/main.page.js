@@ -10,7 +10,7 @@ import PageHeader from '../../common/components/page-header';
 import CompanyContact from './components/company-contact';
 import Favorite from './components/favorite';
 import CompanyThumb from '../../common/components/company-thumb';
-import './main.page.scss';
+import Loading from '../../common/components/loading';
 
 const MainContexted = () => {
   const { MAIN_STATE } = useContext(MainContext);
@@ -20,29 +20,25 @@ const MainContexted = () => {
   }
 
   return (
-    <div className="container">
-      <div className="main-company__thumbnail">
-        <CompanyThumb src={MAIN_STATE.accountInfo.thumbnail} />
-      </div>
-      <PageHeader
-        title={MAIN_STATE.accountInfo.name}
-        description="Realize seu agendamento abaixo."
-      />
-      <Fragment>
-        {MAIN_STATE.isMainRequestPeding ? (
-          <div className="loading"></div>
-        ) : (
-          <Fragment>
-            <Favorite />
-            <ScheduleDate />
-            <ScheduleProfessionals />
-            <ScheduleServices />
-            <ScheduleSlots />
-            <ScheduleForm />
-            <CompanyContact accountInfo={MAIN_STATE.accountInfo} />
-          </Fragment>
-        )}
-      </Fragment>
+    <div className="container mx-auto px-4 max-w-screen-lg">
+      {MAIN_STATE.isMainRequestPeding ? (
+        <Loading />
+      ) : (
+        <Fragment>
+          <CompanyThumb src={MAIN_STATE.accountInfo.thumbnail} />
+          <PageHeader
+            title={MAIN_STATE.accountInfo.name}
+            description="Realize seu agendamento de forma prática, apenas siga os passos abaixo."
+          />
+          <Favorite />
+          <ScheduleDate />
+          <ScheduleProfessionals />
+          <ScheduleServices />
+          <ScheduleSlots />
+          <ScheduleForm />
+          <CompanyContact accountInfo={MAIN_STATE.accountInfo} />
+        </Fragment>
+      )}
     </div>
   );
 };

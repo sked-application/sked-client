@@ -1,28 +1,27 @@
 import React, { useState } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { AiOutlineLock } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import schema from './validators/recover-password.validator';
 import AuthService from '../../services/auth.service';
 import PageHeader from '../../common/components/page-header';
-import InputFormError from '../../common/components/input-form-error';
 import { handleError } from '../../common/utils/api';
-
-import './recover-password.page.scss';
+import { emailRegex } from '../../common/utils/validator';
+import Input from '../../common/components/input';
+import Button from '../../common/components/button';
 
 const RecoverPassword = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, handleSubmit, reset, formState, errors } = useForm({
-    resolver: yupResolver(schema.form.validator),
-    defaultValues: schema.form.initialValues,
-    mode: 'onChange',
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isDirty },
+  } = useForm({
+    defaultValues: { email: '' },
+    mode: 'onSubmit',
   });
-
-  const { touched, isValid, isDirty } = formState;
 
   const recoverPasswordForm = async (values) => {
     try {
@@ -51,45 +50,50 @@ const RecoverPassword = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container mx-auto px-4 max-w-md flex-1">
       <PageHeader
         title="Esqueci a senha"
         description="Um link de recuperação será enviado para seu email."
       />
-      {isLoading && <span className="loading"></span>}
-      {error && <div className="recover-password__error">{error}</div>}
-      {success && <div className="recover-password__success">{success}</div>}
-      <form
-        onSubmit={handleSubmit(recoverPasswordForm)}
-        className="recover-password__form card card--outline"
-      >
-        <div className="card__header">
-          <h2 className="card__title">
-            <AiOutlineLock /> Recuperar
-          </h2>
-        </div>
-        <div className="recover-password__field">
-          <input
-            name="email"
-            type="email"
-            ref={register}
-            className="input"
-            placeholder="Email"
-            disabled={isLoading}
-          />
-          <InputFormError touched={touched.email} error={errors.email} />
-        </div>
-        <div>
-          <button
-            disabled={!isValid || !isDirty || isLoading}
-            className="button button--block button--purple"
-          >
-            Enviar
-          </button>
-        </div>
-      </form>
-      <div className="recover-password__redirect">
-        <Link to="/sign-in">Entrar</Link>
+      {error && <div className="mb-2 text-sm text-red-500">{error}</div>}
+      {success && <div className="mb-2 text-sm text-green-600">{success}</div>}
+      <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
+        <form onSubmit={handleSubmit(recoverPasswordForm)}>
+          <div className="mb-4">
+            <label className="text-sm" htmlFor="email">
+              Email
+            </label>
+            <Input
+              id="email"
+              className="input"
+              disabled={isLoading}
+              fieldName="email"
+              errors={errors}
+              {...register('email', {
+                required: 'Este campo é obrigatório.',
+                pattern: {
+                  value: emailRegex,
+                  message: 'Insira um email válido.',
+                },
+              })}
+            />
+          </div>
+          <div>
+            <Button
+              disabled={!isDirty || isLoading}
+              isLoading={isLoading}
+              className="button button--block button--primary"
+            >
+              <span>Enviar</span>
+            </Button>
+          </div>
+        </form>
+      </div>
+      <div className="text-center mb-6">
+        <span className="text-sm mr-1">Já é cadastrado?</span>
+        <Link to="/sign-in" className="font-semibold">
+          Iniciar sessão
+        </Link>
       </div>
     </div>
   );

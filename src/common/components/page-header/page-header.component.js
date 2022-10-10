@@ -1,13 +1,12 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import './page-header.component.scss';
 
-const PageHeader = memo(({ title, description, titleSize }) => {
+const PageHeader = memo(({ title, description }) => {
   return (
-    <div className="page__header">
-      <h1 className={`page__title page__title--${titleSize}`}>{title}</h1>
+    <div className="my-6">
+      <h1 className="text-2xl font-semibold">{title}</h1>
       {description && (
-        <div className="page__description">
+        <div className="text-sm">
           <span>{description}</span>
         </div>
       )}
@@ -19,7 +18,6 @@ PageHeader.displayName = 'PageHeader';
 PageHeader.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
-  titleSize: PropTypes.string,
 };
 
 export default PageHeader;

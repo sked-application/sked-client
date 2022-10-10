@@ -8,24 +8,23 @@
   -moz-appearance: none;
   appearance: none;
   height: 48px;
-  background-color: #f6f7f8;
-  border-radius: 6px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
-  background-color: var(--light-gray);
-  border: none;
+  background-color: var(--tertiary-light);
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
 
   &::placeholder {
-    color: #6d6d6d;
+    color: var(--tertiary);
   }
 
   &:focus {
     outline: none;
     box-shadow: none;
-  }
-
-  &--dark {
-    border-color: #d7d7d7;
+    border-color: var(--primary);
+    background-color: var(--white);
   }
 }
 

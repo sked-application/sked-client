@@ -11,9 +11,8 @@
   border-style: solid;
   border-color: transparent;
   transition: all 0.3s linear;
-  color: var(--dark);
+  color: var(--primary);
   cursor: pointer;
-  $self: &;
 
   &:hover,
   &:focus {
@@ -23,10 +22,10 @@
   }
 
   &:disabled {
-    opacity: 0.5;
-    background-color: #ffffff;
-    border-color: #d7d7d7;
-    color: var(--dark);
+    opacity: 0.6;
+    background-color: var(--white);;
+    border-color: var(--tertiary);
+    color: var(--tertiary);
   }
 
   &--small {
@@ -39,19 +38,24 @@
     width: 100%;
   }
 
-  &--purple {
-    border-color: var(--purple);
-    background-color: var(--purple);
-    color: white;
+  &--primary {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    color: var(--white);
   }
 
-  &--green {
-    border-color: var(--green);
-    background-color: var(--green);
-    color: white;
+  &--secondary {
+    border-color: var(--secondary);
+    background-color: var(--secondary);
+    color: var(--white);
   }
 
-  &--outline {
-    border-color: var(--dark);
+  &--link {
+    color: var(--primary);
+    background-color: transparent;
+
+    &:disabled {
+      border-color: transparent;
+    }
   }
 }

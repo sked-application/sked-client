@@ -1,18 +1,19 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { BsPlus } from 'react-icons/bs';
-import schema from './validators/schedule-locks-form.validator';
+import { AiOutlinePlus, AiOutlineForm, AiOutlineDelete } from 'react-icons/ai';
 import ScheduleLockService from '../../services/schedule-lock.service';
 import PageHeader from '../../common/components/page-header';
-import InputFormError from '../../common/components/input-form-error';
 import { getFormattedDatePreview } from '../../common/utils/date';
-import { Modal, ModalOpenButton } from '../../common/components/modal';
+import { Modal } from '../../common/components/modal';
 import { handleError } from '../../common/utils/api';
+import Button from '../../common/components/button';
+import Input from '../../common/components/input';
+import Loading from '../../common/components/loading';
 
 const ScheduleLocks = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingModal, setIsLoadingModal] = useState(false);
   const [scheduleLocks, setScheduleLocks] = useState([]);
   const [toggleShow, setToggleShow] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -21,18 +22,21 @@ const ScheduleLocks = () => {
     register,
     handleSubmit,
     reset,
-    formState,
-    errors,
+    formState: { isDirty, errors },
     setValue,
   } = useForm({
-    resolver: yupResolver(schema.form.validator),
-    defaultValues: schema.form.initialValues,
-    mode: 'onChange',
+    defaultValues: {
+      id: '',
+      start: '',
+      end: '',
+      date: null,
+    },
+    mode: 'onSubmit',
   });
 
-  const { touched, isValid, isDirty } = formState;
-
   const scheduleLockForm = async (values) => {
+    setIsLoadingModal(true);
+
     try {
       const { id, date, start, end } = values;
       let message;
@@ -56,10 +60,12 @@ const ScheduleLocks = () => {
       }
 
       reset();
+      setIsLoadingModal(false);
       listScheduleLocks();
       handleCloseModal();
       alert(message);
     } catch (error) {
+      setIsLoadingModal(false);
       alert(handleError(error));
     }
   };
@@ -79,10 +85,6 @@ const ScheduleLocks = () => {
   };
 
   const handleCloseModal = () => {
-    setTimeout(() => {
-      reset();
-    }, 300);
-
     setToggleShow(false);
   };
 
@@ -118,128 +120,134 @@ const ScheduleLocks = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container mx-auto px-4 max-w-screen-lg flex-1">
       <PageHeader
         title="Bloqueio de agenda"
         description="Aqui você gerencia o bloqueio de agenda para dias específicos."
       />
       {isLoading ? (
-        <div className="loading"></div>
+        <Loading />
       ) : (
-        <Fragment>
-          <div className="flexbox flexbox__justify--end m-b-16">
-            <ModalOpenButton onClick={() => handleOpenModal()}>
-              <BsPlus fontSize="30" fontWeight="700" />
-            </ModalOpenButton>
-          </div>
+        <div>
+          <Button
+            type="button"
+            onClick={() => handleOpenModal()}
+            className="button button--block button--primary mb-4"
+          >
+            <div className="flex items-center justify-center">
+              <AiOutlinePlus size={18} className="mr-2" />
+              <span>Adicionar novo bloqueio</span>
+            </div>
+          </Button>
           {scheduleLocks.map((item, index) => (
-            <div key={index} className="card card--outline">
+            <div
+              key={index}
+              className="mb-4 border divide-solid border-stone-200 rounded-xl p-4"
+            >
               <div>
-                <div className="card__header">
-                  <h2 className="card__title">
+                <div className="mb-4 flex justify-between">
+                  <h2 className="text-md font-semibold">
                     {getFormattedDatePreview(item.date)}
                   </h2>
-                  <strong
+                  <AiOutlineForm
                     onClick={() => handleOpenModal(item)}
-                    className="card__subtitle color--purple cursor--pointer"
-                  >
-                    Editar
-                  </strong>
+                    size={18}
+                    className="cursor-pointer"
+                  />
                 </div>
-                <div className="flexbox flexbox--end flexbox__justify--between">
-                  <div className="badge badge--light badge--outline cursor--pointer text--center">
-                    <span>
-                      {item.start.slice(0, 5)} às {item.end.slice(0, 5)}
+                <div className="flex justify-between">
+                  <div>
+                    <span className="text-sm">
+                      {`Agenda bloqueada das ${item.start.slice(0, 5)} às
+                      ${item.end.slice(0, 5)}`}
                     </span>
                   </div>
-                  <button
+                  <AiOutlineDelete
                     onClick={() => removeScheduleLock(item.id)}
-                    className="button button--outline button--small"
-                  >
-                    Remover
-                  </button>
+                    size={18}
+                    className="cursor-pointer"
+                  />
                 </div>
               </div>
             </div>
           ))}
           {!scheduleLocks.length && (
-            <div className="text--center">
-              <span>
+            <div className="text-center">
+              <span className="text-sm">
                 Clique no botão acima para configurar um bloqueio de agenda.
               </span>
             </div>
           )}
-        </Fragment>
+        </div>
       )}
+
       <Modal
-        title="Gerenciar bloqueio de agenda"
         isOpen={toggleShow}
         handleClose={handleCloseModal}
+        title="Gerenciar bloqueio de agenda"
       >
-        <Fragment>
-          <form
-            onSubmit={handleSubmit(scheduleLockForm)}
-            className="flexbox flexbox--column"
-          >
-            <div className="flexbox flexbox--column">
-              <div className="flexbox__item">
-                <div className="m-b-5">
-                  <label htmlFor="date">Data</label>
-                </div>
-                <input
-                  id="date"
-                  name="date"
-                  type="date"
-                  ref={register}
-                  className="input input--dark"
+        <form onSubmit={handleSubmit(scheduleLockForm)}>
+          <div className="flex flex-col">
+            <div className="mb-4">
+              <label className="text-sm" htmlFor="date">
+                Data
+              </label>
+              <Input
+                id="date"
+                type="date"
+                className="input"
+                fieldName="date"
+                errors={errors}
+                {...register('date', {
+                  required: 'Este campo é obrigatório',
+                })}
+              />
+            </div>
+            <div className="flex mb-4">
+              <div className="flex-1">
+                <label className="text-sm" htmlFor="start">
+                  Início
+                </label>
+                <Input
+                  id="start"
+                  type="time"
+                  className="input"
+                  fieldName="start"
+                  errors={errors}
+                  {...register('start', {
+                    required: 'Este campo é obrigatório',
+                  })}
                 />
-                <InputFormError touched={touched.date} error={errors.date} />
               </div>
-              <div className="flexbox m-t-16">
-                <div className="flexbox__item">
-                  <div className="m-b-5">
-                    <label htmlFor="start">Início</label>
-                  </div>
-                  <input
-                    id="start"
-                    name="start"
-                    type="time"
-                    ref={register}
-                    className="input input--dark"
-                  />
-                  <InputFormError
-                    touched={touched.start}
-                    error={errors.start}
-                  />
-                </div>
-                <div className="flexbox__item m-l-16">
-                  <div className="m-b-5">
-                    <label htmlFor="end">Término</label>
-                  </div>
-                  <input
-                    id="end"
-                    name="end"
-                    type="time"
-                    ref={register}
-                    className="input input--dark"
-                  />
-                  <InputFormError touched={touched.end} error={errors.end} />
-                </div>
-              </div>
-              <div>
-                <input name="id" type="hidden" ref={register} />
-              </div>
-              <div className="flexbox m-t-16">
-                <button
-                  disabled={!isValid || !isDirty}
-                  className="button button--block button--purple"
-                >
-                  {isEdit ? 'Atualizar' : 'Salvar'}
-                </button>
+              <div className="flex-1 ml-4">
+                <label className="text-sm" htmlFor="end">
+                  Término
+                </label>
+                <Input
+                  id="end"
+                  type="time"
+                  className="input"
+                  fieldName="end"
+                  errors={errors}
+                  {...register('end', {
+                    required: 'Este campo é obrigatório',
+                  })}
+                />
               </div>
             </div>
-          </form>
-        </Fragment>
+            <div>
+              <input {...register('id')} type="hidden" />
+            </div>
+            <Button
+              type="submit"
+              disabled={!isDirty || isLoadingModal}
+              isLoading={isLoadingModal}
+              className="button button--block button--primary"
+            >
+              <span>{isEdit ? 'Atualizar' : 'Adicionar'}</span>
+            </Button>
+          </div>
+        </form>
       </Modal>
     </div>
   );

@@ -1,16 +1,21 @@
-@import 'colors';
-@import 'global';
+@tailwind base;
+@layer base {
+  html {
+    @apply text-slate-800;
+  }
+}
+@tailwind components;
+@tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Anek+Gujarati:wght@300;400;700&display=swap');
+
+* {
+  font-family: 'Anek Gujarati', sans-serif;
+}
+
+
+@import 'colors';
 @import 'button';
 @import 'input';
 @import 'select';
 @import 'base';
-@import 'spacing';
-@import 'loading';
-
-@import 'utilities';
-@import 'badge';
-@import 'slot';
-@import 'card';
-@import 'grouped-button-label';
-@import 'form';

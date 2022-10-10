@@ -1,65 +1,62 @@
-import React, { memo, Fragment } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { BsX } from 'react-icons/bs';
-import './modal.component.scss';
+import { Dialog, Transition } from '@headlessui/react';
 
-const MemoizedModal = ({ children, title, isOpen, handleClose }) => {
-  if (window && window.innerWidth > 720) {
-    const bodyElement = document.getElementById('body');
-
-    if (isOpen) {
-      if (bodyElement.scrollHeight > window.innerHeight) {
-        bodyElement.classList.add('block-scroll');
-      }
-    } else {
-      if (bodyElement.classList.contains('block-scroll')) {
-        setTimeout(() => bodyElement.classList.remove('block-scroll'), 300);
-      }
-    }
-  }
-
+const MemoizedModal = ({ isOpen, handleClose, title, children }) => {
   return (
-    <Fragment>
-      <div className={`show-up ${isOpen ? 'show-up--active' : ''}`}>
-        <div
-          onClick={handleClose}
-          className={`show-up__overlay ${
-            isOpen ? 'show-up__overlay--active' : ''
-          }`}
-        />
-        <div className="show-up__modal">
-          <div className="show-up__header">
-            <h2 className="show-up__title">{title}</h2>
-            <div onClick={handleClose} className="show-up__close">
-              <BsX fontSize="34" />
-            </div>
+    <Transition appear show={isOpen}>
+      <Dialog as="div" className="relative z-10" onClose={handleClose}>
+        <Transition.Child
+          enter="ease-out duration-200"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-black bg-opacity-50" />
+        </Transition.Child>
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <Transition.Child
+              className="w-full max-w-md"
+              enter="ease-out duration-200"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <Dialog.Panel className="transform overflow-hidden rounded-xl bg-white p-4 text-left align-middle shadow-xl transition-all">
+                <div className="flex justify-between items-start mb-4">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-semibold leading-6 mr-4 mt-2"
+                  >
+                    {title}
+                  </Dialog.Title>
+                  <BsX
+                    fontSize="34"
+                    onClick={handleClose}
+                    className="cursor-pointer"
+                  />
+                </div>
+                {children}
+              </Dialog.Panel>
+            </Transition.Child>
           </div>
-          <div className="show-up__content">{children}</div>
         </div>
-      </div>
-    </Fragment>
+      </Dialog>
+    </Transition>
   );
 };
 
 MemoizedModal.propTypes = {
-  children: PropTypes.element.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   title: PropTypes.string,
-  isOpen: PropTypes.bool,
+  children: PropTypes.element.isRequired,
 };
 
 export const Modal = memo(MemoizedModal);
-
-const MemoizedModalOpenButton = (props) => {
-  return (
-    <button {...props} className="show-up__button cursor--pointer">
-      {props.children}
-    </button>
-  );
-};
-
-MemoizedModalOpenButton.propTypes = {
-  children: PropTypes.element.isRequired,
-};
-
-export const ModalOpenButton = memo(MemoizedModalOpenButton);
