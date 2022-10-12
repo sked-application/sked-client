@@ -83,7 +83,7 @@ const MainSlotGrid = () => {
     <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
       <div className="flex justify-between mb-2">
         <div className="flex">
-          <AiOutlineClockCircle size={18} className="mr-2" />
+          <AiOutlineClockCircle size={20} className="mr-2" />
           <h2 className="text-md font-semibold">Horários</h2>
         </div>
         <div>

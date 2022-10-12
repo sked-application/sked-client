@@ -181,7 +181,7 @@ const CalendarTimeline = ({
                         {status === 'FINISHED' && <div>Finalizado</div>}
                       </div>
                     </div>
-                    <ul className="mb-2">
+                    <ul className="mb-4">
                       <li className="mb-1">
                         <span className="font-semibold mr-2">Serviço:</span>
                         <span>{schedule.service.name}</span>
@@ -230,8 +230,8 @@ const CalendarTimeline = ({
                               }
                             >
                               <div className="flex items-center justify-center text-indigo-500">
-                                <AiOutlineCheck size={18} className="mr-1" />
-                                <span className="text-xs pt-1 font-semibold">
+                                <AiOutlineCheck size={20} className="mr-1" />
+                                <span className="pt-1 font-semibold">
                                   Confirmar
                                 </span>
                               </div>
@@ -247,10 +247,10 @@ const CalendarTimeline = ({
                             >
                               <div className="flex items-center justify-center text-green-600">
                                 <AiOutlineCheckCircle
-                                  size={18}
+                                  size={20}
                                   className="mr-1"
                                 />
-                                <span className="text-xs pt-1 font-semibold">
+                                <span className="pt-1 font-semibold">
                                   Finalizar
                                 </span>
                               </div>
@@ -265,10 +265,10 @@ const CalendarTimeline = ({
                           >
                             <div className="flex items-center justify-center text-red-500">
                               <AiOutlineCloseCircle
-                                size={18}
+                                size={20}
                                 className="mr-1"
                               />
-                              <span className="text-xs pt-1 font-semibold">
+                              <span className="pt-1 font-semibold">
                                 Cancelar
                               </span>
                             </div>

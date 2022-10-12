@@ -93,7 +93,7 @@ const Professionals = () => {
             className="button button--block button--primary mb-4"
           >
             <div className="flex items-center justify-center">
-              <AiOutlinePlus size={18} className="mr-2" />
+              <AiOutlinePlus size={20} className="mr-2" />
               <span>Adicionar novo profissional</span>
             </div>
           </Button>

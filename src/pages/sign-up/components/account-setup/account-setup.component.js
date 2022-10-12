@@ -162,7 +162,7 @@ const AccountSetupValidation = ({ token, setCompanyData, companyData }) => {
             >
               <div className="flex items-center justify-center">
                 <span>Continuar</span>
-                <AiOutlineRight size={18} className="ml-2" />
+                <AiOutlineRight size={20} className="ml-2" />
               </div>
             </Button>
           </div>
@@ -294,7 +294,7 @@ const AccountSetupUrl = ({ companyData, setCompanyData }) => {
             >
               <div className="flex items-center justify-center">
                 <span>Continuar</span>
-                <AiOutlineRight size={18} className="ml-2" />
+                <AiOutlineRight size={20} className="ml-2" />
               </div>
             </Button>
           </div>
@@ -529,7 +529,7 @@ const AccountSetupService = ({ companyData, setCompanyData }) => {
               className="button button--block button--primary"
             >
               <div className="flex items-center justify-center">
-                <AiOutlinePlus className="mr-2" size={18} />
+                <AiOutlinePlus className="mr-2" size={20} />
                 <span>Adicionar novo serviço</span>
               </div>
             </Button>
@@ -546,7 +546,7 @@ const AccountSetupService = ({ companyData, setCompanyData }) => {
                 <div>
                   <AiOutlineForm
                     onClick={() => handleOpenModal(item)}
-                    size={18}
+                    size={20}
                     className="cursor-pointer"
                   />
                 </div>
@@ -565,7 +565,7 @@ const AccountSetupService = ({ companyData, setCompanyData }) => {
                 <div className="flex">
                   <AiOutlineDelete
                     onClick={() => removeService(item.id)}
-                    size={18}
+                    size={20}
                     className="cursor-pointer"
                   />
                 </div>

@@ -76,7 +76,7 @@ const Profile = () => {
                 <h2 className="text-md font-semibold">Meus dados:</h2>
                 <AiOutlineForm
                   onClick={() => handleOpenModal(profile)}
-                  size={18}
+                  size={20}
                   className="cursor-pointer"
                 />
               </div>

@@ -104,7 +104,7 @@ const Services = () => {
             className="button button--block button--primary mb-4"
           >
             <div className="flex items-center justify-center">
-              <AiOutlinePlus size={18} className="mr-2" />
+              <AiOutlinePlus size={20} className="mr-2" />
               <span>Adicionar novo serviço</span>
             </div>
           </Button>
@@ -117,7 +117,7 @@ const Services = () => {
                 <h2 className="font-semibold">{item.name}</h2>
                 <AiOutlineForm
                   onClick={() => handleOpenModal(item)}
-                  size={18}
+                  size={20}
                   className="cursor-pointer"
                 />
               </div>
@@ -135,7 +135,7 @@ const Services = () => {
                 <div className="flex">
                   <AiOutlineDelete
                     onClick={() => removeService(item.id)}
-                    size={18}
+                    size={20}
                     className="cursor-pointer"
                   />
                 </div>

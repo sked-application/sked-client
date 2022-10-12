@@ -30,8 +30,8 @@ const WizardHeader = ({ allowBackOnLastStep }) => {
                 className="text-indigo-500 cursor-pointer"
               >
                 <span className="flex items-center">
-                  <AiOutlineLeft size={14} />
-                  <span className="text-xs font-semibold">Anterior</span>
+                  <AiOutlineLeft size={18} />
+                  <span className="font-semibold">Anterior</span>
                 </span>
               </a>
             </Transition>

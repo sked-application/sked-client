@@ -21,7 +21,7 @@ const ScheduleDate = () => {
   return (
     <div className="mb-4 border divide-solid border-stone-200 rounded-xl p-4">
       <div className="mb-2 flex">
-        <AiOutlineCalendar size={18} className="mr-2" />
+        <AiOutlineCalendar size={20} className="mr-2" />
         <h2 className="text-md font-semibold">Selecione a data</h2>
       </div>
       <div>

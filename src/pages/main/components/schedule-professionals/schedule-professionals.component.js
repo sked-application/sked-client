@@ -50,7 +50,7 @@ const ScheduleProfessionals = () => {
   return (
     <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
       <div className="mb-2 flex">
-        <AiOutlineUser size={18} className="mr-2" />
+        <AiOutlineUser size={20} className="mr-2" />
         <h2 className="text-md font-semibold">Profissional</h2>
       </div>
       <div>

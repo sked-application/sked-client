@@ -29,7 +29,7 @@ const TimegridWeekDay = ({ label, day }) => {
           <span className="font-semibold">{label}</span>
         </div>
         <div onClick={() => handleAppend()}>
-          <AiOutlinePlusSquare fontSize={18} className="cursor-pointer" />
+          <AiOutlinePlusSquare fontsize={20} className="cursor-pointer" />
         </div>
       </div>
       {fields.length ? (
@@ -67,7 +67,7 @@ const TimegridWeekDay = ({ label, day }) => {
                 <div className="ml-4 mb-3">
                   <AiOutlineDelete
                     onClick={() => remove(index)}
-                    size={18}
+                    size={20}
                     className="cursor-pointer"
                   />
                 </div>
