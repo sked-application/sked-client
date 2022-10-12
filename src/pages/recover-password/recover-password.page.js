@@ -55,14 +55,12 @@ const RecoverPassword = () => {
         title="Esqueci a senha"
         description="Um link de recuperação será enviado para seu email."
       />
-      {error && <div className="mb-2 text-sm text-red-500">{error}</div>}
-      {success && <div className="mb-2 text-sm text-green-600">{success}</div>}
+      {error && <div className="mb-2 text-red-500">{error}</div>}
+      {success && <div className="mb-2 text-green-600">{success}</div>}
       <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
         <form onSubmit={handleSubmit(recoverPasswordForm)}>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="email">
-              Email
-            </label>
+            <label htmlFor="email">Email</label>
             <Input
               id="email"
               className="input"
@@ -90,7 +88,7 @@ const RecoverPassword = () => {
         </form>
       </div>
       <div className="text-center mb-6">
-        <span className="text-sm mr-1">Já é cadastrado?</span>
+        <span className="mr-1">Já é cadastrado?</span>
         <Link to="/sign-in" className="font-semibold">
           Iniciar sessão
         </Link>

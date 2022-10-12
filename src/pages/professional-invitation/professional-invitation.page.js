@@ -48,13 +48,11 @@ const ProfessionalInvitation = () => {
   return (
     <div className="container mx-auto px-4 max-w-md flex-1">
       <PageHeader title="Confirme o convite" />
-      {error && <div className="mb-2 text-sm text-red-500">{error}</div>}
+      {error && <div className="mb-2 text-red-500">{error}</div>}
       <div className="mb-4 border divide-solid border-stone-200 rounded-xl p-4">
         <form onSubmit={handleSubmit(confirmInvatationForm)}>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="password">
-              Senha
-            </label>
+            <label htmlFor="password">Senha</label>
             <Input
               id="password"
               type="password"
@@ -81,7 +79,7 @@ const ProfessionalInvitation = () => {
         </form>
       </div>
       <div className="text-center mb-6">
-        <span className="text-sm mr-1">Já é cadastrado?</span>
+        <span className="mr-1">Já é cadastrado?</span>
         <Link to="/sign-in" className="font-semibold">
           Iniciar sessão
         </Link>

@@ -86,11 +86,9 @@ const AccountSignUpEmail = ({ setUserData, userData }) => {
       />
       <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
         <form onSubmit={handleSubmit(formSubmit)}>
-          {error && <div className="mb-2 text-sm text-red-500">{error}</div>}
+          {error && <div className="mb-2 text-red-500">{error}</div>}
           <div className="mb-4">
-            <label className="text-sm" htmlFor="userEmail">
-              Digite seu e-mail
-            </label>
+            <label htmlFor="userEmail">Digite seu e-mail</label>
             <Input
               id="userEmail"
               disabled={isLoading}
@@ -119,7 +117,7 @@ const AccountSignUpEmail = ({ setUserData, userData }) => {
         </form>
       </div>
       <div className="text-center mb-6">
-        <span className="text-sm mr-1">Já é cadastrado?</span>
+        <span className="mr-1">Já é cadastrado?</span>
         <Link to="/sign-in" className="font-semibold">
           Iniciar sessão
         </Link>
@@ -181,14 +179,12 @@ const AccountSignUpValidation = ({ setUserData, userData }) => {
       />
       <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
         <form onSubmit={handleSubmit(formSubmit)}>
-          {error && <div className="mb-2 text-sm text-red-500">{error}</div>}
+          {error && <div className="mb-2 text-red-500">{error}</div>}
           <div className="mb-2">
-            <span className="text-sm font-semibold">{userData.email}</span>
+            <span className="font-semibold">{userData.email}</span>
           </div>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="userName">
-              Digite seu nome completo
-            </label>
+            <label htmlFor="userName">Digite seu nome completo</label>
             <Input
               id="userName"
               disabled={isLoading}
@@ -201,7 +197,7 @@ const AccountSignUpValidation = ({ setUserData, userData }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="userPassword">
+            <label htmlFor="userPassword">
               Escolha uma senha com no mínimo 8 caracteres
             </label>
             <Input
@@ -233,7 +229,7 @@ const AccountSignUpValidation = ({ setUserData, userData }) => {
         </form>
       </div>
       <div className="text-center mb-6">
-        <span className="text-sm mr-1">Já é cadastrado?</span>
+        <span className="mr-1">Já é cadastrado?</span>
         <Link to="/sign-in" className="font-semibold">
           Iniciar sessão
         </Link>
@@ -269,13 +265,13 @@ const AccountSignUpConfirmation = ({ userData }) => {
         description={`Enviamos um e-mail para o endereço: ${userData.email}`}
         titleSize="medium"
       />
-      {error && <div className="mb-2 text-sm text-red-500">{error}</div>}
+      {error && <div className="mb-2 text-red-500">{error}</div>}
       <div>
         {resent ? (
-          <span className="text-sm text-green-600">Reenviado com sucesso</span>
+          <span className="text-green-600">Reenviado com sucesso</span>
         ) : (
           <div className="mb-6">
-            <span className="text-sm mr-1">Não recebeu o e-mail?</span>
+            <span className="mr-1">Não recebeu o e-mail?</span>
             <a className="font-semibold" onClick={retrySendEmail}>
               Reenviar
             </a>

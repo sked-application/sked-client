@@ -51,9 +51,7 @@ const ServiceFormModal = ({ data, onSubmit }) => {
   return (
     <form onSubmit={handleSubmit(serviceForm)}>
       <div className="mb-4">
-        <label className="text-sm" htmlFor="name">
-          Nome
-        </label>
+        <label htmlFor="name">Nome</label>
         <Input
           id="name"
           className="input"
@@ -65,9 +63,7 @@ const ServiceFormModal = ({ data, onSubmit }) => {
         />
       </div>
       <div className="mb-4">
-        <label className="text-sm" htmlFor="duration">
-          Duração em minutos
-        </label>
+        <label htmlFor="duration">Duração em minutos</label>
         <Input
           id="duration"
           type="number"
@@ -82,9 +78,7 @@ const ServiceFormModal = ({ data, onSubmit }) => {
         />
       </div>
       <div className="mb-4">
-        <label className="text-sm" htmlFor="price">
-          Valor
-        </label>
+        <label htmlFor="price">Valor</label>
         <Controller
           control={control}
           name="price"
@@ -103,7 +97,7 @@ const ServiceFormModal = ({ data, onSubmit }) => {
           errors={errors}
           name="price"
           render={({ message }) => (
-            <div className="text-red-500 text-sm mt-2">{message}</div>
+            <div className="text-red-500 mt-2">{message}</div>
           )}
         />
       </div>
@@ -114,9 +108,7 @@ const ServiceFormModal = ({ data, onSubmit }) => {
             className="checkbox"
             {...register('showPrice')}
           />
-          <span className="cursor-pointer text-sm ml-2">
-            Mostrar preço na agenda
-          </span>
+          <span className="cursor-pointer ml-2">Mostrar preço na agenda</span>
         </label>
       </div>
       <div>

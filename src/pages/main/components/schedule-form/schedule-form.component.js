@@ -113,15 +113,15 @@ const ScheduleForm = () => {
               MAIN_STATE.scheduleSlot.date && (
                 <div>
                   <ul className="mb-4">
-                    <li className="text-sm mb-1">
+                    <li className="mb-1">
                       <span className="font-semibold mr-2">Profissional:</span>
                       <span>{MAIN_STATE.user.name}</span>
                     </li>
-                    <li className="text-sm mb-1">
+                    <li className="mb-1">
                       <span className="font-semibold mr-2">Serviço:</span>
                       <span>{MAIN_STATE.service.name}</span>
                     </li>
-                    <li className="text-sm mb-1">
+                    <li className="mb-1">
                       <span className="font-semibold mr-2">Data/Hora:</span>
                       <span>
                         {`${getFormattedDatePreview(
@@ -132,7 +132,7 @@ const ScheduleForm = () => {
                       </span>
                     </li>
                     {MAIN_STATE.service.showPrice && (
-                      <li className="text-sm">
+                      <li>
                         <span className="font-semibold mr-2">Preço:</span>
                         <span className="font-semibold text-green-600">
                           {getFormattedPrice(MAIN_STATE.service.price, 'R$')}

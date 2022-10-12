@@ -52,13 +52,11 @@ const SignIn = () => {
         title="Entrar como profissional"
         description="Gerencie seus agendamentos."
       />
-      {error && <div className="mb-2 text-sm text-red-500">{error}</div>}
+      {error && <div className="mb-2 text-red-500">{error}</div>}
       <div className="mb-4 border divide-solid border-stone-200 rounded-xl p-4">
         <form onSubmit={handleSubmit(signInForm)}>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="email">
-              E-mail
-            </label>
+            <label htmlFor="email">E-mail</label>
             <Input
               id="email"
               disabled={isLoading}
@@ -75,9 +73,7 @@ const SignIn = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="password">
-              Senha
-            </label>
+            <label htmlFor="password">Senha</label>
             <Input
               id="password"
               type="password"
@@ -91,9 +87,7 @@ const SignIn = () => {
             />
           </div>
           <div className="mb-4">
-            <Link to="/recover-password" className="text-sm">
-              Esqueceu a senha?
-            </Link>
+            <Link to="/recover-password">Esqueceu a senha?</Link>
           </div>
           <div>
             <Button
@@ -108,7 +102,7 @@ const SignIn = () => {
         </form>
       </div>
       <div className="text-center mb-6">
-        <span className="text-sm mr-1">Ainda não tem uma conta?</span>
+        <span className="mr-1">Ainda não tem uma conta?</span>
         <Link to="/sign-up" className="font-semibold">
           Cadastrar-se
         </Link>

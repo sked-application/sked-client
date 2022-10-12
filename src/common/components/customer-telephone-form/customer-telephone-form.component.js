@@ -47,9 +47,7 @@ const CustomerSignUpForm = ({ isValidToSubmit, onSubmit }) => {
   return (
     <form onSubmit={handleSubmit(signUpForm)}>
       <div className="mb-4">
-        <label className="text-sm" htmlFor="telephone">
-          Telefone
-        </label>
+        <label htmlFor="telephone">Telefone</label>
         <Input
           id="telephone"
           type="tel"

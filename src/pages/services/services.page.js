@@ -114,7 +114,7 @@ const Services = () => {
               className="mb-4 border divide-solid border-stone-200 rounded-xl p-4"
             >
               <div className="flex justify-between">
-                <h2 className="text-sm font-semibold">{item.name}</h2>
+                <h2 className="font-semibold">{item.name}</h2>
                 <AiOutlineForm
                   onClick={() => handleOpenModal(item)}
                   size={18}
@@ -123,11 +123,11 @@ const Services = () => {
               </div>
               <div className="flex items-end justify-between mt-4">
                 <ul>
-                  <li className="text-sm mb-1">
+                  <li className="mb-1">
                     <span className="font-semibold mr-2">Duração:</span>
                     <span>{item.duration} minutos</span>
                   </li>
-                  <li className="text-sm">
+                  <li>
                     <span className="font-semibold mr-2">Preço:</span>
                     <span>{getFormattedPrice(item.price, 'R$')}</span>
                   </li>
@@ -144,9 +144,7 @@ const Services = () => {
           ))}
           {!services.length && (
             <div className="text-center mt-4">
-              <span className="text-sm">
-                Clique no botão acima e adicione seus serviços.
-              </span>
+              <span>Clique no botão acima e adicione seus serviços.</span>
             </div>
           )}
         </Fragment>

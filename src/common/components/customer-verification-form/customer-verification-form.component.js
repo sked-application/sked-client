@@ -65,7 +65,7 @@ const CustomerVerificationForm = ({
     <div>
       <form onSubmit={handleSubmit(signInForm)}>
         <div>
-          <label className="text-sm font-semibold" htmlFor="name">
+          <label className="font-semibold" htmlFor="name">
             {customerSignInData.name
               ? `Olá ${customerSignInData.name}`
               : 'Digite seu nome'}
@@ -82,7 +82,7 @@ const CustomerVerificationForm = ({
           />
         </div>
         <div className="mt-2">
-          <label className="text-sm" htmlFor="confirmationSmsCode">
+          <label htmlFor="confirmationSmsCode">
             Digite o código enviado para seu telefone.
           </label>
           <Input
@@ -106,7 +106,7 @@ const CustomerVerificationForm = ({
           </Button>
         </div>
         <div className="text-center mt-4">
-          <span className="text-sm mr-1">Não recebeu o sms?</span>
+          <span className="mr-1">Não recebeu o sms?</span>
           <span className="font-semibold" onClick={() => previousStep()}>
             Enviar novamente.
           </span>

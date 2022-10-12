@@ -6,7 +6,7 @@ const CompanyContact = memo(({ accountInfo }) => {
   return (
     <div className="mb-6">
       {accountInfo.telephone && (
-        <p className="text-center text-sm">
+        <p className="text-center">
           <span>Telefone: </span>
           <a href={`tel:+351${accountInfo.telephone}`}>
             {telephoneMask(accountInfo.telephone)}
@@ -18,7 +18,6 @@ const CompanyContact = memo(({ accountInfo }) => {
           <a
             href={`https://maps.google.com/?q=${accountInfo.address}`}
             target="_blank"
-            className="text-sm"
             rel="noreferrer"
           >
             Endereço: {accountInfo.address}

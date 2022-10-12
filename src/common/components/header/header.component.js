@@ -36,7 +36,7 @@ const Header = ({ currentPathname, setIsMenuOpen }) => {
               {allowProfessionalLink(currentPathname) && (
                 <Link
                   to="/sign-in"
-                  className="text-sm underline font-semibold underline-offset-4"
+                  className="underline font-semibold underline-offset-4"
                 >
                   Sou profissional
                 </Link>
@@ -45,7 +45,7 @@ const Header = ({ currentPathname, setIsMenuOpen }) => {
               {['/sign-in'].includes(currentPathname) && (
                 <Link
                   to="/customer-sign-in"
-                  className="text-sm underline font-semibold underline-offset-4"
+                  className="underline font-semibold underline-offset-4"
                 >
                   Sou cliente
                 </Link>

@@ -54,13 +54,11 @@ const ResetPassword = () => {
         title="Redefina uma nova senha"
         description="Sua senha deve conter no mínimo 8 caracteres."
       />
-      {error && <div className="mb-2 text-sm text-red-500">{error}</div>}
+      {error && <div className="mb-2 text-red-500">{error}</div>}
       <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
         <form onSubmit={handleSubmit(resetPasswordForm)}>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="password">
-              Nova senha
-            </label>
+            <label htmlFor="password">Nova senha</label>
             <Input
               id="password"
               type="password"
@@ -89,7 +87,7 @@ const ResetPassword = () => {
         </form>
       </div>
       <div className="text-center mb-6">
-        <span className="text-sm mr-1">Já é cadastrado?</span>
+        <span className="mr-1">Já é cadastrado?</span>
         <Link to="/sign-in" className="font-semibold">
           Iniciar sessão
         </Link>

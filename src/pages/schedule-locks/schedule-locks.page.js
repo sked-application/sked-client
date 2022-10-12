@@ -157,7 +157,7 @@ const ScheduleLocks = () => {
                 </div>
                 <div className="flex justify-between">
                   <div>
-                    <span className="text-sm">
+                    <span>
                       {`Agenda bloqueada das ${item.start.slice(0, 5)} às
                       ${item.end.slice(0, 5)}`}
                     </span>
@@ -173,7 +173,7 @@ const ScheduleLocks = () => {
           ))}
           {!scheduleLocks.length && (
             <div className="text-center">
-              <span className="text-sm">
+              <span>
                 Clique no botão acima para configurar um bloqueio de agenda.
               </span>
             </div>
@@ -189,9 +189,7 @@ const ScheduleLocks = () => {
         <form onSubmit={handleSubmit(scheduleLockForm)}>
           <div className="flex flex-col">
             <div className="mb-4">
-              <label className="text-sm" htmlFor="date">
-                Data
-              </label>
+              <label htmlFor="date">Data</label>
               <Input
                 id="date"
                 type="date"
@@ -205,9 +203,7 @@ const ScheduleLocks = () => {
             </div>
             <div className="flex mb-4">
               <div className="flex-1">
-                <label className="text-sm" htmlFor="start">
-                  Início
-                </label>
+                <label htmlFor="start">Início</label>
                 <Input
                   id="start"
                   type="time"
@@ -220,9 +216,7 @@ const ScheduleLocks = () => {
                 />
               </div>
               <div className="flex-1 ml-4">
-                <label className="text-sm" htmlFor="end">
-                  Término
-                </label>
+                <label htmlFor="end">Término</label>
                 <Input
                   id="end"
                   type="time"

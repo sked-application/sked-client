@@ -116,12 +116,10 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
   return (
     <form onSubmit={handleSubmit(profileForm)}>
       <div className="mb-2">
-        <span className="text-sm font-semibold">Meus dados</span>
+        <span className="font-semibold">Meus dados</span>
       </div>
       <div className="mb-4">
-        <label className="text-sm" htmlFor="userName">
-          Nome
-        </label>
+        <label htmlFor="userName">Nome</label>
         <Input
           id="userName"
           className="input"
@@ -133,9 +131,7 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
         />
       </div>
       <div className="mb-4">
-        <label className="text-sm" htmlFor="userTelephone">
-          Telefone
-        </label>
+        <label htmlFor="userTelephone">Telefone</label>
         <Input
           id="userTelephone"
           type="tel"
@@ -158,14 +154,10 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
       {isProfessional && (
         <Fragment>
           <div className="mb-4">
-            <span className="text-sm font-semibold">
-              Dados do estabelecimento
-            </span>
+            <span className="font-semibold">Dados do estabelecimento</span>
           </div>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="companyName">
-              Nome
-            </label>
+            <label htmlFor="companyName">Nome</label>
             <Input
               id="companyName"
               className="input"
@@ -177,9 +169,7 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="companyTelephone">
-              Telefone
-            </label>
+            <label htmlFor="companyTelephone">Telefone</label>
             <Input
               id="companyTelephone"
               type="tel"
@@ -200,9 +190,7 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="companyAddress">
-              Endereço
-            </label>
+            <label htmlFor="companyAddress">Endereço</label>
             <Input
               id="companyAddress"
               className="input"
@@ -214,9 +202,7 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="uploadFile">
-              Foto/logo
-            </label>
+            <label htmlFor="uploadFile">Foto/logo</label>
             {thumbPreview ? (
               <Fragment>
                 <div className="flex">

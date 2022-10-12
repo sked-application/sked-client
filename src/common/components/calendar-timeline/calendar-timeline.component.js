@@ -93,7 +93,7 @@ const CalendarTimeline = ({
               onClick={() => setStatus(status.value)}
               className={({ selected }) =>
                 classNames(
-                  'w-full rounded-lg py-2.5 text-sm font-semibold ',
+                  'w-full rounded-lg py-2.5 font-semibold ',
                   'ring-none outline-none focus:outline-none focus:ring-none',
                   selected ? 'bg-indigo-500 text-white' : 'text-slate-800',
                 )
@@ -117,16 +117,14 @@ const CalendarTimeline = ({
             <span className="mr-1 font-semibold">
               {dates[0]?.split('-')[2]}
             </span>
-            <span className="text-sm">{getMonthLabelByDate(dates[0])}</span>
+            <span>{getMonthLabelByDate(dates[0])}</span>
           </div>
           <div className="pt-1">
             <span className="mr-1">Até</span>
             <span className="mr-1 font-semibold">
               {dates[dates.length - 1]?.split('-')[2]}
             </span>
-            <span className="text-sm">
-              {getMonthLabelByDate(dates[dates.length - 1])}
-            </span>
+            <span>{getMonthLabelByDate(dates[dates.length - 1])}</span>
           </div>
         </div>
         <a
@@ -158,41 +156,37 @@ const CalendarTimeline = ({
                   >
                     <div className="flex justify-between mb-2">
                       {isCustomerSchudule ? (
-                        <h2 className="text-md font-semibold">
+                        <h2 className="font-semibold">
                           <Link to={`/${schedule.company.url}`}>
                             {schedule.company.name}
                           </Link>
                         </h2>
                       ) : (
-                        <h2 className="text-md font-semibold">
+                        <h2 className="font-semibold">
                           {schedule.customer.name}
                         </h2>
                       )}
 
                       <div>
                         {status === 'SCHEDULED' && !schedule.confirmedAt && (
-                          <div className="text-xs">Agendado</div>
+                          <div>Agendado</div>
                         )}
 
                         {status === 'SCHEDULED' && schedule.confirmedAt && (
-                          <div className="text-xs">Confirmado</div>
+                          <div>Confirmado</div>
                         )}
 
-                        {status === 'CANCELED' && (
-                          <div className="text-xs">Cancelado</div>
-                        )}
+                        {status === 'CANCELED' && <div>Cancelado</div>}
 
-                        {status === 'FINISHED' && (
-                          <div className="text-xs">Finalizado</div>
-                        )}
+                        {status === 'FINISHED' && <div>Finalizado</div>}
                       </div>
                     </div>
                     <ul className="mb-2">
-                      <li className="text-sm mb-1">
+                      <li className="mb-1">
                         <span className="font-semibold mr-2">Serviço:</span>
                         <span>{schedule.service.name}</span>
                       </li>
-                      <li className="text-sm mb-1">
+                      <li className="mb-1">
                         {isCustomerSchudule ? (
                           <Fragment>
                             <span className="font-semibold mr-2">
@@ -211,7 +205,7 @@ const CalendarTimeline = ({
                           </Fragment>
                         )}
                       </li>
-                      <li className="text-sm mb-1">
+                      <li className="mb-1">
                         <span className="font-semibold mr-2">Data/Hora:</span>
                         <span>
                           {`${getFormattedDatePreview(
@@ -219,7 +213,7 @@ const CalendarTimeline = ({
                           )} ${schedule.start.slice(0, 5)}`}
                         </span>
                       </li>
-                      <li className="text-sm mb-1">
+                      <li className="mb-1">
                         <span className="font-semibold mr-2">Preço:</span>
                         <span>{getFormattedPrice(schedule.price, 'R$')}</span>
                       </li>
@@ -288,7 +282,7 @@ const CalendarTimeline = ({
             ))}
             {!Object.keys(list).length && (
               <div className="text-center p-4">
-                <span className="text-sm">
+                <span>
                   {`Nenhum ${
                     isCustomerSchudule ? 'compromisso' : 'agendamento'
                   } para esta pesquisa.`}

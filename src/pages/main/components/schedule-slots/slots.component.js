@@ -87,9 +87,7 @@ const MainSlotGrid = () => {
           <h2 className="text-md font-semibold">Horários</h2>
         </div>
         <div>
-          <span className="text-sm">
-            {getDayLabelByDate(MAIN_STATE.startDate)}
-          </span>
+          <span>{getDayLabelByDate(MAIN_STATE.startDate)}</span>
         </div>
       </div>
 
@@ -103,7 +101,7 @@ const MainSlotGrid = () => {
                 <div
                   key={index}
                   onClick={() => handleSetSlot(slot, index)}
-                  className={`border divide-solid border-stone-200 rounded-lg p-2 cursor-pointer text-center text-sm ${
+                  className={`border divide-solid border-stone-200 rounded-lg p-2 cursor-pointer text-center ${
                     activedSlot === index ? 'bg-slate-800 text-white' : ''
                   }`}
                 >
@@ -114,17 +112,17 @@ const MainSlotGrid = () => {
           )}
 
           {MAIN_STATE.service.id && MAIN_STATE.user.id && !timegrid.length && (
-            <div className="text-sm text-amber-500">
+            <div className="text-amber-500">
               <span>Nenhum horário disponível para esta pesquisa</span>
             </div>
           )}
 
           {!MAIN_STATE.user.id ? (
-            <div className="text-sm text-amber-500">
+            <div className="text-amber-500">
               <span>Selecione um profissional.</span>
             </div>
           ) : !MAIN_STATE.service.id ? (
-            <div className="text-sm text-amber-500">
+            <div className="text-amber-500">
               <span>Selecione um serviço.</span>
             </div>
           ) : (

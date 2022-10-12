@@ -106,21 +106,19 @@ const Professionals = () => {
               <div className="mb-4 flex justify-between">
                 <h2 className="text-md font-semibold">{professional.name}</h2>
                 {professional.confirmationToken ? (
-                  <span className="text-indigo-500 text-sm">Pendente</span>
+                  <span className="text-indigo-500">Pendente</span>
                 ) : (
-                  <span className="text-green-500 text-sm">Ativo</span>
+                  <span className="text-green-500">Ativo</span>
                 )}
               </div>
               <div>
-                <div className="text-sm">{professional.email}</div>
+                <div>{professional.email}</div>
               </div>
             </div>
           ))}
           {!professionals.length && (
             <div className="text-center">
-              <span className="text-sm">
-                Clique no botão acima e adicione profissionais.
-              </span>
+              <span>Clique no botão acima e adicione profissionais.</span>
             </div>
           )}
         </Fragment>
@@ -133,9 +131,7 @@ const Professionals = () => {
       >
         <form onSubmit={handleSubmit(professionalForm)}>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="name">
-              Nome
-            </label>
+            <label htmlFor="name">Nome</label>
             <Input
               id="name"
               className="input"
@@ -147,9 +143,7 @@ const Professionals = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="email">
-              Email
-            </label>
+            <label htmlFor="email">Email</label>
             <Input
               type="email"
               disabled={isLoading}

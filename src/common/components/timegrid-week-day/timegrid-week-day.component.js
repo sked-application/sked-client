@@ -26,7 +26,7 @@ const TimegridWeekDay = ({ label, day }) => {
     <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
       <div className="flex justify-between pb-2">
         <div>
-          <span className="text-sm font-semibold">{label}</span>
+          <span className="font-semibold">{label}</span>
         </div>
         <div onClick={() => handleAppend()}>
           <AiOutlinePlusSquare fontSize={18} className="cursor-pointer" />
@@ -45,7 +45,7 @@ const TimegridWeekDay = ({ label, day }) => {
                   })}
                 />
                 <div className="flex-1">
-                  <label className="text-sm">Início</label>
+                  <label>Início</label>
                   <Input
                     type="time"
                     className="input"
@@ -55,7 +55,7 @@ const TimegridWeekDay = ({ label, day }) => {
                   />
                 </div>
                 <div className="flex-1 ml-2">
-                  <label className="text-sm">Término</label>
+                  <label>Término</label>
                   <Input
                     type="time"
                     className="input"
@@ -78,14 +78,14 @@ const TimegridWeekDay = ({ label, day }) => {
             errors={errors}
             name={fieldName}
             render={() => (
-              <div className="text-red-500 text-sm mt-2">
+              <div className="text-red-500 mt-2">
                 Preencha todos os campos corretamente
               </div>
             )}
           />
         </div>
       ) : (
-        <div className="text-sm">
+        <div>
           <span>Sem definições para este dia.</span>
         </div>
       )}

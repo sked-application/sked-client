@@ -74,14 +74,12 @@ const Favorite = () => {
               {isFavorited ? (
                 <span className="flex">
                   <AiFillHeart size={18} className="mr-1" />
-                  <span className="text-sm font-semibold">Favoritado</span>
+                  <span className="font-semibold">Favoritado</span>
                 </span>
               ) : (
                 <span className="flex">
                   <AiOutlineHeart size={18} className="mr-1" />
-                  <span className="text-sm font-semibold">
-                    Adicionar aos favoritos
-                  </span>
+                  <span className="font-semibold">Adicionar aos favoritos</span>
                 </span>
               )}
             </a>

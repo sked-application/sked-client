@@ -6,7 +6,7 @@ const PageHeader = memo(({ title, description }) => {
     <div className="my-6">
       <h1 className="text-2xl font-semibold">{title}</h1>
       {description && (
-        <div className="text-sm">
+        <div>
           <span>{description}</span>
         </div>
       )}

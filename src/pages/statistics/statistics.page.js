@@ -175,11 +175,11 @@ const Statistics = () => {
                 <h2 className="text-md font-semibold">Em aberto</h2>
               </div>
               <ul className="font-semibold">
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="mr-2">Total:</span>
                   <span>{statistics.open.quantity}</span>
                 </li>
-                <li className="text-sm">
+                <li>
                   <span className="mr-2">Valor:</span>
                   <span className="text-indigo-500">
                     R$ {statistics.open.amount}
@@ -192,11 +192,11 @@ const Statistics = () => {
                 <h2 className="text-md font-semibold">Realizados</h2>
               </div>
               <ul className="font-semibold">
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="mr-2">Total:</span>
                   <span>{statistics.finished.quantity}</span>
                 </li>
-                <li className="text-sm">
+                <li>
                   <span className="mr-2">Valor:</span>
                   <span className="text-green-500">
                     R$ {statistics.finished.amount}
@@ -209,11 +209,11 @@ const Statistics = () => {
                 <h2 className="text-md font-semibold">Cancelados</h2>
               </div>
               <ul className="font-semibold">
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="mr-2">Total:</span>
                   <span>{statistics.canceled.quantity}</span>
                 </li>
-                <li className="text-sm">
+                <li>
                   <span className="mr-2">Valor:</span>
                   <span className="text-red-500">
                     R$ {statistics.canceled.amount}
@@ -226,7 +226,7 @@ const Statistics = () => {
                 <h2 className="text-md font-semibold">Todos</h2>
               </div>
               <ul className="font-semibold">
-                <li className="text-sm">
+                <li>
                   <span className="mr-2">Total:</span>
                   <span>{statistics.total.quantity}</span>
                 </li>

@@ -12,7 +12,7 @@ const Input = forwardRef(({ errors, fieldName, ...rest }, ref) => {
           errors={errors}
           name={fieldName}
           render={({ message }) => (
-            <div className="text-red-500 text-sm mt-2">{message}</div>
+            <div className="text-red-500 mt-2">{message}</div>
           )}
         />
       )}

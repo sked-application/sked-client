@@ -44,20 +44,20 @@ const Favorites = () => {
               className="mb-4 border divide-solid border-stone-200 rounded-xl p-4"
             >
               <div className="mb-4 flex justify-between">
-                <h2 className="text-sm font-semibold">{item.company.name}</h2>
+                <h2 className="font-semibold">{item.company.name}</h2>
                 <Link
                   to={`/${item.company.url}`}
-                  className="text-sm font-weight cursor-pointer"
+                  className="font-weight cursor-pointer"
                 >
                   <strong>Ver agenda</strong>
                 </Link>
               </div>
               <ul>
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="font-semibold mr-2">Endereço:</span>
                   <span>{item.company.address || 'Não informado'}</span>
                 </li>
-                <li className="text-sm">
+                <li>
                   <span className="font-semibold mr-2">Telefone:</span>
                   <span>
                     {telephoneMask(item.company.telephone) || 'Não informado'}
@@ -68,7 +68,7 @@ const Favorites = () => {
           ))}
           {!favorites.length && (
             <div className="text-center">
-              <span className="text-sm">
+              <span>
                 Você ainda não adicionou nenhum estabelecimento aos favoritos.
               </span>
             </div>

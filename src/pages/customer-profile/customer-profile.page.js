@@ -75,11 +75,11 @@ const Profile = () => {
                 />
               </div>
               <ul>
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="font-semibold mr-2">Nome:</span>
                   <span>{profile.name}</span>
                 </li>
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="font-semibold mr-2">Meu telefone:</span>
                   <span>
                     {telephoneMask(profile.telephone) || 'Não informado'}

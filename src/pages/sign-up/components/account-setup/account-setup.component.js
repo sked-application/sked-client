@@ -135,14 +135,12 @@ const AccountSetupValidation = ({ token, setCompanyData, companyData }) => {
       )}
       <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
         <form onSubmit={handleSubmit(formSubmit)}>
-          {error && <div className="mb-2 text-sm text-red-500">{error}</div>}
+          {error && <div className="mb-2 text-red-500">{error}</div>}
           <div className="mb-2">
-            <span className="text-sm font-semibold">{user && user.email}</span>
+            <span className="font-semibold">{user && user.email}</span>
           </div>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="password">
-              Digite sua senha
-            </label>
+            <label htmlFor="password">Digite sua senha</label>
             <Input
               id="password"
               type="password"
@@ -171,7 +169,7 @@ const AccountSetupValidation = ({ token, setCompanyData, companyData }) => {
         </form>
       </div>
       <div className="text-center mb-6">
-        <span className="text-sm mr-1">Esqueceu a senha?</span>
+        <span className="mr-1">Esqueceu a senha?</span>
         <Link to="/recover-password" className="font-semibold">
           Recupere aqui
         </Link>
@@ -247,18 +245,16 @@ const AccountSetupUrl = ({ companyData, setCompanyData }) => {
       />
       <div className="my-4 border divide-solid border-stone-200 rounded-xl p-4">
         <form onSubmit={handleSubmit(formSubmit)}>
-          {error && <div className="mb-2 text-sm text-red-500">{error}</div>}
+          {error && <div className="mb-2 text-red-500">{error}</div>}
           <div className="mb-4">
-            <span className="text-sm">
+            <span>
               Preencha o nome e escolha uma URL que seja curta e fácil de
               memorizar que represente você ou seu negócio de forma concisa para
               facilitar o compartilhamento.
             </span>
           </div>
           <div className="mb-4">
-            <label className="text-sm" htmlFor="name">
-              Nome do seu negócio
-            </label>
+            <label htmlFor="name">Nome do seu negócio</label>
             <Input
               id="name"
               disabled={isLoading}
@@ -271,9 +267,7 @@ const AccountSetupUrl = ({ companyData, setCompanyData }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="url" className="text-sm">
-              Digite sua url de compartilhamento
-            </label>
+            <label htmlFor="url">Digite sua url de compartilhamento</label>
             <Input
               id="url"
               placeholder="conta"
@@ -288,7 +282,7 @@ const AccountSetupUrl = ({ companyData, setCompanyData }) => {
               })}
             />
             <div className=" mt-2">
-              <span className="text-sm">agenda.skedapp.com.br/{watchUrl}</span>
+              <span>agenda.skedapp.com.br/{watchUrl}</span>
             </div>
           </div>
           <div>
@@ -527,7 +521,7 @@ const AccountSetupService = ({ companyData, setCompanyData }) => {
         <Loading />
       ) : (
         <>
-          {error && <div className="mb-2 text-sm text-red-500">{error}</div>}
+          {error && <div className="mb-2 text-red-500">{error}</div>}
           <div className="flex mb-4">
             <Button
               type="button"
@@ -547,7 +541,7 @@ const AccountSetupService = ({ companyData, setCompanyData }) => {
             >
               <div className="flex justify-between">
                 <div>
-                  <span className="text-sm font-semibold">{item.name}</span>
+                  <span className="font-semibold">{item.name}</span>
                 </div>
                 <div>
                   <AiOutlineForm
@@ -559,11 +553,11 @@ const AccountSetupService = ({ companyData, setCompanyData }) => {
               </div>
               <div className="flex items-end justify-between mt-4">
                 <ul>
-                  <li className="text-sm mb-1">
+                  <li className="mb-1">
                     <span className="font-semibold mr-2">Duração:</span>
                     <span>{item.duration} minutos</span>
                   </li>
-                  <li className="text-sm">
+                  <li>
                     <span className="font-semibold mr-2">Preço:</span>
                     <span>{getFormattedPrice(item.price, 'R$')}</span>
                   </li>

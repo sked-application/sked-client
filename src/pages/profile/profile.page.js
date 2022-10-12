@@ -82,21 +82,21 @@ const Profile = () => {
               </div>
 
               <ul className="mb-4">
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="font-semibold mr-2">Nome:</span>
                   <span>{profile.name}</span>
                 </li>
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="font-semibold mr-2">Email:</span>
                   <span>{profile.email}</span>
                 </li>
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="font-semibold mr-2">Meu telefone:</span>
                   <span>
                     {telephoneMask(profile.telephone) || 'Não informado'}
                   </span>
                 </li>
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="font-semibold mr-2">Administrador:</span>
                   <span>{profile.role === 'ADMIN' ? 'Sim' : 'Não'}</span>
                 </li>
@@ -109,28 +109,28 @@ const Profile = () => {
               </div>
 
               <ul>
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="font-semibold mr-2">Conta:</span>
                   <span>{profile.company.name}</span>
                 </li>
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="font-semibold mr-2">Link:</span>
-                  <span className="break-words">
+                  <span className="break-all">
                     http://agenda.skedapp.com.br/{profile.company.url}
                   </span>
                 </li>
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="font-semibold mr-2">Telefone:</span>
                   <span>
                     {telephoneMask(profile.company.telephone) ||
                       'Não informado'}
                   </span>
                 </li>
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="font-semibold mr-2">Endereço:</span>
                   <span>{profile.company.address || 'Não informado'}</span>
                 </li>
-                <li className="text-sm mb-1">
+                <li className="mb-1">
                   <span className="font-semibold mr-2">Plano:</span>
                   <span>
                     {companyPlanLabels(profile.company.plan)}
