@@ -5,13 +5,10 @@ import PageHeader from '../../common/components/page-header';
 import { Modal } from '../../common/components/modal';
 import { handleError } from '../../common/utils/api';
 import { telephoneMask } from '../../common/utils/telephone-mask';
-import {
-  companyPlanLabels,
-  getLeftTrialDays,
-} from '../../common/utils/company';
 import ProfileForm from '../../common/components/profile-form';
 import Loading from '../../common/components/loading';
 import CompanyThumb from '../../common/components/company-thumb';
+import PlanRemainingDays from '../../common/components/plan-remaining-days';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -96,10 +93,11 @@ const Profile = () => {
                     {telephoneMask(profile.telephone) || 'Não informado'}
                   </span>
                 </li>
-                <li className="mb-1">
-                  <span className="font-semibold mr-2">Administrador:</span>
-                  <span>{profile.role === 'ADMIN' ? 'Sim' : 'Não'}</span>
-                </li>
+                {profile.thumbnail && (
+                  <li>
+                    <CompanyThumb src={profile.thumbnail} />
+                  </li>
+                )}
               </ul>
 
               <div className="mb-2">
@@ -132,16 +130,7 @@ const Profile = () => {
                 </li>
                 <li className="mb-1">
                   <span className="font-semibold mr-2">Plano:</span>
-                  <span>
-                    {companyPlanLabels(profile.company.plan)}
-                    {profile.company.plan === 'TRIAL' && (
-                      <span>
-                        {` - ${getLeftTrialDays(
-                          profile.company.createdAt,
-                        )} dia(s) restante(s)`}
-                      </span>
-                    )}
-                  </span>
+                  <PlanRemainingDays userCompany={profile.company} />
                 </li>
                 {profile.company.thumbnail && (
                   <li>
