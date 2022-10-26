@@ -6,15 +6,17 @@ import CompanyThumb from '../company-thumb';
 import { handleError } from '../../utils/api';
 import { telephoneMask } from '../../utils/telephone-mask';
 import { phoneRegex, replaceSpecialCharacters } from '../../utils/validator';
-import { firebaseApp } from '../../../services/firebase.service';
-import { resizeFile } from '../../utils/image';
-import { getUnixHash } from '../../utils/date';
 import Loading from '../loading';
 import Button from '../button';
+import { uploadFile } from '../../utils/upload';
 
-const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
-  const [thumbnailIsLoading, setThumbnailIsLoading] = useState(false);
-  const [thumbPreview, setThumbPreview] = useState();
+const ProfileForm = ({ data, isProfessional, onSubmit }) => {
+  const [companyThumbnailIsLoading, setCompanyThumbnailIsLoading] = useState(
+    false,
+  );
+  const [companyThumbPreview, setCompanyThumbPreview] = useState();
+  const [userThumbnailIsLoading, setUserThumbnailIsLoading] = useState(false);
+  const [userThumbPreview, setUserThumbPreview] = useState();
 
   const {
     formState: { isDirty, errors },
@@ -25,6 +27,7 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
     defaultValues: {
       userName: '',
       userTelephone: '',
+      userThumbnail: '',
       companyName: '',
       companyTelephone: '',
       companyAddress: '',
@@ -37,6 +40,7 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
     const {
       userName,
       userTelephone,
+      userThumbnail,
       companyName,
       companyTelephone,
       companyAddress,
@@ -48,6 +52,7 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
         user: {
           name: userName,
           telephone: userTelephone,
+          thumbnail: userThumbnail,
         },
         company: {
           name: companyName,
@@ -58,44 +63,17 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
       });
   };
 
-  const onChangeFile = async (event, onRemove) => {
-    if (onRemove) {
-      setThumbPreview(null);
-      setValue('companyThumbnail', null, {
-        shouldDirty: true,
-      });
-      return;
-    }
-
-    setThumbnailIsLoading(true);
+  const onChangeFile = async (file, { onStart, onSucess, onError }) => {
+    onStart();
 
     try {
-      const file = event.target.files[0];
+      const fileUrl = await uploadFile(file, data.id);
 
-      const image = await resizeFile(file);
-      const storageRef = firebaseApp.storage().ref('thumbnails');
-      const fileRef = storageRef.child(
-        `${data.id}-${getUnixHash()}-${image.name}`,
-      );
-      await fileRef.put(image);
-      const thumbnailUrl = await fileRef.getDownloadURL();
-
-      setValue('companyThumbnail', thumbnailUrl, {
-        shouldDirty: true,
-      });
-
-      setThumbPreview(thumbnailUrl);
-      setThumbnailIsLoading(false);
+      onSucess(fileUrl);
     } catch (error) {
-      setThumbnailIsLoading(false);
+      onError(error);
       alert(handleError(error));
     }
-  };
-  const onRemoveFile = () => {
-    setThumbPreview(null);
-    setValue('companyThumbnail', null, {
-      shouldDirty: true,
-    });
   };
 
   useEffect(() => {
@@ -104,11 +82,13 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
       setValue('userTelephone', telephoneMask(data.telephone));
 
       if (isProfessional) {
+        setValue('userThumbnail', data.thumbnail);
+        setUserThumbPreview(data.thumbnail);
         setValue('companyName', data.company?.name);
         setValue('companyTelephone', telephoneMask(data.company?.telephone));
         setValue('companyAddress', data.company?.address);
         setValue('companyThumbnail', data.company?.thumbnail);
-        setThumbPreview(data.company?.thumbnail);
+        setCompanyThumbPreview(data.company?.thumbnail);
       }
     }
   }, [data, setValue, isProfessional]);
@@ -151,8 +131,57 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
           })}
         />
       </div>
+
       {isProfessional && (
         <Fragment>
+          <div className="mb-4">
+            <label htmlFor="uploadUserFile">Foto/logo</label>
+            {userThumbPreview ? (
+              <Fragment>
+                <div className="flex">
+                  <CompanyThumb src={userThumbPreview} />
+                  <button
+                    onClick={() => {
+                      setUserThumbPreview(null);
+                      setValue('userThumbnail', null, {
+                        shouldDirty: true,
+                      });
+                    }}
+                    className="button button--small button--secondary ml-4"
+                  >
+                    Remover
+                  </button>
+                </div>
+              </Fragment>
+            ) : (
+              <Input
+                id="uploadUserFile"
+                type="file"
+                accept=".jpg, .jpeg, .png"
+                onChange={(event) =>
+                  onChangeFile(event.target.files[0], {
+                    onStart: () => setUserThumbnailIsLoading(true),
+                    onSucess: (fileUrl) => {
+                      setValue('userThumbnail', fileUrl, {
+                        shouldDirty: true,
+                      });
+                      setUserThumbPreview(fileUrl);
+                      setUserThumbnailIsLoading(false);
+                    },
+                    onError: () => setUserThumbnailIsLoading(false),
+                  })
+                }
+              />
+            )}
+            <Input
+              {...register('userThumbnail', {
+                setValueAs: (value) => value || null,
+              })}
+              id="userThumbnail"
+              type="hidden"
+            />
+            {userThumbnailIsLoading && <Loading />}
+          </div>
           <div className="mb-4">
             <span className="font-semibold">Dados do estabelecimento</span>
           </div>
@@ -203,12 +232,17 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
           </div>
           <div className="mb-4">
             <label htmlFor="uploadFile">Foto/logo</label>
-            {thumbPreview ? (
+            {companyThumbPreview ? (
               <Fragment>
                 <div className="flex">
-                  <CompanyThumb src={thumbPreview} />
+                  <CompanyThumb src={companyThumbPreview} />
                   <button
-                    onClick={onRemoveFile}
+                    onClick={() => {
+                      setCompanyThumbPreview(null);
+                      setValue('companyThumbnail', null, {
+                        shouldDirty: true,
+                      });
+                    }}
                     className="button button--small button--secondary ml-4"
                   >
                     Remover
@@ -220,7 +254,19 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
                 id="uploadFile"
                 type="file"
                 accept=".jpg, .jpeg, .png"
-                onChange={onChangeFile}
+                onChange={(event) =>
+                  onChangeFile(event.target.files[0], {
+                    onStart: () => setCompanyThumbnailIsLoading(true),
+                    onSucess: (fileUrl) => {
+                      setValue('companyThumbnail', fileUrl, {
+                        shouldDirty: true,
+                      });
+                      setCompanyThumbPreview(fileUrl);
+                      setCompanyThumbnailIsLoading(false);
+                    },
+                    onError: () => setCompanyThumbnailIsLoading(false),
+                  })
+                }
               />
             )}
             <Input
@@ -230,14 +276,14 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
               id="companyThumbnail"
               type="hidden"
             />
-            {thumbnailIsLoading && <Loading />}
+            {companyThumbnailIsLoading && <Loading />}
           </div>
         </Fragment>
       )}
       <div>
         <Button
           type="submit"
-          disabled={!isDirty || thumbnailIsLoading}
+          disabled={!isDirty || companyThumbnailIsLoading}
           className="button button--block button--primary"
         >
           <span>Atualizar</span>
@@ -247,10 +293,10 @@ const ProfileFormModal = ({ data, isProfessional, onSubmit }) => {
   );
 };
 
-ProfileFormModal.propTypes = {
+ProfileForm.propTypes = {
   data: PropTypes.object,
   isProfessional: PropTypes.bool,
   onSubmit: PropTypes.func,
 };
 
-export default ProfileFormModal;
+export default ProfileForm;

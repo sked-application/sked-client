@@ -19,16 +19,18 @@ const Layout = ({ children }) => {
   }, [location.pathname]);
 
   return (
-    <div className="flex flex-col flex-1">
+    <div>
       {allowHeader(currentPathname) && (
         <Header
           currentPathname={currentPathname}
           setIsMenuOpen={setIsMenuOpen}
         />
       )}
-      <div className="flex container mx-auto max-w-screen-lg flex-1">
-        <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-        <div className="flex-1 flex flex-col">
+      <div className="container mx-auto max-w-screen-lg">
+        <div className="float-left">
+          <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+        </div>
+        <div className="flex flex-col">
           <div className="flex-1">{children}</div>
           <Copyright />
         </div>
