@@ -15,7 +15,9 @@
   border-width: 1px;
   border-style: solid;
   border-color: transparent;
-
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   &:focus {
     outline: none;
     box-shadow: none;
