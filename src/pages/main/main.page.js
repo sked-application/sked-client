@@ -19,6 +19,17 @@ const MainContexted = () => {
     return <Redirect to="/not-found" />;
   }
 
+  if (MAIN_STATE.accountIsExpired) {
+    return (
+      <div className="container mx-auto px-4 max-w-screen-lg">
+        <PageHeader
+          title="Que pena, mas esta conta encontra-se temporariamente indisponível"
+          description="Para mais informações entre em contato com o estabelecimento."
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto px-4 max-w-screen-lg">
       {MAIN_STATE.isMainRequestPeding ? (

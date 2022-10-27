@@ -11,5 +11,8 @@ export const companyPlanLabels = (plan) => {
 };
 
 export const getLeftTrialDays = (companyCreatedAt) => {
-  return 30 - differenceInDays(new Date(), new Date(companyCreatedAt));
+  return Math.max(
+    0,
+    30 - differenceInDays(new Date(), new Date(companyCreatedAt)),
+  );
 };

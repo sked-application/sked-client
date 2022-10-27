@@ -96,7 +96,9 @@ const ProfileForm = ({ data, isProfessional, onSubmit }) => {
   return (
     <form onSubmit={handleSubmit(profileForm)}>
       <div className="mb-2">
-        <span className="font-semibold">Meus dados</span>
+        <span className="font-semibold">
+          {isProfessional ? 'Dados do profissional' : 'Meus dados'}
+        </span>
       </div>
       <div className="mb-4">
         <label htmlFor="userName">Nome</label>

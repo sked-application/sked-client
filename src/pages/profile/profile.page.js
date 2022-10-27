@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import { AiOutlineForm } from 'react-icons/ai';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import UserService from '../../services/user.service';
 import PageHeader from '../../common/components/page-header';
 import { Modal } from '../../common/components/modal';
@@ -13,6 +14,7 @@ import PlanRemainingDays from '../../common/components/plan-remaining-days';
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState();
+  const [copyLinkText, setCopyLinkText] = useState('Copiar Link');
   const [toggleShow, setToggleShow] = useState(false);
 
   const handleCloseModal = () => {
@@ -112,7 +114,13 @@ const Profile = () => {
                   <span>{profile.company.name}</span>
                 </li>
                 <li className="mb-1">
-                  <span className="font-semibold mr-2">Link:</span>
+                  <CopyToClipboard
+                    className="bg-indigo-500 rounded-sm px-1 mr-2 cursor-pointer text-white"
+                    text={`http://agenda.skedapp.com.br/${profile.company.url}`}
+                    onCopy={() => setCopyLinkText('Copiado!')}
+                  >
+                    <span>{copyLinkText}</span>
+                  </CopyToClipboard>
                   <span className="break-all">
                     http://agenda.skedapp.com.br/{profile.company.url}
                   </span>

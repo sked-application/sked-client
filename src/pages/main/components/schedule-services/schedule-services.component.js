@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  Fragment,
+} from 'react';
 import { AiOutlineCarryOut } from 'react-icons/ai';
 import ServiveService from '../../../../services/service.service';
 import { MainContext } from '../../contexts/main';
@@ -53,6 +59,14 @@ const ScheduleServices = () => {
             </option>
           ))}
         </select>
+
+        {!MAIN_STATE.user.id ? (
+          <div className="text-amber-500 mt-2">
+            <span>Selecione um profissional.</span>
+          </div>
+        ) : (
+          <Fragment />
+        )}
       </div>
     </div>
   );

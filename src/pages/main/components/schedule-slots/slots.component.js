@@ -117,11 +117,7 @@ const MainSlotGrid = () => {
             </div>
           )}
 
-          {!MAIN_STATE.user.id ? (
-            <div className="text-amber-500">
-              <span>Selecione um profissional.</span>
-            </div>
-          ) : !MAIN_STATE.service.id ? (
+          {!MAIN_STATE.service.id ? (
             <div className="text-amber-500">
               <span>Selecione um serviço.</span>
             </div>

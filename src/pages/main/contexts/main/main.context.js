@@ -10,11 +10,13 @@ import { useParams } from 'react-router-dom';
 import CompanyService from '../../../../services/company.service';
 import { handleError } from '../../../../common/utils/api';
 import { replaceSpecialCharacters } from '../../../../common/utils/validator';
+import { getLeftTrialDays } from '../../../../common/utils/company';
 
 const initialState = {
   scheduleSlot: {},
   accountInfo: {},
   accountExists: true,
+  accountIsExpired: false,
   isMainRequestPeding: true,
   startDate: moment().format('YYYY-MM-DD'),
   service: {},
@@ -27,6 +29,7 @@ const actions = {
   SET_SERVICE: 'SET_SERVICE',
   SET_USER: 'SET_USER',
   SET_ACCOUNT_NOT_EXIST: 'SET_ACCOUNT_NOT_EXIST',
+  SET_ACCOUNT_IS_EXPIRED: 'SET_ACCOUNT_IS_EXPIRED',
   SET_ACCOUNT_INFO: 'SET_ACCOUNT_INFO',
 };
 
@@ -58,6 +61,12 @@ const reducer = (state, action) => {
         isMainRequestPeding: false,
         accountExists: false,
       };
+    case actions.SET_ACCOUNT_IS_EXPIRED:
+      return {
+        ...state,
+        isMainRequestPeding: false,
+        accountIsExpired: true,
+      };
     case actions.SET_ACCOUNT_INFO:
       return {
         ...state,
@@ -84,6 +93,11 @@ export const MainProvider = ({ children }) => {
       if (!data) {
         dispatch({
           type: actions.SET_ACCOUNT_NOT_EXIST,
+        });
+        return;
+      } else if (getLeftTrialDays(data.createdAt) <= 0) {
+        dispatch({
+          type: actions.SET_ACCOUNT_IS_EXPIRED,
         });
         return;
       }
