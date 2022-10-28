@@ -95,7 +95,10 @@ export const MainProvider = ({ children }) => {
           type: actions.SET_ACCOUNT_NOT_EXIST,
         });
         return;
-      } else if (getLeftTrialDays(data.createdAt) <= 0) {
+      } else if (
+        data.plan === 'TRIAL' &&
+        getLeftTrialDays(data.createdAt) <= 0
+      ) {
         dispatch({
           type: actions.SET_ACCOUNT_IS_EXPIRED,
         });
