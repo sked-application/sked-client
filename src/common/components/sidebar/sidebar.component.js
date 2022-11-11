@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/auth';
 import { classNames } from '../../utils/helper';
+// import Button from '../button';
 
 const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
   const { AUTH_STATE, AUTH_DISPATCH, AUTH_ACTIONS } = useContext(AuthContext);
@@ -76,7 +77,7 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
           ></div>
           <div
             className={classNames(
-              'h-screen w-64 bg-white transition-all duration-300 z-10',
+              'h-screen w-64 bg-white transition-all duration-300 z-10 overflow-y-auto',
               'fixed right-0 top-0 w-64 p-4',
               'md:sticky md:top-4 md:p-0 md:translate-x-0 md:pl-4',
               isMenuOpen ? 'translate-x-0' : 'translate-x-64',
@@ -107,6 +108,16 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
                       </ul>
                     </li>
                   ))}
+                  {/* <div className="mb-4">
+                    <Link to="/plans" onClick={() => setIsMenuOpen(false)}>
+                      <Button
+                        type="button"
+                        className="button button--block button--primary"
+                      >
+                        <span>Meu plano</span>
+                      </Button>
+                    </Link>
+                  </div> */}
                 </Fragment>
               )}
               {AUTH_STATE.isCustomer && (
@@ -136,13 +147,13 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
                 </Fragment>
               )}
             </ul>
-            <div>
+            <div className="text-center">
               <a
                 type="button"
-                className="text-indigo-500 font-semibold ml-6 cursor-pointer underline"
+                className="text-indigo-500 font-semibold cursor-pointer underline"
                 onClick={headerSignOut}
               >
-                <span>Sair</span>
+                <span>Encerrar sessão</span>
               </a>
             </div>
           </div>

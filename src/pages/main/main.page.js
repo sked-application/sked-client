@@ -1,6 +1,5 @@
 import React, { Fragment, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-import ScheduleDate from './components/schedule-date';
 import { MainProvider, MainContext } from './contexts/main';
 import ScheduleProfessionals from './components/schedule-professionals';
 import ScheduleServices from './components/schedule-services';
@@ -42,7 +41,6 @@ const MainContexted = () => {
             description="Realize seu agendamento de forma prática, apenas siga os passos abaixo."
           />
           <Favorite />
-          <ScheduleDate />
           <ScheduleProfessionals />
           <ScheduleServices />
           <ScheduleSlots />

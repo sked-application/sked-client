@@ -18,6 +18,7 @@ const initialState = {
   isCustomer: null,
   redirectToSignIn: false,
   token: getLocalToken(),
+  loggedUser: null,
 };
 
 const actions = {
@@ -35,9 +36,10 @@ const reducer = (state, action) => {
         ...state,
         isAuthenticated: true,
         isAuthLoading: false,
-        userCompany: action.value,
-        isProfessional: action.value ? true : false,
-        isCustomer: action.value ? false : true,
+        userCompany: action.value?.company,
+        isProfessional: action.value?.company ? true : false,
+        isCustomer: action.value?.company ? false : true,
+        loggedUser: action.value,
       };
     case actions.REMOVE_AUTH_DATA:
       return {
@@ -86,7 +88,7 @@ export const AuthProvider = ({ children }) => {
 
     dispatch({
       type: actions.SET_AUTH_DATA,
-      value: data.company,
+      value: data,
     });
   };
 

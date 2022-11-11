@@ -11,6 +11,7 @@ import { MainContext } from '../../contexts/main';
 import { getDayLabelByDate } from '../../../../common/utils/date';
 import { handleError } from '../../../../common/utils/api';
 import Loading from '../../../../common/components/loading';
+import ScheduleDate from '../schedule-date';
 
 const MainSlotGrid = () => {
   const { MAIN_STATE, MAIN_DISPATCH, MAIN_ACTIONS } = useContext(MainContext);
@@ -84,7 +85,7 @@ const MainSlotGrid = () => {
       <div className="flex justify-between mb-2">
         <div className="flex">
           <AiOutlineClockCircle size={20} className="mr-2" />
-          <h2 className="text-md font-semibold">Horários</h2>
+          <h2 className="text-md font-semibold">Data e Hora</h2>
         </div>
         <div>
           <span>{getDayLabelByDate(MAIN_STATE.startDate)}</span>
@@ -95,6 +96,9 @@ const MainSlotGrid = () => {
         <Loading />
       ) : (
         <div>
+          <div className="mb-4">
+            <ScheduleDate />
+          </div>
           {!!timegrid.length && (
             <div className="grid grid-cols-4 gap-2">
               {timegrid.map((slot, index) => (
