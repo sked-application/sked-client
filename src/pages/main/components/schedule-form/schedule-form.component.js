@@ -113,6 +113,11 @@ const ScheduleForm = () => {
               MAIN_STATE.scheduleSlot.date && (
                 <div>
                   <ul className="mb-4">
+                    <li className="mb-1 border-b divide-solid border-stone-200">
+                      <span className="font-semibold mr-2">
+                        {AUTH_STATE.loggedUser?.name}
+                      </span>
+                    </li>
                     <li className="mb-1">
                       <span className="font-semibold mr-2">Profissional:</span>
                       <span>{MAIN_STATE.user.name}</span>

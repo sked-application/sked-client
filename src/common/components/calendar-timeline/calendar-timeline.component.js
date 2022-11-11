@@ -141,7 +141,7 @@ const CalendarTimeline = ({
           <Fragment>
             {Object.entries(list).map(([date, schedules]) => (
               <div key={date} className="mb-4">
-                <div className="flex items-center justify-between px-4 py-2 bg-white">
+                <div className="flex items-center justify-between px-4 py-2 bg-white sticky top-0">
                   <h3 className="font-semibold text-lg mr-2">
                     {getFormattedDatePreview(date)}
                   </h3>

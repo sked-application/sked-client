@@ -137,7 +137,7 @@ const ProfileForm = ({ data, isProfessional, onSubmit }) => {
       {isProfessional && (
         <Fragment>
           <div className="mb-4">
-            <label htmlFor="uploadUserFile">Foto/logo</label>
+            <label htmlFor="uploadUserFile">Foto de perfil</label>
             {userThumbPreview ? (
               <Fragment>
                 <div className="flex">
@@ -233,7 +233,7 @@ const ProfileForm = ({ data, isProfessional, onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="uploadFile">Foto/logo</label>
+            <label htmlFor="uploadFile">Logotipo do negócio</label>
             {companyThumbPreview ? (
               <Fragment>
                 <div className="flex">
