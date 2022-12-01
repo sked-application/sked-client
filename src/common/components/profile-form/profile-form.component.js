@@ -11,9 +11,8 @@ import Button from '../button';
 import { uploadFile } from '../../utils/upload';
 
 const ProfileForm = ({ data, isProfessional, onSubmit }) => {
-  const [companyThumbnailIsLoading, setCompanyThumbnailIsLoading] = useState(
-    false,
-  );
+  const [companyThumbnailIsLoading, setCompanyThumbnailIsLoading] =
+    useState(false);
   const [companyThumbPreview, setCompanyThumbPreview] = useState();
   const [userThumbnailIsLoading, setUserThumbnailIsLoading] = useState(false);
   const [userThumbPreview, setUserThumbPreview] = useState();

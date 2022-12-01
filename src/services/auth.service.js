@@ -1,4 +1,9 @@
 import api from '../api';
+import { firebaseApp, googleAuthProvider } from './firebase.service';
+
+const signInWithGoogle = () => {
+  return firebaseApp.auth().signInWithPopup(googleAuthProvider);
+};
 
 const signIn = ({ email, password }) => {
   return api.post('v1/auth/signin-admin', {
@@ -33,9 +38,8 @@ const customerSignIn = ({ name, confirmationSmsCode }) => {
   });
 };
 
-const customerSignInWithGoogle = ({ accessToken, tokenId }) => {
+const customerSignInWithGoogle = ({ tokenId }) => {
   return api.post('v1/auth/signin-customer/google', {
-    accessToken,
     tokenId,
   });
 };
@@ -79,4 +83,5 @@ export default {
   customerSignUp,
   customerSignIngGoogle,
   customerSignInWithGoogle,
+  signInWithGoogle,
 };
