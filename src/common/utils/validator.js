@@ -16,9 +16,10 @@ export const replaceSpecialCharacters = (string, limitSlice) => {
 
 export const phoneRegex = (value) => {
   const phoneLength = 11;
-  const phonrRegexTest = /\(?\b([0-9]{2,3}|0((x|[0-9]){2,3}[0-9]{2}))\)?\s*[0-9]{5}[- ]*[0-9]{4}\b/.test(
-    value,
-  );
+  const phonrRegexTest =
+    /\(?\b([0-9]{2,3}|0((x|[0-9]){2,3}[0-9]{2}))\)?\s*[0-9]{5}[- ]*[0-9]{4}\b/.test(
+      value,
+    );
 
   if (
     !value ||
@@ -31,4 +32,5 @@ export const phoneRegex = (value) => {
   return false;
 };
 
-export const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const emailRegex =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
