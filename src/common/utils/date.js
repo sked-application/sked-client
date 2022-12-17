@@ -25,9 +25,11 @@ export const getDayLabelByDate = (date, short) => {
 };
 
 export const getMonthLabelByDate = (date) => {
-  if (!isValid(parseISO(date))) return '';
+  const formattedDate = format(date, 'yyyy-MM-dd');
 
-  return format(parseISO(date.slice(0, 10)), 'MMM', {
+  if (!isValid(parseISO(formattedDate))) return '';
+
+  return format(parseISO(formattedDate.slice(0, 10)), 'MMM', {
     locale: ptBR,
   });
 };

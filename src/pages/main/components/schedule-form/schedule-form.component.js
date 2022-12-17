@@ -13,7 +13,6 @@ import Button from '../../../../common/components/button';
 import { getFormattedDatePreview } from '../../../../common/utils/date';
 import { getFormattedPrice } from '../../../../common/utils/price';
 import AnimatedWrapper from '../../../../common/components/animated-wrapper';
-import AuthService from '../../../../services/auth.service';
 
 const ScheduleForm = () => {
   const history = useHistory();
@@ -21,20 +20,6 @@ const ScheduleForm = () => {
   const [customerSignInData, setCustomerSignInData] = useState({});
   const { MAIN_STATE, MAIN_DISPATCH, MAIN_ACTIONS } = useContext(MainContext);
   const { AUTH_STATE, AUTH_DISPATCH, AUTH_ACTIONS } = useContext(AuthContext);
-
-  const signInWithGoogle = async () => {
-    try {
-      const authData = await AuthService.signInWithGoogle();
-      const token = await AuthService.customerSignInWithGoogle({
-        tokenId: authData.credential.idToken,
-      });
-
-      console.log('authData', authData);
-      console.log('token', token);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const getScheduleInfoPreview = ({ date, start }) => {
     if (!date) return '';
@@ -194,15 +179,6 @@ const ScheduleForm = () => {
             />
           </AnimatedWrapper>
         </Wizard>
-      )}
-      {[1, 13].includes(MAIN_STATE.accountInfo.id) && (
-        <Button
-          type="button"
-          onClick={signInWithGoogle}
-          className="button button--block button--primary"
-        >
-          <span>Entrar com o google</span>
-        </Button>
       )}
     </div>
   );

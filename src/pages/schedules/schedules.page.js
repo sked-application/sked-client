@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import moment from 'moment';
+import { addDays, format, endOfDay, startOfDay } from 'date-fns';
 import CalendarTimeline from '../../common/components/calendar-timeline';
 import ScheduleService from '../../services/schedule.service';
 import PageHeader from '../../common/components/page-header';
@@ -16,8 +16,8 @@ const Schedule = () => {
   const [schedules, setSchedules] = useState({});
   const [status, setStatus] = useState('SCHEDULED');
   const [date, setDate] = useState({
-    startDate: moment().format('YYYY-MM-DD'),
-    endDate: moment().add(7, 'days').format('YYYY-MM-DD'),
+    startDate: startOfDay(new Date()),
+    endDate: endOfDay(addDays(new Date(), 6)),
   });
 
   const updateStatus = async (id, updateStatus) => {
@@ -44,8 +44,8 @@ const Schedule = () => {
       setIsLoading(true);
 
       const { data } = await ScheduleService.findAll({
-        startDate: date.startDate,
-        endDate: date.endDate,
+        startDate: format(date.startDate, 'yyyy-MM-dd'),
+        endDate: format(date.endDate, 'yyyy-MM-dd'),
         status,
       });
 

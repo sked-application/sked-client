@@ -1,7 +1,7 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
+import { subDays, addDays, getDate } from 'date-fns';
 import {
   AiOutlineCheck,
   AiOutlineLeft,
@@ -20,19 +20,9 @@ import Loading from '../loading';
 import { Tab } from '@headlessui/react';
 import { classNames } from '../../utils/helper';
 
-const generateCalendarDates = (startDate, endDate) => {
-  const start = startDate.clone();
-  const end = endDate.clone();
-  let dates = [];
-
-  while (start < end) {
-    const formattedDate = start.format('YYYY-MM-DD');
-
-    dates.push(formattedDate);
-    start.add(1, 'day');
-  }
-
-  return dates;
+const DIRECTIONS = {
+  PREV: 'PREV',
+  NEXT: 'NEXT',
 };
 
 const CalendarTimeline = ({
@@ -45,9 +35,6 @@ const CalendarTimeline = ({
   setDate,
   isCustomerSchudule,
 }) => {
-  const [startDate, setStartDate] = useState(moment(date.startDate));
-  const [endDate, setEndDate] = useState(moment(date.endDate));
-  const [dates, setDates] = useState([]);
   const [tabStatus] = useState([
     {
       name: 'Agendados',
@@ -63,25 +50,23 @@ const CalendarTimeline = ({
     },
   ]);
 
-  const handlePrev = () => {
-    setStartDate(moment(startDate).subtract(7, 'day'));
-    setEndDate(moment(endDate).subtract(7, 'day'));
-  };
+  const handleDirection = (direction) => {
+    const handleDates =
+      direction === DIRECTIONS.PREV
+        ? {
+            start: subDays(date.startDate, 7),
+            end: subDays(date.startDate, 1),
+          }
+        : {
+            start: addDays(date.endDate, 1),
+            end: addDays(date.endDate, 7),
+          };
 
-  const handleNext = () => {
-    setStartDate(moment(startDate).add(7, 'days'));
-    setEndDate(moment(endDate).add(7, 'days'));
-  };
-
-  useEffect(() => {
-    const newDates = generateCalendarDates(startDate, endDate);
-
-    setDates(newDates);
     setDate({
-      startDate: startDate.format('YYYY-MM-DD'),
-      endDate: endDate.format('YYYY-MM-DD'),
+      startDate: handleDates.start,
+      endDate: handleDates.end,
     });
-  }, [startDate, endDate, setDate]);
+  };
 
   return (
     <div>
@@ -106,7 +91,7 @@ const CalendarTimeline = ({
       </Tab.Group>
       <div className="h-12 p-1 bg-gray-200 rounded-xl flex justify-between mt-1">
         <a
-          onClick={handlePrev}
+          onClick={() => handleDirection(DIRECTIONS.PREV)}
           className="flex items-center justify-center cursor-pointer bg-indigo-500 rounded-lg w-10"
         >
           <AiOutlineLeft className="text-white" />
@@ -115,20 +100,18 @@ const CalendarTimeline = ({
           <div className="pt-1">
             <span className="mr-1">De</span>
             <span className="mr-1 font-semibold">
-              {dates[0]?.split('-')[2]}
+              {getDate(date.startDate)}
             </span>
-            <span>{getMonthLabelByDate(dates[0])}</span>
+            <span>{getMonthLabelByDate(date.startDate)}</span>
           </div>
           <div className="pt-1">
             <span className="mr-1">Até</span>
-            <span className="mr-1 font-semibold">
-              {dates[dates.length - 1]?.split('-')[2]}
-            </span>
-            <span>{getMonthLabelByDate(dates[dates.length - 1])}</span>
+            <span className="mr-1 font-semibold">{getDate(date.endDate)}</span>
+            <span>{getMonthLabelByDate(date.endDate)}</span>
           </div>
         </div>
         <a
-          onClick={handleNext}
+          onClick={() => handleDirection(DIRECTIONS.NEXT)}
           className="flex items-center justify-center cursor-pointer bg-indigo-500 rounded-lg w-10"
         >
           <AiOutlineRight className="text-white" />
@@ -139,147 +122,149 @@ const CalendarTimeline = ({
           <Loading />
         ) : (
           <Fragment>
-            {Object.entries(list).map(([date, schedules]) => (
-              <div key={date} className="mb-4">
-                <div className="flex items-center justify-between px-4 py-2 bg-white sticky top-0">
-                  <h3 className="font-semibold text-lg mr-2">
-                    {getFormattedDatePreview(date)}
-                  </h3>
-                  <span className="font-semibold">
-                    {getDayLabelByDate(date)}
-                  </span>
-                </div>
-                {schedules.map((schedule) => (
-                  <div
-                    key={schedule.id}
-                    className="mb-4 border divide-solid border-stone-200 rounded-xl p-4 bg-white"
-                  >
-                    <div className="flex justify-between mb-2">
-                      {isCustomerSchudule ? (
-                        <h2 className="font-semibold">
-                          <Link to={`/${schedule.company.url}`}>
-                            {schedule.company.name}
-                          </Link>
-                        </h2>
-                      ) : (
-                        <h2 className="font-semibold">
-                          {schedule.customer.name}
-                        </h2>
-                      )}
-
-                      <div>
-                        {status === 'SCHEDULED' && !schedule.confirmedAt && (
-                          <div>Agendado</div>
-                        )}
-
-                        {status === 'SCHEDULED' && schedule.confirmedAt && (
-                          <div>Confirmado</div>
-                        )}
-
-                        {status === 'CANCELED' && <div>Cancelado</div>}
-
-                        {status === 'FINISHED' && <div>Finalizado</div>}
-                      </div>
-                    </div>
-                    <ul className="mb-4">
-                      <li className="mb-1">
-                        <span className="font-semibold mr-2">Serviço:</span>
-                        <span>{schedule.service.name}</span>
-                      </li>
-                      <li className="mb-1">
+            {Object.entries(list)
+              .sort()
+              .map(([date, schedules]) => (
+                <div key={date} className="mb-4">
+                  <div className="flex items-center justify-between px-4 py-2 bg-white sticky top-0">
+                    <h3 className="font-semibold text-lg mr-2">
+                      {getFormattedDatePreview(date)}
+                    </h3>
+                    <span className="font-semibold">
+                      {getDayLabelByDate(date)}
+                    </span>
+                  </div>
+                  {schedules.map((schedule) => (
+                    <div
+                      key={schedule.id}
+                      className="mb-4 border divide-solid border-stone-200 rounded-xl p-4 bg-white"
+                    >
+                      <div className="flex justify-between mb-2">
                         {isCustomerSchudule ? (
-                          <Fragment>
-                            <span className="font-semibold mr-2">
-                              Profissional:
-                            </span>
-                            <span>{schedule.user.name}</span>
-                          </Fragment>
+                          <h2 className="font-semibold">
+                            <Link to={`/${schedule.company.url}`}>
+                              {schedule.company.name}
+                            </Link>
+                          </h2>
                         ) : (
-                          <Fragment>
-                            <span className="font-semibold mr-2">
-                              Telefone:
-                            </span>
-                            <a href={`tel:+351${schedule.customer.telephone}`}>
-                              {telephoneMask(schedule.customer.telephone)}
-                            </a>
-                          </Fragment>
+                          <h2 className="font-semibold">
+                            {schedule.customer.name}
+                          </h2>
                         )}
-                      </li>
-                      <li className="mb-1">
-                        <span className="font-semibold mr-2">Data/Hora:</span>
-                        <span>
-                          {`${getFormattedDatePreview(
-                            schedule.date,
-                          )} ${schedule.start.slice(0, 5)}`}
-                        </span>
-                      </li>
-                      <li className="mb-1">
-                        <span className="font-semibold mr-2">Preço:</span>
-                        <span>{getFormattedPrice(schedule.price, 'R$')}</span>
-                      </li>
-                    </ul>
 
-                    {status === 'SCHEDULED' && (
-                      <Fragment>
-                        <div className="flex">
-                          {!schedule.confirmedAt && (
-                            <a
-                              className="mr-4 cursor-pointer"
-                              onClick={() =>
-                                updateStatus(schedule.id, 'CONFIRMED')
-                              }
-                            >
-                              <div className="flex items-center justify-center text-indigo-500">
-                                <AiOutlineCheck size={20} className="mr-1" />
-                                <span className="pt-1 font-semibold">
-                                  Confirmar
-                                </span>
-                              </div>
-                            </a>
+                        <div>
+                          {status === 'SCHEDULED' && !schedule.confirmedAt && (
+                            <div>Agendado</div>
                           )}
 
-                          {!isCustomerSchudule && schedule.confirmedAt && (
+                          {status === 'SCHEDULED' && schedule.confirmedAt && (
+                            <div>Confirmado</div>
+                          )}
+
+                          {status === 'CANCELED' && <div>Cancelado</div>}
+
+                          {status === 'FINISHED' && <div>Finalizado</div>}
+                        </div>
+                      </div>
+                      <ul className="mb-4">
+                        <li className="mb-1">
+                          <span className="font-semibold mr-2">Serviço:</span>
+                          <span>{schedule.service.name}</span>
+                        </li>
+                        <li className="mb-1">
+                          {isCustomerSchudule ? (
+                            <Fragment>
+                              <span className="font-semibold mr-2">
+                                Profissional:
+                              </span>
+                              <span>{schedule.user.name}</span>
+                            </Fragment>
+                          ) : (
+                            <Fragment>
+                              <span className="font-semibold mr-2">
+                                Telefone:
+                              </span>
+                              <a href={`tel:+55${schedule.customer.telephone}`}>
+                                {telephoneMask(schedule.customer.telephone)}
+                              </a>
+                            </Fragment>
+                          )}
+                        </li>
+                        <li className="mb-1">
+                          <span className="font-semibold mr-2">Data/Hora:</span>
+                          <span>
+                            {`${getFormattedDatePreview(
+                              schedule.date,
+                            )} ${schedule.start.slice(0, 5)}`}
+                          </span>
+                        </li>
+                        <li className="mb-1">
+                          <span className="font-semibold mr-2">Preço:</span>
+                          <span>{getFormattedPrice(schedule.price, 'R$')}</span>
+                        </li>
+                      </ul>
+
+                      {status === 'SCHEDULED' && (
+                        <Fragment>
+                          <div className="flex">
+                            {!schedule.confirmedAt && (
+                              <a
+                                className="mr-4 cursor-pointer"
+                                onClick={() =>
+                                  updateStatus(schedule.id, 'CONFIRMED')
+                                }
+                              >
+                                <div className="flex items-center justify-center text-indigo-500">
+                                  <AiOutlineCheck size={20} className="mr-1" />
+                                  <span className="pt-1 font-semibold">
+                                    Confirmar
+                                  </span>
+                                </div>
+                              </a>
+                            )}
+
+                            {!isCustomerSchudule && schedule.confirmedAt && (
+                              <a
+                                className="mr-4 cursor-pointer"
+                                onClick={() =>
+                                  updateStatus(schedule.id, 'FINISHED')
+                                }
+                              >
+                                <div className="flex items-center justify-center text-green-600">
+                                  <AiOutlineCheckCircle
+                                    size={20}
+                                    className="mr-1"
+                                  />
+                                  <span className="pt-1 font-semibold">
+                                    Finalizar
+                                  </span>
+                                </div>
+                              </a>
+                            )}
+
                             <a
-                              className="mr-4 cursor-pointer"
+                              className="cursor-pointer"
                               onClick={() =>
-                                updateStatus(schedule.id, 'FINISHED')
+                                updateStatus(schedule.id, 'CANCELED')
                               }
                             >
-                              <div className="flex items-center justify-center text-green-600">
-                                <AiOutlineCheckCircle
+                              <div className="flex items-center justify-center text-red-500">
+                                <AiOutlineCloseCircle
                                   size={20}
                                   className="mr-1"
                                 />
                                 <span className="pt-1 font-semibold">
-                                  Finalizar
+                                  Cancelar
                                 </span>
                               </div>
                             </a>
-                          )}
-
-                          <a
-                            className="cursor-pointer"
-                            onClick={() =>
-                              updateStatus(schedule.id, 'CANCELED')
-                            }
-                          >
-                            <div className="flex items-center justify-center text-red-500">
-                              <AiOutlineCloseCircle
-                                size={20}
-                                className="mr-1"
-                              />
-                              <span className="pt-1 font-semibold">
-                                Cancelar
-                              </span>
-                            </div>
-                          </a>
-                        </div>
-                      </Fragment>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ))}
+                          </div>
+                        </Fragment>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ))}
             {!Object.keys(list).length && (
               <div className="text-center p-4">
                 <span>
@@ -303,8 +288,8 @@ CalendarTimeline.propTypes = {
   setDate: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   date: PropTypes.shape({
-    startDate: PropTypes.string.isRequired,
-    endDate: PropTypes.string.isRequired,
+    startDate: PropTypes.instanceOf(Date).isRequired,
+    endDate: PropTypes.instanceOf(Date).isRequired,
   }),
   setStatus: PropTypes.func.isRequired,
   isCustomerSchudule: PropTypes.bool,

@@ -8,7 +8,7 @@ const CompanyContact = memo(({ accountInfo }) => {
       {accountInfo.telephone && (
         <p className="text-center">
           <span>Telefone: </span>
-          <a href={`tel:+351${accountInfo.telephone}`}>
+          <a href={`tel:+55${accountInfo.telephone}`}>
             {telephoneMask(accountInfo.telephone)}
           </a>
         </p>

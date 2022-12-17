@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import moment from 'moment';
+import { startOfDay, endOfDay, addDays, format } from 'date-fns';
 import CalendarTimeline from '../../common/components/calendar-timeline';
 import ScheduleService from '../../services/schedule.service';
 import PageHeader from '../../common/components/page-header';
@@ -14,14 +14,14 @@ const statusLabels = {
 const CustomerSchedules = () => {
   const location = useLocation();
   const initialDate = location.state?.date
-    ? moment(location.state.date)
-    : moment();
+    ? new Date(location.state.date)
+    : new Date();
   const [isLoading, setIsLoading] = useState(true);
   const [schedules, setSchedules] = useState({});
   const [status, setStatus] = useState('SCHEDULED');
   const [date, setDate] = useState({
-    startDate: moment(initialDate).format('YYYY-MM-DD'),
-    endDate: moment(initialDate).add(7, 'days').format('YYYY-MM-DD'),
+    startDate: startOfDay(initialDate),
+    endDate: endOfDay(addDays(initialDate, 6)),
   });
 
   const updateStatus = async (id, updateStatus) => {
@@ -48,8 +48,8 @@ const CustomerSchedules = () => {
       setIsLoading(true);
 
       const { data } = await ScheduleService.findAll({
-        startDate: date.startDate,
-        endDate: date.endDate,
+        startDate: format(date.startDate, 'yyyy-MM-dd'),
+        endDate: format(date.endDate, 'yyyy-MM-dd'),
         status,
       });
 
