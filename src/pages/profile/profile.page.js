@@ -86,8 +86,8 @@ const Profile = () => {
                   <span>{profile.name}</span>
                 </li>
                 <li className="mb-1">
-                  <span className="font-semibold mr-2">Email:</span>
-                  <span>{profile.email}</span>
+                  <span className="font-semibold mr-2">E-mail:</span>
+                  <span className="break-all">{profile.email}</span>
                 </li>
                 <li className="mb-1">
                   <span className="font-semibold mr-2">Meu telefone:</span>

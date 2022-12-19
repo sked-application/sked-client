@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AiOutlinePlusSquare, AiOutlineDelete } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineDelete } from 'react-icons/ai';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import Input from '../input';
@@ -19,7 +19,10 @@ const TimegridWeekDay = ({ label, day }) => {
   });
 
   const handleAppend = () => {
-    append({ start: '', end: '' });
+    append(
+      { start: '', end: '' },
+      { focusName: `${fieldName}.${fields.length}.start` },
+    );
   };
 
   return (
@@ -29,7 +32,7 @@ const TimegridWeekDay = ({ label, day }) => {
           <span className="font-semibold">{label}</span>
         </div>
         <div onClick={() => handleAppend()}>
-          <AiOutlinePlusSquare fontsize={20} className="cursor-pointer" />
+          <AiOutlinePlus size={20} className="cursor-pointer" />
         </div>
       </div>
       {fields.length ? (

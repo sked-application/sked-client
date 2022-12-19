@@ -115,11 +115,13 @@ const Services = () => {
             >
               <div className="flex justify-between">
                 <h2 className="font-semibold">{item.name}</h2>
-                <AiOutlineForm
-                  onClick={() => handleOpenModal(item)}
-                  size={20}
-                  className="cursor-pointer"
-                />
+                <div className="pl-4">
+                  <AiOutlineForm
+                    onClick={() => handleOpenModal(item)}
+                    size={20}
+                    className="cursor-pointer"
+                  />
+                </div>
               </div>
               <div className="flex items-end justify-between mt-4">
                 <ul>
