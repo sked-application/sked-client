@@ -96,11 +96,11 @@ const MainSlotGrid = () => {
         <Loading />
       ) : (
         <div>
-          <div className="mb-4">
+          <div>
             <ScheduleDate />
           </div>
           {!!timegrid.length && (
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-2 mt-4">
               {timegrid.map((slot, index) => (
                 <div
                   key={index}
@@ -116,13 +116,13 @@ const MainSlotGrid = () => {
           )}
 
           {MAIN_STATE.service.id && MAIN_STATE.user.id && !timegrid.length && (
-            <div className="text-amber-500">
+            <div className="text-amber-500 mt-2">
               <span>Nenhum horário disponível para esta pesquisa</span>
             </div>
           )}
 
           {!MAIN_STATE.service.id ? (
-            <div className="text-amber-500">
+            <div className="text-amber-500 mt-2">
               <span>Selecione um serviço.</span>
             </div>
           ) : (

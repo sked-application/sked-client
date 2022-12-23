@@ -7,7 +7,11 @@ import Input from '../input';
 import AuthService from '../../../services/auth.service';
 import { handleError } from '../../utils/api';
 import { telephoneMask } from '../../utils/telephone-mask';
-import { phoneRegex, replaceSpecialCharacters } from '../../utils/validator';
+import {
+  emailRegex,
+  phoneRegex,
+  replaceSpecialCharacters,
+} from '../../utils/validator';
 
 const CustomerSignUpForm = ({ isValidToSubmit, onSubmit }) => {
   const { nextStep } = useWizard();
@@ -33,6 +37,7 @@ const CustomerSignUpForm = ({ isValidToSubmit, onSubmit }) => {
       setIsLoading(true);
       const { data } = await AuthService.customerSignUp({
         telephone: values.telephone,
+        email: values.email,
       });
 
       setIsLoading(false);
@@ -61,6 +66,23 @@ const CustomerSignUpForm = ({ isValidToSubmit, onSubmit }) => {
             validate: (value) =>
               phoneRegex(value) || 'Por favor, verifique o número de telefone.',
             setValueAs: (value) => replaceSpecialCharacters(value) || null,
+          })}
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="email">Email</label>
+        <Input
+          id="email"
+          disabled={isLoading}
+          className="input"
+          fieldName="email"
+          errors={errors}
+          {...register('email', {
+            required: 'Este campo é obrigatório.',
+            pattern: {
+              value: emailRegex,
+              message: 'Insira um email válido.',
+            },
           })}
         />
       </div>
