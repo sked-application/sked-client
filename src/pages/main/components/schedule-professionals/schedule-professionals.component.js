@@ -55,28 +55,35 @@ const ScheduleProfessionals = () => {
         <AiOutlineUser size={20} className="mr-2" />
         <h2 className="text-md font-semibold">Profissional</h2>
       </div>
-      <div className="mt-4 flex flex-nowrap snap-x snap-mandatory overflow-x-auto overscroll-x-none pb-4">
-        {Object.values(users).map((item) => (
-          <div
-            className="snap-start snap-always mr-2 last:mr-0 cursor-pointer"
-            key={item.id}
-            onClick={() => handleChangeUser(item.id)}
-          >
+      <div className="mt-4 pb-4">
+        <div className="flex flex-nowrap snap-x snap-mandatory overflow-x-auto overscroll-x-none">
+          {Object.values(users).map((item) => (
             <div
-              className={classNames(
-                'flex items-center border divide-solid rounded-xl py-1 pl-1 pr-2 w-max',
-                item.id === MAIN_STATE.user.id
-                  ? 'border-transparent text-white bg-slate-800'
-                  : 'border-stone-200',
-              )}
+              className="snap-start snap-always mr-2 last:mr-0 cursor-pointer"
+              key={item.id}
+              onClick={() => handleChangeUser(item.id)}
             >
-              <figure className="mr-2 rounded-lg overflow-hidden h-10 w-10 bg-white border divide-solid border-stone-200">
-                <img src={item.thumbnail || srcPlaceholder} />
-              </figure>
-              <span className="mt-1">{item.name}</span>
+              <div
+                className={classNames(
+                  'flex items-center border divide-solid rounded-xl py-1 pl-1 pr-2 w-max',
+                  item.id === MAIN_STATE.user.id
+                    ? 'border-transparent text-white bg-slate-800'
+                    : 'border-stone-200',
+                )}
+              >
+                <figure className="mr-2 rounded-lg overflow-hidden h-10 w-10 bg-white border divide-solid border-stone-200">
+                  <img src={item.thumbnail || srcPlaceholder} />
+                </figure>
+                <span className="mt-1">{item.name}</span>
+              </div>
             </div>
+          ))}
+        </div>
+        {!MAIN_STATE.user.id && (
+          <div className="text-amber-500 mt-2">
+            <span>Selecione um profissional.</span>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

@@ -107,7 +107,10 @@ const CustomerVerificationForm = ({
         </div>
         <div className="text-center mt-4">
           <span className="mr-1">Não recebeu o sms?</span>
-          <span className="font-semibold" onClick={() => previousStep()}>
+          <span
+            className="font-semibold cursor-pointer"
+            onClick={() => previousStep()}
+          >
             Enviar novamente.
           </span>
         </div>

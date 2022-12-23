@@ -143,7 +143,7 @@ const Professionals = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email">E-mail</label>
+            <label htmlFor="email">Email</label>
             <Input
               type="email"
               disabled={isLoading}

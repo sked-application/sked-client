@@ -45,9 +45,9 @@ const customerSignIngGoogle = ({ token }) => {
   });
 };
 
-const customerSignUp = ({ name, telephone }) => {
+const customerSignUp = ({ email, telephone }) => {
   return api.post('v1/auth/signup-customer', {
-    name,
+    email,
     telephone,
   });
 };

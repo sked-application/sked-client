@@ -56,7 +56,7 @@ const SignIn = () => {
       <div className="mb-4 border divide-solid border-stone-200 rounded-xl p-4">
         <form onSubmit={handleSubmit(signInForm)}>
           <div className="mb-4">
-            <label htmlFor="email">E-mail</label>
+            <label htmlFor="email">Email</label>
             <Input
               id="email"
               disabled={isLoading}

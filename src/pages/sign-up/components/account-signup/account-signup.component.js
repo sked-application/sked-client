@@ -88,7 +88,7 @@ const AccountSignUpEmail = ({ setUserData, userData }) => {
         <form onSubmit={handleSubmit(formSubmit)}>
           {error && <div className="mb-2 text-red-500">{error}</div>}
           <div className="mb-4">
-            <label htmlFor="userEmail">Digite seu e-mail</label>
+            <label htmlFor="userEmail">Digite seu email</label>
             <Input
               id="userEmail"
               disabled={isLoading}
@@ -261,8 +261,8 @@ const AccountSignUpConfirmation = ({ userData }) => {
   return (
     <div className="container mx-auto px-4 max-w-md text-center">
       <PageHeader
-        title="Agora é só verificar seu e-mail"
-        description={`Enviamos um e-mail para o endereço: ${userData.email}`}
+        title="Agora é só verificar seu email"
+        description={`Enviamos um email para o endereço: ${userData.email}`}
         titleSize="medium"
       />
       {error && <div className="mb-2 text-red-500">{error}</div>}
@@ -271,7 +271,7 @@ const AccountSignUpConfirmation = ({ userData }) => {
           <span className="text-green-600">Reenviado com sucesso</span>
         ) : (
           <div className="mb-6">
-            <span className="mr-1">Não recebeu o e-mail?</span>
+            <span className="mr-1">Não recebeu o email?</span>
             <a className="font-semibold" onClick={retrySendEmail}>
               Reenviar
             </a>
