@@ -1,5 +1,5 @@
 import React from 'react';
-import PageHeader from '../../common/components/page-header';
+import PageHeader from '../../shared/components/page-header';
 
 const NotFound = () => {
   return (

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Input from '../../../../common/components/input';
+import Input from '../../../../shared/components/input';
 import { MainContext } from '../../contexts/main';
 
 const ScheduleDate = () => {

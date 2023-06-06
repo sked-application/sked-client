@@ -6,10 +6,10 @@ import React, {
   useState,
 } from 'react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import FavoriteService from '../../../../services/favorite.service';
-import { handleError } from '../../../../common/utils/api';
+import FavoriteService from '../../../../modules/favorite/favorite.services';
+import { handleError } from '../../../../api/api.utils';
 import { MainContext } from '../../contexts/main';
-import { AuthContext } from '../../../../common/contexts/auth';
+import { AuthContext } from '../../../../store/auth';
 
 const Favorite = () => {
   const { MAIN_STATE } = useContext(MainContext);

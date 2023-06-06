@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import AuthService from '../../services/auth.service';
-import PageHeader from '../../common/components/page-header';
-import { AuthContext } from '../../common/contexts/auth';
-import { handleError } from '../../common/utils/api';
-import Input from '../../common/components/input';
-import { emailRegex } from '../../common/utils/validator';
-import Button from '../../common/components/button';
+import AuthService from '../../modules/auth/auth.services';
+import PageHeader from '../../shared/components/page-header';
+import { AuthContext } from '../../contexts/auth';
+import { handleError } from '../../api/api.utils';
+import Input from '../../shared/components/input';
+import { emailRegex } from '../../shared/utils/validator';
+import Button from '../../shared/components/button';
 
 const SignIn = () => {
   const [error, setError] = useState(null);
@@ -38,7 +38,7 @@ const SignIn = () => {
 
       AUTH_DISPATCH({
         type: AUTH_ACTIONS.SET_SIGN_IN,
-        value: data.token,
+        value: { token: data },
       });
     } catch (error) {
       setError(handleError(error));

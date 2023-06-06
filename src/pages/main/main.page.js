@@ -5,11 +5,11 @@ import ScheduleProfessionals from './components/schedule-professionals';
 import ScheduleServices from './components/schedule-services';
 import ScheduleSlots from './components/schedule-slots';
 import ScheduleForm from './components/schedule-form';
-import PageHeader from '../../common/components/page-header';
+import PageHeader from '../../shared/components/page-header';
 import CompanyContact from './components/company-contact';
 import Favorite from './components/favorite';
-import CompanyThumb from '../../common/components/company-thumb';
-import Loading from '../../common/components/loading';
+import CompanyThumb from '../../shared/components/company-thumb';
+import Loading from '../../shared/components/loading';
 
 const MainContexted = () => {
   const { MAIN_STATE } = useContext(MainContext);

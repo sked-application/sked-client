@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { telephoneMask } from '../../../../common/utils/telephone-mask';
+import { telephoneMask } from '../../../../shared/utils/telephone-mask';
 
 const CompanyContact = memo(({ accountInfo }) => {
   return (

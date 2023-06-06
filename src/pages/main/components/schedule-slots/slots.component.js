@@ -8,9 +8,9 @@ import React, {
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import TimegridService from '../../../../services/timegrid.service';
 import { MainContext } from '../../contexts/main';
-import { getDayLabelByDate } from '../../../../common/utils/date';
-import { handleError } from '../../../../common/utils/api';
-import Loading from '../../../../common/components/loading';
+import { getDayLabelByDate } from '../../../../shared/utils/date';
+import { handleError } from '../../../../api/api.utils';
+import Loading from '../../../../shared/components/loading';
 import ScheduleDate from '../schedule-date';
 
 const MainSlotGrid = () => {

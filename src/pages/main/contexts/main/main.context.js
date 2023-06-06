@@ -7,10 +7,10 @@ import React, {
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
-import CompanyService from '../../../../services/company.service';
-import { handleError } from '../../../../common/utils/api';
-import { replaceSpecialCharacters } from '../../../../common/utils/validator';
-import { getLeftTrialDays } from '../../../../common/utils/company';
+import CompanyService from '../../../../modules/company/company.services';
+import { handleError } from '../../../../api/api.utils';
+import { replaceSpecialCharacters } from '../../../../shared/utils/validator';
+import { getLeftTrialDays } from '../../../../modules/company/company.utils';
 
 const initialState = {
   scheduleSlot: {},

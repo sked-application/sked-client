@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import AuthService from '../../services/auth.service';
-import PageHeader from '../../common/components/page-header';
-import { handleError } from '../../common/utils/api';
-import { emailRegex } from '../../common/utils/validator';
-import Input from '../../common/components/input';
-import Button from '../../common/components/button';
+import AuthService from '../../modules/auth/auth.services';
+import PageHeader from '../../shared/components/page-header';
+import { handleError } from '../../api/api.utils';
+import { emailRegex } from '../../shared/utils/validator';
+import Input from '../../shared/components/input';
+import Button from '../../shared/components/button';
 
 const RecoverPassword = () => {
   const [error, setError] = useState('');
@@ -28,13 +28,13 @@ const RecoverPassword = () => {
       setIsLoading(true);
 
       const { email } = values;
-      const { message } = await AuthService.sendRecoverEmail({
+      const { data } = await AuthService.sendRecoverEmail({
         email,
       });
 
       reset();
       setIsLoading(false);
-      setSuccess(message);
+      setSuccess(data);
 
       if (error) {
         setError('');

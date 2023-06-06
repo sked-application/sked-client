@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import UserService from '../../services/user.service';
-import PageHeader from '../../common/components/page-header';
-import { Modal } from '../../common/components/modal';
-import { handleError } from '../../common/utils/api';
-import { telephoneMask } from '../../common/utils/telephone-mask';
-import ProfileForm from '../../common/components/profile-form';
-import Loading from '../../common/components/loading';
+import PageHeader from '../../shared/components/page-header';
+import { Modal } from '../../shared/components/modal';
+import { handleError } from '../../api/api.utils';
+import { telephoneMask } from '../../shared/utils/telephone-mask';
+import ProfileForm from '../../shared/components/profile-form';
+import Loading from '../../shared/components/loading';
 import { AiOutlineForm } from 'react-icons/ai';
 
 const Profile = () => {

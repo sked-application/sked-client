@@ -3,13 +3,13 @@ import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { AiOutlinePlus, AiOutlineForm, AiOutlineDelete } from 'react-icons/ai';
 import ScheduleLockService from '../../services/schedule-lock.service';
-import PageHeader from '../../common/components/page-header';
-import { getFormattedDatePreview } from '../../common/utils/date';
-import { Modal } from '../../common/components/modal';
-import { handleError } from '../../common/utils/api';
-import Button from '../../common/components/button';
-import Input from '../../common/components/input';
-import Loading from '../../common/components/loading';
+import PageHeader from '../../shared/components/page-header';
+import { getFormattedDatePreview } from '../../shared/utils/date';
+import { Modal } from '../../shared/components/modal';
+import { handleError } from '../../api/api.utils';
+import Button from '../../shared/components/button';
+import Input from '../../shared/components/input';
+import Loading from '../../shared/components/loading';
 
 const ScheduleLocks = () => {
   const [isLoading, setIsLoading] = useState(false);

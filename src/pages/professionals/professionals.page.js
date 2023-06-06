@@ -2,13 +2,13 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
 import UserService from '../../services/user.service';
-import PageHeader from '../../common/components/page-header';
-import { Modal } from '../../common/components/modal';
-import { handleError } from '../../common/utils/api';
-import Button from '../../common/components/button';
-import Input from '../../common/components/input';
-import { emailRegex } from '../../common/utils/validator';
-import Loading from '../../common/components/loading';
+import PageHeader from '../../shared/components/page-header';
+import { Modal } from '../../shared/components/modal';
+import { handleError } from '../../api/api.utils';
+import Button from '../../shared/components/button';
+import Input from '../../shared/components/input';
+import { emailRegex } from '../../shared/utils/validator';
+import Loading from '../../shared/components/loading';
 
 const Professionals = () => {
   const [isLoading, setIsLoading] = useState(false);

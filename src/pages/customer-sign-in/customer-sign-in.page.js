@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { Wizard } from 'react-use-wizard';
-import PageHeader from '../../common/components/page-header';
-import AnimatedWrapper from '../../common/components/animated-wrapper';
-import CustomerTelephoneForm from '../../common/components/customer-telephone-form';
-import CustomerVerificationForm from '../../common/components/customer-verification-form';
-import { AuthContext } from '../../common/contexts/auth';
+import PageHeader from '../../shared/components/page-header';
+import AnimatedWrapper from '../../shared/components/animated-wrapper';
+import CustomerSignUpForm from '../../shared/components/customer-signup-form';
+import CustomerVerificationForm from '../../shared/components/customer-verification-form';
+import { AuthContext } from '../../contexts/auth';
 
 const CustomerSignIn = () => {
   const { AUTH_DISPATCH, AUTH_ACTIONS } = useContext(AuthContext);
@@ -19,7 +19,7 @@ const CustomerSignIn = () => {
       <div className="mb-4 border divide-solid border-stone-200 rounded-xl p-4">
         <Wizard>
           <AnimatedWrapper>
-            <CustomerTelephoneForm
+            <CustomerSignUpForm
               isValidToSubmit={() => true}
               onSubmit={(data) => setCustomerSignInData(data)}
             />
@@ -31,7 +31,7 @@ const CustomerSignIn = () => {
               onSubmit={(data) =>
                 AUTH_DISPATCH({
                   type: AUTH_ACTIONS.SET_SIGN_IN,
-                  value: data,
+                  value: { token: data },
                 })
               }
             />

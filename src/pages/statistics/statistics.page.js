@@ -1,10 +1,10 @@
 import React, { useState, useEffect, Fragment, useCallback } from 'react';
-import PageHeader from '../../common/components/page-header';
-import { handleError } from '../../common/utils/api';
-import { getDatesByPeriod } from '../../common/utils/date';
+import PageHeader from '../../shared/components/page-header';
+import { handleError } from '../../api/api.utils';
+import { getDatesByPeriod } from '../../shared/utils/date';
 import UserService from '../../services/user.service';
 import StatisticsService from '../../services/statistics.service';
-import Loading from '../../common/components/loading';
+import Loading from '../../shared/components/loading';
 
 const mountStatisticsData = (data = []) => {
   const filteredData = {};

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import FavoriteService from '../../services/favorite.service';
-import PageHeader from '../../common/components/page-header';
-import { handleError } from '../../common/utils/api';
-import { telephoneMask } from '../../common/utils/telephone-mask';
-import Loading from '../../common/components/loading';
+import FavoriteService from '../../modules/favorite/favorite.services';
+import PageHeader from '../../shared/components/page-header';
+import { handleError } from '../../api/api.utils';
+import { telephoneMask } from '../../shared/utils/telephone-mask';
+import Loading from '../../shared/components/loading';
 
 const Favorites = () => {
   const [isLoading, setIsLoading] = useState(false);

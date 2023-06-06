@@ -9,23 +9,23 @@ import { useForm } from 'react-hook-form';
 import { Wizard, useWizard } from 'react-use-wizard';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import PageHeader from '../../../../common/components/page-header';
-import { handleError } from '../../../../common/utils/api';
-import UserService from '../../../../services/user.service';
-import CompanyService from '../../../../services/company.service';
-import Button from '../../../../common/components/button';
-import { replaceSpecialCharacters } from '../../../../common/utils/validator';
-import WizardHeader from '../../../../common/components/wizard-header';
-import TimegridForm from '../../../../common/components/timegrid-form';
-import ServiceFormModal from '../../../../common/components/modal-service-form/modal-service-form.component';
-import { AuthContext } from '../../../../common/contexts/auth';
-import authService from '../../../../services/auth.service';
-import { getTimeGridByDayStructure } from '../../../../common/utils/timegrid';
-import AnimatedWrapper from '../../../../common/components/animated-wrapper';
-import Input from '../../../../common/components/input';
-import { Modal } from '../../../../common/components/modal';
-import Loading from '../../../../common/components/loading';
-import { getFormattedPrice } from '../../../../common/utils/price';
+import PageHeader from '../../../../shared/components/page-header';
+import { handleError } from '../../../../api/api.utils';
+import UserService from '../../../../modules/user/user.service';
+import CompanyService from '../../../../modules/company/company.services';
+import Button from '../../../../shared/components/button';
+import { replaceSpecialCharacters } from '../../../../shared/utils/validator';
+import WizardHeader from '../../../../shared/components/wizard-header';
+import TimegridForm from '../../../../shared/components/timegrid-form';
+import ServiceFormModal from '../../../../shared/components/modal-service-form/modal-service-form.component';
+import { AuthContext } from '../../../../contexts/auth';
+import authService from '../../../../modules/auth/auth.services';
+import { getTimeGridByDayStructure } from '../../../../shared/utils/timegrid';
+import AnimatedWrapper from '../../../../shared/components/animated-wrapper';
+import Input from '../../../../shared/components/input';
+import { Modal } from '../../../../shared/components/modal';
+import Loading from '../../../../shared/components/loading';
+import { getFormattedPrice } from '../../../../shared/utils/price';
 
 const AccountSetup = ({ token }) => {
   const [companyData, setCompanyData] = useState({});
@@ -439,7 +439,7 @@ const AccountSetupService = ({ companyData, setCompanyData }) => {
 
       AUTH_DISPATCH({
         type: AUTH_ACTIONS.SET_SIGN_IN,
-        value: data.token,
+        value: { token: data },
       });
     } catch (error) {
       setError(handleError(error));
@@ -488,8 +488,8 @@ const AccountSetupService = ({ companyData, setCompanyData }) => {
         tempServices[itemIndex] = {
           id,
           name,
-          duration,
           price,
+          duration,
           showPrice,
         };
 

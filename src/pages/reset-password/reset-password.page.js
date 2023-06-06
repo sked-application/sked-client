@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import AuthService from '../../services/auth.service';
-import PageHeader from '../../common/components/page-header';
-import { handleError } from '../../common/utils/api';
+import AuthService from '../../modules/auth/auth.services';
+import PageHeader from '../../shared/components/page-header';
+import { handleError } from '../../api/api.utils';
 import { Link, useParams, useHistory } from 'react-router-dom';
-import Input from '../../common/components/input';
-import Button from '../../common/components/button';
+import Input from '../../shared/components/input';
+import Button from '../../shared/components/button';
 
 const ResetPassword = () => {
   const history = useHistory();

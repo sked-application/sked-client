@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { AiOutlineCarryOut } from 'react-icons/ai';
 import ServiveService from '../../../../services/service.service';
 import { MainContext } from '../../contexts/main';
-import { handleError } from '../../../../common/utils/api';
+import { handleError } from '../../../../api/api.utils';
 
 const ScheduleServices = () => {
   const { MAIN_STATE, MAIN_DISPATCH, MAIN_ACTIONS } = useContext(MainContext);

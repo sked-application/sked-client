@@ -2,17 +2,17 @@ import React, { useContext, useState, Fragment } from 'react';
 import { AiOutlineCarryOut } from 'react-icons/ai';
 import { Wizard } from 'react-use-wizard';
 import moment from 'moment';
-import ScheduleService from '../../../../services/schedule.service';
-import CustomerVerificationForm from '../../../../common/components/customer-verification-form';
-import CustomerTelephoneForm from '../../../../common/components/customer-telephone-form';
+import ScheduleService from '../../../../modules/schedule/schedule.services';
+import CustomerVerificationForm from '../../../../shared/components/customer-verification-form';
+import CustomerSignUpForm from '../../../../shared/components/customer-signup-form';
 import { MainContext } from '../../contexts/main';
-import { AuthContext } from '../../../../common/contexts/auth';
-import { handleError } from '../../../../common/utils/api';
+import { AuthContext } from '../../../../store/auth';
+import { handleError } from '../../../../api/api.utils';
 import { useHistory } from 'react-router-dom';
-import Button from '../../../../common/components/button';
-import { getFormattedDatePreview } from '../../../../common/utils/date';
-import { getFormattedPrice } from '../../../../common/utils/price';
-import AnimatedWrapper from '../../../../common/components/animated-wrapper';
+import Button from '../../../../shared/components/button';
+import { getFormattedDatePreview } from '../../../../shared/utils/date';
+import { getFormattedPrice } from '../../../../shared/utils/price';
+import AnimatedWrapper from '../../../../shared/components/animated-wrapper';
 
 const ScheduleForm = () => {
   const history = useHistory();
@@ -161,7 +161,7 @@ const ScheduleForm = () => {
       ) : (
         <Wizard>
           <AnimatedWrapper>
-            <CustomerTelephoneForm
+            <CustomerSignUpForm
               isValidToSubmit={isValidForm}
               onSubmit={(data) => setCustomerSignInData(data)}
             />
@@ -173,7 +173,7 @@ const ScheduleForm = () => {
               onSubmit={(data) =>
                 AUTH_DISPATCH({
                   type: AUTH_ACTIONS.SET_SIGN_IN,
-                  value: data,
+                  value: { token: data },
                 })
               }
             />

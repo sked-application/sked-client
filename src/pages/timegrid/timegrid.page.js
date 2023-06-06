@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import TimegridForm from '../../common/components/timegrid-form';
-import PageHeader from '../../common/components/page-header';
+import TimegridForm from '../../shared/components/timegrid-form';
+import PageHeader from '../../shared/components/page-header';
 import timegridService from '../../services/timegrid.service';
-import { handleError } from '../../common/utils/api';
-import Loading from '../../common/components/loading';
+import { handleError } from '../../api/api.utils';
+import Loading from '../../shared/components/loading';
 
 const initialTimegrid = {
   0: [],

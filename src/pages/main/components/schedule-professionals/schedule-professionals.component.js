@@ -1,10 +1,10 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
-import srcPlaceholder from '../../../../common/assets/images/user-placeholder.png';
+import srcPlaceholder from '../../../../assets/images/user-placeholder.png';
 import UserService from '../../../../services/user.service';
 import { MainContext } from '../../contexts/main';
-import { handleError } from '../../../../common/utils/api';
-import { classNames } from '../../../../common/utils/helper';
+import { handleError } from '../../../../api/api.utils';
+import { classNames } from '../../../../shared/utils/helper';
 
 const ScheduleProfessionals = () => {
   const { MAIN_STATE, MAIN_DISPATCH, MAIN_ACTIONS } = useContext(MainContext);

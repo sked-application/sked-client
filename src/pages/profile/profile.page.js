@@ -2,14 +2,14 @@ import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import { AiOutlineForm } from 'react-icons/ai';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import UserService from '../../services/user.service';
-import PageHeader from '../../common/components/page-header';
-import { Modal } from '../../common/components/modal';
-import { handleError } from '../../common/utils/api';
-import { telephoneMask } from '../../common/utils/telephone-mask';
-import ProfileForm from '../../common/components/profile-form';
-import Loading from '../../common/components/loading';
-import CompanyThumb from '../../common/components/company-thumb';
-import PlanRemainingDays from '../../common/components/plan-remaining-days';
+import PageHeader from '../../shared/components/page-header';
+import { Modal } from '../../shared/components/modal';
+import { handleError } from '../../api/api.utils';
+import { telephoneMask } from '../../shared/utils/telephone-mask';
+import ProfileForm from '../../shared/components/profile-form';
+import Loading from '../../shared/components/loading';
+import CompanyThumb from '../../shared/components/company-thumb';
+import PlanRemainingDays from '../../shared/components/plan-remaining-days';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);

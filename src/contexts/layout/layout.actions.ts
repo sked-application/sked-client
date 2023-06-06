@@ -1,0 +1,4 @@
+export enum LayoutActions {
+  SET_CURRENT_PATHNAME = 'SET_CURRENT_PATHNAME',
+  SET_IS_MENU_OPEN = 'SET_IS_MENU_OPEN',
+}

@@ -3,15 +3,15 @@ import { useForm } from 'react-hook-form';
 import { Wizard, useWizard } from 'react-use-wizard';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import PageHeader from '../../../../common/components/page-header';
-import { handleError } from '../../../../common/utils/api';
-import AuthService from '../../../../services/auth.service';
-import Button from '../../../../common/components/button';
+import PageHeader from '../../../../shared/components/page-header';
+import { handleError } from '../../../../api/api.utils';
+import AuthService from '../../../../modules/auth/auth.services';
+import Button from '../../../../shared/components/button';
 import UserService from '../../../../services/user.service';
-import WizardHeader from '../../../../common/components/wizard-header';
-import AnimatedWrapper from '../../../../common/components/animated-wrapper';
-import Input from '../../../../common/components/input';
-import { emailRegex } from '../../../../common/utils/validator';
+import WizardHeader from '../../../../shared/components/wizard-header';
+import AnimatedWrapper from '../../../../shared/components/animated-wrapper';
+import Input from '../../../../shared/components/input';
+import { emailRegex } from '../../../../shared/utils/validator';
 
 const AccountSignUp = () => {
   const [userData, setUserData] = useState({});

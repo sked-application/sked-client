@@ -1,13 +1,13 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { AiOutlineDelete, AiOutlineForm, AiOutlinePlus } from 'react-icons/ai';
 import ServiceService from '../../services/service.service';
-import PageHeader from '../../common/components/page-header';
-import { handleError } from '../../common/utils/api';
-import ServiceFormModal from '../../common/components/modal-service-form';
-import { Modal } from '../../common/components/modal';
-import Button from '../../common/components/button';
-import Loading from '../../common/components/loading';
-import { getFormattedPrice } from '../../common/utils/price';
+import PageHeader from '../../shared/components/page-header';
+import { handleError } from '../../api/api.utils';
+import ServiceFormModal from '../../shared/components/modal-service-form';
+import { Modal } from '../../shared/components/modal';
+import Button from '../../shared/components/button';
+import Loading from '../../shared/components/loading';
+import { getFormattedPrice } from '../../shared/utils/price';
 
 const Services = () => {
   const [isLoading, setIsLoading] = useState(false);
